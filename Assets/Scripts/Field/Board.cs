@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using DungeonRush.Cards;
 using DungeonRush.Managers;
@@ -20,6 +19,7 @@ namespace DungeonRush
             {
                 InitializeTiles();
                 gm.AddCard(gm.playerCard, cardPlaces[0], true, this, false);
+                gm.AddCard(gm.enemyCards[0], cardPlaces[1], false, this, false);
 
                 for (int i = 0; i < cardPlaces.Length; i++)
                 {

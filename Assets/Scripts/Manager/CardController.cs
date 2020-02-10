@@ -2,8 +2,6 @@
 using DungeonRush.Element;
 using DungeonRush.Moves;
 using DungeonRush.Property;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace DungeonRush
@@ -33,10 +31,10 @@ namespace DungeonRush
                         if (listnumber > 3)
                         {
                             targetTile = Board.tiles[listnumber - 4];
+                            targetTile2 = Board.tiles[listnumber];
                             moveMaker.moveNumber = 1;
                             if (targetTile.GetCoordinate().y == 0)
                             {
-                                targetTile2 = Board.tiles[listnumber];
                                 targetTile3 = Board.tiles[listnumber + 4];
                                 moveMaker.moveNumber = 2;
                             }
@@ -46,10 +44,10 @@ namespace DungeonRush
                         if (listnumber < 8)
                         {
                             targetTile = Board.tiles[listnumber + 4];
+                            targetTile2 = Board.tiles[listnumber];
                             moveMaker.moveNumber = 1;
                             if (targetTile.GetCoordinate().y == 2)
                             {
-                                targetTile2 = Board.tiles[listnumber];
                                 targetTile3 = Board.tiles[listnumber - 4];
                                 moveMaker.moveNumber = 2;
                             }
@@ -59,16 +57,15 @@ namespace DungeonRush
                         if (listnumber % 4 != 0)
                         {
                             targetTile = Board.tiles[listnumber - 1];
+                            targetTile2 = Board.tiles[listnumber];
                             moveMaker.moveNumber = 1;
                             if (targetTile.GetCoordinate().x == 1)
                             {
-                                targetTile2 = Board.tiles[listnumber];
                                 targetTile3 = Board.tiles[listnumber + 1];
                                 moveMaker.moveNumber = 2;
                             }
                             else if (targetTile.GetCoordinate().x == 0)
                             {
-                                targetTile2 = Board.tiles[listnumber];
                                 targetTile3 = Board.tiles[listnumber + 1];
                                 targetTile4 = Board.tiles[listnumber + 2];
                                 moveMaker.moveNumber = 3;
@@ -79,16 +76,15 @@ namespace DungeonRush
                         if (listnumber % 4 != 3)
                         {
                             targetTile = Board.tiles[listnumber + 1];
+                            targetTile2 = Board.tiles[listnumber];
                             moveMaker.moveNumber = 1;
                             if (targetTile.GetCoordinate().x == 2)
                             {
-                                targetTile2 = Board.tiles[listnumber];
                                 targetTile3 = Board.tiles[listnumber - 1];
                                 moveMaker.moveNumber = 2;
                             }
                             else if (targetTile.GetCoordinate().x == 3)
                             {
-                                targetTile2 = Board.tiles[listnumber];
                                 targetTile3 = Board.tiles[listnumber - 1];
                                 targetTile4 = Board.tiles[listnumber - 2];
                                 moveMaker.moveNumber = 3;
@@ -103,69 +99,95 @@ namespace DungeonRush
             // TODO Player'a göre ayar vermeyi değiştir.
             public void AssignMoves(Tile targetTile, Tile targetTile2, Tile targetTile3, Tile targetTile4)
             {
-                if (targetTile != null)
+                Card moverCard = targetTile2.GetCard();
+                if(targetTile != null)
                 {
-                    // Player Card yürümeye hazır.
-                    cardManager.GetPlayerCard().isMoving = true;
-                    // Move maker updati'i tetiklendi.
+                    // Movemaker update'i tetiklendi
                     Board.touched = true;
-                    // PlayerCard'ının hedefinde card var mı?
+                    // Hamle yapılan Tile'da card var mı?
+                    CardType targetCardType = targetTile.GetCard().GetCardType();
                     if (targetTile.IsTileOccupied())
                     {
-                        if (targetTile.GetCard().GetCardType() == CardType.ENEMY)
+                        if(targetCardType == CardType.ENEMY)
                         {
-                            bool canAttack = cardManager.GetPlayerCard().GetComponent<Attacker>().CanAttack((EnemyCard)targetTile.GetCard());
+                            bool canAttack = moverCard.GetComponent<Attacker>().CanAttack((EnemyCard)targetTile.GetCard());
                             if (canAttack)
+                            {
                                 ConfigureMoves(targetTile, targetTile2, targetTile3, targetTile4, MoveType.Attack);
+                            }
                             else
                             {
                                 tourManager.FinishTour(false);
                                 return;
                             }
                         }
-                        else if (targetTile.GetCard().GetCardType() == CardType.ITEM)
+                        else if(targetCardType == CardType.ITEM)
+                        {
                             ConfigureMoves(targetTile, targetTile2, targetTile3, targetTile4, MoveType.Item);
-                        else if (targetTile.GetCard().GetCardType() == CardType.COIN)
+                        }
+                        else if(targetCardType == CardType.COIN)
+                        {
                             ConfigureMoves(targetTile, targetTile2, targetTile3, targetTile4, MoveType.Coin);
+                        }
                     }
                     else
+                    {
                         ConfigureMoves(targetTile, targetTile2, targetTile3, targetTile4, MoveType.Empty);
-                    targetTile.GetCard().Disappear();
+                    }
                 }
             }
 
-            private void ConfigureMoves(Tile targetTile, Tile targetTile2, Tile targetTile3, Tile targetTile4, MoveType type)
+            public void StartMoves(Tile targetTile, Tile targetTile2, Tile targetTile3)
             {
-
+                Move move = targetTile.GetCard().GetMove();
+                move.GetCard().isMoving = true;
                 if (moveMaker.moveNumber == 1)
                 {
-                    Move move = new Move(cardManager.instantPlayerTile, targetTile, cardManager.GetPlayerCard(), type, true);
-                    cardManager.GetPlayerCard().SetMove(move);
                     moveMaker.SetInstantMove(move);
                     tourManager.IncreaseTourNumber();
                 }
                 else if (moveMaker.moveNumber == 2)
                 {
-                    Move move = new Move(cardManager.instantPlayerTile, targetTile, cardManager.GetPlayerCard(), type, false);
-                    cardManager.GetPlayerCard().SetMove(move);
-                    Move move2 = new Move(targetTile3, targetTile2, targetTile3.GetCard(), MoveType.Empty, true);
-                    targetTile3.GetCard().SetMove(move2);
+                    Move move2 = targetTile2.GetCard().GetMove();
                     move2.GetCard().isMoving = true;
                     moveMaker.SetInstantMove(move, move2);
                     tourManager.IncreaseTourNumber();
                 }
                 else if (moveMaker.moveNumber == 3)
                 {
-                    Move move = new Move(cardManager.instantPlayerTile, targetTile, cardManager.GetPlayerCard(), type, false);
-                    cardManager.GetPlayerCard().SetMove(move);
+                    Move move2 = targetTile2.GetCard().GetMove();
+                    move2.GetCard().isMoving = true;
+                    Move move3 = targetTile3.GetCard().GetMove();
+                    move3.GetCard().isMoving = true;
+                    moveMaker.SetInstantMove(move, move2, move3);
+                    tourManager.IncreaseTourNumber();
+                }
+                move.GetTargetTile().GetCard().Disappear();
+            }
+
+            private void ConfigureMoves(Tile targetTile, Tile targetTile2, Tile targetTile3, Tile targetTile4, MoveType type)
+            {
+                if (moveMaker.moveNumber == 1)
+                {
+                    Move move = new Move(targetTile2, targetTile, targetTile2.GetCard(), type, true);
+                    targetTile2.GetCard().SetMove(move);
+                }
+                else if (moveMaker.moveNumber == 2)
+                {
+                    Move move = new Move(targetTile2, targetTile, targetTile2.GetCard(), type, false);
+                    targetTile2.GetCard().SetMove(move);
+                    Move move2 = new Move(targetTile3, targetTile2, targetTile3.GetCard(), MoveType.Empty, true);
+                    targetTile3.GetCard().SetMove(move2);
+                }
+                else if (moveMaker.moveNumber == 3)
+                {
+                    Move move = new Move(targetTile2, targetTile, targetTile2.GetCard(), type, false);
+                    targetTile2.GetCard().SetMove(move);
                     Move move2 = new Move(targetTile3, targetTile2, targetTile3.GetCard(), MoveType.Empty, false);
                     targetTile3.GetCard().SetMove(move2);
                     move2.GetCard().isMoving = true;
                     Move move3 = new Move(targetTile4, targetTile3, targetTile4.GetCard(), MoveType.Empty, true);
                     targetTile4.GetCard().SetMove(move3);
-                    move3.GetCard().isMoving = true;
-                    moveMaker.SetInstantMove(move, move2, move3);
-                    tourManager.IncreaseTourNumber();
                 }
             }
         }

@@ -15,9 +15,9 @@ namespace DungeonRush
             public static float speed = 5f;
 
             // Çoklu ilerleme için.
-            private Move instantMove;
-            private Move instantMove2;
-            private Move instantMove3;
+            public Move instantMove;
+            public Move instantMove2;
+            public Move instantMove3;
             public int moveNumber;
 
             [SerializeField, Range(0, 2)] float invokeAddingCardTime;

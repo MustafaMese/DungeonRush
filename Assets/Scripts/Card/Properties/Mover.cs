@@ -3,8 +3,6 @@ using DungeonRush.Element;
 using DungeonRush.Managers;
 using DungeonRush.Property;
 using DungeonRush.Settings;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace DungeonRush 

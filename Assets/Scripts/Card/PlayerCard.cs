@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections;
-using DungeonRush.Element;
-using DungeonRush.Managers;
+﻿using DungeonRush.Element;
 using DungeonRush.Moves;
-using DungeonRush.Property;
-using DungeonRush.Settings;
-using TMPro;
 using UnityEngine;
 
 namespace DungeonRush

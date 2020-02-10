@@ -1,12 +1,8 @@
 ﻿using UnityEngine;
-using System.Collections;
 using DungeonRush.Cards;
-using DungeonRush.Settings;
 using DungeonRush.Element;
 using DungeonRush.Moves;
 using System;
-using TMPro;
-using DungeonRush.Property;
 
 namespace DungeonRush
 {
@@ -14,6 +10,11 @@ namespace DungeonRush
     {
         public class GameManager : MonoBehaviour
         {
+            Tile targetTile = null;
+            Tile targetTile2 = null;
+            Tile targetTile3 = null;
+            Tile targetTile4 = null;
+
             public static MoveMaker moveMaker;
             public static CardManager cardManager;
             public TourManager tourManager;
@@ -44,18 +45,19 @@ namespace DungeonRush
                 {
                     if (SwipeManager.swipeDirection != Swipe.None)
                     {
-                        AssignPlayerMove();
+                        targetTile = null;
+                        targetTile2 = null;
+                        targetTile3 = null;
+                        targetTile4 = null;
+                        DoMove();
                     }
                 }
             }
 
-            private void AssignPlayerMove()
+            private void DoMove()
             {
-                int listnumber = cardManager.GetInstantPlayerTile().GetListNumber();
-                Tile targetTile = null;
-                Tile targetTile2 = null;
-                Tile targetTile3 = null;
-                Tile targetTile4 = null;
+                int listnumber = cardManager.GetPlayerCard().GetTile().GetListNumber();
+
                 try
                 {
                     cardController.AssignTiles(listnumber, ref targetTile, ref targetTile2, ref targetTile3, ref targetTile4);
@@ -65,6 +67,11 @@ namespace DungeonRush
                     throw new Exception("Dictionary'de sınırı aştın. No problema. Error 31");
                 }
                 cardController.AssignMoves(targetTile, targetTile2, targetTile3, targetTile4);
+            }
+
+            private void StartMoves()
+            {
+                cardController.StartMoves(targetTile2, targetTile3, targetTile4);
             }
 
             public Card AddCard(Card piece, Tile tile, bool playerCard, Board board, bool inGame)

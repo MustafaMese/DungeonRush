@@ -19,7 +19,7 @@ namespace DungeonRush
             protected Tile coordinate;
             protected Health health;
             protected string cardName;
-            protected Move move;
+            public Move move;
             protected int cardLevel;
             protected float timeLeft;
             protected Mover mover;

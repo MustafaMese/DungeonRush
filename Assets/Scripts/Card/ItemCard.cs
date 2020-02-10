@@ -1,9 +1,5 @@
 ﻿using DungeonRush.Element;
-using DungeonRush.Managers;
 using DungeonRush.Moves;
-using DungeonRush.Settings;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace DungeonRush {
