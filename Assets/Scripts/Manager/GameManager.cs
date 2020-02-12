@@ -49,15 +49,19 @@ namespace DungeonRush
                         targetTile2 = null;
                         targetTile3 = null;
                         targetTile4 = null;
-                        DoMove();
+                        bool canStartMoves = DoMove(cardManager.GetPlayerCard().GetTile().GetListNumber());
+                        if (canStartMoves)
+                        {
+                            StartMoves();
+                            tourManager.IncreaseTourNumber();
+                        }
                     }
                 }
             }
 
-            private void DoMove()
+            // Assign kısmını tamamen move'a taşı. Mesela MoveMaker'daki instant moves olablir.
+            private bool DoMove(int listnumber)
             {
-                int listnumber = cardManager.GetPlayerCard().GetTile().GetListNumber();
-
                 try
                 {
                     cardController.AssignTiles(listnumber, ref targetTile, ref targetTile2, ref targetTile3, ref targetTile4);
@@ -66,12 +70,12 @@ namespace DungeonRush
                 {
                     throw new Exception("Dictionary'de sınırı aştın. No problema. Error 31");
                 }
-                cardController.AssignMoves(targetTile, targetTile2, targetTile3, targetTile4);
+                return cardController.AssignMoves(targetTile, targetTile2, targetTile3, targetTile4);
             }
 
             private void StartMoves()
             {
-                cardController.StartMoves(targetTile2, targetTile3, targetTile4);
+                cardController.StartMoves();
             }
 
             public Card AddCard(Card piece, Tile tile, bool playerCard, Board board, bool inGame)

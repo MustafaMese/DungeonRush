@@ -96,8 +96,7 @@ namespace DungeonRush
                 }
             }
 
-            // TODO Player'a göre ayar vermeyi değiştir.
-            public void AssignMoves(Tile targetTile, Tile targetTile2, Tile targetTile3, Tile targetTile4)
+            public bool AssignMoves(Tile targetTile, Tile targetTile2, Tile targetTile3, Tile targetTile4)
             {
                 Card moverCard = targetTile2.GetCard();
                 if(targetTile != null)
@@ -118,7 +117,7 @@ namespace DungeonRush
                             else
                             {
                                 tourManager.FinishTour(false);
-                                return;
+                                return false;
                             }
                         }
                         else if(targetCardType == CardType.ITEM)
@@ -135,34 +134,22 @@ namespace DungeonRush
                         ConfigureMoves(targetTile, targetTile2, targetTile3, targetTile4, MoveType.Empty);
                     }
                 }
+                return true;
             }
 
-            public void StartMoves(Tile targetTile, Tile targetTile2, Tile targetTile3)
+            public void StartMoves()
             {
-                Move move = targetTile.GetCard().GetMove();
-                move.GetCard().isMoving = true;
-                if (moveMaker.moveNumber == 1)
+                moveMaker.instantMove.GetCard().isMoving = true;
+                if (moveMaker.moveNumber == 2)
                 {
-                    moveMaker.SetInstantMove(move);
-                    tourManager.IncreaseTourNumber();
-                }
-                else if (moveMaker.moveNumber == 2)
-                {
-                    Move move2 = targetTile2.GetCard().GetMove();
-                    move2.GetCard().isMoving = true;
-                    moveMaker.SetInstantMove(move, move2);
-                    tourManager.IncreaseTourNumber();
+                    moveMaker.instantMove2.GetCard().isMoving = true;
                 }
                 else if (moveMaker.moveNumber == 3)
                 {
-                    Move move2 = targetTile2.GetCard().GetMove();
-                    move2.GetCard().isMoving = true;
-                    Move move3 = targetTile3.GetCard().GetMove();
-                    move3.GetCard().isMoving = true;
-                    moveMaker.SetInstantMove(move, move2, move3);
-                    tourManager.IncreaseTourNumber();
+                    moveMaker.instantMove2.GetCard().isMoving = true;
+                    moveMaker.instantMove3.GetCard().isMoving = true;
                 }
-                move.GetTargetTile().GetCard().Disappear();
+                moveMaker.instantMove.GetTargetTile().GetCard().Disappear();
             }
 
             private void ConfigureMoves(Tile targetTile, Tile targetTile2, Tile targetTile3, Tile targetTile4, MoveType type)
@@ -171,6 +158,7 @@ namespace DungeonRush
                 {
                     Move move = new Move(targetTile2, targetTile, targetTile2.GetCard(), type, true);
                     targetTile2.GetCard().SetMove(move);
+                    moveMaker.SetInstantMove(move);
                 }
                 else if (moveMaker.moveNumber == 2)
                 {
@@ -178,6 +166,7 @@ namespace DungeonRush
                     targetTile2.GetCard().SetMove(move);
                     Move move2 = new Move(targetTile3, targetTile2, targetTile3.GetCard(), MoveType.Empty, true);
                     targetTile3.GetCard().SetMove(move2);
+                    moveMaker.SetInstantMove(move, move2);
                 }
                 else if (moveMaker.moveNumber == 3)
                 {
@@ -188,6 +177,7 @@ namespace DungeonRush
                     move2.GetCard().isMoving = true;
                     Move move3 = new Move(targetTile4, targetTile3, targetTile4.GetCard(), MoveType.Empty, true);
                     targetTile4.GetCard().SetMove(move3);
+                    moveMaker.SetInstantMove(move, move2, move3);
                 }
             }
         }
