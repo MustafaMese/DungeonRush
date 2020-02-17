@@ -3,6 +3,7 @@ using DungeonRush.Cards;
 using DungeonRush.Element;
 using DungeonRush.Moves;
 using System;
+using DungeonRush.DataPackages;
 
 namespace DungeonRush
 {
@@ -30,6 +31,8 @@ namespace DungeonRush
             public ItemCard[] itemCards;
             public CoinCard[] coinCards;
 
+            private ProcessHandleChecker process;
+
             private void Awake()
             {
                 moveMaker = FindObjectOfType<MoveMaker>();
@@ -40,6 +43,11 @@ namespace DungeonRush
             }
 
             private void Update()
+            {
+                PlayerMove();
+            }
+
+            private void PlayerMove()
             {
                 if (!Board.touched && tourManager.IsTourNumbersEqual())
                 {
@@ -53,6 +61,11 @@ namespace DungeonRush
                         if (canStartMoves)
                         {
                             StartMoves();
+                            tourManager.IncreaseTourNumber();
+                        }
+                        else
+                        {
+                            cardController.JustAttack();
                             tourManager.IncreaseTourNumber();
                         }
                     }

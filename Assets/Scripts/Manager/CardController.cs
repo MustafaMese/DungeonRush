@@ -116,7 +116,8 @@ namespace DungeonRush
                             }
                             else
                             {
-                                tourManager.FinishTour(false);
+                                moveMaker.moveNumber = 1;
+                                ConfigureMoves(targetTile, targetTile2, targetTile3, targetTile4, MoveType.Attack);
                                 return false;
                             }
                         }
@@ -150,6 +151,13 @@ namespace DungeonRush
                     moveMaker.instantMove3.GetCard().isMoving = true;
                 }
                 moveMaker.instantMove.GetTargetTile().GetCard().Disappear();
+            }
+
+            // TODO Silahta bi sıkıntı var..
+            public void JustAttack()
+            {
+                Move move = moveMaker.instantMove;
+                move.GetCard().GetComponent<Attacker>().Attack((EnemyCard)move.GetTargetTile().GetCard());
             }
 
             private void ConfigureMoves(Tile targetTile, Tile targetTile2, Tile targetTile3, Tile targetTile4, MoveType type)

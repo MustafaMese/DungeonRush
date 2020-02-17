@@ -39,8 +39,6 @@ namespace DungeonRush
             {
                 if (gm.tourManager.tourNumber - 1 == gm.tourManager.oldTourNumber)
                     Move();
-                else if (gm.tourManager.IsTourNumbersEqual())
-                    ResetMoves();
             }
 
             private void ResetMoves()

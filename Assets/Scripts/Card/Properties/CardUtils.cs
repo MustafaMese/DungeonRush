@@ -36,6 +36,7 @@ namespace DungeonRush
             public void DecreaseHealth(int damage)
             {
                 health -= damage;
+                health = Mathf.Max(0, health);
             }
         }
 
@@ -46,7 +47,7 @@ namespace DungeonRush
 
             public void Set(int amount)
             {
-                health = amount;
+                health = Mathf.Max(0, amount);
             }
 
             public int Get()
@@ -60,6 +61,8 @@ namespace DungeonRush
                     health -= amount;
                 else
                     health += amount;
+
+                health = Mathf.Max(0, health);
             }
         }
 

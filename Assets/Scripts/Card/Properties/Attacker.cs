@@ -26,17 +26,12 @@ namespace DungeonRush
             public bool CanAttack(EnemyCard enemy)
             {
                 int enemyHealth = enemy.GetHealth();
+                int health = card.GetHealth();
                 if (itemUser && itemUser.GetItem().exist)
-                {
-                    int itemHealth = itemUser.GetItem().GetHealth();
-                    if (enemyHealth > itemHealth)
-                    {
-                        enemy.DecreaseHealth(itemHealth);
-                        itemUser.ResetItem();
+                    if (enemyHealth > itemUser.GetItem().GetHealth())
                         return false;
-                    }
-                    return true;
-                }
+                else if (health <= enemyHealth)
+                    return false;
                 return true;
             }
 
@@ -48,6 +43,11 @@ namespace DungeonRush
                     itemUser.ResetItem();
                 else if (enemyHealth < itemHealth)
                     itemUser.DecreaseItemHealth(enemyHealth);
+                else
+                {
+                    enemy.DecreaseHealth(itemHealth);
+                    itemUser.ResetItem();
+                }
             }
 
             public void AttackWithoutItem(EnemyCard enemy)
@@ -57,7 +57,11 @@ namespace DungeonRush
                 if (health > enemyHealth)
                     card.DecreaseHealth(enemyHealth);
                 else
-                    LoadManager.LoadLoseScene();
+                {
+                    card.DecreaseHealth(enemyHealth);
+                    enemy.DecreaseHealth(health);
+                    Invoke("LoadLoseScene", 0.5f);
+                }
             }
 
             public void Attack(EnemyCard enemy)
@@ -66,6 +70,11 @@ namespace DungeonRush
                     AttackWithItem(enemy);
                 else
                     AttackWithoutItem(enemy);
+            }
+
+            public void LoadLoseScene()
+            {
+                LoadManager.LoadLoseScene();
             }
         }
     }
