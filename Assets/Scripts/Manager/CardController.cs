@@ -14,6 +14,8 @@ namespace DungeonRush
             private TourManager tourManager;
             private MoveMaker moveMaker;
 
+            private bool attackingMove;
+
             private void Start()
             {
                 cardManager = FindObjectOfType<CardManager>();
@@ -107,6 +109,7 @@ namespace DungeonRush
                     CardType targetCardType = targetTile.GetCard().GetCardType();
                     if (targetTile.IsTileOccupied())
                     {
+                        // TODO BURALARIN İÇİ DEĞİL DE İFLER DEĞİŞECEK
                         if(targetCardType == CardType.ENEMY)
                         {
                             bool canAttack = moverCard.GetComponent<Attacker>().CanAttack((EnemyCard)targetTile.GetCard());
@@ -116,8 +119,8 @@ namespace DungeonRush
                             }
                             else
                             {
-                                moveMaker.moveNumber = 1;
-                                ConfigureMoves(targetTile, targetTile2, targetTile3, targetTile4, MoveType.Attack);
+                                moveMaker.moveNumber = 0;
+                                ConfigureJustAttackMove(targetTile, targetTile2);
                                 return false;
                             }
                         }
@@ -135,29 +138,40 @@ namespace DungeonRush
                         ConfigureMoves(targetTile, targetTile2, targetTile3, targetTile4, MoveType.Empty);
                     }
                 }
+                attackingMove = false;
                 return true;
             }
 
             public void StartMoves()
             {
-                moveMaker.instantMove.GetCard().isMoving = true;
-                if (moveMaker.moveNumber == 2)
+                if (!attackingMove) 
                 {
-                    moveMaker.instantMove2.GetCard().isMoving = true;
-                }
-                else if (moveMaker.moveNumber == 3)
-                {
-                    moveMaker.instantMove2.GetCard().isMoving = true;
-                    moveMaker.instantMove3.GetCard().isMoving = true;
+                    moveMaker.instantMove.GetCard().isMoving = true;
+                    if (moveMaker.moveNumber == 2)
+                    {
+                        moveMaker.instantMove2.GetCard().isMoving = true;
+                    }
+                    else if (moveMaker.moveNumber == 3)
+                    {
+                        moveMaker.instantMove2.GetCard().isMoving = true;
+                        moveMaker.instantMove3.GetCard().isMoving = true;
+                    } 
                 }
                 moveMaker.instantMove.GetTargetTile().GetCard().Disappear();
             }
 
-            // TODO Silahta bi sıkıntı var..
             public void JustAttack()
             {
                 Move move = moveMaker.instantMove;
                 move.GetCard().GetComponent<Attacker>().Attack((EnemyCard)move.GetTargetTile().GetCard());
+            }
+
+            private void ConfigureJustAttackMove(Tile targetTile, Tile targetTile2)
+            {
+                Move move = new Move(targetTile2, targetTile, targetTile2.GetCard(), MoveType.Attack, true);
+                targetTile2.GetCard().SetMove(move);
+                moveMaker.instantMove = move;
+                attackingMove = true;
             }
 
             private void ConfigureMoves(Tile targetTile, Tile targetTile2, Tile targetTile3, Tile targetTile4, MoveType type)

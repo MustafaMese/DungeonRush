@@ -174,7 +174,8 @@ namespace DungeonRush
 
             public void FinishTour()
             {
-                gm.tourManager.FinishTour(true);
+                gm.tourManager.FinishTour(false);
+                ResetMoves();
             }
 
             private void OnDestroy()

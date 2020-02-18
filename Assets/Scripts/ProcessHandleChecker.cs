@@ -11,16 +11,13 @@ namespace DungeonRush
             public bool startProcess;
             public bool endProcess;
 
-            public void StartProcess()
+            public void Init(bool startingProcess)
             {
+                if (startingProcess)
+                    startProcess = true;
+                else
+                    startProcess = false;
                 endProcess = false;
-                startProcess = true;                
-            }
-
-            public void FinishProcess()
-            {
-                endProcess = true;
-                startProcess = false;
             }
 
             public void Reset()

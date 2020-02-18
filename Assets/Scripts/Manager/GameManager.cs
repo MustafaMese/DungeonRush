@@ -31,7 +31,11 @@ namespace DungeonRush
             public ItemCard[] itemCards;
             public CoinCard[] coinCards;
 
-            private ProcessHandleChecker process;
+            bool canStartMoves;
+            private ProcessHandleChecker playerMoveProcess;
+            private ProcessHandleChecker animationProcess;
+            private ProcessHandleChecker forwardCardProcess;
+            private ProcessHandleChecker dungeonBrainProcess;
 
             private void Awake()
             {
@@ -42,34 +46,71 @@ namespace DungeonRush
                 cardController = FindObjectOfType<CardController>();
             }
 
-            private void Update()
+            private void Start()
             {
-                PlayerMove();
+                playerMoveProcess.Init(true);
+                animationProcess.Init(false);
+                forwardCardProcess.Init(false);
+                dungeonBrainProcess.Init(false);
             }
 
-            private void PlayerMove()
+            private void Update()
             {
-                if (!Board.touched && tourManager.IsTourNumbersEqual())
+                // -----> Player's move
+                if (playerMoveProcess.startProcess)
                 {
-                    if (SwipeManager.swipeDirection != Swipe.None)
+                    if (!Board.touched && tourManager.IsTourNumbersEqual())
                     {
-                        targetTile = null;
-                        targetTile2 = null;
-                        targetTile3 = null;
-                        targetTile4 = null;
-                        bool canStartMoves = DoMove(cardManager.GetPlayerCard().GetTile().GetListNumber());
-                        if (canStartMoves)
+                        if (SwipeManager.swipeDirection != Swipe.None)
                         {
-                            StartMoves();
-                            tourManager.IncreaseTourNumber();
-                        }
-                        else
-                        {
-                            cardController.JustAttack();
-                            tourManager.IncreaseTourNumber();
+                            Move(cardManager.GetPlayerCard().GetTile().GetListNumber());
                         }
                     }
                 }
+                // -----> 
+
+                // -----> Dungeon's move
+                if (dungeonBrainProcess.startProcess)
+                {
+
+                }
+                // ----->
+            }
+
+            private void Move(int listNumber)
+            {
+                // -----> 
+                // Determining tiles process
+                targetTile = null;
+                targetTile2 = null;
+                targetTile3 = null;
+                targetTile4 = null;
+                // Can we start move?
+                canStartMoves = DoMove(listNumber);
+                // ----->
+
+                // -----> Animation process
+                if (animationProcess.startProcess)
+                {
+
+                }
+                // ----->
+
+                // ----->
+                // Forward Card Process
+                if (forwardCardProcess.startProcess) 
+                {
+                    if (canStartMoves)
+                    {
+                        StartMoves();
+                    }
+                    else
+                    {
+                        cardController.JustAttack();
+                        tourManager.FinishTour(false);
+                    }
+                }
+                // ----->
             }
 
             // Assign kısmını tamamen move'a taşı. Mesela MoveMaker'daki instant moves olablir.
@@ -89,6 +130,7 @@ namespace DungeonRush
             private void StartMoves()
             {
                 cardController.StartMoves();
+                tourManager.IncreaseTourNumber();
             }
 
             public Card AddCard(Card piece, Tile tile, bool playerCard, Board board, bool inGame)
