@@ -102,12 +102,10 @@ namespace DungeonRush
                     timeLeft = 2f;
                 }
             }
-
             public void Disappear()
             {
                 isAlive = false;
             }
-
             public IEnumerator FadeImage(bool fadeAway)
             {
                 // fade from opaque to transparent
@@ -136,6 +134,10 @@ namespace DungeonRush
             public ItemType GetItemType()
             {
                 return cardProperties.itemType;
+            }
+            public CharacterType GetCharacterType()
+            {
+                return cardProperties.characterType;
             }
         }
     }

@@ -23,8 +23,11 @@ namespace DungeonRush
                 moveMaker = FindObjectOfType<MoveMaker>();
             }
 
-            public void AssignTiles(int listnumber, ref Tile targetTile, ref Tile targetTile2, ref Tile targetTile3, ref Tile targetTile4)
+            public void AssignTiles(int listnumber, ref Tile targetTile, ref Tile targetTile2, ref Tile targetTile3, ref Tile targetTile4, Swipe swipe)
             {
+                if (swipe != Swipe.None)
+                    SwipeManager.swipeDirection = swipe;    
+
                 switch (SwipeManager.swipeDirection)
                 {
                     case Swipe.None:
@@ -144,6 +147,7 @@ namespace DungeonRush
 
             public void StartMoves()
             {
+                print("aM: " + attackingMove);
                 if (!attackingMove) 
                 {
                     moveMaker.instantMove.GetCard().isMoving = true;

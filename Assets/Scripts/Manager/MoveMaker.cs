@@ -12,7 +12,7 @@ namespace DungeonRush
             public Board board;
             public GameManager gm;
 
-            public static float speed = 5f;
+            public static float speed = 10f;
 
             // Çoklu ilerleme için.
             public Move instantMove;
@@ -174,7 +174,7 @@ namespace DungeonRush
 
             public void FinishTour()
             {
-                gm.tourManager.FinishTour(false);
+                gm.tourManager.FinishTour(true);
                 ResetMoves();
             }
 

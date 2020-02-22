@@ -14,6 +14,7 @@ namespace DungeonRush {
             public CardType cardType;
             public int level;
             public ItemType itemType;
+            public CharacterType characterType;
         }
     }
 }

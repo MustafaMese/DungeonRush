@@ -33,6 +33,7 @@ namespace DungeonRush
 
             bool canStartMoves;
             private ProcessHandleChecker playerMoveProcess;
+            private ProcessHandleChecker moveProcess;
             private ProcessHandleChecker animationProcess;
             private ProcessHandleChecker forwardCardProcess;
             private ProcessHandleChecker dungeonBrainProcess;
@@ -49,6 +50,7 @@ namespace DungeonRush
             private void Start()
             {
                 playerMoveProcess.Init(true);
+                moveProcess.Init(true);
                 animationProcess.Init(false);
                 forwardCardProcess.Init(false);
                 dungeonBrainProcess.Init(false);
@@ -59,13 +61,8 @@ namespace DungeonRush
                 // -----> Player's move
                 if (playerMoveProcess.startProcess)
                 {
-                    if (!Board.touched && tourManager.IsTourNumbersEqual())
-                    {
-                        if (SwipeManager.swipeDirection != Swipe.None)
-                        {
-                            Move(cardManager.GetPlayerCard().GetTile().GetListNumber());
-                        }
-                    }
+                    //Move(cardManager.GetPlayerCard().GetTile().GetListNumber());
+                    Move(cardManager.GetInstantPlayerTile().GetListNumber());
                 }
                 // -----> 
 
@@ -79,46 +76,76 @@ namespace DungeonRush
 
             private void Move(int listNumber)
             {
+                
                 // -----> 
                 // Determining tiles process
-                targetTile = null;
-                targetTile2 = null;
-                targetTile3 = null;
-                targetTile4 = null;
-                // Can we start move?
-                canStartMoves = DoMove(listNumber);
+                if (moveProcess.startProcess)
+                {
+                    MakePlayerMove(listNumber);
+                }
                 // ----->
 
                 // -----> Animation process
-                if (animationProcess.startProcess)
+                else if (animationProcess.startProcess)
                 {
-
+                    DoAnimation();
+                    Invoke("ForwardCardProcessSetTrue", 1f);
                 }
                 // ----->
 
                 // ----->
                 // Forward Card Process
-                if (forwardCardProcess.startProcess) 
+                else if (forwardCardProcess.startProcess)
                 {
-                    if (canStartMoves)
-                    {
-                        StartMoves();
-                    }
-                    else
-                    {
-                        cardController.JustAttack();
-                        tourManager.FinishTour(false);
-                    }
+                    StartMoves();
+                    Invoke("MoveProcessSetTrue", 1f);
                 }
                 // ----->
             }
 
+            private void StartMoves()
+            {
+                forwardCardProcess.startProcess = false;
+                playerMoveProcess.startProcess = false;
+                if (canStartMoves)
+                    MoveForward();
+                else
+                    JustAttackMove();
+            }
+
+            private void DoAnimation()
+            {
+                
+            }
+
+            private void MakePlayerMove(int listNumber)
+            {
+                if (!Board.touched && tourManager.IsTourNumbersEqual() && SwipeManager.swipeDirection != Swipe.None)
+                {
+                    targetTile = null;
+                    targetTile2 = null;
+                    targetTile3 = null;
+                    targetTile4 = null;
+                    // Can we start move?
+                    canStartMoves = DoMove(listNumber, Swipe.None);
+                    moveProcess.startProcess = false;
+                    animationProcess.startProcess = true;
+                    print("1");
+                }
+            }
+
+            private void JustAttackMove()
+            {
+                cardController.JustAttack();
+                tourManager.FinishTour(false);
+            }
+
             // Assign kısmını tamamen move'a taşı. Mesela MoveMaker'daki instant moves olablir.
-            private bool DoMove(int listnumber)
+            private bool DoMove(int listnumber, Swipe swipe)
             {
                 try
                 {
-                    cardController.AssignTiles(listnumber, ref targetTile, ref targetTile2, ref targetTile3, ref targetTile4);
+                    cardController.AssignTiles(listnumber, ref targetTile, ref targetTile2, ref targetTile3, ref targetTile4, swipe);
                 }
                 catch (Exception)
                 {
@@ -127,7 +154,7 @@ namespace DungeonRush
                 return cardController.AssignMoves(targetTile, targetTile2, targetTile3, targetTile4);
             }
 
-            private void StartMoves()
+            private void MoveForward()
             {
                 cardController.StartMoves();
                 tourManager.IncreaseTourNumber();
@@ -235,6 +262,18 @@ namespace DungeonRush
             {
                 int length = card.Length;
                 return card[UnityEngine.Random.Range(0, length)];
+            }
+
+            private void MoveProcessSetTrue()
+            {
+                moveProcess.startProcess = true;
+                playerMoveProcess.startProcess = true;
+            }
+
+            private void ForwardCardProcessSetTrue()
+            {
+                animationProcess.startProcess = false;
+                forwardCardProcess.startProcess = true;
             }
         }
     }
