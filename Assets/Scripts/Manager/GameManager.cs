@@ -51,6 +51,7 @@ namespace DungeonRush
             {
                 playerMoveProcess.Init(true);
                 moveProcess.Init(true);
+                moveProcess.StartProcess();
                 animationProcess.Init(false);
                 forwardCardProcess.Init(false);
                 dungeonBrainProcess.Init(false);
@@ -59,7 +60,7 @@ namespace DungeonRush
             private void Update()
             {
                 // -----> Player's move
-                if (playerMoveProcess.startProcess)
+                if (playerMoveProcess.IsRunning())
                 {
                     //Move(cardManager.GetPlayerCard().GetTile().GetListNumber());
                     Move(cardManager.GetInstantPlayerTile().GetListNumber());
@@ -67,7 +68,7 @@ namespace DungeonRush
                 // -----> 
 
                 // -----> Dungeon's move
-                if (dungeonBrainProcess.startProcess)
+                if (dungeonBrainProcess.start)
                 {
 
                 }
@@ -76,41 +77,62 @@ namespace DungeonRush
 
             private void Move(int listNumber)
             {
-                
-                // -----> 
-                // Determining tiles process
-                if (moveProcess.startProcess)
+                // -----> Determining tiles process
+                if (moveProcess.IsRunning())
                 {
-                    MakePlayerMove(listNumber);
+                    if (moveProcess.start)
+                    {
+                        MakePlayerMove(listNumber);
+                    }
+                    else if (moveProcess.end)
+                    {
+                        moveProcess.EndProcess();
+                        animationProcess.StartProcess();
+                    }
                 }
                 // ----->
 
                 // -----> Animation process
-                else if (animationProcess.startProcess)
+                else if (animationProcess.IsRunning())
                 {
-                    DoAnimation();
-                    Invoke("ForwardCardProcessSetTrue", 1f);
+                    if (animationProcess.start)
+                    {
+                        DoAnimation();
+                    }
+                    else if (animationProcess.end)
+                    {
+                        Invoke("ForwardCardProcessSetTrue", 1f);
+                        animationProcess.EndProcess();
+                        forwardCardProcess.StartProcess();
+                    }
                 }
                 // ----->
 
-                // ----->
-                // Forward Card Process
-                else if (forwardCardProcess.startProcess)
+                // -----> Forward Card Process
+                else if (forwardCardProcess.IsRunning())
                 {
-                    StartMoves();
-                    Invoke("MoveProcessSetTrue", 1f);
+                    if (forwardCardProcess.start)
+                    {
+                        StartMoves();
+                    }
+                    else if (forwardCardProcess.end)
+                    {
+                        Invoke("MoveProcessSetTrue", 1f);
+                    }
                 }
                 // ----->
             }
 
             private void StartMoves()
             {
-                forwardCardProcess.startProcess = false;
-                playerMoveProcess.startProcess = false;
+                forwardCardProcess.start = false;
+                playerMoveProcess.start = false;
                 if (canStartMoves)
                     MoveForward();
                 else
                     JustAttackMove();
+
+                moveMaker.Move();
             }
 
             private void DoAnimation()
@@ -128,9 +150,7 @@ namespace DungeonRush
                     targetTile4 = null;
                     // Can we start move?
                     canStartMoves = DoMove(listNumber, Swipe.None);
-                    moveProcess.startProcess = false;
-                    animationProcess.startProcess = true;
-                    print("1");
+                    moveProcess.ContinuingProcess(true);
                 }
             }
 
@@ -266,14 +286,12 @@ namespace DungeonRush
 
             private void MoveProcessSetTrue()
             {
-                moveProcess.startProcess = true;
-                playerMoveProcess.startProcess = true;
+                forwardCardProcess.ContinuingProcess(true);
             }
 
             private void ForwardCardProcessSetTrue()
             {
-                animationProcess.startProcess = false;
-                forwardCardProcess.startProcess = true;
+                animationProcess.ContinuingProcess(true);
             }
         }
     }

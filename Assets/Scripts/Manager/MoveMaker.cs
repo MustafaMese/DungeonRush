@@ -37,8 +37,8 @@ namespace DungeonRush
 
             private void Update()
             {
-                if (gm.tourManager.tourNumber - 1 == gm.tourManager.oldTourNumber)
-                    Move();
+                //if (gm.tourManager.tourNumber - 1 == gm.tourManager.oldTourNumber)
+                //    Move();
             }
 
             private void ResetMoves()
@@ -52,7 +52,7 @@ namespace DungeonRush
             }
 
             // TODO Buraya da bi ara el at...
-            private void Move()
+            public void Move()
             {
                 if (Board.touched && !movesFinished)
                 {
