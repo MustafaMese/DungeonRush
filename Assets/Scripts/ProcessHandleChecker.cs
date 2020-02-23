@@ -38,6 +38,13 @@ namespace DungeonRush
 
             public void EndProcess()
             {
+                start = false;
+                continuing = false;
+                end = true;
+            }
+
+            public void Finish()
+            {
                 run = false;
                 start = false;
                 continuing = false;

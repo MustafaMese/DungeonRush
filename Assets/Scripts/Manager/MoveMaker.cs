@@ -26,7 +26,7 @@ namespace DungeonRush
             public static bool movesFinished = false;
 
             // Card ekleme için.
-            private Tile targetTileForAddingCard;
+            public Tile targetTileForAddingCard;
 
             private void Start()
             {
@@ -35,13 +35,7 @@ namespace DungeonRush
                 stoppingTime = 0.2f;
             }
 
-            private void Update()
-            {
-                //if (gm.tourManager.tourNumber - 1 == gm.tourManager.oldTourNumber)
-                //    Move();
-            }
-
-            private void ResetMoves()
+            public void ResetMoves()
             {
                 if (moveNumber == 1 && instantMove.GetMoveType() != MoveType.None)
                     ResetInstantMove();
@@ -51,7 +45,6 @@ namespace DungeonRush
                     ResetInstantMove();
             }
 
-            // TODO Buraya da bi ara el at...
             public void Move()
             {
                 if (Board.touched && !movesFinished)

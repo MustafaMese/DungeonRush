@@ -9,10 +9,6 @@ namespace DungeonRush
 {
     namespace Cards
     {
-        // TODO Card sınıfını alt yapılara bölebilirsin.
-        // Örneğin Move'la alakalı her şeyi Mover classına atabilirsin.
-        // Health ile alakalı her şeyi Health classına atabilirsin.
-        // Item almayla alakalı her şeyi Item classına atabilirsin.
         [RequireComponent(typeof(CardUtils), typeof(Mover))]
         public abstract class Card : MonoBehaviour
         {

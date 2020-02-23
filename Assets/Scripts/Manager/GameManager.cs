@@ -4,6 +4,7 @@ using DungeonRush.Element;
 using DungeonRush.Moves;
 using System;
 using DungeonRush.DataPackages;
+using System.Collections;
 
 namespace DungeonRush
 {
@@ -86,7 +87,7 @@ namespace DungeonRush
                     }
                     else if (moveProcess.end)
                     {
-                        moveProcess.EndProcess();
+                        moveProcess.Finish();
                         animationProcess.StartProcess();
                     }
                 }
@@ -98,11 +99,11 @@ namespace DungeonRush
                     if (animationProcess.start)
                     {
                         DoAnimation();
+                        animationProcess.EndProcess();
                     }
                     else if (animationProcess.end)
                     {
-                        Invoke("ForwardCardProcessSetTrue", 1f);
-                        animationProcess.EndProcess();
+                        animationProcess.Finish();
                         forwardCardProcess.StartProcess();
                     }
                 }
@@ -115,24 +116,42 @@ namespace DungeonRush
                     {
                         StartMoves();
                     }
+                    else if (forwardCardProcess.continuing)
+                    {
+                        if (MoveMaker.movesFinished && !Board.touched)
+                        {
+                            moveMaker.ResetMoves();
+                            MoveMaker.movesFinished = false;
+                            forwardCardProcess.EndProcess();
+                        }
+                    }
                     else if (forwardCardProcess.end)
                     {
-                        Invoke("MoveProcessSetTrue", 1f);
+                        StartCoroutine(EndTurn());
+                        forwardCardProcess.Finish();
                     }
                 }
                 // ----->
             }
 
+            // TODO Tur olayı bir tek burda var. Burayı unutma..
+            private IEnumerator EndTurn()
+            {
+                yield return new WaitForSeconds(0.1f);
+                AddCard();
+                yield return new WaitForSeconds(0.1f);
+                tourManager.FinishTour(true);
+            }
+
             private void StartMoves()
             {
-                forwardCardProcess.start = false;
-                playerMoveProcess.start = false;
                 if (canStartMoves)
                     MoveForward();
                 else
                     JustAttackMove();
 
                 moveMaker.Move();
+                forwardCardProcess.ContinuingProcess(false);
             }
 
             private void DoAnimation()
@@ -142,7 +161,8 @@ namespace DungeonRush
 
             private void MakePlayerMove(int listNumber)
             {
-                if (!Board.touched && tourManager.IsTourNumbersEqual() && SwipeManager.swipeDirection != Swipe.None)
+                if (!Board.touched && SwipeManager.swipeDirection != Swipe.None)
+                    //if (!Board.touched && tourManager.IsTourNumbersEqual() && SwipeManager.swipeDirection != Swipe.None)
                 {
                     targetTile = null;
                     targetTile2 = null;
@@ -150,8 +170,19 @@ namespace DungeonRush
                     targetTile4 = null;
                     // Can we start move?
                     canStartMoves = DoMove(listNumber, Swipe.None);
-                    moveProcess.ContinuingProcess(true);
+                    moveProcess.EndProcess();
                 }
+            }
+
+            private void MakeDungeonPlayerMove(int listNumber)
+            {
+                targetTile = null;
+                targetTile2 = null;
+                targetTile3 = null;
+                targetTile4 = null;
+
+                canStartMoves = DoMove(listNumber, Swipe.Down);
+                moveProcess.EndProcess();
             }
 
             private void JustAttackMove()
@@ -284,14 +315,21 @@ namespace DungeonRush
                 return card[UnityEngine.Random.Range(0, length)];
             }
 
-            private void MoveProcessSetTrue()
+            /// <summary>
+            /// Adding card function for end of tour. Not for casual usage.
+            /// </summary>
+            public void AddCard()
             {
-                forwardCardProcess.ContinuingProcess(true);
-            }
+                int number = UnityEngine.Random.Range(0, 101);
+                if (number < 70)
+                    AddCard(GiveRandomCard(enemyCards), moveMaker.targetTileForAddingCard, false, board, true);
+                else if (number < 95)
+                    AddCard(GiveRandomCard(itemCards), moveMaker.targetTileForAddingCard, false, board, true);
+                else
+                    AddCard(GiveRandomCard(coinCards), moveMaker.targetTileForAddingCard, false, board, true);
 
-            private void ForwardCardProcessSetTrue()
-            {
-                animationProcess.ContinuingProcess(true);
+                moveMaker.targetTileForAddingCard = null;
+                NullControlOnTiles();
             }
         }
     }
