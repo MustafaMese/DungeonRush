@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using DungeonRush.DataPackages;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,7 +15,7 @@ namespace DungeonRush {
             public CardType cardType;
             public int level;
             public ItemType itemType;
-            public CharacterType characterType;
+            public Character character;
         }
     }
 }

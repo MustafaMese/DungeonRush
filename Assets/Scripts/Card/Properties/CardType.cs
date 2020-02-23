@@ -16,19 +16,4 @@
         POSION,
         NONE = -1
     }
-
-    public enum CharacterType
-    {
-        PLAYER,
-        MACHINE,
-        SLIME,
-        TOXIC,
-        INFECTED,
-        CORRUPTED,
-        HUMAN,
-        HUMANOID,
-        DEMON,
-        THIEF,
-        ITEM
-    }
 }

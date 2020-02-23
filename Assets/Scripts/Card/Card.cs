@@ -1,4 +1,5 @@
-﻿using DungeonRush.Element;
+﻿using DungeonRush.DataPackages;
+using DungeonRush.Element;
 using DungeonRush.Moves;
 using DungeonRush.Property;
 using System.Collections;
@@ -130,10 +131,6 @@ namespace DungeonRush
             public ItemType GetItemType()
             {
                 return cardProperties.itemType;
-            }
-            public CharacterType GetCharacterType()
-            {
-                return cardProperties.characterType;
             }
         }
     }
