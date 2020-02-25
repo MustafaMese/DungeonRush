@@ -17,7 +17,7 @@ namespace DungeonRush
             protected Health health;
             protected string cardName;
             protected Move move;
-            protected int cardLevel;
+            public int cardLevel;
             protected float timeLeft;
             protected Mover mover;
             protected bool isAlive;
@@ -29,6 +29,7 @@ namespace DungeonRush
             public bool isMoving;
             public bool isBossCard;
             public CardUtils cardUtils;
+            public Character characterType;
 
             [Header("General Components")]
             public SpriteRenderer frameColor;
@@ -90,6 +91,10 @@ namespace DungeonRush
             public abstract int GetLevel();
             public abstract SpriteRenderer GetFrameColor();
             public abstract void SetCardFrameColor(Color32 color);
+            public Character GetCharacterType()
+            {
+                return characterType;
+            }
             public void RainbowColorTimer()
             {
                 timeLeft -= Time.deltaTime;

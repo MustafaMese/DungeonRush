@@ -19,7 +19,7 @@ namespace DungeonRush
             DEMON,
             THIEF,
             ITEM,
-            ALL
+            WALL,
         }
 
         [CreateAssetMenu(menuName = "Card/Character")]
