@@ -60,6 +60,7 @@ namespace DungeonRush
 
             private void Update()
             {
+
                 // -----> Player's move
                 if (playerMoveProcess.IsRunning())
                 {

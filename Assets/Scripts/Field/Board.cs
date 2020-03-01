@@ -18,7 +18,7 @@ namespace DungeonRush
             private void Start()
             {
                 InitializeTiles();
-                gm.AddCard(gm.playerCard, cardPlaces[2], true, this, false);
+                gm.AddCard(gm.playerCard, cardPlaces[13], true, this, false);
                 gm.AddCard(gm.enemyCards[0], cardPlaces[1], false, this, false);
                 gm.AddCard(gm.itemCards[0], cardPlaces[3], false, this, false);
                 gm.AddCard(gm.coinCards[0], cardPlaces[6], false, this, false);

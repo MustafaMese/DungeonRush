@@ -51,7 +51,7 @@ namespace DungeonRush
                         }
                         break;
                     case Swipe.Down:
-                        if (listnumber < 8)
+                        if (listnumber < 12)
                         {
                             targetTile = Board.tiles[listnumber + 4];
                             targetTile2 = Board.tiles[listnumber];
