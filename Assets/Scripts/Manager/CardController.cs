@@ -24,6 +24,7 @@ namespace DungeonRush
                 moveMaker = FindObjectOfType<MoveMaker>();
             }
 
+            // TODO Yeni kart sırasını ekle.
             /// <summary>
             /// targetTile is actual target, targetTile2 is our tile.
             /// </summary>
@@ -42,11 +43,18 @@ namespace DungeonRush
                             targetTile = Board.tiles[listnumber - 4];
                             targetTile2 = Board.tiles[listnumber];
                             moveMaker.moveNumber = 1;
-                            if (targetTile.GetCoordinate().y == 0)
+                            if (targetTile.GetCoordinate().y == 1)
                             {
                                 targetTile3 = Board.tiles[listnumber + 4];
                                 //if (targetTile3.GetCard().GetCharacterType().cT != CharacterType.WALL)
                                     moveMaker.moveNumber = 2;
+                            }
+                            else if (targetTile.GetCoordinate().y == 0)
+                            {
+                                targetTile3 = Board.tiles[listnumber + 4];
+                                targetTile4 = Board.tiles[listnumber + 8];
+                                //if (targetTile3.GetCard().GetCharacterType().cT != CharacterType.WALL)
+                                    moveMaker.moveNumber = 3;
                             }
                         }
                         break;
@@ -61,6 +69,13 @@ namespace DungeonRush
                                 targetTile3 = Board.tiles[listnumber - 4];
                                 //if (targetTile3.GetCard().GetCharacterType().cT != CharacterType.WALL)
                                     moveMaker.moveNumber = 2;
+                            }
+                            else if (targetTile.GetCoordinate().y == 3)
+                            {
+                                targetTile3 = Board.tiles[listnumber - 4];
+                                targetTile4 = Board.tiles[listnumber - 8];
+                                //if (targetTile3.GetCard().GetCharacterType().cT != CharacterType.WALL)
+                                    moveMaker.moveNumber = 3;
                             }
                         }
                         break;
@@ -132,45 +147,12 @@ namespace DungeonRush
                         }
                     }
                     else
-                    ConfigureMoves(targetTile, targetTile2, targetTile3, targetTile4, type);
+                        ConfigureMoves(targetTile, targetTile2, targetTile3, targetTile4, type);
                 }
                 attackingMove = false;
-                return true;    
-                //      CardType targetCardType = targetTile.GetCard().GetCardType();
-                //    if (targetTile.IsTileOccupied())
-                //    {
-                //        // TODO BURALARIN İÇİ DEĞİL DE İFLER DEĞİŞECEK
-                //        if(targetCardType == CardType.ENEMY)
-                //        {
-                //            bool canAttack = moverCard.GetComponent<Attacker>().CanAttack((EnemyCard)targetTile.GetCard());
-                //            if (canAttack)
-                //            {
-                //                ConfigureMoves(targetTile, targetTile2, targetTile3, targetTile4, MoveType.Attack);
-                //            }
-                //            else
-                //            {
-                //                moveMaker.moveNumber = 0;
-                //                ConfigureJustAttackMove(targetTile, targetTile2);
-                //                return false;
-                //            }
-                //        }
-                //        else if(targetCardType == CardType.ITEM)
-                //        {
-                //            ConfigureMoves(targetTile, targetTile2, targetTile3, targetTile4, MoveType.Item);
-                //        }
-                //        else if(targetCardType == CardType.COIN)
-                //        {
-                //            ConfigureMoves(targetTile, targetTile2, targetTile3, targetTile4, MoveType.Coin);
-                //        }
-                //    }
-                //    else
-                //    {
-                //        ConfigureMoves(targetTile, targetTile2, targetTile3, targetTile4, MoveType.Empty);
-                //    }
-                //}
+                return true;  
             }
 
-            //public bool EnemyRecognition()
 
             public MoveType SelectMoveAction(Tile targetTile, Tile targetTile2, Tile targetTile3, Tile targetTile4)
             {
