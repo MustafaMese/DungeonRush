@@ -124,6 +124,9 @@ namespace DungeonRush
 
             public void SetLevel()
             {
+                if (card == null)
+                    card = GetComponent<Card>();
+
                 if (card.GetCardType() == CardType.ENEMY)
                 {
                     SetEnemyLevel(card);

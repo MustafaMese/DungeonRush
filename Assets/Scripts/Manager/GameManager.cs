@@ -60,7 +60,7 @@ namespace DungeonRush
 
             private void Update()
             {
-
+                print("bT: " + Board.touched);
                 // -----> Player's move
                 if (playerMoveProcess.IsRunning())
                 {
@@ -128,6 +128,7 @@ namespace DungeonRush
                     }
                     else if (forwardCardProcess.end)
                     {
+                        moveMaker.ResetMoves();
                         StartCoroutine(EndTurn());
                         forwardCardProcess.Finish();
                     }
@@ -142,17 +143,24 @@ namespace DungeonRush
                 AddCard();
                 yield return new WaitForSeconds(0.1f);
                 tourManager.FinishTour(true);
+                moveProcess.StartProcess();
             }
 
             private void StartMoves()
             {
                 if (canStartMoves)
+                {
                     MoveForward();
+                    moveMaker.Move();
+                    forwardCardProcess.ContinuingProcess(false);
+                }
                 else
+                {
                     JustAttackMove();
-
-                moveMaker.Move();
-                forwardCardProcess.ContinuingProcess(false);
+                    forwardCardProcess.Finish();
+                    moveProcess.StartProcess();
+                }
+                
             }
 
             private void DoAnimation()
