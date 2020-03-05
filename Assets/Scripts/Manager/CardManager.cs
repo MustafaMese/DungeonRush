@@ -16,6 +16,17 @@ namespace DungeonRush
 
             private Card playerCard;
 
+            public List<Card> GetHighLevelCards()
+            {
+                List<Card> cleverCards = new List<Card>();
+                foreach (var card in cards)
+                {
+                    if (card.GetLevel() >= 5)
+                        cleverCards.Add(card);
+                }
+                return cleverCards;
+            }
+
             public void SetPlayerCardFromCards()
             {
                 foreach (var card in cardInformations)

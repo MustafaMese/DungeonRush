@@ -3,6 +3,7 @@ using DungeonRush.DataPackages;
 using DungeonRush.Element;
 using DungeonRush.Moves;
 using DungeonRush.Property;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace DungeonRush
@@ -11,16 +12,11 @@ namespace DungeonRush
     {
         public class CardController : MonoBehaviour
         {
-            private CardManager cardManager;
-            private TourManager tourManager;
             private MoveMaker moveMaker;
-
             private bool attackingMove;
 
             private void Start()
             {
-                cardManager = FindObjectOfType<CardManager>();
-                tourManager = FindObjectOfType<TourManager>();
                 moveMaker = FindObjectOfType<MoveMaker>();
             }
 
@@ -126,14 +122,14 @@ namespace DungeonRush
                 }
             }
 
-            public bool AssignMoves(Tile targetTile, Tile targetTile2, Tile targetTile3, Tile targetTile4)
+            public bool AssignMoves(Tile targetTile, Tile targetTile2, Tile targetTile3, Tile targetTile4, out MoveType type)
             {
                 Card moverCard = targetTile2.GetCard();
-                if(targetTile != null)
+                type = SelectMoveAction(targetTile, targetTile2, targetTile3, targetTile4);
+                if (targetTile != null)
                 {
                     // Movemaker update'i tetiklendi
                     Board.touched = true;
-                    MoveType type = SelectMoveAction(targetTile, targetTile2, targetTile3, targetTile4);
                     if(type == MoveType.Attack)
                     {
                         bool canAttack = moverCard.GetComponent<Attacker>().CanAttack((EnemyCard)targetTile.GetCard());
@@ -152,7 +148,6 @@ namespace DungeonRush
                 attackingMove = false;
                 return true;  
             }
-
 
             public MoveType SelectMoveAction(Tile targetTile, Tile targetTile2, Tile targetTile3, Tile targetTile4)
             {

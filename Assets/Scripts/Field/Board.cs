@@ -36,9 +36,9 @@ namespace DungeonRush
                             gm.AddCard(GiveRandomCard(gm.coinCards), cardPlaces[i], false, this, false);
                     }
                 }
-
                 GameManager.GetCardManager().SetInstantPlayerTileFromCards();
                 GameManager.GetCardManager().SetPlayerCardFromCards();
+                
             }
 
             private void InitializeTiles()

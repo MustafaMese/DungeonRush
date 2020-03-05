@@ -20,9 +20,6 @@ namespace DungeonRush
             public Move instantMove3;
             public int moveNumber;
 
-            [SerializeField, Range(0, 2)] float invokeAddingCardTime;
-            [SerializeField, Range(0, 2)] float stoppingTime;
-
             public static bool movesFinished = false;
 
             // Card ekleme için.
@@ -30,9 +27,7 @@ namespace DungeonRush
 
             private void Start()
             {
-                invokeAddingCardTime = 0.1f;
                 moveNumber = 0;
-                stoppingTime = 0.2f;
             }
 
             public void ResetMoves()
@@ -90,16 +85,8 @@ namespace DungeonRush
                         if (targetTileForAddingCard == null)
                         {
                             targetTileForAddingCard = instantMove3.GetCardTile();
-
                         }
                     }
-                }
-                // Stopping time methodunu ayarlamayı unutma.
-                else if (movesFinished && !Board.touched)
-                {
-                    Invoke("AddCardByGameManager", invokeAddingCardTime);
-                    Invoke("FinishTour", stoppingTime);
-                    movesFinished = false;
                 }
             }
 
@@ -143,32 +130,6 @@ namespace DungeonRush
                 }
 
                 moveNumber = 0;
-            }
-
-            public void AddCardByGameManager()
-            {
-                int number = Random.Range(0, 101);
-                if (number < 70)
-                    gm.AddCard(GiveRandomCard(gm.enemyCards), targetTileForAddingCard, false, board, true);
-                else if (number < 95)
-                    gm.AddCard(GiveRandomCard(gm.itemCards), targetTileForAddingCard, false, board, true);
-                else
-                    gm.AddCard(GiveRandomCard(gm.coinCards), targetTileForAddingCard, false, board, true);
-
-                targetTileForAddingCard = null;
-                gm.NullControlOnTiles();
-            }
-
-            private Card GiveRandomCard(Card[] card)
-            {
-                int length = card.Length;
-                return card[Random.Range(0, length)];
-            }
-
-            public void FinishTour()
-            {
-                gm.tourManager.FinishTour(true);
-                ResetMoves();
             }
 
             private void OnDestroy()
