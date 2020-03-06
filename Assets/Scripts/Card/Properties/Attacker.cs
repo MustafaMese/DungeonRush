@@ -23,7 +23,7 @@ namespace DungeonRush
                     itemUser = GetComponent<ItemUser>();
             }
 
-            public bool CanAttack(EnemyCard enemy)
+            public bool CanAttack(Card enemy)
             {
                 int enemyHealth = enemy.GetHealth();
                 int health = card.GetHealth();
@@ -35,7 +35,7 @@ namespace DungeonRush
                 return true;
             }
 
-            public void AttackWithItem(EnemyCard enemy)
+            public void AttackWithItem(Card enemy)
             {
                 int itemHealth = itemUser.GetItem().GetHealth();
                 int enemyHealth = enemy.GetHealth();
@@ -50,7 +50,7 @@ namespace DungeonRush
                 }
             }
 
-            public void AttackWithoutItem(EnemyCard enemy)
+            public void AttackWithoutItem(Card enemy)
             {
                 int health = card.GetHealth();
                 int enemyHealth = enemy.GetHealth();
@@ -64,7 +64,7 @@ namespace DungeonRush
                 }
             }
 
-            public void Attack(EnemyCard enemy)
+            public void Attack(Card enemy)
             {
                 if (isItemUser && itemUser && itemUser.GetItem().exist)
                     AttackWithItem(enemy);

@@ -70,7 +70,6 @@ namespace DungeonRush
 
             private void Update()
             {
-                print("aI: " + attackerIndex);
                 // -----> Player's move
                 if (playerMoveProcess.IsRunning())
                 {
@@ -82,23 +81,41 @@ namespace DungeonRush
                 // -----> Dungeon's move
                 if (dungeonBrainProcess.IsRunning())
                 {
+                    print("1");
                     if (dungeonBrainProcess.start)
                     {
+                        print("2");
                         attackersListnumbers = DecideAttackerEnemies();
-                        dungeonBrainProcess.ContinuingProcess(false);
+                        if (attackersListnumbers.Count > 0)
+                        {
+                            dungeonBrainProcess.ContinuingProcess(false);
+                            print("3");
+                        }
+                        else
+                        {
+                            dungeonBrainProcess.Finish();
+                            playerMoveProcess.Init(true);
+                            print("4");
+                        }
                     }
                     else if (dungeonBrainProcess.continuing)
                     {
+                        print("5");
                         Move(attackersListnumbers[attackerIndex], false);
+                        print("6");
                     }
                     else if (dungeonBrainProcess.end)
                     {
+                        print("7");
                         attackersListnumbers.Remove(attackerIndex);
-                        attackerIndex++;
                         if (attackersListnumbers.Count > 0)
+                        {
                             dungeonBrainProcess.StartProcess();
+                            print("8");
+                        }
                         else
                         {
+                            print("9");
                             dungeonBrainProcess.Finish();
                             playerMoveProcess.Init(true);
                         }
@@ -223,9 +240,9 @@ namespace DungeonRush
                 var attackerCount = highLevelCards.Count % 4;
                 for (int i = 0; i < attackerCount; i++)
                 {
-                    var number = UnityEngine.Random.Range(0, highLevelCards.Count);
-                    if (!listnumbers.Contains(highLevelCards[number].GetTile().GetListNumber()))
-                        listnumbers.Add(number);
+                    var listnumber = highLevelCards[i].GetTile().GetListNumber();
+                    if (!listnumbers.Contains(listnumber))
+                        listnumbers.Add(listnumber);
                 }
                 return listnumbers;
             }
@@ -265,7 +282,7 @@ namespace DungeonRush
             public Swipe SelectTileToAttack(int listnumber)
             {
                 var tiles = GetAvailableTiles(listnumber);
-                var number = UnityEngine.Random.Range(0, tiles.Count);
+                var number = UnityEngine.Random.Range(0, tiles.Count - 1);
                 return tiles[number];
             }
 

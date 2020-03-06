@@ -132,7 +132,7 @@ namespace DungeonRush
                     Board.touched = true;
                     if(type == MoveType.Attack)
                     {
-                        bool canAttack = moverCard.GetComponent<Attacker>().CanAttack((EnemyCard)targetTile.GetCard());
+                        bool canAttack = moverCard.GetComponent<Attacker>().CanAttack(targetTile.GetCard());
                         if (canAttack)
                             ConfigureMoves(targetTile, targetTile2, targetTile3, targetTile4, MoveType.Attack);
                         else
@@ -198,7 +198,7 @@ namespace DungeonRush
             public void JustAttack()
             {
                 Move move = moveMaker.instantMove;
-                move.GetCard().GetComponent<Attacker>().Attack((EnemyCard)move.GetTargetTile().GetCard());
+                move.GetCard().GetComponent<Attacker>().Attack(move.GetTargetTile().GetCard());
             }
 
             private void ConfigureJustAttackMove(Tile targetTile, Tile targetTile2)
