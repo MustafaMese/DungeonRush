@@ -39,9 +39,5 @@ namespace DungeonRush
             }
         }
 
-        public class EnemyRecognition : MonoBehaviour
-        {
-
-        }
     }
 }
