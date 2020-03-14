@@ -21,7 +21,7 @@ namespace DungeonRush
                 List<Card> cleverCards = new List<Card>();
                 foreach (var card in cards)
                 {
-                    if (card.GetLevel() >= 5)
+                    if (card.GetCardType() == CardType.ENEMY && card.GetLevel() >= 5)
                         cleverCards.Add(card);
                 }
                 return cleverCards;

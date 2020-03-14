@@ -26,14 +26,18 @@ namespace DungeonRush
             /// </summary>
             public void AssignTiles(int listnumber, ref Tile targetTile, ref Tile targetTile2, ref Tile targetTile3, ref Tile targetTile4, Swipe swipe)
             {
-                if (swipe != Swipe.None)
+                if (swipe != Swipe.PLAYER)
                     SwipeManager.swipeDirection = swipe;    
 
                 switch (SwipeManager.swipeDirection)
                 {
-                    case Swipe.None:
+                    case Swipe.NONE:
+                        targetTile = null;
+                        targetTile2 = null;
+                        targetTile3 = null;
+                        targetTile4 = null;
                         break;
-                    case Swipe.Up:
+                    case Swipe.UP:
                         if (listnumber > 3)
                         {
                             targetTile = Board.tiles[listnumber - 4];
@@ -54,7 +58,7 @@ namespace DungeonRush
                             }
                         }
                         break;
-                    case Swipe.Down:
+                    case Swipe.DOWN:
                         if (listnumber < 12)
                         {
                             targetTile = Board.tiles[listnumber + 4];
@@ -75,7 +79,7 @@ namespace DungeonRush
                             }
                         }
                         break;
-                    case Swipe.Left:
+                    case Swipe.LEFT:
                         if (listnumber % 4 != 0)
                         {
                             targetTile = Board.tiles[listnumber - 1];
@@ -96,7 +100,7 @@ namespace DungeonRush
                             }
                         }
                         break;
-                    case Swipe.Right:
+                    case Swipe.RIGHT:
                         if (listnumber % 4 != 3)
                         {
                             targetTile = Board.tiles[listnumber + 1];
@@ -124,13 +128,13 @@ namespace DungeonRush
 
             public bool AssignMoves(Tile targetTile, Tile targetTile2, Tile targetTile3, Tile targetTile4, out MoveType type)
             {
-                Card moverCard = targetTile2.GetCard();
                 type = SelectMoveAction(targetTile, targetTile2, targetTile3, targetTile4);
                 if (targetTile != null)
                 {
+                    Card moverCard = targetTile2.GetCard();
                     // Movemaker update'i tetiklendi
                     Board.touched = true;
-                    if(type == MoveType.Attack)
+                    if (type == MoveType.Attack)
                     {
                         bool canAttack = moverCard.GetComponent<Attacker>().CanAttack(targetTile.GetCard());
                         if (canAttack)
@@ -145,12 +149,17 @@ namespace DungeonRush
                     else
                         ConfigureMoves(targetTile, targetTile2, targetTile3, targetTile4, type);
                 }
+                else
+                    moveMaker.moveNumber = 0;
                 attackingMove = false;
                 return true;  
             }
 
             public MoveType SelectMoveAction(Tile targetTile, Tile targetTile2, Tile targetTile3, Tile targetTile4)
             {
+                if (targetTile == null || targetTile2 == null)
+                    return MoveType.None;
+
                 Card attackerCard = targetTile2.GetCard();
                 Card targetCard = targetTile.GetCard();
 
@@ -177,8 +186,11 @@ namespace DungeonRush
                     return MoveType.None;
             }
 
-            public void StartMoves()
+            public bool StartMoves()
             {
+                if (moveMaker.moveNumber == 0)
+                    return false;
+
                 if (!attackingMove) 
                 {
                     moveMaker.instantMove.GetCard().isMoving = true;
@@ -193,6 +205,7 @@ namespace DungeonRush
                     } 
                 }
                 moveMaker.instantMove.GetTargetTile().GetCard().Disappear();
+                return true;
             }
 
             public void JustAttack()

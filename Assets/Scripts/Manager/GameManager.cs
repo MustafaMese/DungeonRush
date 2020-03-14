@@ -19,6 +19,7 @@ namespace DungeonRush
             Tile targetTile4 = null;
 
             MoveType moveType;
+            bool endMove = false;
 
             public List<Card> highLevelCards;
             public List<int> attackersListnumbers;
@@ -127,100 +128,17 @@ namespace DungeonRush
             #region MOVE METHODS
 
             #region PLAYER
-            private void Move(int listNumber, bool isPlayer)
+            
+            private void MakePlayerMove(int listNumber)
             {
-                // -----> Determining tiles process
-                if (moveProcess.IsRunning())
-                {
-                    if (moveProcess.start)
-                    {
-                        MakeMove(listNumber, isPlayer);
-                    }
-                    else if (moveProcess.end)
-                    {
-                        moveProcess.Finish();
-                        animationProcess.StartProcess();
-                    }
-                }
-                // ----->
-
-                // -----> Animation process
-                else if (animationProcess.IsRunning())
-                {
-                    if (animationProcess.start)
-                    {
-                        DoAnimation();
-                        animationProcess.EndProcess();
-                    }
-                    else if (animationProcess.end)
-                    {
-                        if(moveType != MoveType.Attack)
-                            forwardCardProcess.StartProcess();
-                        else
-                            StartCoroutine(FinishAnimationTurn());
-                        animationProcess.Finish();
-                    }
-                }
-                // ----->
-
-                // -----> Forward Card Process
-                else if (forwardCardProcess.IsRunning())
-                {
-                    if (forwardCardProcess.start)
-                    {
-                        StartMoves();
-                    }
-                    else if (forwardCardProcess.continuing)
-                    {
-                        if (MoveMaker.movesFinished && !Board.touched)
-                        {
-                            moveMaker.ResetMoves();
-                            MoveMaker.movesFinished = false;
-                            forwardCardProcess.EndProcess();
-                        }
-                    }
-                    else if (forwardCardProcess.end)
-                    {
-                        moveMaker.ResetMoves();
-                        StartCoroutine(EndTurn());
-                        forwardCardProcess.Finish();
-                        if (playerMoveProcess.IsRunning())
-                        {
-                            playerMoveProcess.Finish();
-                            SelectHighLevelCards();
-                            dungeonBrainProcess.StartProcess();
-                        }
-                        else if (dungeonBrainProcess.IsRunning())
-                        {
-                            dungeonBrainProcess.EndProcess();
-                        }
-                    }
-                }
-                // ----->
-            }
-
-            private void MakeMove(int listNumber, bool isPlayer)
-            {
-                if (isPlayer)
-                {
-                    if (!Board.touched && SwipeManager.swipeDirection != Swipe.None)
-                    {
-                        targetTile = null;
-                        targetTile2 = null;
-                        targetTile3 = null;
-                        targetTile4 = null;
-                        // Can we start move?
-                        canStartMoves = DoMove(listNumber, Swipe.None);
-                        moveProcess.EndProcess();
-                    }
-                }
-                else
+                if (!Board.touched && SwipeManager.swipeDirection != Swipe.NONE)
                 {
                     targetTile = null;
                     targetTile2 = null;
                     targetTile3 = null;
                     targetTile4 = null;
-                    canStartMoves = DoMove(listNumber, SelectTileToAttack(listNumber));
+                    // Can we start move?
+                    canStartMoves = DoMove(listNumber, Swipe.PLAYER);
                     moveProcess.EndProcess();
                 }
             }
@@ -228,6 +146,23 @@ namespace DungeonRush
             #endregion
 
             #region DUNGEONBRAIN
+
+            public bool MakeEnemyMove(int listNumber)
+            {
+                targetTile = null;
+                targetTile2 = null;
+                targetTile3 = null;
+                targetTile4 = null;
+                var swipe = SelectTileToAttack(listNumber);
+                if (swipe != Swipe.NONE)
+                {
+                    canStartMoves = DoMove(listNumber, swipe);
+                    moveProcess.EndProcess();
+                    return true;
+                }
+                else
+                    return false;
+            }
 
             public void SelectHighLevelCards()
             {
@@ -249,6 +184,7 @@ namespace DungeonRush
 
             public List<Swipe> GetAvailableTiles(int listnumber)
             {
+                print("lN: " + listnumber);
                 Tile ownTile = Board.tiles[listnumber];
                 List<Swipe> avaibleTiles = new List<Swipe>();
                 Tile lowerTile, leftTile, rightTile, upperTile;
@@ -256,25 +192,25 @@ namespace DungeonRush
                 {
                     upperTile = Board.tiles[listnumber - 4];
                     if(ownTile.GetCard().GetCharacterType().IsEnemy(upperTile.GetCard().GetCharacterType()))
-                        avaibleTiles.Add(Swipe.Up);
+                        avaibleTiles.Add(Swipe.UP);
                 }
                 if (listnumber % 4 != 0)
                 {
                     leftTile = Board.tiles[listnumber - 1];
                     if (ownTile.GetCard().GetCharacterType().IsEnemy(leftTile.GetCard().GetCharacterType()))
-                        avaibleTiles.Add(Swipe.Left);
+                        avaibleTiles.Add(Swipe.LEFT);
                 }
                 if (listnumber % 4 != 3)
                 {
                     rightTile = Board.tiles[listnumber + 1];
                     if (ownTile.GetCard().GetCharacterType().IsEnemy(rightTile.GetCard().GetCharacterType()))
-                        avaibleTiles.Add(Swipe.Right);
+                        avaibleTiles.Add(Swipe.RIGHT);
                 }
-                if (listnumber < 12)
+                if (listnumber < 13)
                 {
                     lowerTile = Board.tiles[listnumber + 4];
                     if (ownTile.GetCard().GetCharacterType().IsEnemy(lowerTile.GetCard().GetCharacterType()))
-                        avaibleTiles.Add(Swipe.Down);
+                        avaibleTiles.Add(Swipe.DOWN);
                 }
                 return avaibleTiles;
             }
@@ -282,14 +218,16 @@ namespace DungeonRush
             public Swipe SelectTileToAttack(int listnumber)
             {
                 var tiles = GetAvailableTiles(listnumber);
-                var number = UnityEngine.Random.Range(0, tiles.Count - 1);
-                return tiles[number];
+                if (tiles.Count != 0)
+                {
+                    var number = UnityEngine.Random.Range(0, tiles.Count);
+                    if (number < 0)
+                        number = 0;
+                    return tiles[number];
+                }
+                return Swipe.NONE;
             }
 
-            private void DungeonMove(int listNumber)
-            {
-                
-            }
             #endregion
 
             #region MOVE
@@ -307,19 +245,29 @@ namespace DungeonRush
                 return cardController.AssignMoves(targetTile, targetTile2, targetTile3, targetTile4, out moveType);
             }
 
-            private void MoveForward()
+            private bool MoveForward()
             {
-                cardController.StartMoves();
+                var canStart = cardController.StartMoves();
                 tourManager.IncreaseTourNumber();
+                return canStart;
             }
 
-            private void StartMoves()
+            private bool StartMoves()
             {
                 if (canStartMoves)
                 {
-                    MoveForward();
-                    moveMaker.Move();
-                    forwardCardProcess.ContinuingProcess(false);
+                    var canMove = MoveForward();
+                    if (canMove)
+                    {
+                        moveMaker.Move();
+                        forwardCardProcess.ContinuingProcess(false);
+                    }
+                    else
+                    {
+                        forwardCardProcess.Finish();
+                        moveProcess.StartProcess();
+                        return false;
+                    }
                 }
                 else
                 {
@@ -327,12 +275,111 @@ namespace DungeonRush
                     forwardCardProcess.Finish();
                     moveProcess.StartProcess();
                 }
+                return true;
             }
 
             private void JustAttackMove()
             {
                 cardController.JustAttack();
                 tourManager.FinishTour(false);
+            }
+
+            private void Move(int listNumber, bool isPlayer)
+            {
+                if (moveProcess.IsRunning())
+                {
+                    print("M1");
+                    PrepareMoveProcess(listNumber, isPlayer);
+                }
+                else if (animationProcess.IsRunning())
+                {
+                    print("M2");
+                    AnimationProcess();
+                }
+                else if (forwardCardProcess.IsRunning())
+                {
+                    print("M3");
+                    ExecuteMoves();
+                }
+            }
+
+            private void ExecuteMoves()
+            {
+                bool canMove = false;
+                if (forwardCardProcess.start)
+                {
+                    canMove = StartMoves();
+                }
+                else if (forwardCardProcess.continuing)
+                {
+                    if (MoveMaker.movesFinished && !Board.touched)
+                    {
+                        moveMaker.ResetMoves();
+                        MoveMaker.movesFinished = false;
+                        forwardCardProcess.EndProcess();
+                    }
+                }
+                else if (forwardCardProcess.end)
+                {
+                    moveMaker.ResetMoves();
+                    if(!endMove)
+                        StartCoroutine(EndTurn(canMove));
+                    else
+                        StartCoroutine(EndTurn(canMove));
+                    forwardCardProcess.Finish();
+                    if (playerMoveProcess.IsRunning())
+                    {
+                        playerMoveProcess.Finish();
+                        SelectHighLevelCards();
+                        dungeonBrainProcess.StartProcess();
+                    }
+                    else if (dungeonBrainProcess.IsRunning())
+                    {
+                        dungeonBrainProcess.EndProcess();
+                    }
+                }
+            }
+
+            private void AnimationProcess()
+            {
+                if (animationProcess.start)
+                {
+                    DoAnimation();
+                    animationProcess.EndProcess();
+                }
+                else if (animationProcess.end)
+                {
+                    if (moveType != MoveType.Attack)
+                        forwardCardProcess.StartProcess();
+                    else
+                        StartCoroutine(FinishAnimationTurn());
+                    animationProcess.Finish();
+                }
+            }
+
+            private void PrepareMoveProcess(int listNumber, bool isPlayer)
+            {
+                if (moveProcess.start)
+                {
+                    if (isPlayer)
+                        MakePlayerMove(listNumber);
+                    else
+                    {
+                        var canMove = MakeEnemyMove(listNumber);
+                        if (!canMove)
+                        {
+                            endMove = true;
+                            moveProcess.Finish();
+                            forwardCardProcess.Init(true);
+                            forwardCardProcess.EndProcess();
+                        }
+                    }
+                }
+                else if (moveProcess.end)
+                {
+                    moveProcess.Finish();
+                    animationProcess.StartProcess();
+                }
             }
 
             #endregion
@@ -353,13 +400,17 @@ namespace DungeonRush
             #endregion
 
             // TODO Tur olayı bir tek burda var. Burayı unutma..
-            private IEnumerator EndTurn()
+            private IEnumerator EndTurn(bool canMove)
             {
-                yield return new WaitForSeconds(0.1f);
-                AddCard();
-                yield return new WaitForSeconds(0.1f);
-                tourManager.FinishTour(true);
+                if (!canMove)
+                {
+                    yield return new WaitForSeconds(0.1f);
+                    AddCard();
+                    yield return new WaitForSeconds(0.1f);
+                    tourManager.FinishTour(true);
+                }
                 moveProcess.StartProcess();
+                endMove = false;
             }
 
             #endregion

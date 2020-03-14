@@ -6,7 +6,7 @@ namespace DungeonRush
 {
     namespace Managers
     {
-        public enum Swipe { None, Up, Down, Left, Right };
+        public enum Swipe { NONE, UP, DOWN, LEFT, RIGHT, PLAYER };
 
         public class SwipeManager : MonoBehaviour
         {
@@ -44,7 +44,7 @@ namespace DungeonRush
                         // Make sure it was a legit swipe, not a tap
                         if (currentSwipe.magnitude < minSwipeLength)
                         {
-                            swipeDirection = Swipe.None;
+                            swipeDirection = Swipe.NONE;
                             return;
                         }
 
@@ -53,22 +53,22 @@ namespace DungeonRush
                         // Swipe up
                         if (currentSwipe.y > 0 && currentSwipe.x > -0.5f && currentSwipe.x < 0.5f)
                         {
-                            swipeDirection = Swipe.Up;
+                            swipeDirection = Swipe.UP;
                         }
                         // Swipe down
                         else if (currentSwipe.y < 0 && currentSwipe.x > -0.5f && currentSwipe.x < 0.5f)
                         {
-                            swipeDirection = Swipe.Down;
+                            swipeDirection = Swipe.DOWN;
                         }
                         // Swipe left
                         else if (currentSwipe.x < 0 && currentSwipe.y > -0.5f && currentSwipe.y < 0.5f)
                         {
-                            swipeDirection = Swipe.Left;
+                            swipeDirection = Swipe.LEFT;
                         }
                         // Swipe right
                         else if (currentSwipe.x > 0 && currentSwipe.y > -0.5f && currentSwipe.y < 0.5f)
                         {
-                            swipeDirection = Swipe.Right;
+                            swipeDirection = Swipe.RIGHT;
                         }
                     }
                 }
@@ -80,7 +80,7 @@ namespace DungeonRush
                     }
                     else
                     {
-                        swipeDirection = Swipe.None;
+                        swipeDirection = Swipe.NONE;
                     }
                     if (Input.GetMouseButtonUp(0))
                     {
@@ -90,7 +90,7 @@ namespace DungeonRush
                         // Make sure it was a legit swipe, not a tap
                         if (currentSwipe.magnitude < minSwipeLength)
                         {
-                            swipeDirection = Swipe.None;
+                            swipeDirection = Swipe.NONE;
                             return;
                         }
 
@@ -100,22 +100,22 @@ namespace DungeonRush
                         // Swipe up
                         if (currentSwipe.y > 0 && currentSwipe.x > -0.5f && currentSwipe.x < 0.5f)
                         {
-                            swipeDirection = Swipe.Up;
+                            swipeDirection = Swipe.UP;
                         }
                         // Swipe down
                         else if (currentSwipe.y < 0 && currentSwipe.x > -0.5f && currentSwipe.x < 0.5f)
                         {
-                            swipeDirection = Swipe.Down;
+                            swipeDirection = Swipe.DOWN;
                         }
                         // Swipe left
                         else if (currentSwipe.x < 0 && currentSwipe.y > -0.5f && currentSwipe.y < 0.5f)
                         {
-                            swipeDirection = Swipe.Left;
+                            swipeDirection = Swipe.LEFT;
                         }
                         // Swipe right
                         else if (currentSwipe.x > 0 && currentSwipe.y > -0.5f && currentSwipe.y < 0.5f)
                         {
-                            swipeDirection = Swipe.Right;
+                            swipeDirection = Swipe.RIGHT;
                         }
                     }
                 }

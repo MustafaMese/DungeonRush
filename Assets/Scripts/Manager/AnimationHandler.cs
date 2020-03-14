@@ -20,10 +20,10 @@ namespace DungeonRush {
 
             public void DoAnim(MoveType moveType, Tile targetTile)
             {
-                PlaceAnimationGameObject(targetTile);
                 switch (moveType)
                 {   
                     case MoveType.Attack:
+                        PlaceAnimationGameObject(targetTile);
                         anim.SetTrigger("attack");
                         break;
                     case MoveType.Item:

@@ -89,6 +89,7 @@ namespace DungeonRush
                 }
                 else
                 {
+                    // todo düşmaının canının azalmamsı.
                     if (move.GetMoveType() != MoveType.Empty)
                         Tile.ChangeTile(move, false, false);
                     else
