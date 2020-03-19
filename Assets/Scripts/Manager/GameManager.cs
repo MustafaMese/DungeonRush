@@ -19,7 +19,7 @@ namespace DungeonRush
             Tile targetTile4 = null;
 
             MoveType moveType;
-            bool endMove = false;
+            bool dungeonBrainZeroMove;
 
             public List<Card> highLevelCards;
             public List<int> attackersListnumbers;
@@ -69,6 +69,7 @@ namespace DungeonRush
                 dungeonBrainProcess.Init(false);
             }
 
+            // TODO Versiyon 3 için yeterli fakat bi kere daha elden geçmesi gerekiyor.
             private void Update()
             {
                 // -----> Player's move
@@ -82,44 +83,27 @@ namespace DungeonRush
                 // -----> Dungeon's move
                 if (dungeonBrainProcess.IsRunning())
                 {
-                    print("1");
                     if (dungeonBrainProcess.start)
                     {
-                        print("2");
                         attackersListnumbers = DecideAttackerEnemies();
                         if (attackersListnumbers.Count > 0)
                         {
                             dungeonBrainProcess.ContinuingProcess(false);
-                            print("3");
                         }
                         else
                         {
                             dungeonBrainProcess.Finish();
                             playerMoveProcess.Init(true);
-                            print("4");
                         }
                     }
                     else if (dungeonBrainProcess.continuing)
                     {
-                        print("5");
                         Move(attackersListnumbers[attackerIndex], false);
-                        print("6");
                     }
                     else if (dungeonBrainProcess.end)
                     {
-                        print("7");
-                        attackersListnumbers.Remove(attackerIndex);
-                        if (attackersListnumbers.Count > 0)
-                        {
-                            dungeonBrainProcess.StartProcess();
-                            print("8");
-                        }
-                        else
-                        {
-                            print("9");
-                            dungeonBrainProcess.Finish();
-                            playerMoveProcess.Init(true);
-                        }
+                        dungeonBrainProcess.Finish();
+                        playerMoveProcess.Init(true);
                     }
                 }
                 // ----->
@@ -184,31 +168,34 @@ namespace DungeonRush
 
             public List<Swipe> GetAvailableTiles(int listnumber)
             {
-                print("lN: " + listnumber);
                 Tile ownTile = Board.tiles[listnumber];
                 List<Swipe> avaibleTiles = new List<Swipe>();
                 Tile lowerTile, leftTile, rightTile, upperTile;
                 if (listnumber > 3)
                 {
                     upperTile = Board.tiles[listnumber - 4];
+                    //print("t: " + upperTile);
                     if(ownTile.GetCard().GetCharacterType().IsEnemy(upperTile.GetCard().GetCharacterType()))
                         avaibleTiles.Add(Swipe.UP);
                 }
                 if (listnumber % 4 != 0)
                 {
                     leftTile = Board.tiles[listnumber - 1];
+                    //print("t: " + leftTile);
                     if (ownTile.GetCard().GetCharacterType().IsEnemy(leftTile.GetCard().GetCharacterType()))
                         avaibleTiles.Add(Swipe.LEFT);
                 }
                 if (listnumber % 4 != 3)
                 {
                     rightTile = Board.tiles[listnumber + 1];
+                    //print("t: " + rightTile);
                     if (ownTile.GetCard().GetCharacterType().IsEnemy(rightTile.GetCard().GetCharacterType()))
                         avaibleTiles.Add(Swipe.RIGHT);
                 }
-                if (listnumber < 13)
+                if (listnumber < 12)
                 {
                     lowerTile = Board.tiles[listnumber + 4];
+                    //print("t: " + lowerTile);
                     if (ownTile.GetCard().GetCharacterType().IsEnemy(lowerTile.GetCard().GetCharacterType()))
                         avaibleTiles.Add(Swipe.DOWN);
                 }
@@ -288,17 +275,14 @@ namespace DungeonRush
             {
                 if (moveProcess.IsRunning())
                 {
-                    print("M1");
                     PrepareMoveProcess(listNumber, isPlayer);
                 }
                 else if (animationProcess.IsRunning())
                 {
-                    print("M2");
                     AnimationProcess();
                 }
                 else if (forwardCardProcess.IsRunning())
                 {
-                    print("M3");
                     ExecuteMoves();
                 }
             }
@@ -322,10 +306,6 @@ namespace DungeonRush
                 else if (forwardCardProcess.end)
                 {
                     moveMaker.ResetMoves();
-                    if(!endMove)
-                        StartCoroutine(EndTurn(canMove));
-                    else
-                        StartCoroutine(EndTurn(canMove));
                     forwardCardProcess.Finish();
                     if (playerMoveProcess.IsRunning())
                     {
@@ -337,6 +317,11 @@ namespace DungeonRush
                     {
                         dungeonBrainProcess.EndProcess();
                     }
+
+                    if (dungeonBrainZeroMove)
+                        StartCoroutine(EndTurn(true));
+                    else
+                        StartCoroutine(EndTurn(canMove));
                 }
             }
 
@@ -361,6 +346,7 @@ namespace DungeonRush
             {
                 if (moveProcess.start)
                 {
+                    dungeonBrainZeroMove = false;
                     if (isPlayer)
                         MakePlayerMove(listNumber);
                     else
@@ -368,7 +354,7 @@ namespace DungeonRush
                         var canMove = MakeEnemyMove(listNumber);
                         if (!canMove)
                         {
-                            endMove = true;
+                            dungeonBrainZeroMove = true;
                             moveProcess.Finish();
                             forwardCardProcess.Init(true);
                             forwardCardProcess.EndProcess();
@@ -377,6 +363,7 @@ namespace DungeonRush
                 }
                 else if (moveProcess.end)
                 {
+                    print("wow");
                     moveProcess.Finish();
                     animationProcess.StartProcess();
                 }
@@ -408,9 +395,13 @@ namespace DungeonRush
                     AddCard();
                     yield return new WaitForSeconds(0.1f);
                     tourManager.FinishTour(true);
+                    moveProcess.StartProcess();
                 }
-                moveProcess.StartProcess();
-                endMove = false;
+                else
+                {
+                    yield return new WaitForSeconds(0.2f);
+                    moveProcess.StartProcess();
+                }
             }
 
             #endregion

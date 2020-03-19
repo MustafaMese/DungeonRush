@@ -89,7 +89,19 @@ namespace DungeonRush
                 }
                 else
                 {
-                    // todo düşmaının canının azalmamsı.
+                    Card moverCard = move.GetCard();
+                    Card targetCard = move.GetCard();
+                    if(moveType == MoveType.Attack)
+                    {
+                        if(targetCard.GetCardType() == CardType.PLAYER)
+                        {
+
+                        }
+                        else
+                        {
+
+                        }
+                    }
                     if (move.GetMoveType() != MoveType.Empty)
                         Tile.ChangeTile(move, false, false);
                     else

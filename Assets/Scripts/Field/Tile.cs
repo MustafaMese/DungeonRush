@@ -11,7 +11,7 @@ namespace DungeonRush
         public class Tile : MonoBehaviour
         {
             private Vector2Int coordinate;
-            private Card card;
+            public Card card;
             private int listNumber;
 
             public Card GetCard()

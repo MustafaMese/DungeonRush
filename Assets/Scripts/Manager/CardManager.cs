@@ -14,7 +14,7 @@ namespace DungeonRush
             public List<Card> cards = new List<Card>();
             public Tile instantPlayerTile;
 
-            private Card playerCard;
+            public Card playerCard;
 
             public List<Card> GetHighLevelCards()
             {
