@@ -71,6 +71,13 @@ namespace DungeonRush
                     enemy.DecreaseHealth(health);
                     if(card.GetCardType() == CardType.PLAYER)
                         Invoke("LoadLoseScene", 0.5f);
+                    else
+                    {
+                        GameManager.addCard = true;
+                        GameManager.cardListNumber = card.GetTile().GetListNumber();
+                        card.Disappear();
+                        Destroy(card.gameObject);
+                    }
                 }
             }
 

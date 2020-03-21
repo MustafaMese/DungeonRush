@@ -20,6 +20,8 @@ namespace DungeonRush
 
             MoveType moveType;
             bool dungeonBrainZeroMove;
+            public static bool addCard;
+            public static int cardListNumber;
 
             public List<Card> highLevelCards;
             public List<int> attackersListnumbers;
@@ -107,6 +109,13 @@ namespace DungeonRush
                     }
                 }
                 // ----->
+
+                if (addCard && cardListNumber != -1)
+                {
+                    AddCardImmediately(Board.tiles[cardListNumber]);
+                    addCard = false;
+                    cardListNumber = -1;
+                }
             }
 
             #region MOVE METHODS
