@@ -43,7 +43,10 @@ public class LoadManager : MonoBehaviour
     {
         SceneManager.LoadScene("LoseScreen");
     }
-
+    public void LoadLoadingScreen()
+    {
+        StartCoroutine(LoadNewScene("LoadingScreen"));
+    }
     public IEnumerator LoadNewScene(string scene)
     {
         isInLoadingScreen = true;
