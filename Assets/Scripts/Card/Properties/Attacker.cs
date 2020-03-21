@@ -1,4 +1,5 @@
 ﻿using DungeonRush.Cards;
+using DungeonRush.Managers;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -28,8 +29,10 @@ namespace DungeonRush
                 int enemyHealth = enemy.GetHealth();
                 int health = card.GetHealth();
                 if (itemUser && itemUser.GetItem().exist)
+                {
                     if (enemyHealth > itemUser.GetItem().GetHealth())
                         return false;
+                }
                 else if (health <= enemyHealth)
                     return false;
                 return true;
@@ -40,9 +43,13 @@ namespace DungeonRush
                 int itemHealth = itemUser.GetItem().GetHealth();
                 int enemyHealth = enemy.GetHealth();
                 if (enemyHealth == itemHealth)
+                {
                     itemUser.ResetItem();
+                }
                 else if (enemyHealth < itemHealth)
+                {
                     itemUser.DecreaseItemHealth(enemyHealth);
+                }
                 else
                 {
                     enemy.DecreaseHealth(itemHealth);
@@ -55,12 +62,15 @@ namespace DungeonRush
                 int health = card.GetHealth();
                 int enemyHealth = enemy.GetHealth();
                 if (health > enemyHealth)
+                {
                     card.DecreaseHealth(enemyHealth);
+                }
                 else
                 {
                     card.DecreaseHealth(enemyHealth);
                     enemy.DecreaseHealth(health);
-                    Invoke("LoadLoseScene", 0.5f);
+                    if(card.GetCardType() == CardType.PLAYER)
+                        Invoke("LoadLoseScene", 0.5f);
                 }
             }
 

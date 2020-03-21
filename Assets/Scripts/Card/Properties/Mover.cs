@@ -63,12 +63,12 @@ namespace DungeonRush
                     {
                         if(moveType == MoveType.Attack)
                         {
-                            EnemyCard enemy = (EnemyCard)move.GetTargetTile().GetCard();
+                            Card enemy = move.GetTargetTile().GetCard();
                             card.GetComponent<Attacker>().Attack(enemy);
                         }
                         else if(moveType == MoveType.Item)
                         {
-                            ItemCard item = (ItemCard)move.GetTargetTile().GetCard();
+                            Card item = move.GetTargetTile().GetCard();
                             if (item.GetItemType() == ItemType.POTION)
                                 card.GetComponent<ItemUser>().TakePotion(item);
                             else if (item.GetItemType() == ItemType.WEAPON)
@@ -77,7 +77,7 @@ namespace DungeonRush
                         }
                         else if(moveType == MoveType.Coin)
                         {
-                            CoinCard coin = (CoinCard)move.GetTargetTile().GetCard();
+                            Card coin = move.GetTargetTile().GetCard();
                             FindObjectOfType<CoinCounter>().IncreaseCoin(coin.GetHealth());
                         }
                         Tile.ChangeTile(move, false, true);
@@ -90,18 +90,27 @@ namespace DungeonRush
                 else
                 {
                     Card moverCard = move.GetCard();
-                    Card targetCard = move.GetCard();
-                    if(moveType == MoveType.Attack)
+                    Card targetCard = move.GetTargetTile().GetCard();
+                    if(moveType == MoveType.Attack && moverCard.GetComponent<Attacker>())
                     {
+                        // TODO Player'a zırh eklemede burası kullanılabilinir.
                         if(targetCard.GetCardType() == CardType.PLAYER)
                         {
-
+                            moverCard.GetComponent<Attacker>().Attack(targetCard);
                         }
                         else
                         {
-
+                            moverCard.GetComponent<Attacker>().Attack(targetCard);
                         }
                     }
+                    else if (moveType == MoveType.Item && moverCard.GetComponent<ItemUser>())
+                    {
+                        if (targetCard.GetItemType() == ItemType.POTION)
+                            moverCard.GetComponent<ItemUser>().TakePotion(targetCard);
+                        else if (targetCard.GetItemType() == ItemType.WEAPON)
+                            moverCard.GetComponent<ItemUser>().TakeWeapon(targetCard);
+                    }
+
                     if (move.GetMoveType() != MoveType.Empty)
                         Tile.ChangeTile(move, false, false);
                     else

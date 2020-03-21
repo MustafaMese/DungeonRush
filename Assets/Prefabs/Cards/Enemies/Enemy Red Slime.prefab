@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: -7989048224025641208}
   - component: {fileID: -4160743815902796050}
   - component: {fileID: 7616904273129147796}
+  - component: {fileID: -1329455596959954929}
   m_Layer: 0
   m_Name: Enemy Red Slime
   m_TagString: Card
@@ -57,11 +58,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5d5d9987896153439120356b5e4697c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cardLevel: 0
   disappearing: 0.066
   cardProperties: {fileID: 11400000, guid: bf7a6ec396f57234bb534fd470186f12, type: 2}
   isMoving: 0
   isBossCard: 0
   cardUtils: {fileID: -4160743815902796050}
+  characterType: {fileID: 11400000, guid: 19ecea419f268854c80c913b05b06dbd, type: 2}
   frameColor: {fileID: 2077252430326548096}
   characterSprite: {fileID: 958205473868242717}
   textMeshHealth: {fileID: 9023110085846377303}
@@ -111,6 +114,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startMoving: 0
+--- !u!114 &-1329455596959954929
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1003901059469522988}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71a2adf8dcbcf1f40ab96608a369fc40, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isItemUser: 0
 --- !u!1 &1241678481794930997
 GameObject:
   m_ObjectHideFlags: 0
@@ -193,16 +209,16 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1036914501
   m_SortingLayer: 1
-  m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 7a7c2502c80fce548b38b940ccd74462, type: 3}
+  m_SortingOrder: 12
+  m_Sprite: {fileID: 21300000, guid: f2d9c89e405b7ad4fb2cc2f6f04f007b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 2.4, y: 2.4}
+  m_Size: {x: 2.3, y: 1.72}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &2379468403683347763
@@ -293,7 +309,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 10.8, y: 19.2}
+  m_Size: {x: 2.5, y: 4}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -373,8 +389,7 @@ SpriteRenderer:
   m_SortingLayerID: -1036914501
   m_SortingLayer: 1
   m_SortingOrder: 1
-  m_Sprite: {fileID: -2196771716589892576, guid: b58e21131e27f804793d672ddfe40c01,
-    type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7867e5a9a8240f0459ed18437f80a78c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -458,7 +473,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1036914501
   m_SortingLayer: 1
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 6289b61ede6d6774f9287de7bc66893c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -546,7 +561,7 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1036914501
   m_SortingLayer: 1
-  m_SortingOrder: 0
+  m_SortingOrder: 2
 --- !u!33 &3903822073574526284
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -752,7 +767,7 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1036914501
   m_SortingLayer: 1
-  m_SortingOrder: 1
+  m_SortingOrder: 2
 --- !u!33 &8321357818335134257
 MeshFilter:
   m_ObjectHideFlags: 0

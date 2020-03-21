@@ -43,14 +43,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a7ab17b72b448a45b4c63323c236b18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  textMeshTour: {fileID: 0}
-  tourNumber: 0
-  oldTourNumber: 0
+  highLevelCards: []
+  attackersListnumbers: 
+  attackerIndex: 0
+  tourManager: {fileID: 0}
+  coinCounter: {fileID: 0}
+  cardController: {fileID: 0}
+  animHandler: {fileID: 0}
+  board: {fileID: 0}
   playerCard: {fileID: 7381328597454595953, guid: 3d78076d2cee5794ea5ea9d2f147a51f,
     type: 3}
   enemyCards:
   - {fileID: 385931742185610795, guid: 733517a4bf866b94aa4cded94ec54d29, type: 3}
   itemCards:
   - {fileID: 5319641840057533075, guid: 133aaa8ad51e7ec4096210d8ce6249fd, type: 3}
+  - {fileID: 5319641840057533075, guid: 02c3ee1523754b7418b6c393eeb2c8f5, type: 3}
   coinCards:
   - {fileID: -8720231006044005694, guid: 3f1519635989d4846a560bc0317db04f, type: 3}
+  outOfAnimationStateTimer: 0.3

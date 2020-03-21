@@ -363,7 +363,6 @@ namespace DungeonRush
                 }
                 else if (moveProcess.end)
                 {
-                    print("wow");
                     moveProcess.Finish();
                     animationProcess.StartProcess();
                 }

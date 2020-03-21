@@ -24,26 +24,26 @@ namespace DungeonRush
                 return item;
             }
 
-            public void TakeWeapon(ItemCard item)
+            public void TakeWeapon(Card item)
             {
                 SetItem(item);
                 Destroy(item.gameObject);
             }
 
-            public void SetItem(ItemCard item)
+            public void SetItem(Card item)
             {
                 this.item.Set(item);
                 UpdateWeaponImage(item);
                 UpdateWeaponText(this.item.health);
             }
 
-            public void TakePotion(ItemCard item)
+            public void TakePotion(Card item)
             {
                 card.IncreaseHealth(item.GetHealth());
                 Destroy(item.gameObject);
             }
 
-            public void UpdateWeaponImage(ItemCard item)
+            public void UpdateWeaponImage(Card item)
             {
                 weaponSprite.sprite = item.GetImage();
 

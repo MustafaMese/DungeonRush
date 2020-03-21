@@ -21,7 +21,7 @@ namespace DungeonRush
                 exist = false;
             }
 
-            public void Set(ItemCard item)
+            public void Set(Card item)
             {
                 Reset();
                 exist = true;
