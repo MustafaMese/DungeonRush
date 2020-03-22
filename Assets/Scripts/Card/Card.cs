@@ -48,12 +48,7 @@ namespace DungeonRush
                 cardName = cardProperties.cardName;
                 characterSprite.sprite = cardProperties.sprite;
                 textMeshHealth.text = health.Get().ToString();
-                
-                // TODO Burayı sonradan toparlamayı düşünebilirsin.
-                if(CardType.COIN != GetCardType())
-                    textMeshName.text = cardName;
-                else
-                    cardUtils.SetLevel();
+                textMeshName.text = cardName;
                 mover = GetComponent<Mover>();
                 move.Reset();
                 StartCoroutine(FadeImage(false));
