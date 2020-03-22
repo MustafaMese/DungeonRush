@@ -1,4 +1,5 @@
 ﻿using DungeonRush.Cards;
+using DungeonRush.Element;
 using DungeonRush.Managers;
 using System;
 using System.Collections;
@@ -69,14 +70,13 @@ namespace DungeonRush
                 {
                     card.DecreaseHealth(enemyHealth);
                     enemy.DecreaseHealth(health);
-                    if(card.GetCardType() == CardType.PLAYER)
-                        Invoke("LoadLoseScene", 0.5f);
+                    if (card.GetCardType() == CardType.PLAYER)
+                        GameManager.RemoveCard(card.GetTile(), true);
                     else
                     {
                         GameManager.addCard = true;
                         GameManager.cardListNumber = card.GetTile().GetListNumber();
-                        card.Disappear();
-                        Destroy(card.gameObject);
+                        GameManager.RemoveCard(Board.tiles[card.GetTile().GetListNumber()], false);
                     }
                 }
             }

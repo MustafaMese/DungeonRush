@@ -45,7 +45,7 @@ public class LoadManager : MonoBehaviour
     }
     public void LoadLoadingScreen()
     {
-        StartCoroutine(LoadNewScene("LoadingScreen"));
+        SceneManager.LoadScene("LoadingScreen");
     }
     public IEnumerator LoadNewScene(string scene)
     {

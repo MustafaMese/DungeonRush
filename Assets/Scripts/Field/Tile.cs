@@ -54,7 +54,7 @@ namespace DungeonRush
             public static void ChangeTile(Move move, bool isEmpty, bool isPlayer)
             {
                 if (!isEmpty)
-                    GameManager.RemoveCard(move, false);
+                    GameManager.RemoveCard(move.GetTargetTile(), false);
                 if (isPlayer)
                     GameManager.GetCardManager().SetInstantPlayerTile(move.GetTargetTile());
                 move.GetTargetTile().SetCard(move.GetCard());

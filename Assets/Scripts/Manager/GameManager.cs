@@ -288,7 +288,7 @@ namespace DungeonRush
                 }
                 else if (animationProcess.IsRunning())
                 {
-                    AnimationProcess();
+                    AnimationProcess(listNumber);
                 }
                 else if (forwardCardProcess.IsRunning())
                 {
@@ -334,11 +334,11 @@ namespace DungeonRush
                 }
             }
 
-            private void AnimationProcess()
+            private void AnimationProcess(int listNumber)
             {
                 if (animationProcess.start)
                 {
-                    DoAnimation();
+                    DoAnimation(listNumber);
                     animationProcess.EndProcess();
                 }
                 else if (animationProcess.end)
@@ -387,9 +387,9 @@ namespace DungeonRush
                 forwardCardProcess.StartProcess();
             }
 
-            private void DoAnimation()
+            private void DoAnimation(int listNumber)
             {
-                animHandler.DoAnim(moveType, targetTile);
+                animHandler.DoAnim(moveType, targetTile, listNumber);
             }
 
             #endregion
@@ -428,49 +428,12 @@ namespace DungeonRush
                 return newPiece;
             }
 
-            public static void RemoveCard(Tile tile)
+            public static void RemoveCard(Tile tile, bool isPlayerCard)
             {
-                foreach (var card in cardManager.cards)
-                {
-                    if(card.GetTile() == tile)
-                    {
-                        tile.SetCard(null);
-                        Destroy(card.transform.gameObject);
-                        return;
-                    }
-                }
-            }
-
-            public static void RemoveCard(Move move, bool isPlayerCard)
-            {
-                if (!isPlayerCard)
-                {
-                    if (!move.GetTargetTile().IsTileOccupied())
-                        return;
-
-                    foreach (var card in cardManager.cards)
-                    {
-                        if (card.GetTile() == move.GetTargetTile())
-                        {
-                            move.GetTargetTile().SetCard(null);
-                            Destroy(card.transform.gameObject);
-                            return;
-                        }
-                    }
-                    throw new Exception("Error 31");
-                }
-                else
-                {
-                    foreach (var card in cardManager.cards)
-                    {
-                        if (card == move.GetCard())
-                        {
-                            Destroy(card.transform.gameObject);
-                            return;
-                        }
-                    }
-                    throw new Exception("Error 31");
-                }
+                if (isPlayerCard)
+                    LoadManager.LoadLoseScene();
+                Destroy(tile.GetCard().transform.gameObject);
+                tile.SetCard(null);
             }
 
             public static CardManager GetCardManager()
