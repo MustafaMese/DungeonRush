@@ -71,13 +71,9 @@ namespace DungeonRush
                     card.DecreaseHealth(enemyHealth);
                     enemy.DecreaseHealth(health);
                     if (card.GetCardType() == CardType.PLAYER)
-                        GameManager.RemoveCard(card.GetTile(), true);
+                        GameManager.RemoveCardForAttacker(card.GetTile().GetListNumber(), true);
                     else
-                    {
-                        GameManager.addCard = true;
-                        GameManager.cardListNumber = card.GetTile().GetListNumber();
-                        GameManager.RemoveCard(Board.tiles[card.GetTile().GetListNumber()], false);
-                    }
+                        GameManager.RemoveCardForAttacker(card.GetTile().GetListNumber(), false);
                 }
             }
 

@@ -12,7 +12,7 @@ namespace DungeonRush
             public Board board;
             public GameManager gm;
 
-            public static float speed = 10f;
+            public static float speed = 20f;
 
             // Çoklu ilerleme için.
             public Move instantMove;

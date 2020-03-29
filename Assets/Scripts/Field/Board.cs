@@ -18,7 +18,7 @@ namespace DungeonRush
             private void Start()
             {
                 InitializeTiles();
-                gm.AddCard(gm.playerCard, cardPlaces[8], true, this, false);
+                GameManager.AddCard(gm.playerCard, cardPlaces[8], true, this, false);
 
                 for (int i = 0; i < cardPlaces.Length; i++)
                 {
@@ -26,11 +26,11 @@ namespace DungeonRush
                     {
                         int number = Random.Range(0, 101);
                         if(number < 70)
-                            gm.AddCard(GiveRandomCard(gm.enemyCards), cardPlaces[i], false, this, false);
+                            GameManager.AddCard(GiveRandomCard(gm.enemyCards), cardPlaces[i], false, this, false);
                         else if (number < 95)
-                            gm.AddCard(GiveRandomCard(gm.itemCards), cardPlaces[i], false, this, false);
+                            GameManager.AddCard(GiveRandomCard(gm.itemCards), cardPlaces[i], false, this, false);
                         else
-                            gm.AddCard(GiveRandomCard(gm.coinCards), cardPlaces[i], false, this, false);
+                            GameManager.AddCard(GiveRandomCard(gm.coinCards), cardPlaces[i], false, this, false);
                     }
                 }
                 GameManager.GetCardManager().SetInstantPlayerTileFromCards();

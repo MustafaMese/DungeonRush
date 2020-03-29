@@ -49,7 +49,10 @@ namespace DungeonRush
             private ProcessHandleChecker animationProcess;
             private ProcessHandleChecker forwardCardProcess;
             private ProcessHandleChecker dungeonBrainProcess;
+
             [SerializeField, Range(0, 0.5f)] float outOfAnimationStateTimer;
+            [SerializeField, Range(0, 0.5f)] float timeForFinishTourET = 0.1f;
+            [SerializeField, Range(0, 0.5f)] float timeForAddingCardET = 0.1f;
 
             private void Awake()
             {
@@ -87,6 +90,7 @@ namespace DungeonRush
                 {
                     if (dungeonBrainProcess.start)
                     {
+                        attackerIndex = 0;
                         attackersListnumbers = DecideAttackerEnemies();
                         if (attackersListnumbers.Count > 0)
                         {
@@ -100,22 +104,42 @@ namespace DungeonRush
                     }
                     else if (dungeonBrainProcess.continuing)
                     {
-                        Move(attackersListnumbers[attackerIndex], false);
+                        if (attackerIndex >= 0 && attackersListnumbers != null && attackerIndex < attackersListnumbers.Count)
+                            Move(attackersListnumbers[attackerIndex], false);
+                        else
+                        {
+                            dungeonBrainProcess.EndProcess();
+                            attackerIndex = -1;
+                            attackersListnumbers = null;
+                        }
                     }
                     else if (dungeonBrainProcess.end)
                     {
-                        dungeonBrainProcess.Finish();
-                        playerMoveProcess.Init(true);
+                        if (addCard && cardListNumber != -1)
+                        {
+                            AddCardImmediately(Board.tiles[cardListNumber]);
+                            addCard = false;
+                            cardListNumber = -1;
+                            highLevelCards = cardManager.GetHighLevelCards();
+                            attackersListnumbers = DecideAttackerEnemies();
+                            attackerIndex = 0;
+                            UnnecessaryCardControl();
+                        }
+
+                        if (attackerIndex != -1 && attackersListnumbers != null && attackerIndex + 1 != attackersListnumbers.Count)
+                        {
+                            attackerIndex++;
+                            dungeonBrainProcess.ContinuingProcess(false);
+                        }
+                        else
+                        {
+                            dungeonBrainProcess.Finish();
+                            playerMoveProcess.Init(true);
+                        }
                     }
                 }
                 // ----->
-
-                if (addCard && cardListNumber != -1)
-                {
-                    AddCardImmediately(Board.tiles[cardListNumber]);
-                    addCard = false;
-                    cardListNumber = -1;
-                }
+                
             }
 
             #region MOVE METHODS
@@ -180,33 +204,42 @@ namespace DungeonRush
                 Tile ownTile = Board.tiles[listnumber];
                 List<Swipe> avaibleTiles = new List<Swipe>();
                 Tile lowerTile, leftTile, rightTile, upperTile;
-                if (listnumber > 3)
+
+                if (ownTile.GetCard() == null) return null;
+                try
                 {
-                    upperTile = Board.tiles[listnumber - 4];
-                    //print("t: " + upperTile);
-                    if(ownTile.GetCard().GetCharacterType().IsEnemy(upperTile.GetCard().GetCharacterType()))
-                        avaibleTiles.Add(Swipe.UP);
+                    if (listnumber > 3)
+                    {
+                        upperTile = Board.tiles[listnumber - 4];
+                        //print("t: " + upperTile);
+                        if (ownTile.GetCard().GetCharacterType().IsEnemy(upperTile.GetCard().GetCharacterType()))
+                            avaibleTiles.Add(Swipe.UP);
+                    }
+                    if (listnumber % 4 != 0)
+                    {
+                        leftTile = Board.tiles[listnumber - 1];
+                        //print("t: " + leftTile);
+                        if (ownTile.GetCard().GetCharacterType().IsEnemy(leftTile.GetCard().GetCharacterType()))
+                            avaibleTiles.Add(Swipe.LEFT);
+                    }
+                    if (listnumber % 4 != 3)
+                    {
+                        rightTile = Board.tiles[listnumber + 1];
+                        //print("t: " + rightTile);
+                        if (ownTile.GetCard().GetCharacterType().IsEnemy(rightTile.GetCard().GetCharacterType()))
+                            avaibleTiles.Add(Swipe.RIGHT);
+                    }
+                    if (listnumber < 12)
+                    {
+                        lowerTile = Board.tiles[listnumber + 4];
+                        //print("t: " + lowerTile);
+                        if (ownTile.GetCard().GetCharacterType().IsEnemy(lowerTile.GetCard().GetCharacterType()))
+                            avaibleTiles.Add(Swipe.DOWN);
+                    }
                 }
-                if (listnumber % 4 != 0)
+                catch (Exception e)
                 {
-                    leftTile = Board.tiles[listnumber - 1];
-                    //print("t: " + leftTile);
-                    if (ownTile.GetCard().GetCharacterType().IsEnemy(leftTile.GetCard().GetCharacterType()))
-                        avaibleTiles.Add(Swipe.LEFT);
-                }
-                if (listnumber % 4 != 3)
-                {
-                    rightTile = Board.tiles[listnumber + 1];
-                    //print("t: " + rightTile);
-                    if (ownTile.GetCard().GetCharacterType().IsEnemy(rightTile.GetCard().GetCharacterType()))
-                        avaibleTiles.Add(Swipe.RIGHT);
-                }
-                if (listnumber < 12)
-                {
-                    lowerTile = Board.tiles[listnumber + 4];
-                    //print("t: " + lowerTile);
-                    if (ownTile.GetCard().GetCharacterType().IsEnemy(lowerTile.GetCard().GetCharacterType()))
-                        avaibleTiles.Add(Swipe.DOWN);
+                    print("oT: " + ownTile.GetCard());
                 }
                 return avaibleTiles;
             }
@@ -214,7 +247,7 @@ namespace DungeonRush
             public Swipe SelectTileToAttack(int listnumber)
             {
                 var tiles = GetAvailableTiles(listnumber);
-                if (tiles.Count != 0)
+                if (tiles != null && tiles.Count != 0)
                 {
                     var number = UnityEngine.Random.Range(0, tiles.Count);
                     if (number < 0)
@@ -319,6 +352,7 @@ namespace DungeonRush
                     if (playerMoveProcess.IsRunning())
                     {
                         playerMoveProcess.Finish();
+                        //StartCoroutine(EndTurn(canMove));
                         SelectHighLevelCards();
                         dungeonBrainProcess.StartProcess();
                     }
@@ -399,15 +433,15 @@ namespace DungeonRush
             {
                 if (!canMove)
                 {
-                    yield return new WaitForSeconds(0.1f);
+                    yield return new WaitForSeconds(timeForAddingCardET);
                     AddCard();
-                    yield return new WaitForSeconds(0.1f);
+                    yield return new WaitForSeconds(timeForFinishTourET);
                     tourManager.FinishTour(true);
                     moveProcess.StartProcess();
                 }
                 else
                 {
-                    yield return new WaitForSeconds(0.2f);
+                    yield return new WaitForSeconds(timeForFinishTourET);
                     moveProcess.StartProcess();
                 }
             }
@@ -416,7 +450,7 @@ namespace DungeonRush
 
             #region CORE METHODS
 
-            public Card AddCard(Card piece, Tile tile, bool playerCard, Board board, bool inGame)
+            public static Card AddCard(Card piece, Tile tile, bool playerCard, Board board, bool inGame)
             {
                 Card newPiece = Instantiate(piece, tile.transform.position, Quaternion.identity, board.transform);
                 tile.SetCard(newPiece);
@@ -434,6 +468,13 @@ namespace DungeonRush
                     LoadManager.LoadLoseScene();
                 Destroy(tile.GetCard().transform.gameObject);
                 tile.SetCard(null);
+            }
+
+            public static void RemoveCardForAttacker(int listnumber, bool isPlayer)
+            {
+                addCard = true;
+                cardListNumber = listnumber;
+                RemoveCard(Board.tiles[listnumber], isPlayer);
             }
 
             public static CardManager GetCardManager()
@@ -461,7 +502,23 @@ namespace DungeonRush
                             }
                         }
                         AddCardImmediately(Board.tiles[i]);
-                        throw new Exception("Bişeyler ekledik.");
+                        print("Bişeyler ekledik.");
+                    }
+                }
+            }
+
+            public void UnnecessaryCardControl()
+            {
+                Card[] cards = FindObjectsOfType<Card>();
+
+                if (cards.Length <= 16) return; 
+
+                foreach (var card in FindObjectsOfType<Card>())
+                {
+                    if (card != card.GetTile().GetCard())
+                    {
+                        print("Amına koyduk");
+                        Destroy(card.gameObject);
                     }
                 }
             }
