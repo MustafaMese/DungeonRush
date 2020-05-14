@@ -1,12 +1,12 @@
 ﻿using DungeonRush.Cards;
 using DungeonRush.Managers;
-using DungeonRush.Moves;
+using DungeonRush.Data;
 using DungeonRush.Settings;
 using UnityEngine;
 
 namespace DungeonRush
 {
-    namespace Element 
+    namespace Field 
     {
         public class Tile : MonoBehaviour
         {
@@ -54,11 +54,12 @@ namespace DungeonRush
             public static void ChangeTile(Move move, bool isEmpty, bool isPlayer)
             {
                 if (!isEmpty)
-                    GameManager.RemoveCard(move.GetTargetTile(), false);
+                    CardManager.RemoveCard(move.GetTargetTile(), false);
                 if (isPlayer)
-                    GameManager.GetCardManager().SetInstantPlayerTile(move.GetTargetTile());
+                    CardManager.Instance.SetInstantPlayerTile(move.GetTargetTile());
+                    //GameManager.GetCardManager().SetInstantPlayerTile(move.GetTargetTile());
                 move.GetTargetTile().SetCard(move.GetCard());
-                move.GetCardTile().SetCard(null);
+                //move.GetCardTile().SetCard(null);
                 move.GetCard().SetTile(move.GetTargetTile());
             }
         }

@@ -1,9 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using DungeonRush.Element;
-using DungeonRush.Managers;
-using DungeonRush.Moves;
-using DungeonRush.Settings;
+﻿using DungeonRush.Field;
+using DungeonRush.Data;
+using DungeonRush.Property;
 using UnityEngine;
 
 namespace DungeonRush
@@ -13,7 +10,8 @@ namespace DungeonRush
         {
             public override void ExecuteMove()
             {
-                mover.startMoving = true;
+                //mover.startMoving = true;
+                mover.Move();
             }
 
             public override int GetHealth()

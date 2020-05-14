@@ -1,5 +1,6 @@
-﻿using DungeonRush.Element;
-using DungeonRush.Moves;
+﻿using DungeonRush.Field;
+using DungeonRush.Data;
+using DungeonRush.Property;
 using UnityEngine;
 
 namespace DungeonRush
@@ -98,7 +99,8 @@ namespace DungeonRush
 
             public override void ExecuteMove()
             {
-                mover.startMoving = true;
+                //mover.startMoving = true;
+                mover.Move();
             }
         }
     }

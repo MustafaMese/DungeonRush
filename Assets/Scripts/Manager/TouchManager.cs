@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
-using DungeonRush.Element;
-using DungeonRush.Moves;
+using DungeonRush.Field;
+using DungeonRush.Data;
+using DungeonRush.Property;
 
 namespace DungeonRush
 {
@@ -48,20 +49,20 @@ namespace DungeonRush
                                     {
                                         if (tile.GetCard().GetCardType() == CardType.ENEMY)
                                         {
-                                            Move move = new Move(GameManager.GetCardManager().instantPlayerTile, tile, card, MoveType.Attack, false);
+                                            Move move = new Move(GameManager.GetCardManager().instantPlayerTile, tile, card, MoveType.ATTACK, false);
                                             GameManager.GetMoveMaker().SetInstantMove(move);
                                             return;
                                         }
                                         else if (tile.GetCard().GetCardType() == CardType.ITEM)
                                         {
-                                            Move move = new Move(GameManager.GetCardManager().instantPlayerTile, tile, card, MoveType.Item, false);
+                                            Move move = new Move(GameManager.GetCardManager().instantPlayerTile, tile, card, MoveType.ITEM, false);
                                             GameManager.GetMoveMaker().SetInstantMove(move);
                                             return;
                                         }
                                     }
                                     else
                                     {
-                                        Move move = new Move(GameManager.GetCardManager().instantPlayerTile, tile, card, MoveType.Empty, false);
+                                        Move move = new Move(GameManager.GetCardManager().instantPlayerTile, tile, card, MoveType.EMPTY, false);
                                         GameManager.GetMoveMaker().SetInstantMove(move);
                                         return;
                                     }
@@ -97,20 +98,20 @@ namespace DungeonRush
                                     {
                                         if (tile.GetCard().GetCardType() == CardType.ENEMY)
                                         {
-                                            Move move = new Move(GameManager.GetCardManager().instantPlayerTile, tile, card, MoveType.Attack, false);
+                                            Move move = new Move(GameManager.GetCardManager().instantPlayerTile, tile, card, MoveType.ATTACK, false);
                                             GameManager.GetMoveMaker().SetInstantMove(move);
                                             return;
                                         }
                                         else if (tile.GetCard().GetCardType() == CardType.ITEM)
                                         {
-                                            Move move = new Move(GameManager.GetCardManager().instantPlayerTile, tile, card, MoveType.Item, false);
+                                            Move move = new Move(GameManager.GetCardManager().instantPlayerTile, tile, card, MoveType.ITEM, false);
                                             GameManager.GetMoveMaker().SetInstantMove(move);
                                             return;
                                         }
                                     }
                                     else
                                     {
-                                        Move move = new Move(GameManager.GetCardManager().instantPlayerTile, tile, card, MoveType.Empty, false);
+                                        Move move = new Move(GameManager.GetCardManager().instantPlayerTile, tile, card, MoveType.EMPTY, false);
                                         GameManager.GetMoveMaker().SetInstantMove(move);
                                         return;
                                     }

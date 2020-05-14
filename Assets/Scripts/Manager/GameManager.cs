@@ -1,9 +1,8 @@
 ﻿using UnityEngine;
 using DungeonRush.Cards;
-using DungeonRush.Element;
-using DungeonRush.Moves;
+using DungeonRush.Field;
 using System;
-using DungeonRush.DataPackages;
+using DungeonRush.Data;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -29,19 +28,14 @@ namespace DungeonRush
 
             public static MoveMaker moveMaker;
             public static CardManager cardManager;
-            [HideInInspector] public TourManager tourManager;
-            [HideInInspector] public CoinCounter coinCounter;
-            [HideInInspector] public CardController cardController;
+
+            TourManager tourManager;
+            CoinCounter coinCounter;
+
             [HideInInspector] public AnimationHandler animHandler;
 
             [Header("Board")]
             public Board board;
-
-            [Header("Characters")]
-            public PlayerCard playerCard;
-            public EnemyCard[] enemyCards;
-            public ItemCard[] itemCards;
-            public CoinCard[] coinCards;
 
             bool canStartMoves;
             private ProcessHandleChecker playerMoveProcess;
@@ -56,11 +50,11 @@ namespace DungeonRush
 
             private void Awake()
             {
-                moveMaker = FindObjectOfType<MoveMaker>();
-                cardManager = FindObjectOfType<CardManager>();
-                tourManager = FindObjectOfType<TourManager>();
-                coinCounter = FindObjectOfType<CoinCounter>();
-                cardController = FindObjectOfType<CardController>();
+                Application.targetFrameRate = 60;
+                moveMaker = GetComponent<MoveMaker>();
+                cardManager = GetComponent<CardManager>();
+                tourManager = GetComponent<TourManager>();
+                coinCounter = GetComponent<CoinCounter>();
                 animHandler = FindObjectOfType<AnimationHandler>();
             }
 
@@ -74,7 +68,6 @@ namespace DungeonRush
                 dungeonBrainProcess.Init(false);
             }
 
-            // TODO Versiyon 3 için yeterli fakat bi kere daha elden geçmesi gerekiyor.
             private void Update()
             {
                 // -----> Player's move
@@ -117,7 +110,7 @@ namespace DungeonRush
                     {
                         if (addCard && cardListNumber != -1)
                         {
-                            AddCardImmediately(Board.tiles[cardListNumber]);
+                            cardManager.AddCard(Board.tiles[cardListNumber]);
                             addCard = false;
                             cardListNumber = -1;
                             highLevelCards = cardManager.GetHighLevelCards();
@@ -263,20 +256,13 @@ namespace DungeonRush
             // Assign kısmını tamamen move'a taşı. Mesela MoveMaker'daki instant moves olablir.
             private bool DoMove(int listnumber, Swipe swipe)
             {
-                try
-                {
-                    cardController.AssignTiles(listnumber, ref targetTile, ref targetTile2, ref targetTile3, ref targetTile4, swipe);
-                }
-                catch (Exception)
-                {
-                    throw new Exception("Dictionary'de sınırı aştın. No problema. Error 31");
-                }
-                return cardController.AssignMoves(targetTile, targetTile2, targetTile3, targetTile4, out moveType);
+                CardProcessAssigner.Instance.AssignTiles(listnumber, ref targetTile, ref targetTile2, ref targetTile3, ref targetTile4, swipe);
+                return CardProcessAssigner.Instance.AssignMoves(targetTile, targetTile2, targetTile3, targetTile4, out moveType);
             }
 
             private bool MoveForward()
             {
-                var canStart = cardController.StartMoves();
+                var canStart = CardProcessAssigner.Instance.StartMoves();
                 tourManager.IncreaseTourNumber();
                 return canStart;
             }
@@ -309,7 +295,7 @@ namespace DungeonRush
 
             private void JustAttackMove()
             {
-                cardController.JustAttack();
+                CardProcessAssigner.Instance.JustAttack();
                 tourManager.FinishTour(false);
             }
 
@@ -377,7 +363,7 @@ namespace DungeonRush
                 }
                 else if (animationProcess.end)
                 {
-                    if (moveType != MoveType.Attack)
+                    if (moveType != MoveType.ATTACK)
                         forwardCardProcess.StartProcess();
                     else
                         StartCoroutine(FinishAnimationTurn());
@@ -423,18 +409,20 @@ namespace DungeonRush
 
             private void DoAnimation(int listNumber)
             {
+                Board.tiles[listNumber].GetCard().HandleCardEffect(moveType, targetTile, listNumber);
                 animHandler.DoAnim(moveType, targetTile, listNumber);
             }
 
             #endregion
 
-            // TODO Tur olayı bir tek burda var. Burayı unutma..
             private IEnumerator EndTurn(bool canMove)
             {
                 if (!canMove)
                 {
                     yield return new WaitForSeconds(timeForAddingCardET);
-                    AddCard();
+                    cardManager.AddCard(moveMaker.targetTileForAddingCard);
+                    moveMaker.targetTileForAddingCard = null;
+                    NullControlOnTiles();
                     yield return new WaitForSeconds(timeForFinishTourET);
                     tourManager.FinishTour(true);
                     moveProcess.StartProcess();
@@ -449,33 +437,6 @@ namespace DungeonRush
             #endregion
 
             #region CORE METHODS
-
-            public static Card AddCard(Card piece, Tile tile, bool playerCard, Board board, bool inGame)
-            {
-                Card newPiece = Instantiate(piece, tile.transform.position, Quaternion.identity, board.transform);
-                tile.SetCard(newPiece);
-                newPiece.SetTile(tile);
-                cardManager.AddToCards(newPiece, inGame);
-                // Card informations bu if ile beraber oyundan fiilen çıkarılmış oldu.
-                if(!inGame)
-                    cardManager.cardInformations.Add(CardManager.CreateCardInformation(tile, newPiece, playerCard));
-                return newPiece;
-            }
-
-            public static void RemoveCard(Tile tile, bool isPlayerCard)
-            {
-                if (isPlayerCard)
-                    LoadManager.LoadLoseScene();
-                Destroy(tile.GetCard().transform.gameObject);
-                tile.SetCard(null);
-            }
-
-            public static void RemoveCardForAttacker(int listnumber, bool isPlayer)
-            {
-                addCard = true;
-                cardListNumber = listnumber;
-                RemoveCard(Board.tiles[listnumber], isPlayer);
-            }
 
             public static CardManager GetCardManager()
             {
@@ -493,7 +454,7 @@ namespace DungeonRush
                 {
                     if (Board.tiles[i].GetCard() == null)
                     {
-                        foreach (var card in GameManager.GetCardManager().cards)
+                        foreach (var card in cardManager.cards)
                         {
                             if (card.GetTile() == Board.tiles[i])
                             {
@@ -501,7 +462,7 @@ namespace DungeonRush
                                 return;
                             }
                         }
-                        AddCardImmediately(Board.tiles[i]);
+                        cardManager.AddCard(Board.tiles[i]);
                         print("Bişeyler ekledik.");
                     }
                 }
@@ -522,41 +483,6 @@ namespace DungeonRush
                     }
                 }
             }
-
-            public void AddCardImmediately(Tile tile)
-            {
-                int number = UnityEngine.Random.Range(0, 101);
-                if (number < 70)
-                    AddCard(GiveRandomCard(enemyCards), tile, false, board, true);
-                else if (number < 95)
-                    AddCard(GiveRandomCard(itemCards), tile, false, board, true);
-                else
-                    AddCard(GiveRandomCard(coinCards), tile, false, board, true);
-            }
-
-            private Card GiveRandomCard(Card[] card)
-            {
-                int length = card.Length;
-                return card[UnityEngine.Random.Range(0, length)];
-            }
-
-            /// <summary>
-            /// Adding card function for end of tour. Not for casual usage.
-            /// </summary>
-            public void AddCard()
-            {
-                int number = UnityEngine.Random.Range(0, 101);
-                if (number < 70)
-                    AddCard(GiveRandomCard(enemyCards), moveMaker.targetTileForAddingCard, false, board, true);
-                else if (number < 95)
-                    AddCard(GiveRandomCard(itemCards), moveMaker.targetTileForAddingCard, false, board, true);
-                else
-                    AddCard(GiveRandomCard(coinCards), moveMaker.targetTileForAddingCard, false, board, true);
-
-                moveMaker.targetTileForAddingCard = null;
-                NullControlOnTiles();
-            }
-
             #endregion
         }
     }

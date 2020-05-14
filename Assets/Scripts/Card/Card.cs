@@ -1,7 +1,7 @@
-﻿using DungeonRush.DataPackages;
-using DungeonRush.Element;
-using DungeonRush.Moves;
+﻿using DungeonRush.Data;
+using DungeonRush.Field;
 using DungeonRush.Property;
+using DungeonRush.Shifting;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -30,6 +30,7 @@ namespace DungeonRush
             public bool isBossCard;
             public CardUtils cardUtils;
             public Character characterType;
+            public Shift shifting;
 
             [Header("General Components")]
             public SpriteRenderer frameColor;
@@ -50,7 +51,9 @@ namespace DungeonRush
                 textMeshHealth.text = health.Get().ToString();
                 textMeshName.text = cardName;
                 mover = GetComponent<Mover>();
-                move.Reset();
+                move = new Move();
+                //cardLevel = 5;
+
                 StartCoroutine(FadeImage(false));
             }
 
@@ -131,6 +134,34 @@ namespace DungeonRush
             public ItemType GetItemType()
             {
                 return cardProperties.itemType;
+            }
+            public bool IsItemUser()
+            {
+                return GetComponent<ItemUser>();
+            }
+            public bool IsAttacker()
+            {
+                return GetComponent<Attacker>();
+            }
+            public bool CanAttack(Card enemy)
+            {
+                return GetComponent<Attacker>().CanAttack(enemy);
+            }
+            public void Attack(Card enemy)
+            {
+                GetComponent<Attacker>().Attack(enemy);
+            }
+            public void HandleCardEffect(MoveType mT, Tile t, int listnumber)
+            {
+                if (GetComponentInChildren<CardEffectHandler>() == null)
+                    print("null");
+                else
+                    print("null değil");
+                GetComponentInChildren<CardEffectHandler>().DoAnim(mT, t, listnumber);
+            }
+            public Shift GetShift()
+            {
+                return shifting;
             }
         }
     }

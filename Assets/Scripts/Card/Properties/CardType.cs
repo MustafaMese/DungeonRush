@@ -1,4 +1,4 @@
-﻿namespace DungeonRush
+﻿namespace DungeonRush.Property
 {
     public enum CardType
     {

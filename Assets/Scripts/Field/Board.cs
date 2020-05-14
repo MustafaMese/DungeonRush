@@ -2,56 +2,71 @@
 using UnityEngine;
 using DungeonRush.Cards;
 using DungeonRush.Managers;
+using DungeonRush.Property;
 
 namespace DungeonRush
 {
-    namespace Element
+    namespace Field
     {
         public class Board : MonoBehaviour
         {
-            public static readonly int CARD_NUM = 12;
-            public Tile[] cardPlaces = new Tile[CARD_NUM];
+            public static Board instance;
+
+            public static int RowLength;
+            public List<Tile> cardPlaces = new List<Tile>();
             public static Dictionary<int, Tile> tiles = new Dictionary<int, Tile>();
             public static bool touched;
-            public GameManager gm;
+            public CardManager cm;
+            public BoardCreator bCreator;
+
+            private void Awake()
+            {
+                instance = this;
+
+                bCreator = FindObjectOfType<BoardCreator>();
+                RowLength = bCreator.rowLength;
+            }
 
             private void Start()
             {
-                InitializeTiles();
-                GameManager.AddCard(gm.playerCard, cardPlaces[8], true, this, false);
+                bCreator.InitializeTiles(cardPlaces);
 
-                for (int i = 0; i < cardPlaces.Length; i++)
+                cm.AddCard(cm.playerCard, cardPlaces[28], this, false);
+
+                for (int i = 0; i < cardPlaces.Count; i++)
                 {
                     if (cardPlaces[i].GetCard() == null)
                     {
                         int number = Random.Range(0, 101);
                         if(number < 70)
-                            GameManager.AddCard(GiveRandomCard(gm.enemyCards), cardPlaces[i], false, this, false);
+                            cm.AddCard(GiveRandomCard(cm.enemyCards), cardPlaces[i], this, false);
                         else if (number < 95)
-                            GameManager.AddCard(GiveRandomCard(gm.itemCards), cardPlaces[i], false, this, false);
+                            cm.AddCard(GiveRandomCard(cm.itemCards), cardPlaces[i], this, false);
                         else
-                            GameManager.AddCard(GiveRandomCard(gm.coinCards), cardPlaces[i], false, this, false);
+                            cm.AddCard(GiveRandomCard(cm.coinCards), cardPlaces[i], this, false);
                     }
                 }
-                GameManager.GetCardManager().SetInstantPlayerTileFromCards();
-                GameManager.GetCardManager().SetPlayerCardFromCards();
-                
-            }
 
-            private void InitializeTiles()
-            {
-                int i = 0;
-                foreach (var pos in cardPlaces)
+                foreach (var card in cm.cards)
                 {
-                    pos.SetCoordinate(pos.transform.position);
-                    pos.SetCard(null);
-                    pos.SetListNumber(i);
-                    tiles.Add(i, pos);
-                    i++;
+                    if(card.GetCardType() == CardType.PLAYER)
+                    {
+                        cm.instantPlayerTile = card.GetTile();
+                    }
                 }
             }
 
-            public Tile[] GetCardPlaces()
+            public void SetTiles(Dictionary<int, Tile> t)
+            {
+                tiles = t;
+            }
+
+            public void SetCardPlaces(List<Tile> cardPlaces)
+            {
+                this.cardPlaces = cardPlaces;
+            }
+
+            public List<Tile> GetCardPlaces()
             {
                 return this.cardPlaces;
             }

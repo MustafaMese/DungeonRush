@@ -1,13 +1,15 @@
-﻿using DungeonRush.Cards;
-using DungeonRush.Element;
-using DungeonRush.Managers;
-using DungeonRush.Property;
+﻿using UnityEngine;
+using DG.Tweening;
+using DungeonRush.Cards;
 using DungeonRush.Settings;
-using UnityEngine;
+using DungeonRush.Field;
+using DungeonRush.Managers;
+using DungeonRush.Controller;
+using DungeonRush.Data;
 
 namespace DungeonRush 
 {
-    namespace Moves
+    namespace Property
     {
         public class Mover : MonoBehaviour
         {
@@ -16,57 +18,47 @@ namespace DungeonRush
             private Move move;
             private Vector3 direction;
 
-            private void Update()
+            private void Start()
             {
-                if (startMoving)
-                {
-                    if(move.type == MoveType.None && move.GetCard() == null)
-                        direction = GetDirection();
-                    move.GetCard().transform.Translate(direction * MoveMaker.speed * Time.deltaTime);
-                    if (GetComponent<Card>().isMoving)
-                    {
-                        if ((direction == Vector3.down || direction == Vector3.right)
-                                    && Geometry.GridFromPoint(move.GetCard().transform.position) == move.GetTargetTile().GetCoordinate())
-                            TerminateMove();
-                        else if ((direction == Vector3.left) && (Geometry.GridFromPointFixedLeft(move.GetCard().transform.position) == move.GetTargetTile().GetCoordinate()
-                                    || Geometry.GridFromPointFixedLeft(move.GetCard().transform.position).x <= move.GetTargetTile().GetCoordinate().x))
-                            TerminateMove();
-                        else if ((direction == Vector3.up) && (Geometry.GridFromPointFixedTop(move.GetCard().transform.position) == move.GetTargetTile().GetCoordinate()
-                                    || Geometry.GridFromPointFixedTop(move.GetCard().transform.position).y <= move.GetTargetTile().GetCoordinate().y))
-                            TerminateMove();
-                    }
-                }
+                DOTween.Init();
+                move = new Move();
+            }
+
+            public void Move()
+            {
+                if (move == null || move.GetCard() == null )
+                    direction = GetDirection();
+
+                move.GetCard().transform.DOMove(move.GetTargetTile().transform.position, 0.2f).OnComplete(() => TerminateMove());
             }
 
             private Vector3 GetDirection()
             {
-                move = GetComponent<Card>().GetMove().TranferMoveInfoToAnotherMove(move);
+                move = GetComponent<Card>().GetMove();
                 Vector3 pos = Geometry.PointFromGrid(move.GetTargetTile().GetCoordinate());
-                Vector3 cardPos = Geometry.PointFromGrid(move.GetCardTile().GetCoordinate());
+                Vector3 cardPos = Geometry.PointFromGrid(move.GetCard().GetTile().GetCoordinate());
                 var heading = pos - cardPos;
                 var distance = heading.magnitude;
                 var direction = heading / distance;
                 return direction;
             }
-
-            // TODO Burasıyla oyna......
             public void TerminateMove()
             {
                 move.GetCard().isMoving = false;
-                startMoving = false;
+                //startMoving = false;
                 move.GetCard().transform.position = move.GetTargetTile().transform.position;
                 MoveType moveType = move.GetMoveType();
                 if (move.GetCard().GetCardType() == CardType.PLAYER)
                 {
-                    PlayerCard card = GameManager.GetCardManager().GetPlayerCard();
-                    if(moveType != MoveType.Empty)
+                    PlayerCard card = FindObjectOfType<PlayerCard>();
+                    if(moveType != MoveType.EMPTY)
                     {
-                        if(moveType == MoveType.Attack)
+                        if(moveType == MoveType.ATTACK)
                         {
                             Card enemy = move.GetTargetTile().GetCard();
                             card.GetComponent<Attacker>().Attack(enemy);
                         }
-                        else if(moveType == MoveType.Item)
+                        else if(moveType == MoveType.ITEM)
                         {
                             Card item = move.GetTargetTile().GetCard();
                             if (item.GetItemType() == ItemType.POTION)
@@ -75,7 +67,7 @@ namespace DungeonRush
                                 card.GetComponent<ItemUser>().TakeWeapon(item);
 
                         }
-                        else if(moveType == MoveType.Coin)
+                        else if(moveType == MoveType.COIN)
                         {
                             Card coin = move.GetTargetTile().GetCard();
                             FindObjectOfType<CoinCounter>().IncreaseCoin(coin.GetHealth());
@@ -86,12 +78,15 @@ namespace DungeonRush
                     {
                         Tile.ChangeTile(move, false, true);
                     }
+
+                    Board.touched = false;
+                    GetComponent<PlayerController>().moveFinished = true;
                 }
                 else
                 {
                     Card moverCard = move.GetCard();
                     Card targetCard = move.GetTargetTile().GetCard();
-                    if(moveType == MoveType.Attack && moverCard.GetComponent<Attacker>())
+                    if(moveType == MoveType.ATTACK && moverCard.GetComponent<Attacker>())
                     {
                         // TODO Player'a zırh eklemede burası kullanılabilinir.
                         if(targetCard.GetCardType() == CardType.PLAYER)
@@ -103,7 +98,7 @@ namespace DungeonRush
                             moverCard.GetComponent<Attacker>().Attack(targetCard);
                         }
                     }
-                    else if (moveType == MoveType.Item && moverCard.GetComponent<ItemUser>())
+                    else if (moveType == MoveType.ITEM && moverCard.GetComponent<ItemUser>())
                     {
                         if (targetCard.GetItemType() == ItemType.POTION)
                             moverCard.GetComponent<ItemUser>().TakePotion(targetCard);
@@ -111,19 +106,44 @@ namespace DungeonRush
                             moverCard.GetComponent<ItemUser>().TakeWeapon(targetCard);
                     }
 
-                    if (move.GetMoveType() != MoveType.Empty)
+                    if (move.GetMoveType() != MoveType.EMPTY)
                         Tile.ChangeTile(move, false, false);
                     else
                         Tile.ChangeTile(move, true, false);
+
+                    if (move.GetLastMove())
+                    {
+                        Board.touched = false;
+                        MoveMaker.movesFinished = true;
+                    }
                 }
 
-                if (move.GetLastMove())
-                {
-                    Board.touched = false;
-                    MoveMaker.movesFinished = true;
-                }
                 move.Reset();
             }
         }
     }
 }
+
+//private void Update()
+//{
+//    if (startMoving)
+//    {
+//        if(move.type == MoveType.None && move.GetCard() == null)
+//            direction = GetDirection();
+
+//        move.GetCard().transform.DOMove(move.GetTargetTile().transform.position, 1f);
+//        move.GetCard().transform.Translate(direction * MoveMaker.speed * Time.deltaTime);
+//        if (GetComponent<Card>().isMoving)
+//        {
+//            if ((direction == Vector3.down || direction == Vector3.right)
+//                        && Geometry.GridFromPoint(move.GetCard().transform.position) == move.GetTargetTile().GetCoordinate())
+//                TerminateMove();
+//            else if ((direction == Vector3.left) && (Geometry.GridFromPointFixedLeft(move.GetCard().transform.position) == move.GetTargetTile().GetCoordinate()
+//                        || Geometry.GridFromPointFixedLeft(move.GetCard().transform.position).x <= move.GetTargetTile().GetCoordinate().x))
+//                TerminateMove();
+//            else if ((direction == Vector3.up) && (Geometry.GridFromPointFixedTop(move.GetCard().transform.position) == move.GetTargetTile().GetCoordinate()
+//                        || Geometry.GridFromPointFixedTop(move.GetCard().transform.position).y <= move.GetTargetTile().GetCoordinate().y))
+//                TerminateMove();
+//        }
+//    }
+//}

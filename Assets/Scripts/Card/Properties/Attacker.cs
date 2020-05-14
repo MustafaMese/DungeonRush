@@ -1,10 +1,5 @@
 ﻿using DungeonRush.Cards;
-using DungeonRush.Element;
 using DungeonRush.Managers;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 
 namespace DungeonRush
@@ -71,9 +66,9 @@ namespace DungeonRush
                     card.DecreaseHealth(enemyHealth);
                     enemy.DecreaseHealth(health);
                     if (card.GetCardType() == CardType.PLAYER)
-                        GameManager.RemoveCardForAttacker(card.GetTile().GetListNumber(), true);
+                        CardManager.RemoveCardForAttacker(card.GetTile().GetListNumber(), true);
                     else
-                        GameManager.RemoveCardForAttacker(card.GetTile().GetListNumber(), false);
+                        CardManager.RemoveCardForAttacker(card.GetTile().GetListNumber(), false);
                 }
             }
 
