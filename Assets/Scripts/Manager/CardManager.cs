@@ -140,6 +140,8 @@ namespace DungeonRush
                     LoadManager.LoadLoseScene();
                 Destroy(tile.GetCard().transform.gameObject);
                 tile.SetCard(null);
+
+
             }
 
             public static void RemoveCardForAttacker(int listnumber, bool isPlayer)

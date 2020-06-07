@@ -3,7 +3,6 @@ using DungeonRush.Data;
 using DungeonRush.Field;
 using DungeonRush.Managers;
 using DungeonRush.Property;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;

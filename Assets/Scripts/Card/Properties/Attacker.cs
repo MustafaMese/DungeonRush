@@ -44,6 +44,8 @@ namespace DungeonRush
                 if (enemyHealth == itemHealth)
                 {
                     itemUser.ResetItem();
+                    DestroyCard(enemy);
+                    // Buralarda bazı sıkıntılar var ama itemlere gelince de halledilebilinir.
                 }
                 else if (enemyHealth < itemHealth)
                 {
@@ -71,13 +73,12 @@ namespace DungeonRush
                 }
                 else
                 {
-                    print("öl oç");
                     card.DecreaseHealth(enemyHealth);
                     enemy.DecreaseHealth(health);
-                    if (card.GetCardType() == CardType.PLAYER)
-                        CardManager.RemoveCardForAttacker(card.GetTile().GetListNumber(), true);
-                    else
-                        CardManager.RemoveCardForAttacker(card.GetTile().GetListNumber(), false);
+                    DestroyCard(card);
+
+                    if(enemyHealth <= 0) 
+                        DestroyCard(enemy);
                 }
             }
 
@@ -92,6 +93,16 @@ namespace DungeonRush
             public void LoadLoseScene()
             {
                 LoadManager.LoadLoseScene();
+            }
+
+            public void DestroyCard(Card enemy) 
+            {
+                if (enemy == null) return;
+
+                if (enemy.GetCardType() == CardType.PLAYER)
+                    CardManager.RemoveCardForAttacker(enemy.GetTile().GetListNumber(), true);
+                else
+                    CardManager.RemoveCardForAttacker(enemy.GetTile().GetListNumber(), false);
             }
         }
     }

@@ -1,19 +1,22 @@
 ﻿using DungeonRush.Managers;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 namespace DungeonRush.Controller
 {
     public class MoveSchedular : MonoBehaviour
     {
-        public bool notify = false;
+        public TextMeshProUGUI tourText;
 
+        [SerializeField] bool notify = false;
         /// <summary>
         /// -1 for Nothing, 0 for Player, 1 for NonPlayers, 2 for Adding
         /// </summary>
-        public int turn;
-        public int oldTurn;
+        [SerializeField] int turnNumber;
+        [SerializeField] int oldTurnNumber;
+        [SerializeField] int tourCount;
 
         public PlayerController pc;
         public NonPlayerController npc;
@@ -23,8 +26,10 @@ namespace DungeonRush.Controller
             pc = FindObjectOfType<PlayerController>();
             npc = FindObjectOfType<NonPlayerController>();
 
-            turn = 0;
-            oldTurn = -1;
+            tourCount = 0;
+            tourText.text = tourCount.ToString();
+            turnNumber = 0;
+            oldTurnNumber = -1;
         }
 
         private void Update()
@@ -42,37 +47,46 @@ namespace DungeonRush.Controller
             }
         }
 
+        public void IncreaseTour() 
+        {
+            tourCount++;
+            tourText.text = tourCount.ToString();
+        }
+
         public void OnNotify() 
         {
-            if(turn != 2) 
+            if(turnNumber != 2)
             {
-                oldTurn = turn;
-                turn = 2;
+                oldTurnNumber = turnNumber;
+                turnNumber = 2;
+
+                if (oldTurnNumber == 0)
+                    IncreaseTour();
             }
             else
             {
-                if (oldTurn == 0)
-                    turn = 1;
+                if (oldTurnNumber == 0)
+                    turnNumber = 1;
                 else
-                    turn = 0;
+                    turnNumber = 0;
 
-                oldTurn = -1;
+                oldTurnNumber = -1;
             }
 
             CardManager.Instance.ReshuffleCards();
-            if (turn == -1) 
+            if (turnNumber == -1) 
             {
                 // Nothing
             }
-            else if (turn == 0)
+            else if (turnNumber == 0)
             {
                 pc.Begin();
             }
-            else if (turn == 1)
+            else if (turnNumber == 1)
             {
                 npc.Begin();
             }
-            else if (turn == 2)
+            else if (turnNumber == 2)
             {
                 
             }
