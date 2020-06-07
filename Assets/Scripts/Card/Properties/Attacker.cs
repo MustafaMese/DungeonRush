@@ -77,9 +77,11 @@ namespace DungeonRush
                     enemy.DecreaseHealth(health);
                     DestroyCard(card);
 
-                    if(enemyHealth <= 0) 
-                        DestroyCard(enemy);
+                    if (enemy.GetHealth() <= 0)
+                    DestroyCard(enemy);
                 }
+
+                
             }
 
             public void Attack(Card enemy)
