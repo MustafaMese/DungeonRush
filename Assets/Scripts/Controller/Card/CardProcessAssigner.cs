@@ -24,7 +24,6 @@ namespace DungeonRush
                 Instance = this;
             }
 
-            // TODO Yeni kart sırasını ekle.
             /// <summary>
             /// targetTile is actual target, targetTile2 is our tile.
             /// </summary>

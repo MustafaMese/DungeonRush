@@ -5,6 +5,7 @@ using DungeonRush.Managers;
 using DungeonRush.Property;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace DungeonRush.Shifting
@@ -31,32 +32,36 @@ namespace DungeonRush.Shifting
                         int targetListnumber = listnumber - length;
                         Tile targetTile = Board.tiles[targetListnumber];
                         ConfigureCardMove(card, targetTile);
+                        return true;
                     }
-                    return true;
+                    break;
                 case Swipe.DOWN:
                     if (listnumber < lowerBorder)
                     {
                         int targetListnumber = listnumber + length;
                         Tile targetTile = Board.tiles[targetListnumber];
                         ConfigureCardMove(card, targetTile);
+                        return true;
                     }
-                    return true;
+                    break;
                 case Swipe.LEFT:
                     if (listnumber % length != leftBorder)
                     {
                         int targetListnumber = listnumber - 1;
                         Tile targetTile = Board.tiles[targetListnumber];
                         ConfigureCardMove(card, targetTile);
+                        return true;
                     }
-                    return true;
+                    break;
                 case Swipe.RIGHT:
                     if (listnumber % length != rightBorder)
                     {
                         int targetListnumber = listnumber + 1;
                         Tile targetTile = Board.tiles[targetListnumber];
                         ConfigureCardMove(card, targetTile);
+                        return true;
                     }
-                    return true;
+                    break;
             }
             return false;
         }
@@ -64,20 +69,30 @@ namespace DungeonRush.Shifting
         {
             Board.touched = true;
             MoveType moveType = FindMoveType(targetTile);
-            bool canMove = card.CanAttack(targetTile.GetCard());
+            bool canMove;
+            if (moveType == MoveType.EMPTY)
+                canMove = true;
+            else
+                canMove = card.CanAttack(targetTile.GetCard());
             Move move = new Move(targetTile, card, moveType, canMove);
             card.SetMove(move);
         }
-        private Swipe SelectTileToAttack(Dictionary<Tile, Swipe> tiles, Tile target)
+        public override Swipe SelectTileToAttack(Dictionary<Tile, Swipe> tiles)
         {
-            foreach (var tile in tiles.Keys)
+            var number = tiles.Count;
+            number = Random.Range(0, number);
+
+            List<Tile> keys = Enumerable.ToList(tiles.Keys);
+            if (keys.Count <= 0)
+                return Swipe.NONE;
+            else
             {
-                if (tile == target)
-                    return tiles[tile];
+                Tile tile = keys[number];
+                return tiles[tile];
             }
-            return Swipe.NONE;
         }
-        private Dictionary<Tile, Swipe> GetAvaibleTiles(Card card)
+
+        public override Dictionary<Tile, Swipe> GetAvaibleTiles(Card card)
         {
             if (card == null) return null;
 
@@ -88,7 +103,7 @@ namespace DungeonRush.Shifting
             if (listnumber > upperBorder)
             {
                 var upperTile = Board.tiles[listnumber - length];
-                if (card.GetCharacterType().IsEnemy(upperTile.GetCard().GetCharacterType()))
+                if (upperTile.GetCard() == null || card.GetCharacterType().IsEnemy(upperTile.GetCard().GetCharacterType()))
                 {
                     avaibleTiles.Add(upperTile, Swipe.UP);
                 }
@@ -96,7 +111,7 @@ namespace DungeonRush.Shifting
             if (listnumber < lowerBorder)
             {
                 var lowerTile = Board.tiles[listnumber + length];
-                if (card.GetCharacterType().IsEnemy(lowerTile.GetCard().GetCharacterType()))
+                if (lowerTile.GetCard() == null || card.GetCharacterType().IsEnemy(lowerTile.GetCard().GetCharacterType()))
                 {
                     avaibleTiles.Add(lowerTile, Swipe.DOWN);
                 }
@@ -104,7 +119,7 @@ namespace DungeonRush.Shifting
             if (listnumber % length != rightBorder)
             {
                 var rightTile = Board.tiles[listnumber + 1];
-                if (card.GetCharacterType().IsEnemy(rightTile.GetCard().GetCharacterType()))
+                if (rightTile.GetCard() == null || card.GetCharacterType().IsEnemy(rightTile.GetCard().GetCharacterType()))
                 {
                     avaibleTiles.Add(rightTile, Swipe.RIGHT);
                 }
@@ -112,7 +127,7 @@ namespace DungeonRush.Shifting
             if (listnumber % length != leftBorder)
             {
                 var leftTile = Board.tiles[listnumber - 1];
-                if (card.GetCharacterType().IsEnemy(leftTile.GetCard().GetCharacterType()))
+                if (leftTile.GetCard() == null || card.GetCharacterType().IsEnemy(leftTile.GetCard().GetCharacterType()))
                 {
                     avaibleTiles.Add(leftTile, Swipe.LEFT);
                 }
@@ -121,7 +136,14 @@ namespace DungeonRush.Shifting
         }
         private MoveType FindMoveType(Tile t)
         {
-            var type = t.GetCard().GetCardType();
+            if (t == null)
+                return MoveType.NONE;
+
+            if (t.GetCard() == null)
+                return MoveType.EMPTY;
+
+            CardType type = t.GetCard().GetCardType();
+
 
             switch (type)
             {
@@ -132,7 +154,7 @@ namespace DungeonRush.Shifting
                 case CardType.COIN:
                     return MoveType.COIN;
                 default:
-                    return MoveType.NONE;
+                    return MoveType.EMPTY;
             }
         }
     }

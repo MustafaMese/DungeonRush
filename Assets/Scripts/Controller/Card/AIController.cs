@@ -2,6 +2,7 @@
 using DungeonRush.Data;
 using DungeonRush.Field;
 using DungeonRush.Managers;
+using DungeonRush.Property;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -9,21 +10,15 @@ using UnityEngine;
 
 namespace DungeonRush.Controller
 {
-    public class AIController : MonoBehaviour
+    public class AIController : MonoBehaviour, IMoveController
     {
-        Tile targetTile = null;
-        Tile targetTile2 = null;
-        Tile targetTile3 = null;
-        Tile targetTile4 = null;
+        [SerializeField] float timeForFinishTourET = 0.2f;
+        public Dictionary<Tile, Swipe> avaibleTiles = new Dictionary<Tile, Swipe>();
 
-        MoveType moveType;
-        [SerializeField] float animationFinishTime = 0.1f;
-        [SerializeField] float timeForAddingCardET = 0.1f;
-        [SerializeField] float timeForFinishTourET = 0.1f;
-
-        bool canMoveToTarget = false;
-        bool isRunning = false;
-        Card card;
+        public Swipe swipe;
+        private Card card;
+        public bool isRunning = false;
+        public bool isAttacker = false;
 
         public ProcessHandleChecker preparingProcess;
         public ProcessHandleChecker animationProcess;
@@ -33,131 +28,74 @@ namespace DungeonRush.Controller
         private void Start()
         {
             nonPlayerController = FindObjectOfType<NonPlayerController>();
-            InitProcessHandlers();
-            preparingProcess.StartProcess();
             card = GetComponent<Card>();
+            InitProcessHandlers();
         }
 
         private void Update()
         {
-            if (isRunning)
+            if (!isRunning) return;
+
+            //if (card.GetMove().GetCard() == null) return;
+
+            if (preparingProcess.IsRunning())
             {
-                // TODO RUNNİNG TRUE KALIYO.
-                print("1");
-                if (preparingProcess.IsRunning())
-                {
-                    print("2");
-                    var anyMove = PrepareMoveProcess(card.GetTile().GetListNumber());
-                    preparingProcess.Finish();
-                    preparingProcess.run = false;
-                    if (anyMove)
-                    {
-                        print("2.1");
-                        animationProcess.StartProcess();
-                    }
-                    else
-                    {
-                        print("2.2");
-                        moveProcess.EndProcess();
-                    }
-                }
-                else if (animationProcess.IsRunning())
-                {
-                    print("3");
-                    AnimationProcess(card);
-                }
-                else if (moveProcess.IsRunning())
-                {
-                    print("4");
-                    ExecuteMoves();
-                }
+                print("ai1");
+                PrepareMoveProcess();
+            }
+            else if (animationProcess.IsRunning()) 
+            {
+                print("ai2");
+                AnimationProcess(card);
+            }
+            else if (moveProcess.IsRunning())
+            {
+                print("ai3");
+                ExecuteMoves();
+            }
+
+            if(isAttacker && !card.isMoving) 
+            {
+                Notify();
+                isAttacker = false;
             }
         }
 
-        #region PREPARE MOVE METHODS
-        public bool PrepareMoveProcess(int listNumber)
+        // TODO Swipe değişkeninden kurtul..
+
+        #region PREPARE MOVE PROCESS
+
+        public void PrepareMoveProcess()
         {
-            targetTile = null;
-            targetTile2 = null;
-            targetTile3 = null;
-            targetTile4 = null;
-            var swipe = SelectTileToAttack(listNumber);
-            if (swipe != Swipe.NONE)
+            var canMove = DoMove(swipe);
+            
+            if (canMove)
             {
-                canMoveToTarget = DoMove(listNumber, swipe);
-                return canMoveToTarget;
+                print("ai1.1");
+                preparingProcess.Finish();
+                animationProcess.StartProcess();
             }
             else
-                return false;
-        }
-
-        private bool DoMove(int listnumber, Swipe swipe)
-        {
-            CardProcessAssigner.Instance.AssignTiles(listnumber, ref targetTile, ref targetTile2, ref targetTile3, ref targetTile4, swipe);
-            return CardProcessAssigner.Instance.AssignMoves(targetTile, targetTile2, targetTile3, targetTile4, out moveType);
-        }
-
-        public Swipe SelectTileToAttack(int listnumber)
-        {
-            var tiles = GetAvailableTiles(listnumber);
-            if (tiles != null && tiles.Count != 0)
             {
-                var number = UnityEngine.Random.Range(0, tiles.Count);
-                if (number < 0)
-                    number = 0;
-                return tiles[number];
+                print("ai1.2");
+                swipe = Swipe.NONE;
+                Notify();
+                card.GetMove().Reset();
+                preparingProcess.Finish();
+                isRunning = false;
+                avaibleTiles.Clear();
             }
-            return Swipe.NONE;
         }
 
-        public List<Swipe> GetAvailableTiles(int listnumber)
+        private bool DoMove(Swipe swipe)
         {
-            Tile ownTile = Board.tiles[listnumber];
-            List<Swipe> avaibleTiles = new List<Swipe>();
-            Tile lowerTile, leftTile, rightTile, upperTile;
-
-            if (ownTile.GetCard() == null) return null;
-
-            try
-            {
-                if (listnumber > 3)
-                {
-                    upperTile = Board.tiles[listnumber - 4];
-                    //print("t: " + upperTile);
-                    if (ownTile.GetCard().GetCharacterType().IsEnemy(upperTile.GetCard().GetCharacterType()))
-                        avaibleTiles.Add(Swipe.UP);
-                }
-                if (listnumber % 4 != 0)
-                {
-                    leftTile = Board.tiles[listnumber - 1];
-                    //print("t: " + leftTile);
-                    if (ownTile.GetCard().GetCharacterType().IsEnemy(leftTile.GetCard().GetCharacterType()))
-                        avaibleTiles.Add(Swipe.LEFT);
-                }
-                if (listnumber % 4 != 3)
-                {
-                    rightTile = Board.tiles[listnumber + 1];
-                    //print("t: " + rightTile);
-                    if (ownTile.GetCard().GetCharacterType().IsEnemy(rightTile.GetCard().GetCharacterType()))
-                        avaibleTiles.Add(Swipe.RIGHT);
-                }
-                if (listnumber < 12)
-                {
-                    lowerTile = Board.tiles[listnumber + 4];
-                    //print("t: " + lowerTile);
-                    if (ownTile.GetCard().GetCharacterType().IsEnemy(lowerTile.GetCard().GetCharacterType()))
-                        avaibleTiles.Add(Swipe.DOWN);
-                }
-            }
-            catch (Exception e)
-            {
-                print("oT: " + ownTile.GetCard());
-            }
-            return avaibleTiles;
+            return card.GetShift().Define(card, swipe);
         }
+
         #endregion
 
-        #region ANIMATION METHODS
+        #region ANIMATION
+
         public void AnimationProcess(Card c)
         {
             if (animationProcess.start)
@@ -167,7 +105,7 @@ namespace DungeonRush.Controller
             }
             else if (animationProcess.end)
             {
-                if (moveType != MoveType.ATTACK)
+                if (c.GetMove().GetMoveType() != MoveType.ATTACK)
                     moveProcess.StartProcess();
                 else
                     StartCoroutine(FinishAnimationTurn());
@@ -178,12 +116,12 @@ namespace DungeonRush.Controller
         private void DoAnimation(Card c)
         {
             Move m = c.GetMove();
-            c.HandleCardEffect(m.GetMoveType(), m.GetTargetTile(), m.GetCardTile().GetListNumber());
+            //c.HandleCardEffect(m.GetMoveType(), m.GetTargetTile(), m.GetCardTile().GetListNumber());
         }
 
         private IEnumerator FinishAnimationTurn()
         {
-            yield return new WaitForSeconds(0.35f);
+            yield return new WaitForSeconds(0.27f);
             moveProcess.StartProcess();
         }
 
@@ -191,64 +129,75 @@ namespace DungeonRush.Controller
 
         #region MOVE PROCESS
 
-        private void ExecuteMoves()
+        public void ExecuteMoves()
         {
             if (moveProcess.start)
             {
-                PassToAnotherTileMove();
-                moveProcess.ContinuingProcess(false);
+                var move = card.GetMove().GetCanMove();
+
+                if (move)
+                {
+                    print("ai.notAt");
+                    card.ExecuteMove();
+                    moveProcess.ContinuingProcess(false);
+                }
+                else
+                {
+                    print("ai.at");
+                    card.Attack(card.GetMove().GetTargetTile().GetCard());
+                    moveProcess.EndProcess();
+                }
             }
             else if (moveProcess.continuing)
             {
-                if (MoveMaker.movesFinished && !Board.touched)
+                print("mP.contu");
+                if(card.GetComponent<Mover>().moveFinished && !Board.touched)
                 {
-                    // Securing the process
-                    MoveMaker.Instance.ResetMoves();
-                    MoveMaker.movesFinished = false;
+                    print("mP.contu fin");
+                    card.GetComponent<Mover>().moveFinished = false;
                     moveProcess.EndProcess();
                 }
             }
             else if (moveProcess.end)
             {
-                MoveMaker.Instance.ResetMoves();
-                StartCoroutine(EndTurn(canMoveToTarget));
-                //preparingProcess.StartProcess();
+                Notify();
+                StartCoroutine(EndTurn());
                 moveProcess.Finish();
+                preparingProcess.StartProcess();
+                swipe = Swipe.NONE;
                 isRunning = false;
-                nonPlayerController.FinishTurn = true;
             }
         }
 
-        private void PassToAnotherTileMove()
+        private void Notify() 
         {
-            CardProcessAssigner.Instance.StartMoves();
-            //MoveMaker.Instance.Move();
+            isAttacker = false;
+            nonPlayerController.OnNotify();
         }
 
-        private IEnumerator EndTurn(bool c)
+        private IEnumerator EndTurn()
         {
-            if (c)
-            {
-                yield return new WaitForSeconds(timeForAddingCardET);
-                CardManager.Instance.AddCard(MoveMaker.Instance.targetTileForAddingCard);
-                MoveMaker.Instance.targetTileForAddingCard = null;
-                yield return new WaitForSeconds(timeForFinishTourET);
-
-            }
-            else
-            {
-                Board.touched = false;
-                yield return new WaitForSeconds(timeForFinishTourET);
-            }
+            Board.touched = false;
+            yield return new WaitForSeconds(timeForFinishTourET);
         }
 
         #endregion
 
         public void InitProcessHandlers()
         {
-            preparingProcess.Init(false);
+            preparingProcess.Init(true);
             animationProcess.Init(false);
-            moveProcess.Init(true);
+            moveProcess.Init(false);
+        }
+
+        public void SetSwipe(Swipe s)
+        {
+            swipe = s;
+        }
+
+        public void SetMove(Move move)
+        {
+            card.SetMove(move);
         }
 
         public Card GetCard()
@@ -259,6 +208,15 @@ namespace DungeonRush.Controller
         public void Run()
         {
             isRunning = true;
+            isAttacker = true;
+            preparingProcess.StartProcess();
         }
+
+        public bool IsRunning()
+        {
+            return isRunning;
+        }
+
+
     }
 }

@@ -9,5 +9,7 @@ namespace DungeonRush.Controller
         void InitProcessHandlers();
         bool IsRunning();
         void Run();
+        void Stop();
+        void Begin();
     }
 }

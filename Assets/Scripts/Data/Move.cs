@@ -26,6 +26,7 @@ namespace DungeonRush
             {
                 this.targetTile = targetTile;
                 this.card = card;
+                this.cardTile = card.GetTile();
                 this.type = type;
                 this.canMoveToPlace = canMoveToPlace;
             }

@@ -40,6 +40,15 @@ namespace DungeonRush
                 board = FindObjectOfType<Board>();
             }
 
+            public void ReshuffleCards() 
+            {
+                cards.Clear();
+                foreach (var card in FindObjectsOfType<Card>())
+                {
+                    cards.Add(card);
+                }
+            }
+
             public List<Card> GetHighLevelCards()
             {
                 List<Card> cleverCards = new List<Card>();
@@ -99,7 +108,9 @@ namespace DungeonRush
 
             public Card AddCard(Card piece, Tile tile, Board board, bool inGame)
             {
-                Card newPiece = Instantiate(piece, tile.transform.position, Quaternion.identity, board.transform);
+                Card newPiece = Instantiate(piece, tile.transform.position, Quaternion.identity);
+                if(newPiece.GetCardType() != CardType.PLAYER)
+                    newPiece.transform.SetParent(board.transform);
                 tile.SetCard(newPiece);
                 newPiece.SetTile(tile);
                 AddToCards(newPiece, inGame);
@@ -133,9 +144,6 @@ namespace DungeonRush
 
             public static void RemoveCardForAttacker(int listnumber, bool isPlayer)
             {
-                // TODO Burası değişicek
-                GameManager.addCard = true;
-                GameManager.cardListNumber = listnumber;
                 RemoveCard(Board.tiles[listnumber], isPlayer);
             }
         }

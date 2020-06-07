@@ -22,6 +22,9 @@ namespace DungeonRush
 
             public bool CanAttack(Card enemy)
             {
+                if (enemy.GetCardType() != CardType.ENEMY)
+                    return true;
+
                 int enemyHealth = enemy.GetHealth();
                 int health = card.GetHealth();
                 if (itemUser && itemUser.GetItem().exist)
@@ -56,13 +59,19 @@ namespace DungeonRush
             public void AttackWithoutItem(Card enemy)
             {
                 int health = card.GetHealth();
-                int enemyHealth = enemy.GetHealth();
-                if (health > enemyHealth)
+                int enemyHealth;
+                if (enemy != null)
+                    enemyHealth = enemy.GetHealth();
+                else
+                    enemyHealth = 0;
+
+                if (health > enemyHealth || enemy == null)
                 {
                     card.DecreaseHealth(enemyHealth);
                 }
                 else
                 {
+                    print("öl oç");
                     card.DecreaseHealth(enemyHealth);
                     enemy.DecreaseHealth(health);
                     if (card.GetCardType() == CardType.PLAYER)

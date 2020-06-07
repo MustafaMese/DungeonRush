@@ -287,6 +287,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eefd2d4f397f44546b605ddd448dd9e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  move:
+    cardTile: {fileID: 0}
+    targetTile: {fileID: 0}
+    card: {fileID: 0}
+    type: 0
+    lastMove: 0
+    canMoveToPlace: 0
   cardLevel: 0
   disappearing: 0.066
   cardProperties: {fileID: 0}
@@ -294,6 +301,7 @@ MonoBehaviour:
   isBossCard: 0
   cardUtils: {fileID: -6615717728069192236}
   characterType: {fileID: 11400000, guid: d49b1aa2a0de99549bc35edcd96869ba, type: 2}
+  shifting: {fileID: 0}
   frameColor: {fileID: 389843478582796627}
   characterSprite: {fileID: 958205473868242717}
   textMeshHealth: {fileID: 4744195878023823607}
@@ -324,6 +332,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startMoving: 0
+  moveFinished: 0
 --- !u!114 &7147871325311128375
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -363,13 +372,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98e6ea5abca7a4942beadb0db06acec0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animationFinishTime: 0.1
-  timeForAddingCardET: 0.1
   timeForFinishTourET: 0.1
-  moveFinished: 0
   preparingProcess:
-    run: 1
-    start: 1
+    run: 0
+    start: 0
     continuing: 0
     end: 0
   animationProcess:

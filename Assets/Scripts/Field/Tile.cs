@@ -57,9 +57,8 @@ namespace DungeonRush
                     CardManager.RemoveCard(move.GetTargetTile(), false);
                 if (isPlayer)
                     CardManager.Instance.SetInstantPlayerTile(move.GetTargetTile());
-                    //GameManager.GetCardManager().SetInstantPlayerTile(move.GetTargetTile());
                 move.GetTargetTile().SetCard(move.GetCard());
-                //move.GetCardTile().SetCard(null);
+                move.GetCardTile().SetCard(null);
                 move.GetCard().SetTile(move.GetTargetTile());
             }
         }

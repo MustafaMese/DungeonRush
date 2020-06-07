@@ -10,6 +10,8 @@ namespace DungeonRush
     {
         public class Board : MonoBehaviour
         {
+
+            // Touched moveschedulara veya nonplayera falan alınabilinir.
             public static Board instance;
 
             public static int RowLength;
@@ -18,6 +20,7 @@ namespace DungeonRush
             public static bool touched;
             public CardManager cm;
             public BoardCreator bCreator;
+            public int playerStartTile = 0;
 
             private void Awake()
             {
@@ -31,19 +34,19 @@ namespace DungeonRush
             {
                 bCreator.InitializeTiles(cardPlaces);
 
-                cm.AddCard(cm.playerCard, cardPlaces[28], this, false);
+                cm.AddCard(cm.playerCard, cardPlaces[playerStartTile], this, false);
 
                 for (int i = 0; i < cardPlaces.Count; i++)
                 {
                     if (cardPlaces[i].GetCard() == null)
                     {
                         int number = Random.Range(0, 101);
-                        if(number < 70)
+                        if(number < 50)
                             cm.AddCard(GiveRandomCard(cm.enemyCards), cardPlaces[i], this, false);
-                        else if (number < 95)
-                            cm.AddCard(GiveRandomCard(cm.itemCards), cardPlaces[i], this, false);
                         else
-                            cm.AddCard(GiveRandomCard(cm.coinCards), cardPlaces[i], this, false);
+                            cm.AddCard(GiveRandomCard(cm.itemCards), cardPlaces[i], this, false);
+                        //else
+                        //    cm.AddCard(GiveRandomCard(cm.coinCards), cardPlaces[i], this, false);
                     }
                 }
 

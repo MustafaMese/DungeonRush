@@ -8,31 +8,24 @@ using UnityEngine;
 
 namespace DungeonRush.Controller
 {
-    public class PlayerController : MonoBehaviour, ICardController
+    public class PlayerController : MonoBehaviour, ICardController, IMoveController
     {
-        MoveType moveType;
-
-        [SerializeField] float animationFinishTime = 0.1f;
-        [SerializeField] float timeForAddingCardET = 0.1f;
         [SerializeField] float timeForFinishTourET = 0.1f;
 
-        bool canMoveToTarget = false;
         bool isRunning = false;
-        public bool moveFinished = false;
         Card player;
 
         public ProcessHandleChecker preparingProcess;
         public ProcessHandleChecker animationProcess;
         public ProcessHandleChecker moveProcess;
         public NonPlayerController nonPlayerCont;
+        public MoveSchedular ms;
 
         private void Start()
         {
-            Application.targetFrameRate = 60;
             InitProcessHandlers();
-            preparingProcess.StartProcess();
             player = GetComponent<PlayerCard>();
-            nonPlayerCont = FindObjectOfType<NonPlayerController>();
+            ms = FindObjectOfType<MoveSchedular>();
         }
 
         private void Update()
@@ -56,20 +49,15 @@ namespace DungeonRush.Controller
         {
             if (!Board.touched && SwipeManager.swipeDirection != Swipe.NONE)
             {
-                print("1");
-                print(SwipeManager.swipeDirection);
                 var canMove = DoMove(SwipeManager.swipeDirection);
-
                 if (canMove)
                 {
-                    print("2");
                     preparingProcess.Finish();
                     animationProcess.StartProcess();
                 }
                 else
                 {
                     player.GetMove().Reset();
-                    print("3");
                 }
             }
         }
@@ -92,7 +80,7 @@ namespace DungeonRush.Controller
             }
             else if (animationProcess.end)
             {
-                if (moveType != MoveType.ATTACK)
+                if (c.GetMove().GetMoveType() != MoveType.ATTACK)
                     moveProcess.StartProcess();
                 else
                     StartCoroutine(FinishAnimationTurn());
@@ -103,10 +91,7 @@ namespace DungeonRush.Controller
         private void DoAnimation(Card c)
         {
             Move m = c.GetMove();
-            print("mGMT: " + m.GetMoveType());
-            print("mGTT: " + m.GetTargetTile());
-            print("mGLN: " + m.GetCard().GetTile().GetListNumber());
-            c.HandleCardEffect(m.GetMoveType(), m.GetTargetTile(), m.GetCard().GetTile().GetListNumber());
+            //c.HandleCardEffect(m.GetMoveType(), m.GetTargetTile(), m.GetCardTile().GetListNumber());
         }
 
         private IEnumerator FinishAnimationTurn()
@@ -119,7 +104,7 @@ namespace DungeonRush.Controller
 
         #region MOVE PROCESS
 
-        private void ExecuteMoves()
+        public void ExecuteMoves()
         {
             if (moveProcess.start)
             {
@@ -138,36 +123,23 @@ namespace DungeonRush.Controller
             }
             else if (moveProcess.continuing)
             {
-                if (moveFinished && !Board.touched)
+                if (player.GetComponent<Mover>().moveFinished && !Board.touched)
                 {
-                    moveFinished = false;
+                    player.GetComponent<Mover>().moveFinished = false;
                     moveProcess.EndProcess();
                 }
             }
             else if (moveProcess.end)
             {
-                StartCoroutine(EndTurn(canMoveToTarget));
-                //nonPlayerCont.Run();
-                moveProcess.Finish();
-                preparingProcess.StartProcess();
+                StartCoroutine(EndTurn());
+                Stop();
             }
         }
 
-        private IEnumerator EndTurn(bool c)
+        private IEnumerator EndTurn()
         {
-            if (c)
-            {
-                yield return new WaitForSeconds(timeForAddingCardET);
-                CardManager.Instance.AddCard(MoveMaker.Instance.targetTileForAddingCard);
-                MoveMaker.Instance.targetTileForAddingCard = null;
-                yield return new WaitForSeconds(timeForFinishTourET);
-                
-            }
-            else
-            {
-                Board.touched = false;
-                yield return new WaitForSeconds(timeForFinishTourET);
-            }
+            Board.touched = false;
+            yield return new WaitForSeconds(timeForFinishTourET);
         }
 
         #endregion
@@ -178,16 +150,35 @@ namespace DungeonRush.Controller
             animationProcess.Init(false);
             moveProcess.Init(false);
         }
-
         public bool IsRunning()
         {
             return isRunning;
         }
-
         public void Run()
         {
             isRunning = true;
+        }
+        public Card GetCard()
+        {
+            return player;
+        }
+        public void Stop() 
+        {
+            isRunning = false;
+            preparingProcess.Finish();
+            animationProcess.Finish();
+            moveProcess.Finish();
+            Notify();
+        }
+        public void Begin() 
+        {
+            Run();
             preparingProcess.StartProcess();
+        }
+
+        private void Notify()
+        {
+            ms.OnNotify();
         }
     }
 }

@@ -14,9 +14,11 @@ namespace DungeonRush
         public class Mover : MonoBehaviour
         {
             public bool startMoving;
+            public bool moveFinished = false;
 
             private Move move;
             private Vector3 direction;
+
 
             private void Start()
             {
@@ -36,7 +38,7 @@ namespace DungeonRush
             {
                 move = GetComponent<Card>().GetMove();
                 Vector3 pos = Geometry.PointFromGrid(move.GetTargetTile().GetCoordinate());
-                Vector3 cardPos = Geometry.PointFromGrid(move.GetCard().GetTile().GetCoordinate());
+                Vector3 cardPos = Geometry.PointFromGrid(move.GetCardTile().GetCoordinate());
                 var heading = pos - cardPos;
                 var distance = heading.magnitude;
                 var direction = heading / distance;
@@ -45,105 +47,93 @@ namespace DungeonRush
             public void TerminateMove()
             {
                 move.GetCard().isMoving = false;
-                //startMoving = false;
                 move.GetCard().transform.position = move.GetTargetTile().transform.position;
                 MoveType moveType = move.GetMoveType();
                 if (move.GetCard().GetCardType() == CardType.PLAYER)
                 {
                     PlayerCard card = FindObjectOfType<PlayerCard>();
-                    if(moveType != MoveType.EMPTY)
-                    {
-                        if(moveType == MoveType.ATTACK)
-                        {
-                            Card enemy = move.GetTargetTile().GetCard();
-                            card.GetComponent<Attacker>().Attack(enemy);
-                        }
-                        else if(moveType == MoveType.ITEM)
-                        {
-                            Card item = move.GetTargetTile().GetCard();
-                            if (item.GetItemType() == ItemType.POTION)
-                                card.GetComponent<ItemUser>().TakePotion(item);
-                            else if (item.GetItemType() == ItemType.WEAPON)
-                                card.GetComponent<ItemUser>().TakeWeapon(item);
+                    PlayerMoveTypes(moveType, card);
 
-                        }
-                        else if(moveType == MoveType.COIN)
-                        {
-                            Card coin = move.GetTargetTile().GetCard();
-                            FindObjectOfType<CoinCounter>().IncreaseCoin(coin.GetHealth());
-                        }
-                        Tile.ChangeTile(move, false, true);
-                    }
-                    else
-                    {
-                        Tile.ChangeTile(move, false, true);
-                    }
-
+                    // TODO Board.touched sadece controllerlar da kullanılacak.
                     Board.touched = false;
-                    GetComponent<PlayerController>().moveFinished = true;
                 }
                 else
                 {
                     Card moverCard = move.GetCard();
                     Card targetCard = move.GetTargetTile().GetCard();
-                    if(moveType == MoveType.ATTACK && moverCard.GetComponent<Attacker>())
-                    {
-                        // TODO Player'a zırh eklemede burası kullanılabilinir.
-                        if(targetCard.GetCardType() == CardType.PLAYER)
-                        {
-                            moverCard.GetComponent<Attacker>().Attack(targetCard);
-                        }
-                        else
-                        {
-                            moverCard.GetComponent<Attacker>().Attack(targetCard);
-                        }
-                    }
-                    else if (moveType == MoveType.ITEM && moverCard.GetComponent<ItemUser>())
-                    {
-                        if (targetCard.GetItemType() == ItemType.POTION)
-                            moverCard.GetComponent<ItemUser>().TakePotion(targetCard);
-                        else if (targetCard.GetItemType() == ItemType.WEAPON)
-                            moverCard.GetComponent<ItemUser>().TakeWeapon(targetCard);
-                    }
+                    NonPlayerMoveTypes(moveType, moverCard, targetCard);
 
-                    if (move.GetMoveType() != MoveType.EMPTY)
-                        Tile.ChangeTile(move, false, false);
-                    else
-                        Tile.ChangeTile(move, true, false);
-
-                    if (move.GetLastMove())
-                    {
-                        Board.touched = false;
-                        MoveMaker.movesFinished = true;
-                    }
+                    Board.touched = false;
+                    MoveMaker.movesFinished = true;
                 }
 
+                moveFinished = true;
                 move.Reset();
+            }
+
+            private void PlayerMoveTypes(MoveType moveType, PlayerCard card)
+            {
+                switch (moveType)
+                {
+                    case MoveType.NONE:
+                        break;
+                    case MoveType.ATTACK:
+                        Card enemy = move.GetTargetTile().GetCard();
+                        card.GetComponent<Attacker>().Attack(enemy);
+                        Tile.ChangeTile(move, false, true);
+                        break;
+                    case MoveType.ITEM:
+                        Card item = move.GetTargetTile().GetCard();
+                        if (item.GetItemType() == ItemType.POTION)
+                            card.GetComponent<ItemUser>().TakePotion(item);
+                        else if (item.GetItemType() == ItemType.WEAPON)
+                            card.GetComponent<ItemUser>().TakeWeapon(item);
+                        Tile.ChangeTile(move, false, true);
+                        break;
+                    case MoveType.COIN:
+                        Card coin = move.GetTargetTile().GetCard();
+                        FindObjectOfType<CoinCounter>().IncreaseCoin(coin.GetHealth());
+                        Tile.ChangeTile(move, false, true);
+                        break;
+                    case MoveType.EMPTY:
+                        Tile.ChangeTile(move, true, true);
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            private void NonPlayerMoveTypes(MoveType moveType, Card moverCard, Card targetCard)
+            {
+                switch (moveType)
+                {
+                    case MoveType.NONE:
+                        break;
+                    case MoveType.ATTACK:
+                        if (moverCard.GetComponent<Attacker>())
+                            moverCard.GetComponent<Attacker>().Attack(targetCard);
+                        Tile.ChangeTile(move, false, false);
+                        break;
+                    case MoveType.ITEM:
+                        if (moverCard.GetComponent<ItemUser>())
+                        {
+                            if (targetCard.GetItemType() == ItemType.POTION)
+                                moverCard.GetComponent<ItemUser>().TakePotion(targetCard);
+                            else if (targetCard.GetItemType() == ItemType.WEAPON)
+                                moverCard.GetComponent<ItemUser>().TakeWeapon(targetCard);
+                        }
+                        Tile.ChangeTile(move, false, false);
+                        break;
+                    case MoveType.COIN:
+                        break;
+                    case MoveType.EMPTY:
+                        Tile.ChangeTile(move, true, false);
+                        break;
+                    default:
+                        break;
+                }
             }
         }
     }
 }
 
-//private void Update()
-//{
-//    if (startMoving)
-//    {
-//        if(move.type == MoveType.None && move.GetCard() == null)
-//            direction = GetDirection();
-
-//        move.GetCard().transform.DOMove(move.GetTargetTile().transform.position, 1f);
-//        move.GetCard().transform.Translate(direction * MoveMaker.speed * Time.deltaTime);
-//        if (GetComponent<Card>().isMoving)
-//        {
-//            if ((direction == Vector3.down || direction == Vector3.right)
-//                        && Geometry.GridFromPoint(move.GetCard().transform.position) == move.GetTargetTile().GetCoordinate())
-//                TerminateMove();
-//            else if ((direction == Vector3.left) && (Geometry.GridFromPointFixedLeft(move.GetCard().transform.position) == move.GetTargetTile().GetCoordinate()
-//                        || Geometry.GridFromPointFixedLeft(move.GetCard().transform.position).x <= move.GetTargetTile().GetCoordinate().x))
-//                TerminateMove();
-//            else if ((direction == Vector3.up) && (Geometry.GridFromPointFixedTop(move.GetCard().transform.position) == move.GetTargetTile().GetCoordinate()
-//                        || Geometry.GridFromPointFixedTop(move.GetCard().transform.position).y <= move.GetTargetTile().GetCoordinate().y))
-//                TerminateMove();
-//        }
-//    }
-//}

@@ -1,5 +1,6 @@
 ﻿using DungeonRush.Cards;
 using DungeonRush.Data;
+using DungeonRush.Field;
 using DungeonRush.Managers;
 using System.Collections;
 using System.Collections.Generic;
@@ -9,156 +10,224 @@ namespace DungeonRush.Controller
 {
     public class NonPlayerController : MonoBehaviour, ICardController
     {
+        List<Tile> avaibleTiles = new List<Tile>();
+
         public ProcessHandleChecker determineProcess;
         public ProcessHandleChecker decideProcess;
         public ProcessHandleChecker assigningProcess;
 
-        public List<AIController> aiControllers;
         public List<Card> highLevelCards;
-        public List<Card> attackers;
+        public List<AIController> attackers;
 
-        bool isRunning = false;
+        [SerializeField] int enemyNumber = 4;
+        public bool movesFinished = false;
+
+        public bool isRunning = false;
         bool finishTurn = false;
         public bool FinishTurn { get => finishTurn; set => finishTurn = value; }
 
-        public int attackerIndex = 0;
-        PlayerController playerController;
+        public PlayerController playerController;
+        public MoveSchedular ms;
 
         private void Start()
         {
             playerController = FindObjectOfType<PlayerController>();
+            ms = FindObjectOfType<MoveSchedular>();
+            InitProcessHandlers();
         }
 
-        // TODO Buraları düzelt en son assign de kalıyodu.
         private void Update()
         {
+            if(playerController == null) playerController = FindObjectOfType<PlayerController>();
+
             if (IsRunning())
             {
                 if (determineProcess.IsRunning())
                 {
-                    highLevelCards = GetHighLevelCards();
-                    if (highLevelCards != null && highLevelCards.Count > 0)
-                    {
-                        decideProcess.StartProcess();
-                    }
-                    else
-                    {
-                        MigrateTurn();
-                    }
-                    determineProcess.Finish();
+                    DetermineHighLevelCards();
+                    print("np1");
                 }
                 else if (decideProcess.IsRunning())
                 {
-                    attackers = DecideAttackerEnemies();
-                    if (attackers != null && attackers.Count > 0)
-                    {
-                        assigningProcess.StartProcess();
-                    }
-                    else
-                    {
-                        MigrateTurn();
-                    }
-                    decideProcess.Finish();
+                    print("np2");
+                    DecidingProcess();
                 }
                 else if (assigningProcess.IsRunning())
                 {
-                    print("1");
-                    if (assigningProcess.start)
+                    print("np4");
+                    if (assigningProcess.start) 
                     {
-                        print("2");
-                        // TODO iki yüksek seviyeli birbirine saldırırsa hata alıyo.
-                        if (attackers[attackerIndex] == null)
-                        {
-                            print("3");
-                            assigningProcess.EndProcess();
-                            return;
-                        }
-
-                        attackers[attackerIndex].GetComponent<AIController>().Run();
-                        assigningProcess.ContinuingProcess(false);
+                        AssignControllers();
                     }
-                    else if (assigningProcess.continuing)
+                    else if (assigningProcess.end) 
                     {
-                        print("4");
-                        if (finishTurn)
+                        if (movesFinished)
                         {
-                            print("5");
-                            assigningProcess.EndProcess();
-                            finishTurn = false;
-                        }
-                    }
-                    else if (assigningProcess.end)
-                    {
-                        print("6");
-                        attackerIndex++;
-                        if (attackers.Count > attackerIndex)
-                        {
-                            print("7");
-                            assigningProcess.StartProcess();
-                        }
-                        else
-                        {
-                            print("8");
-                            assigningProcess.EndProcess();
-                            MigrateTurn();
-                            print("bitti");
+                            FinishMovement();
                         }
                     }
                 }
             }
         }
 
-        private void MigrateTurn()
-        {
-            isRunning = false;
-            highLevelCards.Clear();
-            attackers.Clear();
-            assigningProcess.Finish();
-            playerController.Run();
-            attackerIndex = 0;
-        }
+        
 
-        private IEnumerator Islem(Card card)
+        #region DETERMINING METHODS
+        private void DetermineHighLevelCards() 
         {
-            print(card.GetTile() + "'in İlerlemesi başladı.");
-            assigningProcess.ContinuingProcess(false);
-            yield return new WaitForSeconds(1f);
-            print(card.GetTile() + "'in İlerlemesi bitti");
-            assigningProcess.EndProcess();
-        }
-
-        private List<Card> DecideAttackerEnemies()
-        {
-            List<Card> cards = new List<Card>();
-            var attackerCount = highLevelCards.Count % 4;
-            for (int i = 0; i < attackerCount; i++)
+            highLevelCards = GetHighLevelCards();
+            determineProcess.Finish();
+            decideProcess.StartProcess();
+            if (highLevelCards == null || highLevelCards.Count <= 0)
             {
-                var card = highLevelCards[i];
-                if (!cards.Contains(card))
-                    cards.Add(card);
+                print("np1.1");
+                Stop();
             }
-            return cards;
         }
-
         private List<Card> GetHighLevelCards()
         {
             return CardManager.Instance.GetHighLevelCards();
         }
 
+        #endregion
+
+        #region DECIDING METHODS
+        private void DecidingProcess() 
+        {
+            attackers = DecideAttackerEnemies();
+            highLevelCards.Clear();
+            decideProcess.Finish();
+            assigningProcess.StartProcess();
+            if (attackers == null || attackers.Count <= 0)
+            {
+                print("np3");
+                Stop();
+            }
+        }
+        private List<AIController> DecideAttackerEnemies()
+        {
+            List<AIController> cards = new List<AIController>();
+            var attackerCount = highLevelCards.Count % enemyNumber;
+            print("aC: " + attackerCount);
+            for (int i = 0; i < attackerCount; i++)
+            {
+                var card = highLevelCards[Random.Range(0, highLevelCards.Count)];
+                if (!cards.Contains((AIController)card.Controller))
+                {
+                    print("attacc: " + card + "x" + card.GetTile().GetListNumber());
+                    cards.Add((AIController)card.Controller);
+                }
+            }
+            return cards;
+        }
+
+        #endregion
+
+        #region ASSINGING PROCESS
+        private void FinishMovement()
+        {
+            Stop();
+            assigningProcess.Finish();
+            movesFinished = false;
+        }
+        private void AssignControllers() 
+        {
+            SetAvaibleTiles();
+            SelectTilesToAttack();
+            foreach (var attacker in attackers)
+            {
+                print("np5");
+                attacker.Run();
+            }
+            assigningProcess.EndProcess();
+        }
+        private void SelectTilesToAttack()
+        {
+            foreach (var attacker in attackers)
+            {
+                attacker.swipe = attacker.GetCard().GetShift().SelectTileToAttack(attacker.avaibleTiles);
+            }
+        }
+        private void SetAvaibleTiles()
+        {
+            List<AIController> keys = new List<AIController>(attackers);
+            foreach (var attacker in keys)
+            {
+                attacker.avaibleTiles = attacker.GetCard().GetShift().GetAvaibleTiles(attacker.GetCard());
+                if (avaibleTiles != null && attacker.avaibleTiles != null)
+                {
+                    List<Tile> keyList = new List<Tile>(attacker.avaibleTiles.Keys);
+                    foreach (var tile in keyList)
+                    {
+                        if (avaibleTiles.Contains(tile) || (tile.GetCard() != null && attackers.Contains((AIController)tile.GetCard().Controller)))
+                        {
+                            attacker.avaibleTiles.Remove(tile);
+                        }
+                        else
+                        {
+                            avaibleTiles.Add(tile);
+                        }
+                    }
+                }
+                else
+                    attackers.Remove(attacker);
+            }
+        }
+        #endregion
+
+        public void Stop()
+        {
+            isRunning = false;
+            highLevelCards.Clear();
+            attackers.Clear();
+            avaibleTiles.Clear();
+            decideProcess.Finish();
+            determineProcess.Finish();
+            assigningProcess.Finish();
+            movesFinished = false;
+            Notify();
+        }
+
         public void Run()
         {
             isRunning = true;
-            determineProcess.StartProcess();
         }
 
         public void InitProcessHandlers()
         {
-            throw new System.NotImplementedException();
+            determineProcess.Init(false);
+            decideProcess.Init(false);
+            assigningProcess.Init(false);
         }
 
         public bool IsRunning()
         {
             return isRunning;
+        }
+    
+        public void Begin() 
+        {
+            Run();
+            determineProcess.StartProcess();
+            movesFinished = false;
+            attackers.Clear();
+            highLevelCards.Clear();
+            avaibleTiles.Clear();
+        }
+
+        public void OnNotify() 
+        {
+            foreach (var attacker in attackers)
+            {
+                if (attacker.GetCard().isMoving)
+                    return;
+            }
+            movesFinished = true;
+        }
+
+        private void Notify() 
+        {
+            ms.OnNotify();
         }
     }
 }

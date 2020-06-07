@@ -1,4 +1,5 @@
-﻿using DungeonRush.Data;
+﻿using DungeonRush.Controller;
+using DungeonRush.Data;
 using DungeonRush.Field;
 using DungeonRush.Property;
 using DungeonRush.Shifting;
@@ -16,11 +17,12 @@ namespace DungeonRush
             protected Tile coordinate;
             protected Health health;
             protected string cardName;
-            protected Move move;
+            public Move move;
             public int cardLevel;
             protected float timeLeft;
             protected Mover mover;
             protected bool isAlive;
+            private IMoveController controller;
 
             [SerializeField, Range(0, 1)] float disappearing = 0.1f;
 
@@ -38,6 +40,8 @@ namespace DungeonRush
             public TextMeshPro textMeshHealth;
             public TextMeshPro textMeshName;
 
+            public IMoveController Controller { get => controller; set => controller = value; }
+
             public void Start()
             {
                 isAlive = true;
@@ -52,6 +56,7 @@ namespace DungeonRush
                 textMeshName.text = cardName;
                 mover = GetComponent<Mover>();
                 move = new Move();
+                Controller = GetComponent<IMoveController>();
                 //cardLevel = 5;
 
                 StartCoroutine(FadeImage(false));
@@ -153,10 +158,6 @@ namespace DungeonRush
             }
             public void HandleCardEffect(MoveType mT, Tile t, int listnumber)
             {
-                if (GetComponentInChildren<CardEffectHandler>() == null)
-                    print("null");
-                else
-                    print("null değil");
                 GetComponentInChildren<CardEffectHandler>().DoAnim(mT, t, listnumber);
             }
             public Shift GetShift()
