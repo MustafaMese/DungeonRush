@@ -90,7 +90,6 @@ namespace DungeonRush.Shifting
                 return tiles[tile];
             }
         }
-
         public override Dictionary<Tile, Swipe> GetAvaibleTiles(Card card)
         {
             if (card == null) return null;
@@ -142,7 +141,6 @@ namespace DungeonRush.Shifting
                 return MoveType.EMPTY;
 
             CardType type = t.GetCard().GetCardType();
-
 
             switch (type)
             {
