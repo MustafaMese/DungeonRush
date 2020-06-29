@@ -93,40 +93,44 @@ namespace DungeonRush.Shifting
         {
             if (card == null) return null;
 
-            int listnumber = card.GetTile().GetListNumber();
-            int length = Board.RowLength;
+            int rL = Board.RowLength;
+            Vector2 coordinate = card.transform.position;
             Dictionary<Tile, Swipe> avaibleTiles = new Dictionary<Tile, Swipe>();
 
-            if (listnumber > upperBorder)
+            if (coordinate.y < rL - 1) 
             {
-                var upperTile = Board.tilesByListnumbers[listnumber - length];
-                if (upperTile.GetCard() == null || card.GetCharacterType().IsEnemy(upperTile.GetCard().GetCharacterType()))
+                var targetCoordinate = new Vector2(coordinate.x, coordinate.y + 1);
+                var upperTile = Board.tilesByCoordinates[targetCoordinate];
+                if(upperTile.GetCard() == null || card.GetCharacterType().IsEnemy(upperTile.GetCard().GetCharacterType())) 
                 {
                     avaibleTiles.Add(upperTile, Swipe.UP);
                 }
             }
-            if (listnumber < lowerBorder)
+            else if(coordinate.y > 0) 
             {
-                var lowerTile = Board.tilesByListnumbers[listnumber + length];
+                var targetCoordinate = new Vector2(coordinate.x, coordinate.y - 1);
+                var lowerTile = Board.tilesByCoordinates[targetCoordinate];
                 if (lowerTile.GetCard() == null || card.GetCharacterType().IsEnemy(lowerTile.GetCard().GetCharacterType()))
                 {
                     avaibleTiles.Add(lowerTile, Swipe.DOWN);
                 }
             }
-            if (listnumber % length != rightBorder)
+            else if(coordinate.x > 0) 
             {
-                var rightTile = Board.tilesByListnumbers[listnumber + 1];
-                if (rightTile.GetCard() == null || card.GetCharacterType().IsEnemy(rightTile.GetCard().GetCharacterType()))
-                {
-                    avaibleTiles.Add(rightTile, Swipe.RIGHT);
-                }
-            }
-            if (listnumber % length != leftBorder)
-            {
-                var leftTile = Board.tilesByListnumbers[listnumber - 1];
+                var targetCoordinate = new Vector2(coordinate.x - 1, coordinate.y);
+                var leftTile = Board.tilesByCoordinates[targetCoordinate];
                 if (leftTile.GetCard() == null || card.GetCharacterType().IsEnemy(leftTile.GetCard().GetCharacterType()))
                 {
                     avaibleTiles.Add(leftTile, Swipe.LEFT);
+                }
+            }
+            else if(coordinate.x < rL - 1) 
+            {
+                var targetCoordinate = new Vector2(coordinate.x + 1, coordinate.y);
+                var rightTile = Board.tilesByCoordinates[targetCoordinate];
+                if (rightTile.GetCard() == null || card.GetCharacterType().IsEnemy(rightTile.GetCard().GetCharacterType()))
+                {
+                    avaibleTiles.Add(rightTile, Swipe.RIGHT);
                 }
             }
             return avaibleTiles;
