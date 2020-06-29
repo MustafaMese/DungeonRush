@@ -14,54 +14,53 @@ namespace DungeonRush.Shifting
     {
         public override bool Define(Card card, Swipe swipe)
         {
-            upperBorder = Board.RowLength - 1;
-            lowerBorder = Board.RowLength * (Board.RowLength - 1);
-            leftBorder = 0;
-            rightBorder = Board.RowLength - 1;
+            int rL = Board.RowLength;
 
-            int listnumber = card.GetTile().GetListNumber();
-            int length = Board.RowLength;
+            Vector2 coordinate = card.GetTile().transform.position;
             switch (swipe)
             {
                 case Swipe.NONE:
                     break;
                 case Swipe.UP:
-                    if (listnumber > upperBorder)
+                    if(coordinate.y < rL - 1) 
                     {
-                        int targetListnumber = listnumber - length;
-                        Tile targetTile = Board.tiles[targetListnumber];
+                        Vector2 targetPos = new Vector2(coordinate.x, coordinate.y + 1);
+                        Tile targetTile = Board.tilesByCoordinates[targetPos];
                         ConfigureCardMove(card, targetTile);
                         return true;
                     }
                     break;
                 case Swipe.DOWN:
-                    if (listnumber < lowerBorder)
+                    if(coordinate.y > 0) 
                     {
-                        int targetListnumber = listnumber + length;
-                        Tile targetTile = Board.tiles[targetListnumber];
+                        Vector2 targetPos = new Vector2(coordinate.x, coordinate.y - 1);
+                        Tile targetTile = Board.tilesByCoordinates[targetPos];
                         ConfigureCardMove(card, targetTile);
                         return true;
                     }
                     break;
                 case Swipe.LEFT:
-                    if (listnumber % length != leftBorder)
+                    if(coordinate.x > 0) 
                     {
-                        int targetListnumber = listnumber - 1;
-                        Tile targetTile = Board.tiles[targetListnumber];
+                        Vector2 targetPos = new Vector2(coordinate.x - 1, coordinate.y);
+                        Tile targetTile = Board.tilesByCoordinates[targetPos];
                         ConfigureCardMove(card, targetTile);
                         return true;
                     }
                     break;
                 case Swipe.RIGHT:
-                    if (listnumber % length != rightBorder)
+                    if(coordinate.x < rL - 1) 
                     {
-                        int targetListnumber = listnumber + 1;
-                        Tile targetTile = Board.tiles[targetListnumber];
+                        Vector2 targetPos = new Vector2(coordinate.x + 1, coordinate.y);
+                        Tile targetTile = Board.tilesByCoordinates[targetPos];
                         ConfigureCardMove(card, targetTile);
                         return true;
                     }
                     break;
+                default:
+                    break;
             }
+
             return false;
         }
         private void ConfigureCardMove(Card card, Tile targetTile)
@@ -100,7 +99,7 @@ namespace DungeonRush.Shifting
 
             if (listnumber > upperBorder)
             {
-                var upperTile = Board.tiles[listnumber - length];
+                var upperTile = Board.tilesByListnumbers[listnumber - length];
                 if (upperTile.GetCard() == null || card.GetCharacterType().IsEnemy(upperTile.GetCard().GetCharacterType()))
                 {
                     avaibleTiles.Add(upperTile, Swipe.UP);
@@ -108,7 +107,7 @@ namespace DungeonRush.Shifting
             }
             if (listnumber < lowerBorder)
             {
-                var lowerTile = Board.tiles[listnumber + length];
+                var lowerTile = Board.tilesByListnumbers[listnumber + length];
                 if (lowerTile.GetCard() == null || card.GetCharacterType().IsEnemy(lowerTile.GetCard().GetCharacterType()))
                 {
                     avaibleTiles.Add(lowerTile, Swipe.DOWN);
@@ -116,7 +115,7 @@ namespace DungeonRush.Shifting
             }
             if (listnumber % length != rightBorder)
             {
-                var rightTile = Board.tiles[listnumber + 1];
+                var rightTile = Board.tilesByListnumbers[listnumber + 1];
                 if (rightTile.GetCard() == null || card.GetCharacterType().IsEnemy(rightTile.GetCard().GetCharacterType()))
                 {
                     avaibleTiles.Add(rightTile, Swipe.RIGHT);
@@ -124,7 +123,7 @@ namespace DungeonRush.Shifting
             }
             if (listnumber % length != leftBorder)
             {
-                var leftTile = Board.tiles[listnumber - 1];
+                var leftTile = Board.tilesByListnumbers[listnumber - 1];
                 if (leftTile.GetCard() == null || card.GetCharacterType().IsEnemy(leftTile.GetCard().GetCharacterType()))
                 {
                     avaibleTiles.Add(leftTile, Swipe.LEFT);

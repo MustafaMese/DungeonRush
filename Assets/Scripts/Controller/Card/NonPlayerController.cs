@@ -114,7 +114,6 @@ namespace DungeonRush.Controller
                 var card = highLevelCards[Random.Range(0, highLevelCards.Count)];
                 if (!cards.Contains((AIController)card.Controller))
                 {
-                    print("attacc: " + card + "x" + card.GetTile().GetListNumber());
                     cards.Add((AIController)card.Controller);
                 }
             }

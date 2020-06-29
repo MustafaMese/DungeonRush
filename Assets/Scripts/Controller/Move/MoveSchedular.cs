@@ -30,12 +30,13 @@ namespace DungeonRush.Controller
             tourText.text = tourCount.ToString();
             turnNumber = 0;
             oldTurnNumber = -1;
+
         }
 
         private void Update()
         {
-            if (pc == null) 
-            { 
+            if(pc == null) 
+            {
                 pc = FindObjectOfType<PlayerController>();
                 pc.Begin();
             }

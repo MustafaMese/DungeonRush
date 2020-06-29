@@ -8,11 +8,27 @@ namespace DungeonRush
 {
     namespace Field 
     {
+        [ExecuteAlways]
         public class Tile : MonoBehaviour
         {
-            private Vector2Int coordinate;
+            public Vector2Int coordinate;
             public Card card;
-            private int listNumber;
+            public int listNumber;
+
+
+            private void Start()
+            {
+                if (card != null)
+                {
+                    CardManager.Instance.AddCard(card, this, FindObjectOfType<Board>(), false);
+                }
+            }
+
+            private void Update()
+            {
+                #if UNITY_EDITOR
+                #endif
+            }
 
             public Card GetCard()
             {

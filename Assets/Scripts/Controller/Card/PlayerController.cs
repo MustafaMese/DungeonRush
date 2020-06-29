@@ -26,6 +26,7 @@ namespace DungeonRush.Controller
             InitProcessHandlers();
             player = GetComponent<PlayerCard>();
             ms = FindObjectOfType<MoveSchedular>();
+            Begin();
         }
 
         private void Update()

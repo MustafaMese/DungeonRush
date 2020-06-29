@@ -16,11 +16,14 @@ namespace DungeonRush
 
             public static int RowLength;
             public List<Tile> cardPlaces = new List<Tile>();
-            public static Dictionary<int, Tile> tiles = new Dictionary<int, Tile>();
+            public static Dictionary<int, Tile> tilesByListnumbers = new Dictionary<int, Tile>();
+            public static Dictionary<Vector2, Tile> tilesByCoordinates = new Dictionary<Vector2, Tile>();
             public static bool touched;
             public CardManager cm;
             public BoardCreator bCreator;
             public int playerStartTile = 0;
+
+            [SerializeField] bool editedInRuntime = false;
 
             private void Awake()
             {
@@ -32,22 +35,27 @@ namespace DungeonRush
 
             private void Start()
             {
-                bCreator.InitializeTiles(cardPlaces);
-
-                cm.AddCard(cm.playerCard, cardPlaces[playerStartTile], this, false);
-
-                for (int i = 0; i < cardPlaces.Count; i++)
+                if (!editedInRuntime)
                 {
-                    if (cardPlaces[i].GetCard() == null)
+                    bCreator.InitializeTiles(cardPlaces);
+                    cm.AddCard(cm.playerCard, cardPlaces[5], this, false);
+                    for (int i = 0; i < cardPlaces.Count; i++)
                     {
-                        int number = Random.Range(0, 101);
-                        if(number < 100)
-                            cm.AddCard(GiveRandomCard(cm.enemyCards), cardPlaces[i], this, false);
-                        else
-                            cm.AddCard(GiveRandomCard(cm.itemCards), cardPlaces[i], this, false);
-                        //else
-                        //    cm.AddCard(GiveRandomCard(cm.coinCards), cardPlaces[i], this, false);
+                        if (cardPlaces[i].GetCard() == null)
+                        {
+                            int number = Random.Range(0, 101);
+                            //if (number > 75)
+                                //cm.AddCard(GiveRandomCard(cm.enemyCards), cardPlaces[i], this, false);
+                            //else if (number < 90)
+                            //    cm.AddCard(GiveRandomCard(cm.itemCards), cardPlaces[i], this, false);
+                            //else
+                            //    cm.AddCard(GiveRandomCard(cm.itemCards), cardPlaces[i], this, false);
+                        }
                     }
+                }
+                else 
+                {
+                    CardPlacesToTiles();
                 }
 
                 foreach (var card in cm.cards)
@@ -59,9 +67,18 @@ namespace DungeonRush
                 }
             }
 
+            public void CardPlacesToTiles() 
+            {
+                foreach (var tile in cardPlaces)
+                {
+                    tilesByListnumbers.Add(tile.listNumber, tile);
+                    tilesByCoordinates.Add(tile.transform.position, tile);
+                }
+            }
+
             public void SetTiles(Dictionary<int, Tile> t)
             {
-                tiles = t;
+                tilesByListnumbers = t;
             }
 
             public void SetCardPlaces(List<Tile> cardPlaces)
@@ -82,7 +99,8 @@ namespace DungeonRush
 
             private void OnDestroy()
             {
-                tiles.Clear();
+                tilesByListnumbers.Clear();
+                tilesByCoordinates.Clear();
                 touched = false;
             }
         }

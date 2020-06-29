@@ -10,11 +10,15 @@ namespace DungeonRush.Field
     {
         public int rowLength;
 
-        [SerializeField] Vector2 startPos;
-        [SerializeField] float emptySpace;
-        [SerializeField] float xSpace;
-        [SerializeField] float ySpace;
-        [SerializeField] Tile tilePrefab;
+        [SerializeField] Vector2 startPos = Vector2.zero;
+        [SerializeField] float emptySpace = 0;
+        [SerializeField] float xSpace = 0;
+        [SerializeField] float ySpace = 0;
+        [SerializeField] Tile tilePrefab = null;
+
+        public static float _XSpace = 0;
+        public static float _YSpace = 0;
+        public static float _EmptySpace = 0;
 
         public bool create;
         public bool delete;
@@ -33,18 +37,21 @@ namespace DungeonRush.Field
             {
                 create = false;
                 Create();
+                SetValues();
             }
 
             if (delete)
             {
                 delete = false;
                 Delete();
+                SetValues();
             }
 
             if (display)
             {
                 display = false;
                 DisplayTiles();
+                SetValues();
             }
         }
 
@@ -56,7 +63,7 @@ namespace DungeonRush.Field
                 {
                     DestroyImmediate(board.cardPlaces[i].gameObject);
                 }
-                Board.tiles.Clear();
+                Board.tilesByListnumbers.Clear();
                 board.cardPlaces = null;
             }
         }
@@ -77,7 +84,7 @@ namespace DungeonRush.Field
                         currentPos.x += xSpace + emptySpace;
                     }
                     currentPos.x = startPos.x;
-                    currentPos.y -= ySpace + emptySpace;
+                    currentPos.y += ySpace + emptySpace;
                 }
 
                 InitializeTiles(list);
@@ -92,7 +99,8 @@ namespace DungeonRush.Field
                 pos.SetCoordinate(pos.transform.position);
                 pos.SetCard(null);
                 pos.SetListNumber(i);
-                Board.tiles.Add(i, pos);
+                Board.tilesByListnumbers.Add(i, pos);
+                Board.tilesByCoordinates.Add(pos.transform.position, pos);
                 i++;
             }
             board.SetCardPlaces(cardPlaces);
@@ -100,11 +108,17 @@ namespace DungeonRush.Field
 
         public void DisplayTiles()
         {
-            foreach (var tile in Board.tiles.Values)
+            foreach (var tile in Board.tilesByListnumbers.Values)
             {
-                print("haha");
-                print(tile.GetListNumber() + " " + tile);
+                print(tile.GetListNumber() + " " + tile.GetCoordinate());
             }
+        }
+
+        public void SetValues() 
+        {
+            _XSpace = xSpace;
+            _YSpace = ySpace;
+            _EmptySpace = emptySpace;
         }
     }
 }

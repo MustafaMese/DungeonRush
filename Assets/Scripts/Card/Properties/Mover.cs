@@ -64,7 +64,6 @@ namespace DungeonRush
                     NonPlayerMoveTypes(moveType, moverCard, targetCard);
 
                     Board.touched = false;
-                    MoveMaker.movesFinished = true;
                 }
 
                 moveFinished = true;

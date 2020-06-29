@@ -31,7 +31,7 @@ namespace DungeonRush.Shifting
                     if (listnumber > upperBorder)
                     {
                         int targetListnumber = listnumber - (length * 2);
-                        Tile targetTile = Board.tiles[targetListnumber];
+                        Tile targetTile = Board.tilesByListnumbers[targetListnumber];
                         ConfigureCardMove(card, targetTile);
                         return true;
                     }
@@ -40,7 +40,7 @@ namespace DungeonRush.Shifting
                     if (listnumber < lowerBorder)
                     {
                         int targetListnumber = listnumber + (length * 2);
-                        Tile targetTile = Board.tiles[targetListnumber];
+                        Tile targetTile = Board.tilesByListnumbers[targetListnumber];
                         ConfigureCardMove(card, targetTile);
                         return true;
                     }
@@ -49,7 +49,7 @@ namespace DungeonRush.Shifting
                     if (listnumber % length != leftBorder)
                     {
                         int targetListnumber = listnumber - 2;
-                        Tile targetTile = Board.tiles[targetListnumber];
+                        Tile targetTile = Board.tilesByListnumbers[targetListnumber];
                         ConfigureCardMove(card, targetTile);
                         return true;
                     }
@@ -58,7 +58,7 @@ namespace DungeonRush.Shifting
                     if (listnumber % length != rightBorder)
                     {
                         int targetListnumber = listnumber + 2;
-                        Tile targetTile = Board.tiles[targetListnumber];
+                        Tile targetTile = Board.tilesByListnumbers[targetListnumber];
                         ConfigureCardMove(card, targetTile);
                         return true;
                     }
@@ -113,7 +113,7 @@ namespace DungeonRush.Shifting
             // TODO Sadece bir kare de gidebilmeli
             if(listnumber > upperBorder) 
             {
-                var twoUpperTile = Board.tiles[listnumber - (length * 2)];
+                var twoUpperTile = Board.tilesByListnumbers[listnumber - (length * 2)];
                 if (twoUpperTile.GetCard() == null || card.GetCharacterType().IsEnemy(twoUpperTile.GetCard().GetCharacterType()))
                 {
                     avaibleTiles.Add(twoUpperTile, Swipe.UP);

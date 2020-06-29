@@ -54,7 +54,7 @@ namespace DungeonRush
                 List<Card> cleverCards = new List<Card>();
                 foreach (var card in cards)
                 {
-                    if (card.GetCardType() == CardType.ENEMY && card.GetLevel() >= 5)
+                    if (card.GetCardType() == CardType.ENEMY && card.GetLevel() >= 1)
                         cleverCards.Add(card);
                 }
                 return cleverCards;
@@ -146,7 +146,7 @@ namespace DungeonRush
 
             public static void RemoveCardForAttacker(int listnumber, bool isPlayer)
             {
-                RemoveCard(Board.tiles[listnumber], isPlayer);
+                RemoveCard(Board.tilesByListnumbers[listnumber], isPlayer);
             }
         }
     }
