@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using DungeonRush.Cards;
 using DungeonRush.Data;
 using DungeonRush.Field;
@@ -15,53 +16,82 @@ namespace DungeonRush.Shifting
     {
         public override bool Define(Card card, Swipe swipe)
         {
-            upperBorder = (Board.RowLength * 2) - 1;
-            lowerBorder = Board.RowLength * (Board.RowLength - 2);
-            leftBorder = 1;
-            rightBorder = Board.RowLength - 2;
-
-            int listnumber = card.GetTile().GetListNumber();
-            int length = Board.RowLength;
+            int rL = Board.RowLength;
+            Vector2 coordinate = card.GetTile().transform.position;
 
             switch (swipe)
             {
                 case Swipe.NONE:
                     break;
                 case Swipe.UP:
-                    if (listnumber > upperBorder)
+                    if (coordinate.y < rL - 2)
                     {
-                        int targetListnumber = listnumber - (length * 2);
-                        Tile targetTile = Board.tilesByListnumbers[targetListnumber];
+                        Vector2 targetPos = new Vector2(coordinate.x, coordinate.y + 2);
+                        Tile targetTile = Board.tilesByCoordinates[targetPos];
+                        ConfigureCardMove(card, targetTile);
+                        return true;
+                    }
+
+                    if (coordinate.y < rL - 1)
+                    {
+                        Vector2 targetPos = new Vector2(coordinate.x, coordinate.y + 1);
+                        Tile targetTile = Board.tilesByCoordinates[targetPos];
                         ConfigureCardMove(card, targetTile);
                         return true;
                     }
                     break;
                 case Swipe.DOWN:
-                    if (listnumber < lowerBorder)
+                    if (coordinate.y > 1)
                     {
-                        int targetListnumber = listnumber + (length * 2);
-                        Tile targetTile = Board.tilesByListnumbers[targetListnumber];
+                        Vector2 targetPos = new Vector2(coordinate.x, coordinate.y - 2);
+                        Tile targetTile = Board.tilesByCoordinates[targetPos];
+                        ConfigureCardMove(card, targetTile);
+                        return true;
+                    }
+
+                    if (coordinate.y > 0)
+                    {
+                        Vector2 targetPos = new Vector2(coordinate.x, coordinate.y - 1);
+                        Tile targetTile = Board.tilesByCoordinates[targetPos];
                         ConfigureCardMove(card, targetTile);
                         return true;
                     }
                     break;
                 case Swipe.LEFT:
-                    if (listnumber % length != leftBorder)
+                    if (coordinate.x > 1)
                     {
-                        int targetListnumber = listnumber - 2;
-                        Tile targetTile = Board.tilesByListnumbers[targetListnumber];
+                        Vector2 targetPos = new Vector2(coordinate.x - 2, coordinate.y);
+                        Tile targetTile = Board.tilesByCoordinates[targetPos];
+                        ConfigureCardMove(card, targetTile);
+                        return true;
+                    }
+
+                    if (coordinate.x > 0)
+                    {
+                        Vector2 targetPos = new Vector2(coordinate.x - 1, coordinate.y);
+                        Tile targetTile = Board.tilesByCoordinates[targetPos];
                         ConfigureCardMove(card, targetTile);
                         return true;
                     }
                     break;
                 case Swipe.RIGHT:
-                    if (listnumber % length != rightBorder)
+                    if (coordinate.x < rL - 2)
                     {
-                        int targetListnumber = listnumber + 2;
-                        Tile targetTile = Board.tilesByListnumbers[targetListnumber];
+                        Vector2 targetPos = new Vector2(coordinate.x + 2, coordinate.y);
+                        Tile targetTile = Board.tilesByCoordinates[targetPos];
                         ConfigureCardMove(card, targetTile);
                         return true;
                     }
+
+                    if (coordinate.x < rL - 1)
+                    {
+                        Vector2 targetPos = new Vector2(coordinate.x + 1, coordinate.y);
+                        Tile targetTile = Board.tilesByCoordinates[targetPos];
+                        ConfigureCardMove(card, targetTile);
+                        return true;
+                    }
+                    break;
+                default:
                     break;
             }
             return false;
@@ -102,28 +132,112 @@ namespace DungeonRush.Shifting
         }
         public override Dictionary<Tile, Swipe> GetAvaibleTiles(Card card)
         {
-            throw new System.NotImplementedException();
-
             if (card == null) return null;
 
-            int listnumber = card.GetTile().GetListNumber();
-            int length = Board.RowLength;
+            Vector2 coordinate = card.GetTile().transform.position;
+            int rL = Board.RowLength;
             Dictionary<Tile, Swipe> avaibleTiles = new Dictionary<Tile, Swipe>();
 
-            // TODO Sadece bir kare de gidebilmeli
-            if(listnumber > upperBorder) 
+            bool upper = false;
+            bool lower = false;
+            bool left = false;
+            bool right = false;
+
+            if(coordinate.y < rL - 2) 
             {
-                var twoUpperTile = Board.tilesByListnumbers[listnumber - (length * 2)];
-                if (twoUpperTile.GetCard() == null || card.GetCharacterType().IsEnemy(twoUpperTile.GetCard().GetCharacterType()))
+                upper = true;
+                var targetCoordinate = new Vector2(coordinate.x, coordinate.y + 2);
+                var upperTile = Board.tilesByCoordinates[targetCoordinate];
+                if(upperTile.GetCard() == null || card.GetCharacterType().IsEnemy(upperTile.GetCard().GetCharacterType()))
                 {
-                    avaibleTiles.Add(twoUpperTile, Swipe.UP);
+                    avaibleTiles.Add(upperTile, Swipe.UP);
                 }
-                
             }
+            if(!upper & coordinate.y < rL - 1) 
+            {
+                var targetCoordinate = new Vector2(coordinate.x, coordinate.y + 1);
+                var upperTile = Board.tilesByCoordinates[targetCoordinate];
+                if (upperTile.GetCard() == null || card.GetCharacterType().IsEnemy(upperTile.GetCard().GetCharacterType()))
+                {
+                    avaibleTiles.Add(upperTile, Swipe.UP);
+                }
+            }
+
+            if(coordinate.y > 1)
+            {
+                lower = true;
+                var targetCoordinate = new Vector2(coordinate.x, coordinate.y - 2);
+                var lowerTile = Board.tilesByCoordinates[targetCoordinate];
+                if (lowerTile.GetCard() == null || card.GetCharacterType().IsEnemy(lowerTile.GetCard().GetCharacterType()))
+                {
+                    avaibleTiles.Add(lowerTile, Swipe.UP);
+                }
+            }
+            if(!lower && coordinate.y > 0)
+            {
+                var targetCoordinate = new Vector2(coordinate.x, coordinate.y - 1);
+                var lowerTile = Board.tilesByCoordinates[targetCoordinate];
+                if (lowerTile.GetCard() == null || card.GetCharacterType().IsEnemy(lowerTile.GetCard().GetCharacterType()))
+                {
+                    avaibleTiles.Add(lowerTile, Swipe.DOWN);
+                }
+            }
+
+            if(coordinate.x > 1)
+            {
+                left = true;
+                var targetCoordinate = new Vector2(coordinate.x - 2, coordinate.y);
+                var leftTile = Board.tilesByCoordinates[targetCoordinate];
+                if (leftTile.GetCard() == null || card.GetCharacterType().IsEnemy(leftTile.GetCard().GetCharacterType()))
+                {
+                    avaibleTiles.Add(leftTile, Swipe.LEFT);
+                }
+            }
+            if(!left && coordinate.x > 0)
+            {
+                var targetCoordinate = new Vector2(coordinate.x - 1, coordinate.y);
+                var leftTile = Board.tilesByCoordinates[targetCoordinate];
+                if (leftTile.GetCard() == null || card.GetCharacterType().IsEnemy(leftTile.GetCard().GetCharacterType()))
+                {
+                    avaibleTiles.Add(leftTile, Swipe.LEFT);
+                }
+            }
+
+            if(coordinate.x < rL - 2)
+            {
+                right = true;
+                var targetCoordinate = new Vector2(coordinate.x + 2, coordinate.y);
+                var rightTile = Board.tilesByCoordinates[targetCoordinate];
+                if (rightTile.GetCard() == null || card.GetCharacterType().IsEnemy(rightTile.GetCard().GetCharacterType()))
+                {
+                    avaibleTiles.Add(rightTile, Swipe.RIGHT);
+                }
+            }
+            if(!right && coordinate.x < rL - 1)
+            {
+                var targetCoordinate = new Vector2(coordinate.x + 1, coordinate.y);
+                var rightTile = Board.tilesByCoordinates[targetCoordinate];
+                if (rightTile.GetCard() == null || card.GetCharacterType().IsEnemy(rightTile.GetCard().GetCharacterType()))
+                {
+                    avaibleTiles.Add(rightTile, Swipe.RIGHT);
+                }
+            }
+
+            return avaibleTiles;
         }
         public override Swipe SelectTileToAttack(Dictionary<Tile, Swipe> tiles)
         {
-            throw new System.NotImplementedException();
+            var number = tiles.Count;
+            number = UnityEngine.Random.Range(0, number);
+
+            List<Tile> keys = Enumerable.ToList(tiles.Keys);
+            if (keys.Count <= 0)
+                return Swipe.NONE;
+            else
+            {
+                Tile tile = keys[number];
+                return tiles[tile];
+            }
         }
     }
 }

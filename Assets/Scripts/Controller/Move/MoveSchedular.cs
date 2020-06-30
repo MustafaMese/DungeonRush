@@ -89,7 +89,7 @@ namespace DungeonRush.Controller
             }
             else if (turnNumber == 2)
             {
-                
+                notify = true;
             }
         }
     }

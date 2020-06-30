@@ -19,7 +19,7 @@ namespace DungeonRush.Controller
         public List<Card> highLevelCards;
         public List<AIController> attackers;
 
-        [SerializeField] int enemyNumber = 4;
+        [SerializeField] int attackerDistance = 4;
         public bool movesFinished = false;
 
         public bool isRunning = false;
@@ -70,8 +70,6 @@ namespace DungeonRush.Controller
             }
         }
 
-        
-
         #region DETERMINING METHODS
         private void DetermineHighLevelCards() 
         {
@@ -86,7 +84,33 @@ namespace DungeonRush.Controller
         }
         private List<Card> GetHighLevelCards()
         {
-            return CardManager.Instance.GetHighLevelCards();
+            Vector2 coordinate = playerController.transform.position;
+            int rL = Board.RowLength;
+            Tile t;
+            Vector2 temp;
+            List<Card> l = new List<Card>();
+
+            for (int i = -2; i < attackerDistance / 2 + 1; i++)
+            {
+                if (i == 0)
+                    continue;
+
+                for (int j = -2; j < attackerDistance / 2 + 1; j++)
+                {
+                    if (j == 0)
+                        continue;
+
+                    if (coordinate.x + j < 0 || coordinate.y + i < 0 || coordinate.x + j > rL - 1 || coordinate.y + i > rL - 1) 
+                        continue;
+
+                    temp = new Vector2(coordinate.x + j, coordinate.y + i);
+                    t = Board.tilesByCoordinates[temp];
+                    if (t != null && t.GetCard() != null)
+                        l.Add(t.GetCard());
+                }
+            }
+
+            return l;
         }
 
         #endregion
@@ -107,15 +131,10 @@ namespace DungeonRush.Controller
         private List<AIController> DecideAttackerEnemies()
         {
             List<AIController> cards = new List<AIController>();
-            var attackerCount = highLevelCards.Count % enemyNumber;
-            print("aC: " + attackerCount);
-            for (int i = 0; i < attackerCount; i++)
+            var attackerCount = highLevelCards.Count;
+            foreach (var hc in highLevelCards)
             {
-                var card = highLevelCards[Random.Range(0, highLevelCards.Count)];
-                if (!cards.Contains((AIController)card.Controller))
-                {
-                    cards.Add((AIController)card.Controller);
-                }
+                cards.Add((AIController)hc.Controller);
             }
             return cards;
         }

@@ -106,7 +106,8 @@ namespace DungeonRush.Shifting
                     avaibleTiles.Add(upperTile, Swipe.UP);
                 }
             }
-            else if(coordinate.y > 0) 
+            
+            if(coordinate.y > 0) 
             {
                 var targetCoordinate = new Vector2(coordinate.x, coordinate.y - 1);
                 var lowerTile = Board.tilesByCoordinates[targetCoordinate];
@@ -115,7 +116,8 @@ namespace DungeonRush.Shifting
                     avaibleTiles.Add(lowerTile, Swipe.DOWN);
                 }
             }
-            else if(coordinate.x > 0) 
+            
+            if(coordinate.x > 0) 
             {
                 var targetCoordinate = new Vector2(coordinate.x - 1, coordinate.y);
                 var leftTile = Board.tilesByCoordinates[targetCoordinate];
@@ -124,7 +126,8 @@ namespace DungeonRush.Shifting
                     avaibleTiles.Add(leftTile, Swipe.LEFT);
                 }
             }
-            else if(coordinate.x < rL - 1) 
+            
+            if(coordinate.x < rL - 1) 
             {
                 var targetCoordinate = new Vector2(coordinate.x + 1, coordinate.y);
                 var rightTile = Board.tilesByCoordinates[targetCoordinate];
@@ -133,6 +136,7 @@ namespace DungeonRush.Shifting
                     avaibleTiles.Add(rightTile, Swipe.RIGHT);
                 }
             }
+
             return avaibleTiles;
         }
         private MoveType FindMoveType(Tile t)
