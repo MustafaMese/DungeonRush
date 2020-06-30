@@ -10,6 +10,6 @@ namespace DungeonRush.Shifting
     {
         public abstract bool Define(Card card, Swipe swipe);
         public abstract Dictionary<Tile, Swipe> GetAvaibleTiles(Card card);
-        public abstract Swipe SelectTileToAttack(Dictionary<Tile, Swipe> tiles);
+        public abstract Swipe SelectTileToAttack(Dictionary<Tile, Swipe> tiles, Card attacker);
     }
 }

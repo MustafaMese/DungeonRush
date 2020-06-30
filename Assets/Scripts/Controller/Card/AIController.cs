@@ -40,25 +40,17 @@ namespace DungeonRush.Controller
 
             if (preparingProcess.IsRunning())
             {
-                print("ai1");
                 PrepareMoveProcess();
             }
             else if (animationProcess.IsRunning()) 
             {
-                print("ai2");
                 AnimationProcess(card);
             }
             else if (moveProcess.IsRunning())
             {
-                print("ai3");
                 ExecuteMoves();
             }
 
-            if(isAttacker && !card.isMoving) 
-            {
-                Notify();
-                isAttacker = false;
-            }
         }
 
         // TODO Swipe değişkeninden kurtul..
@@ -71,13 +63,11 @@ namespace DungeonRush.Controller
             
             if (canMove)
             {
-                print("ai1.1");
                 preparingProcess.Finish();
                 animationProcess.StartProcess();
             }
             else
             {
-                print("ai1.2");
                 swipe = Swipe.NONE;
                 Notify();
                 card.GetMove().Reset();
@@ -137,23 +127,19 @@ namespace DungeonRush.Controller
 
                 if (move)
                 {
-                    print("ai.notAt");
                     card.ExecuteMove();
                     moveProcess.ContinuingProcess(false);
                 }
                 else
                 {
-                    print("ai.at");
                     card.Attack(card.GetMove().GetTargetTile().GetCard());
                     moveProcess.EndProcess();
                 }
             }
             else if (moveProcess.continuing)
             {
-                print("mP.contu");
                 if(card.GetComponent<Mover>().moveFinished && !Board.touched)
                 {
-                    print("mP.contu fin");
                     card.GetComponent<Mover>().moveFinished = false;
                     moveProcess.EndProcess();
                 }
@@ -178,7 +164,7 @@ namespace DungeonRush.Controller
         private IEnumerator EndTurn()
         {
             Board.touched = false;
-            yield return new WaitForSeconds(timeForFinishTourET);
+            yield return new WaitForSeconds(0);
         }
 
         #endregion
@@ -207,6 +193,7 @@ namespace DungeonRush.Controller
 
         public void Run()
         {
+            swipe = GetCard().GetShift().SelectTileToAttack(GetCard().GetShift().GetAvaibleTiles(GetCard()), GetCard());
             isRunning = true;
             isAttacker = true;
             preparingProcess.StartProcess();

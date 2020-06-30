@@ -10,17 +10,13 @@ namespace DungeonRush.Controller
 {
     public class NonPlayerController : MonoBehaviour, ICardController
     {
-        List<Tile> avaibleTiles = new List<Tile>();
-
         public ProcessHandleChecker determineProcess;
-        public ProcessHandleChecker decideProcess;
         public ProcessHandleChecker assigningProcess;
 
-        public List<Card> highLevelCards;
-        public List<AIController> attackers;
+        public List<AIController> attackerCards;
 
+        public bool moveFinished = false;
         [SerializeField] int attackerDistance = 4;
-        public bool movesFinished = false;
 
         public bool isRunning = false;
         bool finishTurn = false;
@@ -28,6 +24,8 @@ namespace DungeonRush.Controller
 
         public PlayerController playerController;
         public MoveSchedular ms;
+
+        public int attackerIndex;
 
         private void Start()
         {
@@ -45,27 +43,16 @@ namespace DungeonRush.Controller
                 if (determineProcess.IsRunning())
                 {
                     DetermineHighLevelCards();
-                    print("np1");
-                }
-                else if (decideProcess.IsRunning())
-                {
-                    print("np2");
-                    DecidingProcess();
+                    moveFinished = true;
                 }
                 else if (assigningProcess.IsRunning())
                 {
-                    print("np4");
-                    if (assigningProcess.start) 
+                    if (attackerIndex < attackerCards.Count)
                     {
-                        AssignControllers();
+                        MoveControllers();
                     }
-                    else if (assigningProcess.end) 
-                    {
-                        if (movesFinished)
-                        {
-                            FinishMovement();
-                        }
-                    }
+                    else
+                        FinishMovement();
                 }
             }
         }
@@ -73,22 +60,22 @@ namespace DungeonRush.Controller
         #region DETERMINING METHODS
         private void DetermineHighLevelCards() 
         {
-            highLevelCards = GetHighLevelCards();
+            attackerCards = GetHighLevelCards();
             determineProcess.Finish();
-            decideProcess.StartProcess();
-            if (highLevelCards == null || highLevelCards.Count <= 0)
+            assigningProcess.StartProcess();
+            if (attackerCards == null || attackerCards.Count <= 0)
             {
                 print("np1.1");
                 Stop();
             }
         }
-        private List<Card> GetHighLevelCards()
+        private List<AIController> GetHighLevelCards()
         {
             Vector2 coordinate = playerController.transform.position;
             int rL = Board.RowLength;
             Tile t;
             Vector2 temp;
-            List<Card> l = new List<Card>();
+            List<AIController> l = new List<AIController>();
 
             for (int i = -2; i < attackerDistance / 2 + 1; i++)
             {
@@ -106,7 +93,7 @@ namespace DungeonRush.Controller
                     temp = new Vector2(coordinate.x + j, coordinate.y + i);
                     t = Board.tilesByCoordinates[temp];
                     if (t != null && t.GetCard() != null)
-                        l.Add(t.GetCard());
+                        l.Add((AIController)t.GetCard().Controller);
                 }
             }
 
@@ -115,94 +102,38 @@ namespace DungeonRush.Controller
 
         #endregion
 
-        #region DECIDING METHODS
-        private void DecidingProcess() 
-        {
-            attackers = DecideAttackerEnemies();
-            highLevelCards.Clear();
-            decideProcess.Finish();
-            assigningProcess.StartProcess();
-            if (attackers == null || attackers.Count <= 0)
-            {
-                print("np3");
-                Stop();
-            }
-        }
-        private List<AIController> DecideAttackerEnemies()
-        {
-            List<AIController> cards = new List<AIController>();
-            var attackerCount = highLevelCards.Count;
-            foreach (var hc in highLevelCards)
-            {
-                cards.Add((AIController)hc.Controller);
-            }
-            return cards;
-        }
-
-        #endregion
-
         #region ASSINGING PROCESS
+
+        private void MoveControllers()
+        {
+            if (moveFinished && attackerCards[attackerIndex] != null)
+            {
+                attackerCards[attackerIndex].Run();
+                moveFinished = false;
+            }
+            else if (attackerCards[attackerIndex] == null)
+            {
+                attackerIndex++;
+                moveFinished = true;
+            }
+        }
+
         private void FinishMovement()
         {
             Stop();
             assigningProcess.Finish();
-            movesFinished = false;
         }
-        private void AssignControllers() 
-        {
-            SetAvaibleTiles();
-            SelectTilesToAttack();
-            foreach (var attacker in attackers)
-            {
-                print("np5");
-                attacker.Run();
-            }
-            assigningProcess.EndProcess();
-        }
-        private void SelectTilesToAttack()
-        {
-            foreach (var attacker in attackers)
-            {
-                attacker.swipe = attacker.GetCard().GetShift().SelectTileToAttack(attacker.avaibleTiles);
-            }
-        }
-        private void SetAvaibleTiles()
-        {
-            List<AIController> keys = new List<AIController>(attackers);
-            foreach (var attacker in keys)
-            {
-                attacker.avaibleTiles = attacker.GetCard().GetShift().GetAvaibleTiles(attacker.GetCard());
-                if (avaibleTiles != null && attacker.avaibleTiles != null)
-                {
-                    List<Tile> keyList = new List<Tile>(attacker.avaibleTiles.Keys);
-                    foreach (var tile in keyList)
-                    {
-                        if (avaibleTiles.Contains(tile) || (tile.GetCard() != null && attackers.Contains((AIController)tile.GetCard().Controller)))
-                        {
-                            attacker.avaibleTiles.Remove(tile);
-                        }
-                        else
-                        {
-                            avaibleTiles.Add(tile);
-                        }
-                    }
-                }
-                else
-                    attackers.Remove(attacker);
-            }
-        }
+
+
         #endregion
 
         public void Stop()
         {
             isRunning = false;
-            highLevelCards.Clear();
-            attackers.Clear();
-            avaibleTiles.Clear();
-            decideProcess.Finish();
+            attackerCards.Clear();
+            attackerIndex = 0;
             determineProcess.Finish();
             assigningProcess.Finish();
-            movesFinished = false;
             Notify();
         }
 
@@ -214,7 +145,6 @@ namespace DungeonRush.Controller
         public void InitProcessHandlers()
         {
             determineProcess.Init(false);
-            decideProcess.Init(false);
             assigningProcess.Init(false);
         }
 
@@ -227,20 +157,13 @@ namespace DungeonRush.Controller
         {
             Run();
             determineProcess.StartProcess();
-            movesFinished = false;
-            attackers.Clear();
-            highLevelCards.Clear();
-            avaibleTiles.Clear();
+            attackerCards.Clear();
         }
 
         public void OnNotify() 
         {
-            foreach (var attacker in attackers)
-            {
-                if (attacker.GetCard().isMoving)
-                    return;
-            }
-            movesFinished = true;
+            moveFinished = true;
+            attackerIndex++;
         }
 
         private void Notify() 

@@ -75,10 +75,20 @@ namespace DungeonRush.Shifting
             Move move = new Move(targetTile, card, moveType, canMove);
             card.SetMove(move);
         }
-        public override Swipe SelectTileToAttack(Dictionary<Tile, Swipe> tiles)
+        public override Swipe SelectTileToAttack(Dictionary<Tile, Swipe> tiles, Card attacker)
         {
+            foreach (var t in tiles.Keys)
+            {
+                if (t.GetCard() != null && attacker.GetCharacterType().IsEnemy(t.GetCard().GetCharacterType()))
+                {
+                    return tiles[t];
+                }
+            }
+
             var number = tiles.Count;
             number = Random.Range(0, number);
+
+            Debug.Log(attacker + " " + number);
 
             List<Tile> keys = Enumerable.ToList(tiles.Keys);
             if (keys.Count <= 0)

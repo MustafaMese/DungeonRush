@@ -225,7 +225,7 @@ namespace DungeonRush.Shifting
 
             return avaibleTiles;
         }
-        public override Swipe SelectTileToAttack(Dictionary<Tile, Swipe> tiles)
+        public override Swipe SelectTileToAttack(Dictionary<Tile, Swipe> tiles, Card attacker)
         {
             var number = tiles.Count;
             number = UnityEngine.Random.Range(0, number);

@@ -31,7 +31,7 @@ namespace DungeonRush
                 if (move == null || move.GetCard() == null )
                     direction = GetDirection();
 
-                move.GetCard().transform.DOMove(move.GetTargetTile().transform.position, 0.2f).OnComplete(() => TerminateMove());
+                move.GetCard().transform.DOMove(move.GetTargetTile().transform.position, 0.15f).OnComplete(() => TerminateMove());
             }
 
             private Vector3 GetDirection()
