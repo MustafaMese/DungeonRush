@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 7616904273129147796}
   - component: {fileID: -1329455596959954929}
   - component: {fileID: -6689683383463227786}
+  - component: {fileID: -474957396755857396}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Card
@@ -64,7 +65,6 @@ MonoBehaviour:
     targetTile: {fileID: 0}
     card: {fileID: 0}
     type: 0
-    lastMove: 0
     canMoveToPlace: 0
   cardLevel: 0
   disappearing: 0.066
@@ -168,6 +168,18 @@ MonoBehaviour:
     start: 0
     continuing: 0
     end: 0
+--- !u!114 &-474957396755857396
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1003901059469522988}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6d09c71aee6114479da1d4877ea958c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1241678481794930997
 GameObject:
   m_ObjectHideFlags: 0

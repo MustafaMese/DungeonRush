@@ -65,7 +65,6 @@ namespace DungeonRush.Shifting
         }
         private void ConfigureCardMove(Card card, Tile targetTile)
         {
-            Board.touched = true;
             MoveType moveType = FindMoveType(targetTile);
             bool canMove;
             if (moveType == MoveType.EMPTY)
@@ -87,8 +86,6 @@ namespace DungeonRush.Shifting
 
             var number = tiles.Count;
             number = Random.Range(0, number);
-
-            Debug.Log(attacker + " " + number);
 
             List<Tile> keys = Enumerable.ToList(tiles.Keys);
             if (keys.Count <= 0)

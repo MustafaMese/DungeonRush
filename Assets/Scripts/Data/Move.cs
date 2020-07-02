@@ -13,15 +13,6 @@ namespace DungeonRush
                 Reset();
             }
 
-            public Move(Tile cardTile, Tile targetTile, Card card, MoveType type, bool lastMove)
-            {
-                this.cardTile = cardTile;
-                this.targetTile = targetTile;
-                this.card = card;
-                this.type = type;
-                this.lastMove = lastMove;
-            }
-
             public Move(Tile targetTile, Card card, MoveType type, bool canMoveToPlace)
             {
                 this.targetTile = targetTile;
@@ -35,7 +26,6 @@ namespace DungeonRush
             public Tile targetTile;
             public Card card;
             public MoveType type;
-            public bool lastMove;
             public bool canMoveToPlace;
 
             public Tile GetCardTile()
@@ -58,24 +48,9 @@ namespace DungeonRush
                 return this.type;
             }
 
-            public bool GetLastMove()
-            {
-                return this.lastMove;
-            }
-
             public bool GetCanMove()
             {
                 return this.canMoveToPlace;
-            }
-
-            public Move TranferMoveInfoToAnotherMove(Move move)
-            {
-                move.cardTile = this.cardTile;
-                move.targetTile = this.targetTile;
-                move.card = this.card;
-                move.type = this.type;
-                move.lastMove = this.lastMove;
-                return move;
             }
 
             public void Reset()
@@ -84,7 +59,6 @@ namespace DungeonRush
                 this.targetTile = null;
                 this.card = null;
                 this.type = MoveType.NONE;
-                this.lastMove = false;
                 this.canMoveToPlace = false;
             }
 

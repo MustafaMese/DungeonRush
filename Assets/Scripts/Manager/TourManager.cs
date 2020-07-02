@@ -35,7 +35,6 @@ namespace DungeonRush
                 if(!isCardDisPlaced)
                     IncreaseTourNumber();
                 oldTourNumber = tourNumber;
-                Board.touched = false;
             }
         }
     }

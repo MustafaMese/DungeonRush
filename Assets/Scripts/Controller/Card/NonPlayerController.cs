@@ -42,6 +42,7 @@ namespace DungeonRush.Controller
             {
                 if (determineProcess.IsRunning())
                 {
+                    Board.touched = true;
                     DetermineHighLevelCards();
                     moveFinished = true;
                 }
@@ -65,7 +66,6 @@ namespace DungeonRush.Controller
             assigningProcess.StartProcess();
             if (attackerCards == null || attackerCards.Count <= 0)
             {
-                print("np1.1");
                 Stop();
             }
         }
@@ -91,6 +91,7 @@ namespace DungeonRush.Controller
                         continue;
 
                     temp = new Vector2(coordinate.x + j, coordinate.y + i);
+                    print("ghl: " + temp);
                     t = Board.tilesByCoordinates[temp];
                     if (t != null && t.GetCard() != null)
                         l.Add((AIController)t.GetCard().Controller);
@@ -135,6 +136,7 @@ namespace DungeonRush.Controller
             determineProcess.Finish();
             assigningProcess.Finish();
             Notify();
+            Board.touched = false;
         }
 
         public void Run()

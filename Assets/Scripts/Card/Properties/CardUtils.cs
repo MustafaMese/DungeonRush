@@ -39,32 +39,6 @@ namespace DungeonRush
             }
         }
 
-        [System.Serializable]
-        public struct Health
-        {
-            private int health;
-
-            public void Set(int amount)
-            {
-                health = Mathf.Max(0, amount);
-            }
-
-            public int Get()
-            {
-                return health;
-            }
-
-            public void ChangeHealth(bool isDamage, int amount)
-            {
-                if (isDamage)
-                    health -= amount;
-                else
-                    health += amount;
-
-                health = Mathf.Max(0, health);
-            }
-        }
-
         public class CardUtils : MonoBehaviour
         {
             public Card card;

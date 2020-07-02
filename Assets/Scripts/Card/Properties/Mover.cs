@@ -17,8 +17,6 @@ namespace DungeonRush
             public bool moveFinished = false;
 
             private Move move;
-            private Vector3 direction;
-
 
             private void Start()
             {
@@ -28,22 +26,12 @@ namespace DungeonRush
 
             public void Move()
             {
-                if (move == null || move.GetCard() == null )
-                    direction = GetDirection();
+                if (move.GetCard() == null)
+                    move = GetComponent<Card>().GetMove();
 
                 move.GetCard().transform.DOMove(move.GetTargetTile().transform.position, 0.15f).OnComplete(() => TerminateMove());
             }
 
-            private Vector3 GetDirection()
-            {
-                move = GetComponent<Card>().GetMove();
-                Vector3 pos = Geometry.PointFromGrid(move.GetTargetTile().GetCoordinate());
-                Vector3 cardPos = Geometry.PointFromGrid(move.GetCardTile().GetCoordinate());
-                var heading = pos - cardPos;
-                var distance = heading.magnitude;
-                var direction = heading / distance;
-                return direction;
-            }
             public void TerminateMove()
             {
                 move.GetCard().isMoving = false;
@@ -53,17 +41,12 @@ namespace DungeonRush
                 {
                     PlayerCard card = FindObjectOfType<PlayerCard>();
                     PlayerMoveTypes(moveType, card);
-
-                    // TODO Board.touched sadece controllerlar da kullanılacak.
-                    Board.touched = false;
                 }
                 else
                 {
                     Card moverCard = move.GetCard();
                     Card targetCard = move.GetTargetTile().GetCard();
                     NonPlayerMoveTypes(moveType, moverCard, targetCard);
-
-                    Board.touched = false;
                 }
 
                 moveFinished = true;
@@ -78,7 +61,7 @@ namespace DungeonRush
                         break;
                     case MoveType.ATTACK:
                         Card enemy = move.GetTargetTile().GetCard();
-                        card.GetComponent<Attacker>().Attack(enemy);
+                        card.GetComponent<Attacker>().Attack();
                         Tile.ChangeTile(move, false, true);
                         break;
                     case MoveType.ITEM:
@@ -110,7 +93,7 @@ namespace DungeonRush
                         break;
                     case MoveType.ATTACK:
                         if (moverCard.GetComponent<Attacker>())
-                            moverCard.GetComponent<Attacker>().Attack(targetCard);
+                            moverCard.GetComponent<Attacker>().Attack();
                         Tile.ChangeTile(move, false, false);
                         break;
                     case MoveType.ITEM:

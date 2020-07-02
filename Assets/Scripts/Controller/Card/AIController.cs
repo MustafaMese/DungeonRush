@@ -21,14 +21,18 @@ namespace DungeonRush.Controller
         public bool isAttacker = false;
 
         public ProcessHandleChecker preparingProcess;
-        public ProcessHandleChecker animationProcess;
+        public ProcessHandleChecker attackProcess;
         public ProcessHandleChecker moveProcess;
         private NonPlayerController nonPlayerController;
+        private Mover mover;
+        private Attacker attacker;
 
         private void Start()
         {
             nonPlayerController = FindObjectOfType<NonPlayerController>();
             card = GetComponent<Card>();
+            mover = card.GetComponent<Mover>();
+            attacker = card.GetComponent<Attacker>();
             InitProcessHandlers();
         }
 
@@ -42,13 +46,13 @@ namespace DungeonRush.Controller
             {
                 PrepareMoveProcess();
             }
-            else if (animationProcess.IsRunning()) 
+            else if (attackProcess.IsRunning()) 
             {
-                AnimationProcess(card);
+                AttackProcess();
             }
             else if (moveProcess.IsRunning())
             {
-                ExecuteMoves();
+                MoveProcess();
             }
 
         }
@@ -64,16 +68,18 @@ namespace DungeonRush.Controller
             if (canMove)
             {
                 preparingProcess.Finish();
-                animationProcess.StartProcess();
+                var move = card.GetMove().GetCanMove();
+
+                if (move)
+                    moveProcess.StartProcess();
+                else
+                    attackProcess.StartProcess();
             }
             else
             {
-                swipe = Swipe.NONE;
-                Notify();
-                card.GetMove().Reset();
                 preparingProcess.Finish();
-                isRunning = false;
-                avaibleTiles.Clear();
+                Stop();
+                Notify();
             }
         }
 
@@ -84,95 +90,84 @@ namespace DungeonRush.Controller
 
         #endregion
 
-        #region ANIMATION
+        #region ATTACK PROCESS
 
-        public void AnimationProcess(Card c)
+        public void AttackProcess()
         {
-            if (animationProcess.start)
+            if (attackProcess.start)
             {
-                DoAnimation(c);
-                animationProcess.EndProcess();
+                card.ExecuteAttack();
+                attackProcess.ContinuingProcess(false);
             }
-            else if (animationProcess.end)
+            else if (attackProcess.continuing)
             {
-                if (c.GetMove().GetMoveType() != MoveType.ATTACK)
-                    moveProcess.StartProcess();
-                else
-                    StartCoroutine(FinishAnimationTurn());
-                animationProcess.Finish();
+                if (attacker.attackFinished)
+                {
+                    attacker.attackFinished = false;
+                    attackProcess.EndProcess();
+                }
+            }
+            else if (attackProcess.end)
+            {
+                StartCoroutine(EndTurn());
+                Stop();
+                attackProcess.Finish();
+                Notify();
             }
         }
-
-        private void DoAnimation(Card c)
-        {
-            Move m = c.GetMove();
-            //c.HandleCardEffect(m.GetMoveType(), m.GetTargetTile(), m.GetCardTile().GetListNumber());
-        }
-
-        private IEnumerator FinishAnimationTurn()
-        {
-            yield return new WaitForSeconds(0.27f);
-            moveProcess.StartProcess();
-        }
-
         #endregion
 
         #region MOVE PROCESS
 
-        public void ExecuteMoves()
+        public void MoveProcess()
         {
             if (moveProcess.start)
             {
-                var move = card.GetMove().GetCanMove();
-
-                if (move)
-                {
-                    card.ExecuteMove();
-                    moveProcess.ContinuingProcess(false);
-                }
-                else
-                {
-                    card.Attack(card.GetMove().GetTargetTile().GetCard());
-                    moveProcess.EndProcess();
-                }
+                card.ExecuteMove();
+                moveProcess.ContinuingProcess(false);
             }
             else if (moveProcess.continuing)
             {
-                if(card.GetComponent<Mover>().moveFinished && !Board.touched)
+                
+                if (mover.moveFinished)
                 {
-                    card.GetComponent<Mover>().moveFinished = false;
+                    mover.moveFinished = false;
                     moveProcess.EndProcess();
                 }
             }
             else if (moveProcess.end)
             {
-                Notify();
                 StartCoroutine(EndTurn());
+                Stop();
                 moveProcess.Finish();
-                preparingProcess.StartProcess();
-                swipe = Swipe.NONE;
-                isRunning = false;
+                Notify();
             }
         }
 
-        private void Notify() 
+        #endregion
+        private IEnumerator EndTurn()
+        {
+            yield return new WaitForSeconds(0);
+        }
+
+        private void Notify()
         {
             isAttacker = false;
             nonPlayerController.OnNotify();
         }
 
-        private IEnumerator EndTurn()
+        private void Stop()
         {
-            Board.touched = false;
-            yield return new WaitForSeconds(0);
+            isRunning = false;
+            swipe = Swipe.NONE;
+            avaibleTiles.Clear();
+            card.GetMove().Reset();
         }
-
-        #endregion
 
         public void InitProcessHandlers()
         {
             preparingProcess.Init(true);
-            animationProcess.Init(false);
+            attackProcess.Init(false);
             moveProcess.Init(false);
         }
 
@@ -203,7 +198,5 @@ namespace DungeonRush.Controller
         {
             return isRunning;
         }
-
-
     }
 }

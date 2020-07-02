@@ -49,6 +49,7 @@ namespace DungeonRush
                 isBossCard = false;
                 timeLeft = 2f;
                 cardLevel = cardProperties.level;
+                health = GetComponent<Health>();
                 health.Set(cardProperties.health);
                 cardName = cardProperties.cardName;
                 characterSprite.sprite = cardProperties.sprite;
@@ -150,11 +151,11 @@ namespace DungeonRush
             }
             public bool CanAttack(Card enemy)
             {
-                return GetComponent<Attacker>().CanAttack(enemy);
+                return GetComponent<Attacker>().CanMove(enemy);
             }
-            public void Attack(Card enemy)
+            public void ExecuteAttack()
             {
-                GetComponent<Attacker>().Attack(enemy);
+                GetComponent<Attacker>().Attack();
             }
             public void HandleCardEffect(MoveType mT, Tile t, int listnumber)
             {

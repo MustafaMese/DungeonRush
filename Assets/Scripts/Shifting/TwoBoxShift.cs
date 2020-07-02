@@ -98,7 +98,6 @@ namespace DungeonRush.Shifting
         }
         private void ConfigureCardMove(Card card, Tile targetTile)
         {
-            Board.touched = true;
             MoveType moveType = FindMoveType(targetTile);
             bool canMove;
             if (moveType == MoveType.EMPTY)

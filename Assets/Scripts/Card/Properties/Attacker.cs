@@ -1,6 +1,9 @@
 ﻿using DungeonRush.Cards;
 using DungeonRush.Managers;
 using UnityEngine;
+using DG.Tweening;
+using DungeonRush.Data;
+using System.Collections;
 
 namespace DungeonRush
 {
@@ -8,103 +11,79 @@ namespace DungeonRush
     {
         public class Attacker : MonoBehaviour
         {
-            public bool isItemUser = false;
-
+            [SerializeField] bool isItemUser = false;
+            [SerializeField] float range = 0.8f;
+            // TODO Bunu da car properties e ekle.
+            [SerializeField] int power = 5;
             private Card card;
             private ItemUser itemUser;
 
+            public bool attackFinished = false;
+
             private void Start()
             {
+                DOTween.Init();
                 card = GetComponent<Card>();
                 if(isItemUser)
                     itemUser = GetComponent<ItemUser>();
             }
 
-            public bool CanAttack(Card enemy)
+            // Saldırı eylemi için false, ilerleme eyleme için true.
+            public bool CanMove(Card enemy)
             {
                 if (enemy.GetCardType() != CardType.ENEMY)
                     return true;
+                return false;
+            }
 
-                int enemyHealth = enemy.GetHealth();
-                int health = card.GetHealth();
+            private void MoveToAttackRange()
+            {
+                Move move = card.GetMove();
+                var dir = GetDirection(move);
+                Vector2 targetPos = new Vector2(move.GetCardTile().transform.position.x + dir.x * range, move.GetCardTile().transform.position.y + dir.y * range);
+                // Yolun yarısına kadar yürüyecek.
+                move.GetCard().transform.DOMove(targetPos, 0.15f).OnComplete(() => StartCoroutine(FinishAttack(move)));
+            }
+
+            public void Attack()
+            {
+                attackFinished = false;
+                MoveToAttackRange();
+            }
+
+
+            private void Damage(Card enemy)
+            {
+                int itemDamage = 0;
                 if (itemUser && itemUser.GetItem().exist)
-                {
-                    if (enemyHealth > itemUser.GetItem().GetHealth())
-                        return false;
-                }
-                else if (health <= enemyHealth)
-                    return false;
-                return true;
+                    itemDamage = itemUser.GetItem().GetHealth();
+
+                int totalDamage = itemDamage + power;
+                enemy.DecreaseHealth(totalDamage);
             }
 
-            public void AttackWithItem(Card enemy)
+            private IEnumerator FinishAttack(Move move)
             {
-                int itemHealth = itemUser.GetItem().GetHealth();
-                int enemyHealth = enemy.GetHealth();
-                if (enemyHealth == itemHealth)
-                {
-                    itemUser.ResetItem();
-                    DestroyCard(enemy);
-                    // Buralarda bazı sıkıntılar var ama itemlere gelince de halledilebilinir.
-                }
-                else if (enemyHealth < itemHealth)
-                {
-                    itemUser.DecreaseItemHealth(enemyHealth);
-                }
-                else
-                {
-                    enemy.DecreaseHealth(itemHealth);
-                    itemUser.ResetItem();
-                }
+                print("Anim başlar");
+                yield return new WaitForSeconds(0.2f);
+                Damage(move.GetTargetTile().GetCard());
+                print("Anim biter");
+                move.GetCard().transform.DOMove(move.GetCardTile().transform.position, 0.15f);
+                attackFinished = true;
             }
 
-            public void AttackWithoutItem(Card enemy)
+            private Vector3 GetDirection(Move move)
             {
-                int health = card.GetHealth();
-                int enemyHealth;
-                if (enemy != null)
-                    enemyHealth = enemy.GetHealth();
-                else
-                    enemyHealth = 0;
-
-                if (health > enemyHealth || enemy == null)
-                {
-                    card.DecreaseHealth(enemyHealth);
-                }
-                else
-                {
-                    card.DecreaseHealth(enemyHealth);
-                    enemy.DecreaseHealth(health);
-                    DestroyCard(card);
-
-                    if (enemy.GetHealth() <= 0)
-                    DestroyCard(enemy);
-                }
-
-                
+                var heading = move.GetTargetTile().transform.position - move.GetCardTile().transform.position;
+                var distance = heading.magnitude;
+                var direction = heading / distance;
+                return direction;
             }
 
-            public void Attack(Card enemy)
-            {
-                if (isItemUser && itemUser && itemUser.GetItem().exist)
-                    AttackWithItem(enemy);
-                else
-                    AttackWithoutItem(enemy);
-            }
 
             public void LoadLoseScene()
             {
                 LoadManager.LoadLoseScene();
-            }
-
-            public void DestroyCard(Card enemy) 
-            {
-                if (enemy == null) return;
-
-                if (enemy.GetCardType() == CardType.PLAYER)
-                    CardManager.RemoveCardForAttacker(enemy.GetTile().GetListNumber(), true);
-                else
-                    CardManager.RemoveCardForAttacker(enemy.GetTile().GetListNumber(), false);
             }
         }
     }

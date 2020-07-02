@@ -8,8 +8,8 @@ namespace DungeonRush.Controller
     public interface IMoveController
     {
         void PrepareMoveProcess();
-        void AnimationProcess(Card card);
-        void ExecuteMoves();
+        void AttackProcess();
+        void MoveProcess();
         Card GetCard();
     }
 }
