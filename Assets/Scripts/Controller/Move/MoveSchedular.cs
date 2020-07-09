@@ -35,12 +35,6 @@ namespace DungeonRush.Controller
 
         private void Update()
         {
-            if(pc == null) 
-            {
-                pc = FindObjectOfType<PlayerController>();
-                pc.Begin();
-            }
-
             if (notify) 
             {
                 OnNotify();

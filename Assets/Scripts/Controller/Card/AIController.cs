@@ -12,17 +12,13 @@ namespace DungeonRush.Controller
 {
     public class AIController : MonoBehaviour, IMoveController
     {
-        [SerializeField] float timeForFinishTourET = 0.2f;
-        public Dictionary<Tile, Swipe> avaibleTiles = new Dictionary<Tile, Swipe>();
-
-        public Swipe swipe;
+        private Swipe swipe;
         private Card card;
-        public bool isRunning = false;
-        public bool isAttacker = false;
+        private bool isRunning = false;
 
-        public ProcessHandleChecker preparingProcess;
-        public ProcessHandleChecker attackProcess;
-        public ProcessHandleChecker moveProcess;
+        private ProcessHandleChecker preparingProcess;
+        private ProcessHandleChecker attackProcess;
+        private ProcessHandleChecker moveProcess;
         private NonPlayerController nonPlayerController;
         private Mover mover;
         private Attacker attacker;
@@ -40,8 +36,6 @@ namespace DungeonRush.Controller
         {
             if (!isRunning) return;
 
-            //if (card.GetMove().GetCard() == null) return;
-
             if (preparingProcess.IsRunning())
             {
                 PrepareMoveProcess();
@@ -54,7 +48,6 @@ namespace DungeonRush.Controller
             {
                 MoveProcess();
             }
-
         }
 
         // TODO Swipe değişkeninden kurtul..
@@ -69,6 +62,7 @@ namespace DungeonRush.Controller
             {
                 preparingProcess.Finish();
                 var move = card.GetMove().GetCanMove();
+                print("m: " + move);
 
                 if (move)
                     moveProcess.StartProcess();
@@ -145,55 +139,45 @@ namespace DungeonRush.Controller
         }
 
         #endregion
+
         private IEnumerator EndTurn()
         {
             yield return new WaitForSeconds(0);
         }
-
         private void Notify()
         {
-            isAttacker = false;
             nonPlayerController.OnNotify();
         }
-
         private void Stop()
         {
             isRunning = false;
             swipe = Swipe.NONE;
-            avaibleTiles.Clear();
             card.GetMove().Reset();
         }
-
         public void InitProcessHandlers()
         {
             preparingProcess.Init(true);
             attackProcess.Init(false);
             moveProcess.Init(false);
         }
-
         public void SetSwipe(Swipe s)
         {
             swipe = s;
         }
-
         public void SetMove(Move move)
         {
             card.SetMove(move);
         }
-
         public Card GetCard()
         {
             return card;
         }
-
         public void Run()
         {
             swipe = GetCard().GetShift().SelectTileToAttack(GetCard().GetShift().GetAvaibleTiles(GetCard()), GetCard());
             isRunning = true;
-            isAttacker = true;
             preparingProcess.StartProcess();
         }
-
         public bool IsRunning()
         {
             return isRunning;

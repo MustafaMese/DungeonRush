@@ -88,6 +88,7 @@ namespace DungeonRush.Shifting
             number = Random.Range(0, number);
 
             List<Tile> keys = Enumerable.ToList(tiles.Keys);
+
             if (keys.Count <= 0)
                 return Swipe.NONE;
             else
@@ -108,7 +109,7 @@ namespace DungeonRush.Shifting
             {
                 var targetCoordinate = new Vector2(coordinate.x, coordinate.y + 1);
                 var upperTile = Board.tilesByCoordinates[targetCoordinate];
-                if(upperTile.GetCard() == null || card.GetCharacterType().IsEnemy(upperTile.GetCard().GetCharacterType())) 
+                if (upperTile.GetCard() == null || card.GetCharacterType().IsEnemy(upperTile.GetCard().GetCharacterType())) 
                 {
                     avaibleTiles.Add(upperTile, Swipe.UP);
                 }
@@ -146,18 +147,20 @@ namespace DungeonRush.Shifting
 
             return avaibleTiles;
         }
+
+        // Burayı toparlayıver..
         private MoveType FindMoveType(Tile t)
         {
             if (t == null)
                 return MoveType.NONE;
-
             if (t.GetCard() == null)
                 return MoveType.EMPTY;
-
+            
             CardType type = t.GetCard().GetCardType();
-
             switch (type)
             {
+                case CardType.PLAYER:
+                    return MoveType.ATTACK;
                 case CardType.ENEMY:
                     return MoveType.ATTACK;
                 case CardType.ITEM:

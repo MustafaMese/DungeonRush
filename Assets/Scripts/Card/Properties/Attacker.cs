@@ -11,14 +11,19 @@ namespace DungeonRush
     {
         public class Attacker : MonoBehaviour
         {
+            [HideInInspector] public bool attackFinished = false;
             [SerializeField] bool isItemUser = false;
             [SerializeField] float range = 0.8f;
-            // TODO Bunu da car properties e ekle.
             [SerializeField] int power = 5;
+
+            [SerializeField] GameObject slashPrefab;
+            private GameObject slashPrefabInstance;
+
+            [SerializeField] GameObject particulPrefab;
+            private GameObject particulPrefabInstance;
+
             private Card card;
             private ItemUser itemUser;
-
-            public bool attackFinished = false;
 
             private void Start()
             {
@@ -31,9 +36,15 @@ namespace DungeonRush
             // Saldırı eylemi için false, ilerleme eyleme için true.
             public bool CanMove(Card enemy)
             {
-                if (enemy.GetCardType() != CardType.ENEMY)
-                    return true;
-                return false;
+                switch (enemy.GetCardType())
+                {
+                    case CardType.PLAYER:
+                        return false;
+                    case CardType.ENEMY:
+                        return false;
+                }
+
+                return true;
             }
 
             private void MoveToAttackRange()
@@ -41,7 +52,6 @@ namespace DungeonRush
                 Move move = card.GetMove();
                 var dir = GetDirection(move);
                 Vector2 targetPos = new Vector2(move.GetCardTile().transform.position.x + dir.x * range, move.GetCardTile().transform.position.y + dir.y * range);
-                // Yolun yarısına kadar yürüyecek.
                 move.GetCard().transform.DOMove(targetPos, 0.15f).OnComplete(() => StartCoroutine(FinishAttack(move)));
             }
 
@@ -57,18 +67,24 @@ namespace DungeonRush
                 int itemDamage = 0;
                 if (itemUser && itemUser.GetItem().exist)
                     itemDamage = itemUser.GetItem().GetHealth();
-
                 int totalDamage = itemDamage + power;
+
                 enemy.DecreaseHealth(totalDamage);
             }
 
             private IEnumerator FinishAttack(Move move)
             {
-                print("Anim başlar");
+                slashPrefabInstance = Instantiate(slashPrefab, move.GetTargetTile().transform);
                 yield return new WaitForSeconds(0.2f);
+                particulPrefabInstance = Instantiate(particulPrefab, move.GetTargetTile().transform);
                 Damage(move.GetTargetTile().GetCard());
-                print("Anim biter");
-                move.GetCard().transform.DOMove(move.GetCardTile().transform.position, 0.15f);
+                move.GetCard().transform.DOMove(move.GetCardTile().transform.position, 0.2f).OnComplete(() =>  FinaliseAttack());
+            }
+
+            private void FinaliseAttack()
+            {
+                Destroy(slashPrefabInstance);
+                Destroy(particulPrefabInstance);
                 attackFinished = true;
             }
 

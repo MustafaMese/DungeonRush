@@ -136,8 +136,8 @@ namespace DungeonRush
 
             public static void RemoveCard(Tile tile, bool isPlayerCard)
             {
-                if (isPlayerCard)
-                    LoadManager.LoadLoseScene();
+                //if (isPlayerCard)
+                //    LoadManager.LoadLoseScene();
                 Destroy(tile.GetCard().transform.gameObject);
                 tile.SetCard(null);
 

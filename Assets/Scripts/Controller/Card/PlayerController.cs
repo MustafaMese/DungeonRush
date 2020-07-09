@@ -10,18 +10,14 @@ namespace DungeonRush.Controller
 {
     public class PlayerController : MonoBehaviour, ICardController, IMoveController
     {
-        [SerializeField] float timeForFinishTourET = 0.1f;
-
-        public bool isRunning = false;
-        Card player;
-
-        public ProcessHandleChecker preparingProcess;
-        public ProcessHandleChecker attackProcess;
-        public ProcessHandleChecker moveProcess;
-        public NonPlayerController nonPlayerCont;
-        public MoveSchedular ms;
-        Mover mover;
-        Attacker attacker;
+        private bool isRunning = false;
+        private Card player;
+        private ProcessHandleChecker preparingProcess;
+        private ProcessHandleChecker attackProcess;
+        private ProcessHandleChecker moveProcess;
+        private MoveSchedular ms;
+        private Mover mover;
+        private Attacker attacker;
 
         private void Start()
         {
@@ -30,7 +26,8 @@ namespace DungeonRush.Controller
             ms = FindObjectOfType<MoveSchedular>();
             mover = player.GetComponent<Mover>();
             attacker = player.GetComponent<Attacker>();
-            Begin();
+            FindObjectOfType<MoveSchedular>().pc = this;
+            //Begin();
         }
 
         private void Update()
@@ -137,7 +134,7 @@ namespace DungeonRush.Controller
 
         private IEnumerator EndTurn()
         {
-            yield return new WaitForSeconds(timeForFinishTourET);
+            yield return new WaitForSeconds(0.2f);
         }
 
         public void InitProcessHandlers()
@@ -171,7 +168,6 @@ namespace DungeonRush.Controller
             Run();
             preparingProcess.StartProcess();
         }
-
         private void Notify()
         {
             ms.OnNotify();

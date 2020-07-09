@@ -10,22 +10,16 @@ namespace DungeonRush.Controller
 {
     public class NonPlayerController : MonoBehaviour, ICardController
     {
-        public ProcessHandleChecker determineProcess;
-        public ProcessHandleChecker assigningProcess;
-
-        public List<AIController> attackerCards;
-
-        public bool moveFinished = false;
         [SerializeField] int attackerDistance = 4;
 
-        public bool isRunning = false;
-        bool finishTurn = false;
-        public bool FinishTurn { get => finishTurn; set => finishTurn = value; }
-
-        public PlayerController playerController;
-        public MoveSchedular ms;
-
-        public int attackerIndex;
+        private PlayerController playerController;
+        private MoveSchedular ms;
+        private ProcessHandleChecker determineProcess;
+        private ProcessHandleChecker assigningProcess;
+        public List<AIController> attackerCards;
+        private bool moveFinished = false;
+        private bool isRunning = false;
+        private int attackerIndex;
 
         private void Start()
         {
@@ -77,21 +71,13 @@ namespace DungeonRush.Controller
             Vector2 temp;
             List<AIController> l = new List<AIController>();
 
-            for (int i = -2; i < attackerDistance / 2 + 1; i++)
+            for (int i = -(attackerDistance / 2); i < attackerDistance / 2 + 1; i++)
             {
-                if (i == 0)
-                    continue;
-
-                for (int j = -2; j < attackerDistance / 2 + 1; j++)
+                for (int j = -(attackerDistance / 2); j < attackerDistance / 2 + 1; j++)
                 {
-                    if (j == 0)
+                    if (coordinate.x + j < 0 || coordinate.y + i < 0 || coordinate.x + j > rL - 1 || coordinate.y + i > rL - 1 || (i == 0 && j == 0)) 
                         continue;
-
-                    if (coordinate.x + j < 0 || coordinate.y + i < 0 || coordinate.x + j > rL - 1 || coordinate.y + i > rL - 1) 
-                        continue;
-
                     temp = new Vector2(coordinate.x + j, coordinate.y + i);
-                    print("ghl: " + temp);
                     t = Board.tilesByCoordinates[temp];
                     if (t != null && t.GetCard() != null)
                         l.Add((AIController)t.GetCard().Controller);
@@ -159,7 +145,6 @@ namespace DungeonRush.Controller
         {
             Run();
             determineProcess.StartProcess();
-            attackerCards.Clear();
         }
 
         public void OnNotify() 

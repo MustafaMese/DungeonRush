@@ -18,7 +18,7 @@ namespace DungeonRush
             protected Health health;
             protected string cardName;
             public Move move;
-            public int cardLevel;
+            protected int cardLevel;
             protected float timeLeft;
             protected Mover mover;
             protected bool isAlive;

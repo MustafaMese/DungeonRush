@@ -9,7 +9,7 @@ namespace DungeonRush.Property
 {
     public class Health : MonoBehaviour
     {
-        private int health;
+        public int health;
         private Card card;
 
         private void Start()
@@ -25,7 +25,6 @@ namespace DungeonRush.Property
 
         private void Death()
         {
-            print("Ben ölerem");
 
             if (card.GetCardType() == CardType.PLAYER)
                 CardManager.RemoveCardForAttacker(card.GetTile().GetListNumber(), true);

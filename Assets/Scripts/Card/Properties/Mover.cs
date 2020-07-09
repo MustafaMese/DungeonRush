@@ -37,83 +37,48 @@ namespace DungeonRush
                 move.GetCard().isMoving = false;
                 move.GetCard().transform.position = move.GetTargetTile().transform.position;
                 MoveType moveType = move.GetMoveType();
-                if (move.GetCard().GetCardType() == CardType.PLAYER)
+                Card card = move.GetCard();
+                Card item = move.GetTargetTile().GetCard();
+                switch (moveType)
                 {
-                    PlayerCard card = FindObjectOfType<PlayerCard>();
-                    PlayerMoveTypes(moveType, card);
-                }
-                else
-                {
-                    Card moverCard = move.GetCard();
-                    Card targetCard = move.GetTargetTile().GetCard();
-                    NonPlayerMoveTypes(moveType, moverCard, targetCard);
+                    case MoveType.ITEM:
+                        ItemMove(card, item);
+                        ChangeTiles(card, false);
+                        break;
+                    case MoveType.COIN:
+                        CoinMove(item);
+                        ChangeTiles(card, false);
+                        break;
+                    case MoveType.EMPTY:
+                        ChangeTiles(card, true);
+                        break;
+                    default:
+                        break;
                 }
 
                 moveFinished = true;
                 move.Reset();
             }
 
-            private void PlayerMoveTypes(MoveType moveType, PlayerCard card)
+            private void ChangeTiles(Card card, bool isEmpty)
             {
-                switch (moveType)
-                {
-                    case MoveType.NONE:
-                        break;
-                    case MoveType.ATTACK:
-                        Card enemy = move.GetTargetTile().GetCard();
-                        card.GetComponent<Attacker>().Attack();
-                        Tile.ChangeTile(move, false, true);
-                        break;
-                    case MoveType.ITEM:
-                        Card item = move.GetTargetTile().GetCard();
-                        if (item.GetItemType() == ItemType.POTION)
-                            card.GetComponent<ItemUser>().TakePotion(item);
-                        else if (item.GetItemType() == ItemType.WEAPON)
-                            card.GetComponent<ItemUser>().TakeWeapon(item);
-                        Tile.ChangeTile(move, false, true);
-                        break;
-                    case MoveType.COIN:
-                        Card coin = move.GetTargetTile().GetCard();
-                        FindObjectOfType<CoinCounter>().IncreaseCoin(coin.GetHealth());
-                        Tile.ChangeTile(move, false, true);
-                        break;
-                    case MoveType.EMPTY:
-                        Tile.ChangeTile(move, true, true);
-                        break;
-                    default:
-                        break;
-                }
+                if (card.GetCardType() == CardType.PLAYER)
+                    Tile.ChangeTile(move, isEmpty, true);
+                else
+                    Tile.ChangeTile(move, isEmpty, false);
             }
 
-            private void NonPlayerMoveTypes(MoveType moveType, Card moverCard, Card targetCard)
+            private void CoinMove(Card item)
             {
-                switch (moveType)
-                {
-                    case MoveType.NONE:
-                        break;
-                    case MoveType.ATTACK:
-                        if (moverCard.GetComponent<Attacker>())
-                            moverCard.GetComponent<Attacker>().Attack();
-                        Tile.ChangeTile(move, false, false);
-                        break;
-                    case MoveType.ITEM:
-                        if (moverCard.GetComponent<ItemUser>())
-                        {
-                            if (targetCard.GetItemType() == ItemType.POTION)
-                                moverCard.GetComponent<ItemUser>().TakePotion(targetCard);
-                            else if (targetCard.GetItemType() == ItemType.WEAPON)
-                                moverCard.GetComponent<ItemUser>().TakeWeapon(targetCard);
-                        }
-                        Tile.ChangeTile(move, false, false);
-                        break;
-                    case MoveType.COIN:
-                        break;
-                    case MoveType.EMPTY:
-                        Tile.ChangeTile(move, true, false);
-                        break;
-                    default:
-                        break;
-                }
+                FindObjectOfType<CoinCounter>().IncreaseCoin(item.GetHealth());
+            }
+
+            private void ItemMove(Card card, Card item)
+            {
+                if (item.GetItemType() == ItemType.POTION)
+                    card.GetComponent<ItemUser>().TakePotion(item);
+                else if (item.GetItemType() == ItemType.WEAPON)
+                    card.GetComponent<ItemUser>().TakeWeapon(item);
             }
         }
     }
