@@ -1,7 +1,6 @@
 ﻿using DungeonRush.Cards;
 using DungeonRush.Data;
 using DungeonRush.Effects;
-using DungeonRush.Property;
 using UnityEngine;
 
 namespace DungeonRush.Skills
@@ -15,10 +14,15 @@ namespace DungeonRush.Skills
 
         public override void Execute(Move move)
         {
-            Card card = move.GetTargetTile().GetCard();
-            card.DecreaseHealth(slashPower);
-            slashAnimationPrefab.InitializeObject(effectTime, card.transform);
-            Debug.Log("Double Slash!!");
+            Debug.Log("Double Slash");
+            Card targetCard = move.GetTargetTile().GetCard();
+            Card card = move.GetCard();
+            targetCard.DecreaseHealth(slashPower);
+
+            if (slashAnimationPrefab.prefab == null)
+                slashAnimationPrefab.InitializeObject(effectTime, targetCard.transform.position, card.transform);
+            else
+                slashAnimationPrefab.EnableObject(effectTime, targetCard.transform.position);
         }
 
         public override void Initialize(Move move)

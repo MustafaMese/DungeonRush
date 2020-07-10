@@ -58,12 +58,11 @@ namespace DungeonRush
                     CardPlacesToTiles();
                 }
 
-                foreach (var card in cm.cards)
+                for (int i = 0; i < cm.cards.Count; i++)
                 {
+                    Card card = cm.cards[i];
                     if(card.GetCardType() == CardType.PLAYER)
-                    {
                         cm.instantPlayerTile = card.GetTile();
-                    }
                 }
             }
 

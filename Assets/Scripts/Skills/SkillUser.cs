@@ -7,10 +7,7 @@ namespace DungeonRush.Skills {
     public class SkillUser : MonoBehaviour
     {
         public Dictionary<Skill, int> moverSkills = new Dictionary<Skill, int>();
-        public Dictionary<Skill, int> tempMoverSkills = new Dictionary<Skill, int>();
-
         public Dictionary<Skill, int> attackerSkills = new Dictionary<Skill, int>();
-        public Dictionary<Skill, int> tempAttackerSkills = new Dictionary<Skill, int>();
 
         public List<Skill> moverSkillList = new List<Skill>();
         public List<Skill> attackerSkillList = new List<Skill>();
@@ -21,22 +18,26 @@ namespace DungeonRush.Skills {
         {
             card = GetComponent<Card>();
 
-            foreach (var s in moverSkillList)
+            for (int i = 0; i < moverSkillList.Count; i++)
             {
+                Skill s = moverSkillList[i];
                 moverSkills.Add(s, s.cooldown);
             }
 
-            foreach (var s in attackerSkillList)
+            for (int i = 0; i < attackerSkillList.Count; i++)
             {
+                Skill s = attackerSkillList[i];
                 attackerSkills.Add(s, s.cooldown);
             }
+
         }
 
         public void ExecuteMoverSkills()
         {
-            tempMoverSkills = new Dictionary<Skill, int>(moverSkills);
-            foreach (var s in tempMoverSkills.Keys)
+            List<Skill> list = new List<Skill>(moverSkills.Keys);
+            for (int i = 0; i < list.Count; i++)
             {
+                Skill s = list[i];
                 if (moverSkills[s] == 0)
                 {
                     s.Execute(card.GetMove());
@@ -51,10 +52,11 @@ namespace DungeonRush.Skills {
 
         public void ExecuteAttackerSkills()
         {
-            tempAttackerSkills = new Dictionary<Skill, int>(attackerSkills);
-            foreach (var s in tempAttackerSkills.Keys)
+            List<Skill> list = new List<Skill>(attackerSkills.Keys);
+            for (int i = 0; i < list.Count; i++)
             {
-                if(attackerSkills[s] == 0)
+                Skill s = list[i];
+                if (attackerSkills[s] == 0)
                 {
                     s.Execute(card.GetMove());
                     attackerSkills[s] = s.cooldown;

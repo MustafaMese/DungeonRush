@@ -21,9 +21,13 @@ namespace DungeonRush.Skills
 
         public override void Execute(Move move)
         {
-            move.GetCard().IncreaseHealth(healPower);
-            healAnimationPrefab.InitializeObject(effectTime, move.GetCard().transform);
-            Debug.Log("Healladım seni");
+            Card card = move.GetCard();
+            card.IncreaseHealth(healPower);
+
+            if (healAnimationPrefab.prefab == null)
+                healAnimationPrefab.InitializeObject(effectTime, card.transform.position, card.transform);
+            else
+                healAnimationPrefab.EnableObject(effectTime, card.transform.position);
         }
 
     }

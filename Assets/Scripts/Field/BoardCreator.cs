@@ -93,23 +93,24 @@ namespace DungeonRush.Field
 
         public void InitializeTiles(List<Tile> cardPlaces)
         {
-            int i = 0;
-            foreach (var pos in cardPlaces)
+            for (int i = 0; i < cardPlaces.Count; i++)
             {
+                Tile pos = cardPlaces[i];
                 pos.SetCoordinate(pos.transform.position);
                 pos.SetCard(null);
                 pos.SetListNumber(i);
                 Board.tilesByListnumbers.Add(i, pos);
                 Board.tilesByCoordinates.Add(pos.transform.position, pos);
-                i++;
             }
             board.SetCardPlaces(cardPlaces);
         }
 
         public void DisplayTiles()
         {
-            foreach (var tile in Board.tilesByListnumbers.Values)
+            List<Tile> list = new List<Tile>(Board.tilesByListnumbers.Values);
+            for (int i = 0; i < list.Count; i++)
             {
+                Tile tile = list[i];
                 print(tile.GetListNumber() + " " + tile.GetCoordinate());
             }
         }

@@ -52,8 +52,9 @@ namespace DungeonRush
             public List<Card> GetHighLevelCards()
             {
                 List<Card> cleverCards = new List<Card>();
-                foreach (var card in cards)
+                for (int i = 0; i < cards.Count; i++)
                 {
+                    Card card = cards[i];
                     if (card.GetCardType() == CardType.ENEMY && card.GetLevel() >= 1)
                         cleverCards.Add(card);
                 }
@@ -67,9 +68,10 @@ namespace DungeonRush
 
             public Card GetCard(Tile tile)
             {
-                foreach (var card in cards)
+                for (int i = 0; i < cards.Count; i++)
                 {
-                    if(card.GetTile() == tile)
+                    Card card = cards[i];
+                    if (card.GetTile() == tile)
                     {
                         return card;
                     }

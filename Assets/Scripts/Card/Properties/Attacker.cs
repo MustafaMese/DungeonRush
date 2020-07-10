@@ -5,6 +5,7 @@ using DG.Tweening;
 using DungeonRush.Data;
 using System.Collections;
 using DungeonRush.Skills;
+using System;
 
 namespace DungeonRush
 {
@@ -83,19 +84,53 @@ namespace DungeonRush
 
             private IEnumerator FinishAttack(Move move)
             {
-                slashPrefabInstance = Instantiate(slashPrefab, move.GetTargetTile().transform);
+                if (slashPrefabInstance == null)
+                    InitializeSlashInstance(move);
+                else
+                    EnableSlashPrefabInstance(move);
+
                 yield return new WaitForSeconds(0.2f);
-                particulPrefabInstance = Instantiate(particulPrefab, move.GetTargetTile().transform);
+
+                if (particulPrefabInstance == null)
+                    InitializeParticulEffect(move);
+                else
+                    EnableParticulEffect(move);
                 Damage(move.GetTargetTile().GetCard());
-                move.GetCard().transform.DOMove(move.GetCardTile().transform.position, 0.2f).OnComplete(() =>  FinaliseAttack());
+                move.GetCard().transform.DOMove(move.GetCardTile().transform.position, 0.2f).OnComplete(() => FinaliseAttack());
             }
+
+            #region FINALIZE ATTACK AND EFFECTS
+            private void EnableParticulEffect(Move move)
+            {
+                particulPrefabInstance.SetActive(true);
+                particulPrefabInstance.transform.position = move.GetTargetTile().transform.position;
+            }
+
+            private void InitializeParticulEffect(Move move)
+            {
+                particulPrefabInstance = Instantiate(particulPrefab, move.GetTargetTile().transform.position, Quaternion.identity, this.transform);
+            }
+
+            private void InitializeSlashInstance(Move move)
+            {
+                slashPrefabInstance = Instantiate(slashPrefab, move.GetTargetTile().transform.position, Quaternion.identity, this.transform);
+            }
+
+            private void EnableSlashPrefabInstance(Move move)
+            {
+                slashPrefabInstance.SetActive(true);
+                slashPrefabInstance.transform.position = move.GetTargetTile().transform.position;
+            }
+
 
             private void FinaliseAttack()
             {
-                Destroy(slashPrefabInstance);
-                Destroy(particulPrefabInstance);
+                slashPrefabInstance.SetActive(false);
+                particulPrefabInstance.SetActive(false);
                 attackFinished = true;
             }
+
+            #endregion
 
             private Vector3 GetDirection(Move move)
             {
@@ -104,7 +139,6 @@ namespace DungeonRush
                 var direction = heading / distance;
                 return direction;
             }
-
 
             public void LoadLoseScene()
             {

@@ -76,8 +76,10 @@ namespace DungeonRush.Shifting
         }
         public override Swipe SelectTileToAttack(Dictionary<Tile, Swipe> tiles, Card attacker)
         {
-            foreach (var t in tiles.Keys)
+            List<Tile> list = new List<Tile>(tiles.Keys);
+            for (int i = 0; i < list.Count; i++)
             {
+                Tile t = list[i];
                 if (t.GetCard() != null && attacker.GetCharacterType().IsEnemy(t.GetCard().GetCharacterType()))
                 {
                     return tiles[t];
@@ -148,7 +150,6 @@ namespace DungeonRush.Shifting
             return avaibleTiles;
         }
 
-        // Burayı toparlayıver..
         private MoveType FindMoveType(Tile t)
         {
             if (t == null)

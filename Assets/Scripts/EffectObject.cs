@@ -6,17 +6,33 @@ namespace DungeonRush.Effects
 {
     public class EffectObject : MonoBehaviour
     {
-        private EffectObject prefab;
+        [HideInInspector] public EffectObject prefab;
 
-        public void InitializeObject(float existence, Transform t)
+        public void InitializeObject(float existence, Vector3 position, Transform parent)
         {
-            prefab = Instantiate(this, t);
-            Invoke("DestroyObject", existence);
+            print("Init");
+            prefab = Instantiate(this, position, Quaternion.identity, parent);
+            Invoke("DisableObject", existence);
         }
 
-        public void DestroyObject()
+        public void DisableObject()
         {
-            Destroy(prefab.gameObject);
+            if (prefab == null)
+                print("prefab null");
+
+            if (prefab.gameObject == null)
+                print("prefab.gameObject.null");
+
+            if(prefab.gameObject.activeInHierarchy)
+                prefab.gameObject.SetActive(false);
+        }
+
+        public void EnableObject(float existence, Vector3 position)
+        {
+            print("Enabling");
+            prefab.gameObject.SetActive(true);
+            prefab.transform.position = position;
+            Invoke("DisableObject", existence);
         }
     }
 }
