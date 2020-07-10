@@ -45,7 +45,7 @@ namespace DungeonRush
 
             public void UpdateWeaponImage(Card item)
             {
-                weaponSprite.sprite = item.GetImage();
+                weaponSprite.sprite = item.GetImage().sprite;
 
             }
 

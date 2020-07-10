@@ -62,7 +62,6 @@ namespace DungeonRush.Controller
             {
                 preparingProcess.Finish();
                 var move = card.GetMove().GetCanMove();
-                print("m: " + move);
 
                 if (move)
                     moveProcess.StartProcess();

@@ -4,6 +4,7 @@ using UnityEngine;
 using DG.Tweening;
 using DungeonRush.Data;
 using System.Collections;
+using DungeonRush.Skills;
 
 namespace DungeonRush
 {
@@ -13,6 +14,7 @@ namespace DungeonRush
         {
             [HideInInspector] public bool attackFinished = false;
             [SerializeField] bool isItemUser = false;
+            [SerializeField] bool isSkillUser = false;
             [SerializeField] float range = 0.8f;
             [SerializeField] int power = 5;
 
@@ -24,6 +26,7 @@ namespace DungeonRush
 
             private Card card;
             private ItemUser itemUser;
+            private SkillUser skillUser;
 
             private void Start()
             {
@@ -31,6 +34,8 @@ namespace DungeonRush
                 card = GetComponent<Card>();
                 if(isItemUser)
                     itemUser = GetComponent<ItemUser>();
+                if (isSkillUser)
+                    skillUser = GetComponent<SkillUser>();
             }
 
             // Saldırı eylemi için false, ilerleme eyleme için true.
@@ -58,12 +63,16 @@ namespace DungeonRush
             public void Attack()
             {
                 attackFinished = false;
+                if (isSkillUser)
+                    skillUser.ExecuteAttackerSkills();
                 MoveToAttackRange();
             }
 
-
             private void Damage(Card enemy)
             {
+                if (enemy == null)
+                    return;
+
                 int itemDamage = 0;
                 if (itemUser && itemUser.GetItem().exist)
                     itemDamage = itemUser.GetItem().GetHealth();

@@ -83,7 +83,7 @@ namespace DungeonRush
             public abstract void DecreaseHealth(int damage);
             public abstract void IncreaseHealth(int health);
             public abstract void SetHealth(int health);
-            public abstract Sprite GetImage();
+            public abstract SpriteRenderer GetImage();
             public abstract CardType GetCardType();
             public abstract void SetCardType(CardType type);
             public abstract Tile GetTile();

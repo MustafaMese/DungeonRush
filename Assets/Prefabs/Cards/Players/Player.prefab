@@ -225,6 +225,7 @@ GameObject:
   - component: {fileID: 4091481314613496153}
   - component: {fileID: -280077000644605062}
   - component: {fileID: 3667906809812512254}
+  - component: {fileID: 5641049783462244617}
   m_Layer: 0
   m_Name: Player
   m_TagString: Card
@@ -291,6 +292,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eefd2d4f397f44546b605ddd448dd9e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  move:
+    cardTile: {fileID: 0}
+    targetTile: {fileID: 0}
+    card: {fileID: 0}
+    type: 0
+    canMoveToPlace: 0
   disappearing: 0.066
   cardProperties: {fileID: 0}
   isMoving: 0
@@ -327,6 +334,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8fa7938d024e9f448b58f360dc68e6e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isSkillUser: 1
   startMoving: 0
   moveFinished: 0
 --- !u!114 &7147871325311128375
@@ -343,6 +351,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackFinished: 0
   isItemUser: 1
+  isSkillUser: 1
   range: 0.8
   power: 5
   slashPrefab: {fileID: 3221835154008914645, guid: 30562f86a1cb76e4ea99edde0ba4ac19,
@@ -387,6 +396,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6d09c71aee6114479da1d4877ea958c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: 0
+--- !u!114 &5641049783462244617
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1003901059469522988}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: baedc7a4b2667b04fae84a5bc25157c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moverSkillList:
+  - {fileID: 11400000, guid: e5127d728048b0447918b6aeac209c21, type: 2}
+  attackerSkillList:
+  - {fileID: 11400000, guid: 9b5e0e25270546d44955fad521e035a0, type: 2}
 --- !u!1 &1241678481794930997
 GameObject:
   m_ObjectHideFlags: 0

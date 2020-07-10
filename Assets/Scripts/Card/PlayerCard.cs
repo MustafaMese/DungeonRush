@@ -14,9 +14,9 @@ namespace DungeonRush
                 return health.Get();
             }
 
-            public override Sprite GetImage()
+            public override SpriteRenderer GetImage()
             {
-                return characterSprite.sprite;
+                return characterSprite;
             }
 
             public override string GetCardName()

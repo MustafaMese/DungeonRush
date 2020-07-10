@@ -6,6 +6,7 @@ using DungeonRush.Field;
 using DungeonRush.Managers;
 using DungeonRush.Controller;
 using DungeonRush.Data;
+using DungeonRush.Skills;
 
 namespace DungeonRush 
 {
@@ -13,21 +14,29 @@ namespace DungeonRush
     {
         public class Mover : MonoBehaviour
         {
+            public bool isSkillUser;
             public bool startMoving;
             public bool moveFinished = false;
 
             private Move move;
+            private SkillUser skillUser;
 
             private void Start()
             {
                 DOTween.Init();
                 move = new Move();
+
+                if (isSkillUser)
+                    skillUser = GetComponent<SkillUser>();
             }
 
             public void Move()
             {
                 if (move.GetCard() == null)
                     move = GetComponent<Card>().GetMove();
+
+                if (isSkillUser)
+                    skillUser.ExecuteMoverSkills();
 
                 move.GetCard().transform.DOMove(move.GetTargetTile().transform.position, 0.15f).OnComplete(() => TerminateMove());
             }
