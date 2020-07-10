@@ -57,6 +57,8 @@ namespace DungeonRush.Controller
 
                 if (oldTurnNumber == 0)
                     IncreaseTour();
+
+                OnNotify();
             }
             else
             {
@@ -79,7 +81,7 @@ namespace DungeonRush.Controller
             }
             else if (turnNumber == 1)
             {
-                pc.Begin();
+                npc.Begin();
             }
             else if (turnNumber == 2)
             {

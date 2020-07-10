@@ -38,7 +38,7 @@ namespace DungeonRush
                 if (!editedInRuntime)
                 {
                     bCreator.InitializeTiles(cardPlaces);
-                    cm.AddCard(cm.playerCard, cardPlaces[5], this, false);
+                    cm.AddCard(cm.playerCard, cardPlaces[0], this, false);
                     for (int i = 0; i < cardPlaces.Count; i++)
                     {
                         if (cardPlaces[i].GetCard() == null)
