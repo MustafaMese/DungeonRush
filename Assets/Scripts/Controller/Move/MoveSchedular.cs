@@ -19,20 +19,19 @@ namespace DungeonRush.Controller
         [SerializeField] int tourCount;
 
         public PlayerController pc;
-        public NonPlayerController npc;
+        public EnemyController ec;
         public TrapController tc;
 
         private void Start()
         {
             pc = FindObjectOfType<PlayerController>();
-            npc = FindObjectOfType<NonPlayerController>();
+            ec = FindObjectOfType<EnemyController>();
             tc = FindObjectOfType<TrapController>();
 
             tourCount = 0;
             tourText.text = tourCount.ToString();
             turnNumber = 0;
             oldTurnNumber = -1;
-
         }
 
         private void Update()
@@ -83,7 +82,7 @@ namespace DungeonRush.Controller
             }
             else if (turnNumber == 1)
             {
-                npc.Begin();
+                ec.Begin();
             }
             else if (turnNumber == 2)
             {

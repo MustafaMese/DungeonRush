@@ -15,19 +15,6 @@ namespace DungeonRush
             public int listNumber;
             public Card trapCard;
 
-            private void Start()
-            {
-                if (card != null)
-                {
-                    CardManager.Instance.AddCard(card, this, FindObjectOfType<Board>(), false);
-                }
-            }
-
-            private void Update()
-            {
-                #if UNITY_EDITOR
-                #endif
-            }
 
             public Card GetTrapCard()
             {

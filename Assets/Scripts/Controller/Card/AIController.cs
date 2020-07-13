@@ -15,12 +15,13 @@ namespace DungeonRush.Controller
         private Swipe swipe;
         private Card card;
         private bool isRunning = false;
+        private CardType cardType;
 
         private ProcessHandleChecker preparingProcess;
         private ProcessHandleChecker attackProcess;
         private ProcessHandleChecker moveProcess;
 
-        private NonPlayerController nonPlayerController;
+        private EnemyController enemyController;
         private TrapController trapController;
 
         private Mover mover;
@@ -30,12 +31,15 @@ namespace DungeonRush.Controller
             card = GetComponent<Card>();
             mover = card.GetComponent<Mover>();
             attacker = card.GetComponent<Attacker>();
-            if (card.GetCardType() == CardType.ENEMY)
+
+            cardType = card.GetCardType();
+
+            if (cardType == CardType.ENEMY)
             {
-                nonPlayerController = FindObjectOfType<NonPlayerController>();
-                NonPlayerController.subscribedEnemies.Add(this);
+                enemyController = FindObjectOfType<EnemyController>();
+                EnemyController.subscribedEnemies.Add(this);
             }
-            else if (card.GetCardType() == CardType.TRAP)
+            else if (cardType == CardType.TRAP)
             {
                 trapController = FindObjectOfType<TrapController>();
                 TrapController.subscribedTraps.Add(this);
@@ -91,7 +95,12 @@ namespace DungeonRush.Controller
 
         private bool DoMove(Swipe swipe)
         {
-            return card.GetShift().Define(card, swipe);
+            if (cardType == CardType.ENEMY)
+                return card.GetShift().Define(card, swipe);
+            else if (cardType == CardType.TRAP)
+                return card.GetShift().Define(card, Swipe.NONE);
+            else
+                return false;
         }
 
         #endregion
@@ -158,7 +167,10 @@ namespace DungeonRush.Controller
         }
         private void Notify()
         {
-            nonPlayerController.OnNotify();
+            if (cardType == CardType.ENEMY)
+                enemyController.OnNotify();
+            else if (cardType == CardType.TRAP)
+                trapController.OnNotify();
         }
         private void Stop()
         {
@@ -186,7 +198,9 @@ namespace DungeonRush.Controller
         }
         public void Run()
         {
-            swipe = GetCard().GetShift().SelectTileToAttack(GetCard().GetShift().GetAvaibleTiles(GetCard()), GetCard());
+            if (cardType == CardType.ENEMY)
+                swipe = GetCard().GetShift().SelectTileToAttack(GetCard().GetShift().GetAvaibleTiles(GetCard()), GetCard());
+
             isRunning = true;
             preparingProcess.StartProcess();
         }

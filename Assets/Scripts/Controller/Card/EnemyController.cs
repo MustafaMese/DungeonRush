@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace DungeonRush.Controller
 {
-    public class NonPlayerController : MonoBehaviour, ICardController
+    public class EnemyController : MonoBehaviour, ICardController
     {
         [SerializeField] int attackerDistance = 4;
 
@@ -22,6 +22,7 @@ namespace DungeonRush.Controller
 
         public static List<AIController> subscribedEnemies = new List<AIController>();
         public List<AIController> attackerCards;
+
         private void Start()
         {
             playerController = FindObjectOfType<PlayerController>();
@@ -38,7 +39,7 @@ namespace DungeonRush.Controller
                 if (determineProcess.IsRunning())
                 {
                     Board.touched = true;
-                    DetermineHighLevelCards();
+                    DetermineAttackers();
                     moveFinished = true;
                 }
                 else if (assigningProcess.IsRunning())
@@ -54,9 +55,9 @@ namespace DungeonRush.Controller
         }
 
         #region DETERMINING METHODS
-        private void DetermineHighLevelCards() 
+        private void DetermineAttackers() 
         {
-            attackerCards = GetHighLevelCards();
+            attackerCards = GetAttackers();
             determineProcess.Finish();
             assigningProcess.StartProcess();
             if (attackerCards == null || attackerCards.Count <= 0)
@@ -64,7 +65,7 @@ namespace DungeonRush.Controller
                 Stop();
             }
         }
-        private List<AIController> GetHighLevelCards()
+        private List<AIController> GetAttackers()
         {
             Vector2 coordinate = playerController.transform.position;
             int rL = Board.RowLength;
@@ -120,6 +121,7 @@ namespace DungeonRush.Controller
 
         #endregion
 
+        #region CARD CONTROLLER METHODS
         public void Stop()
         {
             isRunning = false;
@@ -159,10 +161,12 @@ namespace DungeonRush.Controller
             attackerIndex++;
         }
 
-        private void Notify() 
+        public void Notify() 
         {
             ms.OnNotify();
         }
+
+        #endregion
 
         public static void UnsubscribeCard(AIController controller)
         {

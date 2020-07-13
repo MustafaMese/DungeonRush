@@ -25,6 +25,7 @@ namespace DungeonRush
             public EnemyCard[] enemyCards;
             public ItemCard[] itemCards;
             public CoinCard[] coinCards;
+            public EnemyCard[] trapCards;
 
             public List<Card> cards = new List<Card>();
             public Tile instantPlayerTile;
@@ -110,12 +111,17 @@ namespace DungeonRush
                 }
             }
 
-            public Card AddCard(Card piece, Tile tile, Board board, bool inGame)
+            public Card AddCard(Card piece, Tile tile, Board board, bool inGame, bool isTrapCard)
             {
                 Card newPiece = Instantiate(piece, tile.transform.position, Quaternion.identity);
                 if(newPiece.GetCardType() != CardType.PLAYER)
                     newPiece.transform.SetParent(board.transform);
-                tile.SetCard(newPiece);
+
+                if (isTrapCard)
+                    tile.SetTrapCard(newPiece);
+                else
+                    tile.SetCard(newPiece);
+
                 newPiece.SetTile(tile);
                 AddToCards(newPiece, inGame);
                 return newPiece;
@@ -125,11 +131,11 @@ namespace DungeonRush
             {
                 int number = UnityEngine.Random.Range(0, 101);
                 if (number < 70)
-                    AddCard(GiveRandomCard(enemyCards), tile, board, true);
+                    AddCard(GiveRandomCard(enemyCards), tile, board, true, false);
                 else if (number < 95)
-                    AddCard(GiveRandomCard(itemCards), tile, board, true);
+                    AddCard(GiveRandomCard(itemCards), tile, board, true, false);
                 else
-                    AddCard(GiveRandomCard(coinCards), tile, board, true);
+                    AddCard(GiveRandomCard(coinCards), tile, board, true, false);
             }
 
             private Card GiveRandomCard(Card[] card)
@@ -143,7 +149,7 @@ namespace DungeonRush
                 Card card = tile.GetCard();
                 if(card.GetCardType() == CardType.ENEMY)
                 {
-                    NonPlayerController.UnsubscribeCard((AIController)card.Controller);
+                    EnemyController.UnsubscribeCard((AIController)card.Controller);
                 }
                 else if(card.GetCardType() == CardType.TRAP)
                 {

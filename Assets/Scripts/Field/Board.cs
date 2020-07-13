@@ -37,20 +37,28 @@ namespace DungeonRush
                 if (!editedInRuntime)
                 {
                     bCreator.InitializeTiles(cardPlaces);
-                    cm.AddCard(cm.playerCard, cardPlaces[0], this, false);
+                    cm.AddCard(cm.playerCard, cardPlaces[0], this, false, false);
                     for (int i = 0; i < cardPlaces.Count; i++)
                     {
                         if (cardPlaces[i].GetCard() == null)
                         {
                             int number = Random.Range(0, 101);
                             if (number < 30)
-                                cm.AddCard(GiveRandomCard(cm.enemyCards), cardPlaces[i], this, false);
+                                cm.AddCard(GiveRandomCard(cm.enemyCards), cardPlaces[i], this, false, false);
                             else if (number < 55)
-                                cm.AddCard(GiveRandomCard(cm.itemCards), cardPlaces[i], this, false);
-                            //else
-                            //    cm.AddCard(GiveRandomCard(cm.itemCards), cardPlaces[i], this, false);
+                                cm.AddCard(GiveRandomCard(cm.itemCards), cardPlaces[i], this, false, false);
                         }
                     }
+
+                    //for (int i = 0; i < cardPlaces.Count; i++)
+                    //{
+                    //    if(cardPlaces[i].GetTrapCard() == null)
+                    //    {
+                    //        int number = Random.Range(0, 101);
+                    //        if (number < 3)
+                    //            cm.AddCard(GiveRandomCard(cm.trapCards), cardPlaces[i], this, false, true);
+                    //    }
+                    //}
                 }
                 else 
                 {

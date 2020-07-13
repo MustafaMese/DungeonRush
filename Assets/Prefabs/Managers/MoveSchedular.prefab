@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &9178959630608101884
+--- !u!1 &3970455011409390342
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,22 +8,22 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 9178959630608101882}
-  - component: {fileID: 9178959630608101885}
+  - component: {fileID: 3970455011409390340}
+  - component: {fileID: 3970455011409390343}
   m_Layer: 0
-  m_Name: NonPlayerController
+  m_Name: MoveSchedular
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &9178959630608101882
+--- !u!4 &3970455011409390340
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9178959630608101884}
+  m_GameObject: {fileID: 3970455011409390342}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -31,37 +31,23 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &9178959630608101885
+--- !u!114 &3970455011409390343
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9178959630608101884}
+  m_GameObject: {fileID: 3970455011409390342}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 28f14dbb3da50bd4199df217e69d686f, type: 3}
+  m_Script: {fileID: 11500000, guid: d9664b9b62251094a8f437954419be38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  determineProcess:
-    run: 0
-    start: 0
-    continuing: 0
-    end: 0
-  decideProcess:
-    run: 0
-    start: 0
-    continuing: 0
-    end: 0
-  assigningProcess:
-    run: 0
-    start: 0
-    continuing: 0
-    end: 0
-  highLevelCards: []
-  attackers: []
-  enemyNumber: 4
-  numberOfFinishedMoves: 0
-  attackerCount: 0
-  isRunning: 0
-  playerController: {fileID: 0}
+  tourText: {fileID: 0}
+  notify: 0
+  turnNumber: 0
+  oldTurnNumber: 0
+  tourCount: 0
+  pc: {fileID: 0}
+  ec: {fileID: 0}
+  tc: {fileID: 0}
