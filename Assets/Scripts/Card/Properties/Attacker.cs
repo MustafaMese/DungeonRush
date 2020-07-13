@@ -119,11 +119,6 @@ namespace DungeonRush
                 var direction = heading / distance;
                 return direction;
             }
-
-            public void LoadLoseScene()
-            {
-                LoadManager.LoadLoseScene();
-            }
         }
     }
 }

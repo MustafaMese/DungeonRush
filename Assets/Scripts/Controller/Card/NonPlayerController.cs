@@ -16,11 +16,12 @@ namespace DungeonRush.Controller
         private MoveSchedular ms;
         private ProcessHandleChecker determineProcess;
         private ProcessHandleChecker assigningProcess;
-        public List<AIController> attackerCards;
         private bool moveFinished = false;
         private bool isRunning = false;
         private int attackerIndex;
 
+        public static List<AIController> subscribedEnemies = new List<AIController>();
+        public List<AIController> attackerCards;
         private void Start()
         {
             playerController = FindObjectOfType<PlayerController>();
@@ -79,8 +80,13 @@ namespace DungeonRush.Controller
                         continue;
                     temp = new Vector2(coordinate.x + j, coordinate.y + i);
                     t = Board.tilesByCoordinates[temp];
+                    
                     if (t != null && t.GetCard() != null)
-                        l.Add((AIController)t.GetCard().Controller);
+                    {
+                        AIController c = (AIController)t.GetCard().Controller;
+                        if(subscribedEnemies.Contains(c))
+                            l.Add(c);
+                    }
                 }
             }
 
@@ -156,6 +162,11 @@ namespace DungeonRush.Controller
         private void Notify() 
         {
             ms.OnNotify();
+        }
+
+        public static void UnsubscribeCard(AIController controller)
+        {
+            subscribedEnemies.Remove(controller);
         }
     }
 }

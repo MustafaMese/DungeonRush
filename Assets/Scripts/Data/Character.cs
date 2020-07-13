@@ -20,6 +20,7 @@ namespace DungeonRush
             THIEF,
             ITEM,
             WALL,
+            TRAP
         }
 
         [CreateAssetMenu(menuName = "Card/Character")]

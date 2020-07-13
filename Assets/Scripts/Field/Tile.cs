@@ -13,7 +13,7 @@ namespace DungeonRush
             public Vector2Int coordinate;
             public Card card;
             public int listNumber;
-
+            public Card trapCard;
 
             private void Start()
             {
@@ -29,6 +29,11 @@ namespace DungeonRush
                 #endif
             }
 
+            public Card GetTrapCard()
+            {
+                return trapCard;
+            }
+
             public Card GetCard()
             {
                 return card;
@@ -42,6 +47,11 @@ namespace DungeonRush
             public void SetCoordinate(Vector3 pos)
             {
                 this.coordinate = Geometry.GridFromPoint(pos);
+            }
+
+            public void SetTrapCard(Card card)
+            {
+                this.trapCard = card;
             }
 
             public void SetCard(Card card)

@@ -6,6 +6,7 @@
         ENEMY,
         ITEM,
         COIN,
+        TRAP,
         NONE = -1
     }
 

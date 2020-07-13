@@ -19,16 +19,29 @@ namespace DungeonRush.Controller
         private ProcessHandleChecker preparingProcess;
         private ProcessHandleChecker attackProcess;
         private ProcessHandleChecker moveProcess;
+
         private NonPlayerController nonPlayerController;
+        private TrapController trapController;
+
         private Mover mover;
         private Attacker attacker;
-
         private void Start()
         {
-            nonPlayerController = FindObjectOfType<NonPlayerController>();
             card = GetComponent<Card>();
             mover = card.GetComponent<Mover>();
             attacker = card.GetComponent<Attacker>();
+            if (card.GetCardType() == CardType.ENEMY)
+            {
+                nonPlayerController = FindObjectOfType<NonPlayerController>();
+                NonPlayerController.subscribedEnemies.Add(this);
+            }
+            else if (card.GetCardType() == CardType.TRAP)
+            {
+                trapController = FindObjectOfType<TrapController>();
+                TrapController.subscribedTraps.Add(this);
+            }
+
+            
             InitProcessHandlers();
         }
 

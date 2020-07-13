@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DungeonRush.Field;
 using DungeonRush.Property;
+using DungeonRush.Controller;
 
 namespace DungeonRush
 {
@@ -29,6 +30,7 @@ namespace DungeonRush
             public Tile instantPlayerTile;
 
             public Board board;
+
 
             private void Awake()
             {
@@ -138,9 +140,17 @@ namespace DungeonRush
 
             public static void RemoveCard(Tile tile, bool isPlayerCard)
             {
-                //if (isPlayerCard)
-                //    LoadManager.LoadLoseScene();
-                Destroy(tile.GetCard().transform.gameObject);
+                Card card = tile.GetCard();
+                if(card.GetCardType() == CardType.ENEMY)
+                {
+                    NonPlayerController.UnsubscribeCard((AIController)card.Controller);
+                }
+                else if(card.GetCardType() == CardType.TRAP)
+                {
+                    TrapController.UnsubscribeCard((AIController)card.Controller);
+                }
+
+                Destroy(card.transform.gameObject);
                 tile.SetCard(null);
 
 

@@ -20,11 +20,13 @@ namespace DungeonRush.Controller
 
         public PlayerController pc;
         public NonPlayerController npc;
+        public TrapController tc;
 
         private void Start()
         {
             pc = FindObjectOfType<PlayerController>();
             npc = FindObjectOfType<NonPlayerController>();
+            tc = FindObjectOfType<TrapController>();
 
             tourCount = 0;
             tourText.text = tourCount.ToString();
@@ -81,7 +83,7 @@ namespace DungeonRush.Controller
             }
             else if (turnNumber == 1)
             {
-                pc.Begin();
+                npc.Begin();
             }
             else if (turnNumber == 2)
             {
