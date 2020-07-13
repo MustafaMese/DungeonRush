@@ -21,9 +21,6 @@ namespace DungeonRush
             [SerializeField] int power = 5;
             [SerializeField] AttackStyle attackStyle;
 
-            [SerializeField] GameObject slashPrefab;
-            private GameObject slashPrefabInstance;
-
             [SerializeField] GameObject particulPrefab;
             private GameObject particulPrefabInstance;
 
@@ -83,10 +80,7 @@ namespace DungeonRush
 
             private IEnumerator FinishAttack(Move move)
             {
-                if (slashPrefabInstance == null)
-                    InitializeSlashInstance(move);
-                else
-                    EnableSlashPrefabInstance(move);
+                Damage(move);
 
                 yield return new WaitForSeconds(0.2f);
 
@@ -94,7 +88,6 @@ namespace DungeonRush
                     InitializeParticulEffect(move);
                 else
                     EnableParticulEffect(move);
-                Damage(move);
                 move.GetCard().transform.DOMove(move.GetCardTile().transform.position, 0.2f).OnComplete(() => FinaliseAttack());
             }
 
@@ -110,20 +103,9 @@ namespace DungeonRush
                 particulPrefabInstance = Instantiate(particulPrefab, move.GetTargetTile().transform.position, Quaternion.identity, this.transform);
             }
 
-            private void InitializeSlashInstance(Move move)
-            {
-                slashPrefabInstance = Instantiate(slashPrefab, move.GetTargetTile().transform.position, Quaternion.identity, this.transform);
-            }
-
-            private void EnableSlashPrefabInstance(Move move)
-            {
-                slashPrefabInstance.SetActive(true);
-                slashPrefabInstance.transform.position = move.GetTargetTile().transform.position;
-            }
 
             private void FinaliseAttack()
             {
-                slashPrefabInstance.SetActive(false);
                 particulPrefabInstance.SetActive(false);
                 attackFinished = true;
             }

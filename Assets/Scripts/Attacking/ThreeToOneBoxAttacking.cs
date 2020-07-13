@@ -11,19 +11,30 @@ namespace DungeonRush.Attacking
     public class ThreeToOneBoxAttacking : AttackStyle
     {
         private List<Card> tempList = new List<Card>();
+        [SerializeField] float effectTime;
 
         public override void Attack(Move move, int damage)
         {
             Tile target = move.GetTargetTile();
-
             tempList = FindTargetTiles(move);
             tempList.Add(target.GetCard());
-
             for (int i = 0; i < tempList.Count; i++)
             {
                 if(tempList[i] != null)
                     tempList[i].DecreaseHealth(damage);
             }
+
+            Transform card = move.GetCard().transform;
+            Vector3 tPos = move.GetTargetTile().transform.position;
+            SetEffectPosition(tPos, card);
+        }
+
+        private void SetEffectPosition(Vector3 tPos, Transform card)
+        {
+            if (effectPrefab.prefab == null)
+                effectPrefab.InitializeObject(effectTime, tPos, card.transform, true);
+            else
+                effectPrefab.EnableObject(effectTime, tPos);
         }
 
         private List<Card> FindTargetTiles(Move move)
