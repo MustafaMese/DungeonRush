@@ -42,8 +42,6 @@ namespace DungeonRush
         public class CardUtils : MonoBehaviour
         {
             public Card card;
-            private int count;
-            private List<Color32> colors;
 
             /// <summary>
             /// Düşmanlar için Çözüm: 1.5x1.5, 2x2, 2.5x2.5, 3x3, ... Mathf.Floor ile!
@@ -55,44 +53,10 @@ namespace DungeonRush
             /// </summary>
             private const int ilev1 = 2, ilev2 = 4, ilev3 = 6, ilev4 = 8, ilev5 = 10, ilev6 = 14;  
 
-            private Color32 white;
-            private Color32 green;
-            private Color32 blue;
-            private Color32 purple;
-            private Color32 orange;
-            private Color32 magenta;
-            private Color32 pink;
-            private Color32 cyan;
-            private Color32 gold;
-
             private void Start()
             {
                 card = GetComponent<Card>();
-                white = new Color32(255, 255, 255, 255);
-                green = new Color32(65, 210, 11, 255);
-                blue = new Color32(47, 120, 255, 255);
-                purple = new Color32(145, 50, 200, 255);
-                orange = new Color32(255, 250, 0, 255);
-                magenta = new Color32(207, 71, 71, 255);
-                pink = new Color32(231, 105, 180, 255);
-                cyan = new Color32(0, 255, 255, 255);
-                gold = new Color32(207, 181, 59, 255);
-                colors = new List<Color32>();
-                colors.Add(blue);
-                colors.Add(purple);
-                colors.Add(orange);
-                colors.Add(magenta);
-                colors.Add(pink);
-                colors.Add(cyan);
                 SetLevel();
-            }
-
-            public void SetRainbowColorFrame()
-            {
-                if (count == colors.Count - 1)
-                    count = 0;
-                count++;
-                card.SetCardFrameColor(colors[count]);
             }
 
             public void SetLevel()
@@ -149,7 +113,6 @@ namespace DungeonRush
                     
                 }
                 card.isBossCard = false;
-                card.SetCardFrameColor(green);
             }
 
             private void SetItemLevel(Card card)
@@ -157,7 +120,6 @@ namespace DungeonRush
                 if (card.GetLevel() != 0)
                 {
                     card.isBossCard = true;
-                    card.SetCardFrameColor(gold);
                 }
                 else
                 {
@@ -196,11 +158,9 @@ namespace DungeonRush
                     {
                         card.SetHealth(ilev6);
                         card.SetLevel(6);
-                        card.SetCardFrameColor(gold);
                         card.isBossCard = true;
                         return;
                     }
-                    card.SetCardFrameColor(white);
                 }
             }
 
@@ -217,42 +177,36 @@ namespace DungeonRush
                     {
                         card.SetHealth(elev1);
                         card.SetLevel(1);
-                        card.SetCardFrameColor(blue);
                         card.isBossCard = false;
                     }
                     else if (randomValue < 75f)
                     {
                         card.SetHealth(elev2);
                         card.SetLevel(2);
-                        card.SetCardFrameColor(purple);
                         card.isBossCard = false;
                     }
                     else if (randomValue < 87.5f)
                     {
                         card.SetHealth(elev3);
                         card.SetLevel(3);
-                        card.SetCardFrameColor(orange);
                         card.isBossCard = false;
                     }
                     else if (randomValue < 93.75f)
                     {
                         card.SetHealth(elev4);
                         card.SetLevel(4);
-                        card.SetCardFrameColor(magenta);
                         card.isBossCard = false;
                     }
                     else if (randomValue < 96.875f)
                     {
                         card.SetHealth(elev5);
                         card.SetLevel(5);
-                        card.SetCardFrameColor(pink);
                         card.isBossCard = false;
                     }
                     else if (randomValue < 98.4375f)
                     {
                         card.SetHealth(elev6);
                         card.SetLevel(6);
-                        card.SetCardFrameColor(cyan);
                         card.isBossCard = false;
                     }
                     else

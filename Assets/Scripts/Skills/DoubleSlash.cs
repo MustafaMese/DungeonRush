@@ -14,15 +14,63 @@ namespace DungeonRush.Skills
 
         public override void Execute(Move move)
         {
-            Debug.Log("Double Slash");
             Card targetCard = move.GetTargetTile().GetCard();
             Card card = move.GetCard();
             targetCard.DecreaseHealth(slashPower);
 
+            var dir = GetDirection(move);
+            Vector3 pos = Vector3.zero;
+
             if (slashAnimationPrefab.prefab == null)
-                slashAnimationPrefab.InitializeObject(effectTime, targetCard.transform.position, card.transform);
+            {
+                pos = SetPosition(targetCard, dir, pos);
+                slashAnimationPrefab.InitializeObject(effectTime, pos, card.transform, true);
+            }
             else
-                slashAnimationPrefab.EnableObject(effectTime, targetCard.transform.position);
+            {
+                pos = SetPosition(targetCard, dir, pos);
+                slashAnimationPrefab.EnableObject(effectTime, pos);
+            }
+        }
+
+        private Vector3 SetPosition(Card targetCard, Vector3 dir, Vector3 pos)
+        {
+            if (dir.x != 0)
+            {
+                if (dir.x < 0)
+                {
+                    Vector3 coordinate = targetCard.transform.position;
+                    pos = new Vector3(coordinate.x + 1, coordinate.y, coordinate.z);
+                }
+                else if (dir.x > 0)
+                {
+                    Vector3 coordinate = targetCard.transform.position;
+                    pos = new Vector3(coordinate.x - 1, coordinate.y, coordinate.z);
+                }
+            }
+            else if (dir.y != 0)
+            {
+                if (dir.y < 0)
+                {
+                    Vector3 coordinate = targetCard.transform.position;
+                    pos = new Vector3(coordinate.x, coordinate.y + 1, coordinate.z);
+                }
+                else if (dir.y > 0)
+                {
+                    Vector3 coordinate = targetCard.transform.position;
+                    pos = new Vector3(coordinate.x, coordinate.y - 1, coordinate.z);
+                }
+            }
+
+            return pos;
+        }
+
+        private Vector3 GetDirection(Move move)
+        {
+            var heading = move.GetTargetTile().transform.position - move.GetCardTile().transform.position;
+            var distance = heading.magnitude;
+            var direction = heading / distance;
+            return direction;
         }
 
         public override void Initialize(Move move)

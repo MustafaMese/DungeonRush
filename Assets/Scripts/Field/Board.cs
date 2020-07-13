@@ -10,7 +10,6 @@ namespace DungeonRush
     {
         public class Board : MonoBehaviour
         {
-
             // Touched moveschedulara veya nonplayera falan alınabilinir.
             public static Board instance;
 
@@ -44,10 +43,10 @@ namespace DungeonRush
                         if (cardPlaces[i].GetCard() == null)
                         {
                             int number = Random.Range(0, 101);
-                            if (number > 75)
+                            if (number < 30)
                                 cm.AddCard(GiveRandomCard(cm.enemyCards), cardPlaces[i], this, false);
-                            //else if (number < 90)
-                            //    cm.AddCard(GiveRandomCard(cm.itemCards), cardPlaces[i], this, false);
+                            else if (number < 55)
+                                cm.AddCard(GiveRandomCard(cm.itemCards), cardPlaces[i], this, false);
                             //else
                             //    cm.AddCard(GiveRandomCard(cm.itemCards), cardPlaces[i], this, false);
                         }

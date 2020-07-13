@@ -8,31 +8,27 @@ namespace DungeonRush.Effects
     {
         [HideInInspector] public EffectObject prefab;
 
-        public void InitializeObject(float existence, Vector3 position, Transform parent)
+        public void InitializeObject(float existence, Vector3 position, Transform parent, bool disable)
         {
-            print("Init");
             prefab = Instantiate(this, position, Quaternion.identity, parent);
-            Invoke("DisableObject", existence);
+            if(disable)
+                Invoke("DisableObject", existence);
         }
 
         public void DisableObject()
         {
-            if (prefab == null)
-                print("prefab null");
-
-            if (prefab.gameObject == null)
-                print("prefab.gameObject.null");
-
-            if(prefab.gameObject.activeInHierarchy)
+            if (prefab.gameObject.activeInHierarchy)
+            {
                 prefab.gameObject.SetActive(false);
+            }
         }
 
         public void EnableObject(float existence, Vector3 position)
         {
-            print("Enabling");
             prefab.gameObject.SetActive(true);
             prefab.transform.position = position;
             Invoke("DisableObject", existence);
         }
+
     }
 }

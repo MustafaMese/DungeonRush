@@ -6,6 +6,7 @@ using DungeonRush.Data;
 using System.Collections;
 using DungeonRush.Skills;
 using System;
+using DungeonRush.Attacking;
 
 namespace DungeonRush
 {
@@ -18,6 +19,7 @@ namespace DungeonRush
             [SerializeField] bool isSkillUser = false;
             [SerializeField] float range = 0.8f;
             [SerializeField] int power = 5;
+            [SerializeField] AttackStyle attackStyle;
 
             [SerializeField] GameObject slashPrefab;
             private GameObject slashPrefabInstance;
@@ -69,17 +71,14 @@ namespace DungeonRush
                 MoveToAttackRange();
             }
 
-            private void Damage(Card enemy)
+            private void Damage(Move move)
             {
-                if (enemy == null)
-                    return;
-
                 int itemDamage = 0;
                 if (itemUser && itemUser.GetItem().exist)
                     itemDamage = itemUser.GetItem().GetHealth();
                 int totalDamage = itemDamage + power;
 
-                enemy.DecreaseHealth(totalDamage);
+                attackStyle.Attack(move, totalDamage);
             }
 
             private IEnumerator FinishAttack(Move move)
@@ -95,7 +94,7 @@ namespace DungeonRush
                     InitializeParticulEffect(move);
                 else
                     EnableParticulEffect(move);
-                Damage(move.GetTargetTile().GetCard());
+                Damage(move);
                 move.GetCard().transform.DOMove(move.GetCardTile().transform.position, 0.2f).OnComplete(() => FinaliseAttack());
             }
 
@@ -121,7 +120,6 @@ namespace DungeonRush
                 slashPrefabInstance.SetActive(true);
                 slashPrefabInstance.transform.position = move.GetTargetTile().transform.position;
             }
-
 
             private void FinaliseAttack()
             {

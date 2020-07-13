@@ -11,7 +11,7 @@ namespace DungeonRush
 {
     namespace Cards
     {
-        [RequireComponent(typeof(CardUtils), typeof(Mover))]
+        [RequireComponent(typeof(CardUtils))]
         public abstract class Card : MonoBehaviour
         {
             protected Tile coordinate;
@@ -54,7 +54,7 @@ namespace DungeonRush
                 cardName = cardProperties.cardName;
                 characterSprite.sprite = cardProperties.sprite;
                 textMeshHealth.text = health.Get().ToString();
-                textMeshName.text = cardName;
+                //textMeshName.text = cardName;
                 mover = GetComponent<Mover>();
                 move = new Move();
                 Controller = GetComponent<IMoveController>();
@@ -69,10 +69,6 @@ namespace DungeonRush
                 if(!isAlive)
                 {
                     transform.localScale = Vector3.Lerp(transform.localScale, new Vector3(0, 0, 0), disappearing);
-                }
-                if (isBossCard)
-                {
-                    RainbowColorTimer();
                 }
 
             }
@@ -98,15 +94,6 @@ namespace DungeonRush
             public Character GetCharacterType()
             {
                 return characterType;
-            }
-            public void RainbowColorTimer()
-            {
-                timeLeft -= Time.deltaTime;
-                if (timeLeft < 0)
-                {
-                    cardUtils.SetRainbowColorFrame();
-                    timeLeft = 2f;
-                }
             }
             public void Disappear()
             {

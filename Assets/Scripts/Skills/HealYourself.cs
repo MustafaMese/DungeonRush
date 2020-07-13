@@ -25,7 +25,7 @@ namespace DungeonRush.Skills
             card.IncreaseHealth(healPower);
 
             if (healAnimationPrefab.prefab == null)
-                healAnimationPrefab.InitializeObject(effectTime, card.transform.position, card.transform);
+                healAnimationPrefab.InitializeObject(effectTime, card.transform.position, card.transform, true);
             else
                 healAnimationPrefab.EnableObject(effectTime, card.transform.position);
         }

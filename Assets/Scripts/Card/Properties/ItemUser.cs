@@ -33,7 +33,7 @@ namespace DungeonRush
             public void SetItem(Card item)
             {
                 this.item.Set(item);
-                UpdateWeaponImage(item);
+                //UpdateWeaponImage(item);
                 UpdateWeaponText(this.item.health);
             }
 

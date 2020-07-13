@@ -8,7 +8,6 @@ namespace DungeonRush
 {
     namespace Field 
     {
-        [ExecuteAlways]
         public class Tile : MonoBehaviour
         {
             public Vector2Int coordinate;
