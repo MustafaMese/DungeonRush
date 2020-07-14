@@ -20,12 +20,12 @@ namespace DungeonRush
 
             private Move move;
             private SkillUser skillUser;
+            [SerializeField] Animator animator;
 
             private void Start()
             {
                 DOTween.Init();
                 move = new Move();
-
                 if (isSkillUser)
                     skillUser = GetComponent<SkillUser>();
             }
@@ -37,12 +37,15 @@ namespace DungeonRush
 
                 if (isSkillUser)
                     skillUser.ExecuteMoverSkills();
-
+                // YÜRÜ.
+                UpdateAnimation(true);
                 move.GetCard().transform.DOMove(move.GetTargetTile().transform.position, 0.15f).OnComplete(() => TerminateMove());
             }
 
             public void TerminateMove()
             {
+                // YÜRÜMEYİ BİTİR.
+                UpdateAnimation(false);
                 move.GetCard().isMoving = false;
                 move.GetCard().transform.position = move.GetTargetTile().transform.position;
                 MoveType moveType = move.GetMoveType();
@@ -88,6 +91,11 @@ namespace DungeonRush
                     card.GetComponent<ItemUser>().TakePotion(item);
                 else if (item.GetItemType() == ItemType.WEAPON)
                     card.GetComponent<ItemUser>().TakeWeapon(item);
+            }
+
+            private void UpdateAnimation(bool b)
+            {
+                animator.SetBool("walk", b);
             }
         }
     }

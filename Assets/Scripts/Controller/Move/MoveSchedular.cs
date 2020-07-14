@@ -82,7 +82,7 @@ namespace DungeonRush.Controller
             }
             else if (turnNumber == 1)
             {
-                ec.Begin();
+                pc.Begin();
             }
             else if (turnNumber == 2)
             {
