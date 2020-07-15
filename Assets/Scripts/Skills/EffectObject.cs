@@ -17,7 +17,7 @@ namespace DungeonRush.Effects
 
         public void DisableObject()
         {
-            if (prefab.gameObject.activeInHierarchy)
+            if (prefab != null && prefab.gameObject != null && prefab.gameObject.activeInHierarchy)
             {
                 prefab.gameObject.SetActive(false);
             }
