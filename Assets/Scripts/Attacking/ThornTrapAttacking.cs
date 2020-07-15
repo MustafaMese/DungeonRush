@@ -24,7 +24,7 @@ namespace DungeonRush.Attacking
         private void SetEffectPosition(Vector3 tPos, Transform card)
         {
             if (effectPrefab.prefab == null)
-                effectPrefab.InitializeObject(effectTime, tPos, card.transform, true);
+                effectPrefab.InitializeObject(effectTime, tPos, card, true);
             else
                 effectPrefab.EnableObject(effectTime, tPos);
         }

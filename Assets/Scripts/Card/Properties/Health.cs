@@ -11,6 +11,7 @@ namespace DungeonRush.Property
     {
         public int health;
         private Card card;
+        [SerializeField] Animator animator;
 
         private void Start()
         {
@@ -46,11 +47,20 @@ namespace DungeonRush.Property
         public void ChangeHealth(bool isDamage, int amount)
         {
             if (isDamage)
+            {
+                if(card.GetCardType() == CardType.PLAYER)
+                    UpdateAnimation();
                 health -= amount;
+            }
             else
                 health += amount;
 
             health = Mathf.Max(0, health);
+        }
+
+        private void UpdateAnimation()
+        {
+            animator.SetTrigger("hurt");
         }
     }
 }

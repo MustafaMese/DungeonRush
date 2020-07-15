@@ -39,7 +39,7 @@ namespace DungeonRush
                     skillUser.ExecuteMoverSkills();
                 // YÜRÜ.
                 UpdateAnimation(true);
-                move.GetCard().transform.DOMove(move.GetTargetTile().transform.position, 0.15f).OnComplete(() => TerminateMove());
+                move.GetCard().transform.DOMove(move.GetTargetTile().GetCoordinate(), 0.15f).OnComplete(() => TerminateMove());
             }
 
             public void TerminateMove()
@@ -47,7 +47,7 @@ namespace DungeonRush
                 // YÜRÜMEYİ BİTİR.
                 UpdateAnimation(false);
                 move.GetCard().isMoving = false;
-                move.GetCard().transform.position = move.GetTargetTile().transform.position;
+                move.GetCard().transform.position = move.GetTargetTile().GetCoordinate();
                 MoveType moveType = move.GetMoveType();
                 Card card = move.GetCard();
                 Card item = move.GetTargetTile().GetCard();
@@ -95,7 +95,8 @@ namespace DungeonRush
 
             private void UpdateAnimation(bool b)
             {
-                animator.SetBool("walk", b);
+                if(move.GetCard().GetCardType() == CardType.PLAYER)
+                    animator.SetBool("walk", b);
             }
         }
     }

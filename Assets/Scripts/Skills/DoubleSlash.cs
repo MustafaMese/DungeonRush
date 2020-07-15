@@ -1,6 +1,7 @@
 ﻿using DungeonRush.Cards;
 using DungeonRush.Data;
 using DungeonRush.Effects;
+using DungeonRush.Field;
 using UnityEngine;
 
 namespace DungeonRush.Skills
@@ -16,24 +17,26 @@ namespace DungeonRush.Skills
         {
             Card targetCard = move.GetTargetTile().GetCard();
             Card card = move.GetCard();
-            targetCard.DecreaseHealth(slashPower);
+            
+            if(targetCard != null)
+                targetCard.DecreaseHealth(slashPower);
 
             var dir = GetDirection(move);
             Vector3 pos = Vector3.zero;
 
             if (slashAnimationPrefab.prefab == null)
             {
-                pos = SetPosition(targetCard, dir, pos);
+                pos = SetPosition(move.GetTargetTile(), dir, pos);
                 slashAnimationPrefab.InitializeObject(effectTime, pos, card.transform, true);
             }
             else
             {
-                pos = SetPosition(targetCard, dir, pos);
+                pos = SetPosition(move.GetTargetTile(), dir, pos);
                 slashAnimationPrefab.EnableObject(effectTime, pos);
             }
         }
 
-        private Vector3 SetPosition(Card targetCard, Vector3 dir, Vector3 pos)
+        private Vector3 SetPosition(Tile targetCard, Vector3 dir, Vector3 pos)
         {
             if (dir.x != 0)
             {

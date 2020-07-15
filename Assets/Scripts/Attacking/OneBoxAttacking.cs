@@ -18,14 +18,14 @@ namespace DungeonRush.Attacking
                 targetCard.DecreaseHealth(damage);
 
             Transform card = move.GetCard().transform;
-            Vector3 tPos = move.GetTargetTile().transform.position;
+            Vector3 tPos = move.GetTargetTile().GetCoordinate();
             SetEffectPosition(tPos, card);
         }
 
         private void SetEffectPosition(Vector3 tPos, Transform card)
         {
             if (effectPrefab.prefab == null)
-                effectPrefab.InitializeObject(effectTime, tPos, card.transform, true);
+                effectPrefab.InitializeObject(effectTime, tPos, card, true);
             else
                 effectPrefab.EnableObject(effectTime, tPos);
         }

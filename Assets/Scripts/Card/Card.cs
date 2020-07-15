@@ -47,7 +47,6 @@ namespace DungeonRush
                 isAlive = true;
                 isMoving = false;
                 isBossCard = false;
-                timeLeft = 2f;
                 cardLevel = cardProperties.level;
                 health = GetComponent<Health>();
                 health.Set(cardProperties.health);
@@ -143,10 +142,6 @@ namespace DungeonRush
             public void ExecuteAttack()
             {
                 GetComponent<Attacker>().Attack();
-            }
-            public void HandleCardEffect(MoveType mT, Tile t, int listnumber)
-            {
-                GetComponentInChildren<CardEffectHandler>().DoAnim(mT, t, listnumber);
             }
             public Shift GetShift()
             {

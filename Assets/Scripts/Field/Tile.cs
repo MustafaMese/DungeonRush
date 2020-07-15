@@ -10,11 +10,10 @@ namespace DungeonRush
     {
         public class Tile : MonoBehaviour
         {
-            public Vector2Int coordinate;
+            public Vector2 coordinate;
             public Card card;
             public int listNumber;
             public Card trapCard;
-
 
             public Card GetTrapCard()
             {
@@ -26,14 +25,14 @@ namespace DungeonRush
                 return card;
             }
 
-            public Vector2Int GetCoordinate()
+            public Vector2 GetCoordinate()
             {
-                return Geometry.GridPoint(coordinate.x, coordinate.y);
+                return coordinate;
             }
 
             public void SetCoordinate(Vector3 pos)
             {
-                this.coordinate = Geometry.GridFromPoint(pos);
+                this.coordinate = pos;
             }
 
             public void SetTrapCard(Card card)

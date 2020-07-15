@@ -27,7 +27,7 @@ namespace DungeonRush
             private Card card;
             private ItemUser itemUser;
             private SkillUser skillUser;
-            private Animator animator;
+            [SerializeField] Animator animator;
 
             private void Start()
             {
@@ -57,8 +57,9 @@ namespace DungeonRush
             {
                 Move move = card.GetMove();
                 var dir = GetDirection(move);
-                Vector2 targetPos = new Vector2(move.GetCardTile().transform.position.x + dir.x * range, move.GetCardTile().transform.position.y + dir.y * range);
-                // YÜRÜME ANİMASYONU GİR
+
+                Vector2 targetPos = new Vector2(move.GetCardTile().GetCoordinate().x + dir.x * range, move.GetCardTile().GetCoordinate().y + dir.y * range);
+                UpdateAnimation(true, false);
                 move.GetCard().transform.DOMove(targetPos, 0.1f).OnComplete(() => StartCoroutine(FinishAttack(move)));
             }
 
@@ -82,31 +83,30 @@ namespace DungeonRush
 
             private IEnumerator FinishAttack(Move move)
             {
-                // YÜRÜME ANİMASYONU BİTİR
-                // SALDIR
-                // DÜŞMANIN CANINI ACIT
-                Damage(move);
-                // SALDIRIYI BİTİR
-                yield return new WaitForSeconds(0.2f);
+                UpdateAnimation(false, false);
 
+                UpdateAnimation(true, true);
+
+                Damage(move);
+                yield return new WaitForSeconds(0.2f);
                 if (particulPrefabInstance == null)
                     InitializeParticulEffect(move);
                 else
                     EnableParticulEffect(move);
-                // YÜRÜME ANİMASYONU
-                move.GetCard().transform.DOMove(move.GetCardTile().transform.position, 0.2f).OnComplete(() => FinaliseAttack());
+
+                move.GetCard().transform.DOMove(move.GetCardTile().GetCoordinate(), 0.2f).OnComplete(() => FinaliseAttack());
             }
 
             #region FINALIZE ATTACK AND EFFECTS
             private void EnableParticulEffect(Move move)
             {
                 particulPrefabInstance.SetActive(true);
-                particulPrefabInstance.transform.position = move.GetTargetTile().transform.position;
+                particulPrefabInstance.transform.position = move.GetTargetTile().GetCoordinate();
             }
 
             private void InitializeParticulEffect(Move move)
             {
-                particulPrefabInstance = Instantiate(particulPrefab, move.GetTargetTile().transform.position, Quaternion.identity, this.transform);
+                particulPrefabInstance = Instantiate(particulPrefab, move.GetTargetTile().GetCoordinate(), Quaternion.identity, this.transform);
             }
 
 
@@ -121,10 +121,19 @@ namespace DungeonRush
 
             private Vector3 GetDirection(Move move)
             {
-                var heading = move.GetTargetTile().transform.position - move.GetCardTile().transform.position;
+                var heading = move.GetTargetTile().GetCoordinate() - move.GetCardTile().GetCoordinate();
                 var distance = heading.magnitude;
                 var direction = heading / distance;
                 return direction;
+            }
+
+            private void UpdateAnimation(bool play, bool isAttack)
+            {
+                if(card.GetCardType() == CardType.PLAYER)
+                    if (isAttack)
+                        animator.SetTrigger("attack");
+                    else
+                        animator.SetBool("walk", play);
             }
         }
     }

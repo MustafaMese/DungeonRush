@@ -25,14 +25,14 @@ namespace DungeonRush.Attacking
             }
 
             Transform card = move.GetCard().transform;
-            Vector3 tPos = move.GetTargetTile().transform.position;
+            Vector3 tPos = move.GetTargetTile().GetCoordinate();
             SetEffectPosition(tPos, card);
         }
 
         private void SetEffectPosition(Vector3 tPos, Transform card)
         {
             if (effectPrefab.prefab == null)
-                effectPrefab.InitializeObject(effectTime, tPos, card.transform, true);
+                effectPrefab.InitializeObject(effectTime, tPos, card, true);
             else
                 effectPrefab.EnableObject(effectTime, tPos);
         }
@@ -42,7 +42,7 @@ namespace DungeonRush.Attacking
             tempList.Clear();
             int rL = Board.RowLength;
             Tile t = move.GetTargetTile();
-            Vector2 coordinate = t.transform.position;
+            Vector2 coordinate = t.GetCoordinate();
 
             var dir = GetDirection(move);
 
@@ -83,7 +83,7 @@ namespace DungeonRush.Attacking
 
         private Vector3 GetDirection(Move move)
         {
-            var heading = move.GetTargetTile().transform.position - move.GetCardTile().transform.position;
+            var heading = move.GetTargetTile().GetCoordinate() - move.GetCardTile().GetCoordinate();
             var distance = heading.magnitude;
             var direction = heading / distance;
             return direction;
