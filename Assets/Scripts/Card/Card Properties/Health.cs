@@ -31,7 +31,7 @@ namespace DungeonRush.Property
                 CardManager.RemoveCardForAttacker(card.GetTile().GetListNumber(), true);
             else
                 CardManager.RemoveCardForAttacker(card.GetTile().GetListNumber(), false);
-            // ÖLME ANİMASYONU. FALAN
+            
         }
 
         public void Set(int amount)

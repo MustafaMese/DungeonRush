@@ -74,10 +74,10 @@ namespace DungeonRush
             private void Damage(Move move)
             {
                 int itemDamage = 0;
-                //if (itemUser && itemUser.GetItem().exist)
-                //    itemDamage = itemUser.GetItem().GetDamage();
+                if (itemUser && itemUser.GetItem() != null)
+                    itemDamage = itemUser.GetItem().GetDamage();
                 int totalDamage = itemDamage + power;
-
+                print("tD: " + totalDamage);
                 attackStyle.Attack(move, totalDamage);
             }
 

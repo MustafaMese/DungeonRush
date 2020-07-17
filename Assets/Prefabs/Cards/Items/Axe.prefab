@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &8249766799317189238
+--- !u!1001 &7168055888643361263
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -11,18 +11,8 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 5c1295660efe65d45b44fb86cc1615a0,
+      objectReference: {fileID: 21300000, guid: e90ca01142f2f1d4ca5b52070ab388d3,
         type: 3}
-    - target: {fileID: 958205473868242717, guid: 133aaa8ad51e7ec4096210d8ce6249fd,
-        type: 3}
-      propertyPath: m_Size.x
-      value: 1.67
-      objectReference: {fileID: 0}
-    - target: {fileID: 958205473868242717, guid: 133aaa8ad51e7ec4096210d8ce6249fd,
-        type: 3}
-      propertyPath: m_Size.y
-      value: 2.01
-      objectReference: {fileID: 0}
     - target: {fileID: 958205473868242717, guid: 133aaa8ad51e7ec4096210d8ce6249fd,
         type: 3}
       propertyPath: m_WasSpriteAssigned
@@ -31,40 +21,40 @@ PrefabInstance:
     - target: {fileID: 1003901059469522988, guid: 133aaa8ad51e7ec4096210d8ce6249fd,
         type: 3}
       propertyPath: m_Name
-      value: Health Potion
+      value: Axe
       objectReference: {fileID: 0}
     - target: {fileID: 1211509003950963802, guid: 133aaa8ad51e7ec4096210d8ce6249fd,
         type: 3}
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
-    - target: {fileID: 2510903702732758764, guid: 133aaa8ad51e7ec4096210d8ce6249fd,
+    - target: {fileID: 2379468403683347763, guid: 133aaa8ad51e7ec4096210d8ce6249fd,
         type: 3}
-      propertyPath: type
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2510903702732758764, guid: 133aaa8ad51e7ec4096210d8ce6249fd,
-        type: 3}
-      propertyPath: damage
-      value: 3
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2510903702732758764, guid: 133aaa8ad51e7ec4096210d8ce6249fd,
         type: 3}
       propertyPath: sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 5c1295660efe65d45b44fb86cc1615a0,
+      objectReference: {fileID: 21300000, guid: 552602e0f0f46344a8c60aa465b0387b,
         type: 3}
     - target: {fileID: 2510903702732758764, guid: 133aaa8ad51e7ec4096210d8ce6249fd,
         type: 3}
       propertyPath: itemSpriteRenderer
       value: 
-      objectReference: {fileID: 3797863542711390644}
+      objectReference: {fileID: 2716720808710429229}
     - target: {fileID: 2510903702732758764, guid: 133aaa8ad51e7ec4096210d8ce6249fd,
         type: 3}
       propertyPath: itemSprite
       value: 
-      objectReference: {fileID: 21300000, guid: 5c1295660efe65d45b44fb86cc1615a0,
+      objectReference: {fileID: 21300000, guid: 0a166431bd21fd64988c8637d78e08c0,
         type: 3}
+    - target: {fileID: 2510903702732758764, guid: 133aaa8ad51e7ec4096210d8ce6249fd,
+        type: 3}
+      propertyPath: damage
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 3055322803219196748, guid: 133aaa8ad51e7ec4096210d8ce6249fd,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -170,6 +160,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 4723882753198622387, guid: 133aaa8ad51e7ec4096210d8ce6249fd,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5028750565145745055, guid: 133aaa8ad51e7ec4096210d8ce6249fd,
         type: 3}
       propertyPath: m_IsActive
@@ -179,17 +174,17 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 5c1295660efe65d45b44fb86cc1615a0,
+      objectReference: {fileID: 21300000, guid: 0a166431bd21fd64988c8637d78e08c0,
         type: 3}
     - target: {fileID: 5100810314956723138, guid: 133aaa8ad51e7ec4096210d8ce6249fd,
         type: 3}
       propertyPath: m_Size.x
-      value: 0.835
+      value: 0.150625
       objectReference: {fileID: 0}
     - target: {fileID: 5100810314956723138, guid: 133aaa8ad51e7ec4096210d8ce6249fd,
         type: 3}
       propertyPath: m_Size.y
-      value: 1.005
+      value: 0.363125
       objectReference: {fileID: 0}
     - target: {fileID: 5100810314956723138, guid: 133aaa8ad51e7ec4096210d8ce6249fd,
         type: 3}
@@ -205,8 +200,24 @@ PrefabInstance:
         type: 3}
       propertyPath: cardProperties
       value: 
-      objectReference: {fileID: 11400000, guid: b79a80166b952974b84f850dc88b49ed,
+      objectReference: {fileID: 11400000, guid: 941d22e69e3d53240b5f0355da2ddeb2,
         type: 2}
+    - target: {fileID: 5319641840057533075, guid: 133aaa8ad51e7ec4096210d8ce6249fd,
+        type: 3}
+      propertyPath: characterType
+      value: 
+      objectReference: {fileID: 11400000, guid: 98bddafb4fc1cb342b7213d4805f2d04,
+        type: 2}
+    - target: {fileID: 5711722651633475449, guid: 133aaa8ad51e7ec4096210d8ce6249fd,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5776579073385143519, guid: 133aaa8ad51e7ec4096210d8ce6249fd,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6464877079288459363, guid: 133aaa8ad51e7ec4096210d8ce6249fd,
         type: 3}
       propertyPath: m_IsActive
@@ -214,9 +225,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 133aaa8ad51e7ec4096210d8ce6249fd, type: 3}
---- !u!212 &3797863542711390644 stripped
+--- !u!212 &2716720808710429229 stripped
 SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 5100810314956723138, guid: 133aaa8ad51e7ec4096210d8ce6249fd,
     type: 3}
-  m_PrefabInstance: {fileID: 8249766799317189238}
+  m_PrefabInstance: {fileID: 7168055888643361263}
   m_PrefabAsset: {fileID: 0}

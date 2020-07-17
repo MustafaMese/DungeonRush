@@ -123,8 +123,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 552602e0f0f46344a8c60aa465b0387b,
-        type: 3}
+      objectReference: {fileID: 0}
     - target: {fileID: 1535930889743290764, guid: 3d78076d2cee5794ea5ea9d2f147a51f,
         type: 3}
       propertyPath: m_Size.x
@@ -138,7 +137,7 @@ PrefabInstance:
     - target: {fileID: 1535930889743290764, guid: 3d78076d2cee5794ea5ea9d2f147a51f,
         type: 3}
       propertyPath: m_WasSpriteAssigned
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1669093185118140848, guid: 3d78076d2cee5794ea5ea9d2f147a51f,
         type: 3}
@@ -398,6 +397,11 @@ PrefabInstance:
       propertyPath: health
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 4091481314613496153, guid: 3d78076d2cee5794ea5ea9d2f147a51f,
+        type: 3}
+      propertyPath: itemBone
+      value: 
+      objectReference: {fileID: 4461669070518704656}
     - target: {fileID: 4125916995559540813, guid: 3d78076d2cee5794ea5ea9d2f147a51f,
         type: 3}
       propertyPath: m_LocalRotation.z
@@ -554,7 +558,12 @@ PrefabInstance:
     - target: {fileID: 7147871325311128375, guid: 3d78076d2cee5794ea5ea9d2f147a51f,
         type: 3}
       propertyPath: isItemUser
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7147871325311128375, guid: 3d78076d2cee5794ea5ea9d2f147a51f,
+        type: 3}
+      propertyPath: power
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7448227363587340953, guid: 3d78076d2cee5794ea5ea9d2f147a51f,
         type: 3}
@@ -650,3 +659,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3d78076d2cee5794ea5ea9d2f147a51f, type: 3}
+--- !u!212 &4461669070518704656 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 1535930889743290764, guid: 3d78076d2cee5794ea5ea9d2f147a51f,
+    type: 3}
+  m_PrefabInstance: {fileID: 2935134611781421980}
+  m_PrefabAsset: {fileID: 0}

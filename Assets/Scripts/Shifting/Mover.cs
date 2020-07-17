@@ -53,7 +53,7 @@ namespace DungeonRush
                 {
                     case MoveType.ITEM:
                         ItemMove(card, item);
-                        ChangeTiles(card, false);
+                        ChangeTiles(card, true);
                         break;
                     case MoveType.COIN:
                         CoinMove(item);
@@ -91,6 +91,8 @@ namespace DungeonRush
                     card.GetComponent<ItemUser>().TakePotion(i);
                 else if (i.GetItemType() == ItemType.WEAPON)
                     card.GetComponent<ItemUser>().TakeWeapon(i);
+
+
             }
 
             private void UpdateAnimation(bool b)
