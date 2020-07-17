@@ -52,18 +52,6 @@ namespace DungeonRush
                 }
             }
 
-            public List<Card> GetHighLevelCards()
-            {
-                List<Card> cleverCards = new List<Card>();
-                for (int i = 0; i < cards.Count; i++)
-                {
-                    Card card = cards[i];
-                    if (card.GetCardType() == CardType.ENEMY && card.GetLevel() >= 1)
-                        cleverCards.Add(card);
-                }
-                return cleverCards;
-            }
-
             public PlayerCard GetPlayerCard()
             {
                 return this.playerCard;

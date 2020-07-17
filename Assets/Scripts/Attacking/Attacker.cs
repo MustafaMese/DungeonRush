@@ -75,7 +75,7 @@ namespace DungeonRush
             {
                 int itemDamage = 0;
                 if (itemUser && itemUser.GetItem().exist)
-                    itemDamage = itemUser.GetItem().GetHealth();
+                    itemDamage = itemUser.GetItem().GetDamage();
                 int totalDamage = itemDamage + power;
 
                 attackStyle.Attack(move, totalDamage);
@@ -112,7 +112,6 @@ namespace DungeonRush
 
             private void FinaliseAttack()
             {
-                // YÜRÜME ANİMASYONUNU BİTİR.
                 particulPrefabInstance.SetActive(false);
                 attackFinished = true;
             }

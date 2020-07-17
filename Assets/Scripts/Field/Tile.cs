@@ -1,7 +1,6 @@
 ﻿using DungeonRush.Cards;
 using DungeonRush.Managers;
 using DungeonRush.Data;
-using DungeonRush.Settings;
 using UnityEngine;
 
 namespace DungeonRush
