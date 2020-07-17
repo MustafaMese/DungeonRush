@@ -74,8 +74,8 @@ namespace DungeonRush
             private void Damage(Move move)
             {
                 int itemDamage = 0;
-                if (itemUser && itemUser.GetItem().exist)
-                    itemDamage = itemUser.GetItem().GetDamage();
+                //if (itemUser && itemUser.GetItem().exist)
+                //    itemDamage = itemUser.GetItem().GetDamage();
                 int totalDamage = itemDamage + power;
 
                 attackStyle.Attack(move, totalDamage);
@@ -128,11 +128,10 @@ namespace DungeonRush
 
             private void UpdateAnimation(bool play, bool isAttack)
             {
-                if(card.GetCardType() == CardType.PLAYER)
-                    if (isAttack)
-                        animator.SetTrigger("attack");
-                    else
-                        animator.SetBool("walk", play);
+                if (isAttack)
+                    animator.SetTrigger("attack");
+                else
+                    animator.SetBool("walk", play);
             }
         }
     }

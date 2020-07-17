@@ -5,11 +5,10 @@ namespace DungeonRush
 {
     namespace Property
     {
-        [CreateAssetMenu(menuName = "Property/Template")]
+        [CreateAssetMenu(menuName = "Card/Template")]
         public class CardProperties : ScriptableObject
         {
             public string cardName;
-            public int health;
             public CardType cardType;
             public Character character;
         }

@@ -48,8 +48,7 @@ namespace DungeonRush.Property
         {
             if (isDamage)
             {
-                if(card.GetCardType() == CardType.PLAYER)
-                    UpdateAnimation();
+                UpdateAnimation();
                 health -= amount;
             }
             else

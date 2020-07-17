@@ -9,7 +9,6 @@ namespace DungeonRush.Property
     {
         public ItemType type;
         public int damage;
-        public bool exist;
         public Sprite sprite;
 
         public Sprite GetSprite()
@@ -25,11 +24,6 @@ namespace DungeonRush.Property
         public int GetDamage()
         {
             return damage;
-        }
-
-        public bool isExist()
-        {
-            return exist;
         }
     }
 

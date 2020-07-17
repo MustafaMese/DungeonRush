@@ -95,8 +95,7 @@ namespace DungeonRush
 
             private void UpdateAnimation(bool b)
             {
-                if(move.GetCard().GetCardType() == CardType.PLAYER)
-                    animator.SetBool("walk", b);
+                animator.SetBool("walk", b);
             }
         }
     }

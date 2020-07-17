@@ -46,6 +46,13 @@ public class LoadManager : MonoBehaviour
     {
         SceneManager.LoadScene("LoadingScreen");
     }
+
+    public void RestartScene()
+    {
+        var scene = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(scene.buildIndex);
+    }
+
     public IEnumerator LoadNewScene(string scene)
     {
         isInLoadingScreen = true;

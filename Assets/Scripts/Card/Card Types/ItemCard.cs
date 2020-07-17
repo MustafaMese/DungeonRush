@@ -8,6 +8,7 @@ namespace DungeonRush {
     {
         public class ItemCard : Card
         {
+
             public override void ExecuteMove()
             {
                 mover.Move();

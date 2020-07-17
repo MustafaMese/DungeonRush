@@ -35,7 +35,6 @@ namespace DungeonRush
                 isMoving = false;
                 isBossCard = false;
                 health = GetComponent<Health>();
-                health.Set(cardProperties.health);
                 cardName = cardProperties.cardName;
                 mover = GetComponent<Mover>();
                 move = new Move();
