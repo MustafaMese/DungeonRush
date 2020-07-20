@@ -67,29 +67,40 @@ namespace DungeonRush.Controller
         }
         private List<AIController> GetAttackers()
         {
-            Vector2 coordinate = playerController.transform.position;
-            int rL = Board.RowLength;
-            Tile t;
-            Vector2 temp;
             List<AIController> l = new List<AIController>();
 
-            for (int i = -(attackerDistance / 2); i < attackerDistance / 2 + 1; i++)
+            for (int i = 0; i < subscribedEnemies.Count; i++)
             {
-                for (int j = -(attackerDistance / 2); j < attackerDistance / 2 + 1; j++)
+                if((subscribedEnemies[i].transform.position - playerController.transform.position).sqrMagnitude <= attackerDistance)
                 {
-                    if (coordinate.x + j < 0 || coordinate.y + i < 0 || coordinate.x + j > rL - 1 || coordinate.y + i > rL - 1 || (i == 0 && j == 0)) 
-                        continue;
-                    temp = new Vector2(coordinate.x + j, coordinate.y + i);
-                    t = Board.tilesByCoordinates[temp];
-                    
-                    if (t != null && t.GetCard() != null)
-                    {
-                        AIController c = (AIController)t.GetCard().Controller;
-                        if(subscribedEnemies.Contains(c))
-                            l.Add(c);
-                    }
+                    l.Add(subscribedEnemies[i]);
+                    subscribedEnemies[i].ChangeAnimatorState(true);
                 }
+                else
+                    subscribedEnemies[i].ChangeAnimatorState(false);
             }
+
+            //for (int i = -(attackerDistance / 2); i < attackerDistance / 2 + 1; i++)
+            //{
+            //    for (int j = -(attackerDistance / 2); j < attackerDistance / 2 + 1; j++)
+            //    {
+            //        if (coordinate.x + j < 0 || coordinate.y + i < 0 || coordinate.x + j > rL - 1 || coordinate.y + i > rL - 1 || (i == 0 && j == 0)) 
+            //            continue;
+            //        temp = new Vector2(coordinate.x + j, coordinate.y + i);
+            //        t = Board.tilesByCoordinates[temp];
+                    
+            //        if (t != null && t.GetCard() != null)
+            //        {
+            //            AIController c = (AIController)t.GetCard().Controller;
+            //            if (subscribedEnemies.Contains(c))
+            //            {
+            //                var distance = (playerController.transform.position - c.transform.position).sqrMagnitude;
+            //                print(distance);
+            //                l.Add(c);
+            //            }
+            //        }
+            //    }
+            //}
 
             return l;
         }

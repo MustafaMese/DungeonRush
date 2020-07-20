@@ -26,6 +26,8 @@ namespace DungeonRush.Controller
 
         private Mover mover;
         private Attacker attacker;
+        public GameObject model;
+
         private void Start()
         {
             card = GetComponent<Card>();
@@ -160,6 +162,11 @@ namespace DungeonRush.Controller
         }
 
         #endregion
+
+        public void ChangeAnimatorState(bool state)
+        {
+            model.GetComponent<Animator>().enabled = state;
+        }
 
         private IEnumerator EndTurn()
         {

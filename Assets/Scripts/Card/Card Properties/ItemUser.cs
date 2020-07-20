@@ -25,20 +25,15 @@ namespace DungeonRush
 
             public void TakeWeapon(Item item)
             {
-                print("wow");
                 SetItem(item);
             }
 
             public void SetItem(Item item)
             {
-                print("1");
                 if (this.item != null)
                 {
                     Destroy(this.item.gameObject);
-                    print("2");
                 }
-                print("3");
-                print("i: " + item);
                 this.item = null;
                 this.item = item;
                 this.item.GetRenderer().sprite = null;

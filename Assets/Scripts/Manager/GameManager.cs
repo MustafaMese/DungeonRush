@@ -9,10 +9,19 @@ namespace DungeonRush
         {
             public MoveSchedular moveSchedular;
 
+            public Vector3 v1;
+            public Vector3 v2;
+
             private void Start()
             {
-                Application.targetFrameRate = 60;
+                Application.targetFrameRate = 45;
                 moveSchedular = FindObjectOfType<MoveSchedular>();
+            }
+
+            private void Update()
+            {
+                var dis = (v1 - v2).sqrMagnitude;
+                print(dis);
             }
         }
     }

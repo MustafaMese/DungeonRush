@@ -77,7 +77,6 @@ namespace DungeonRush
                 if (itemUser && itemUser.GetItem() != null)
                     itemDamage = itemUser.GetItem().GetDamage();
                 int totalDamage = itemDamage + power;
-                print("tD: " + totalDamage);
                 attackStyle.Attack(move, totalDamage);
             }
 
