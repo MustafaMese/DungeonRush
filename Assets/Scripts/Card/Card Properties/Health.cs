@@ -59,7 +59,8 @@ namespace DungeonRush.Property
 
         private void UpdateAnimation()
         {
-            animator.SetTrigger("hurt");
+            if(card.GetCardType() != CardType.TRAP)
+                animator.SetTrigger("hurt");
         }
     }
 }

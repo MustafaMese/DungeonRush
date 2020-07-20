@@ -20,7 +20,7 @@ namespace DungeonRush.Controller
         private int trapIndex;
 
         public static List<AIController> subscribedTraps = new List<AIController>();
-        private List<AIController> trapCards;
+        public List<AIController> trapCards;
 
         private void Start()
         {
@@ -35,16 +35,20 @@ namespace DungeonRush.Controller
 
             if (IsRunning())
             {
+                print("heyy");
                 if (determineProcess.IsRunning())
                 {
+                    print("1");
                     Board.touched = true;
                     DetermineActiveTraps();
                     moveFinished = true;
                 }
                 else if (assigningProcess.IsRunning())
                 {
+                    print("5");
                     if (trapIndex < trapCards.Count)
                     {
+                        print("6");
                         MoveControllers();
                     }
                     else
@@ -56,38 +60,29 @@ namespace DungeonRush.Controller
         #region DETERMINIG METHODS
         private void DetermineActiveTraps()
         {
+            print("2");
             trapCards = GetActiveTraps();
             determineProcess.Finish();
             assigningProcess.StartProcess();
             if(trapCards == null || trapCards.Count <= 0)
             {
+                print("4");
                 Stop();
             }
         }
         private List<AIController> GetActiveTraps()
         {
-            Vector2 coordinate = playerController.transform.position;
-            int rL = Board.RowLength;
-            Tile t;
-            Vector2 temp;
+            print("3");
             List<AIController> l = new List<AIController>();
 
-            for (int i = -(activeTrapDistance / 2); i < activeTrapDistance / 2 + 1; i++)
+            for (int i = 0; i < subscribedTraps.Count; i++)
             {
-                for (int j = -(activeTrapDistance / 2); j < activeTrapDistance / 2 + 1; j++)
+                if ((subscribedTraps[i].transform.position - playerController.transform.position).sqrMagnitude <= activeTrapDistance)
                 {
-                    if (coordinate.x + j < 0 || coordinate.y + i < 0 || coordinate.x + j > rL - 1 || coordinate.y + i > rL - 1 || (i == 0 && j == 0))
-                        continue;
-                    temp = new Vector2(coordinate.x + j, coordinate.y + i);
-                    t = Board.tilesByCoordinates[temp];
-
-                    if (t != null && t.GetCard() != null)
-                    {
-                        AIController c = (AIController)t.GetCard().Controller;
-                        if (subscribedTraps.Contains(c))
-                            l.Add(c);
-                    }
+                    l.Add(subscribedTraps[i]);
+                    //subscribedTraps[i].ChangeAnimatorState(true);
                 }
+                    //subscribedTraps[i].ChangeAnimatorState(false);
             }
 
             return l;
@@ -98,13 +93,16 @@ namespace DungeonRush.Controller
         #region ASSIGNING PROCESS
         private void MoveControllers()
         {
+            print("7");
             if (moveFinished && trapCards[trapIndex] != null)
             {
+                print("8");
                 trapCards[trapIndex].Run();
                 moveFinished = false;
             }
             else if (trapCards[trapIndex] == null)
             {
+                print("9");
                 trapIndex++;
                 moveFinished = true;
             }

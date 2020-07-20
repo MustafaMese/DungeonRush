@@ -12,7 +12,7 @@ namespace DungeonRush.Controller
 
         [SerializeField] bool notify = false;
         /// <summary>
-        /// -1 for Nothing, 0 for Player, 1 for NonPlayers, 2 for Adding
+        /// -1 for Nothing, 0 for Player, 1 for NonPlayers, 2 for Traps
         /// </summary>
         [SerializeField] int turnNumber;
         [SerializeField] int oldTurnNumber;
@@ -59,7 +59,7 @@ namespace DungeonRush.Controller
                 if (oldTurnNumber == 0)
                     IncreaseTour();
 
-                OnNotify();
+               // OnNotify();
             }
             else
             {
@@ -86,7 +86,7 @@ namespace DungeonRush.Controller
             }
             else if (turnNumber == 2)
             {
-                notify = true;
+                tc.Begin();
             }
         }
     }

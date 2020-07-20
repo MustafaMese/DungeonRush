@@ -127,10 +127,11 @@ namespace DungeonRush
 
             private void UpdateAnimation(bool play, bool isAttack)
             {
-                if (isAttack)
-                    animator.SetTrigger("attack");
-                else
-                    animator.SetBool("walk", play);
+                if(card.GetCardType() != CardType.TRAP)
+                    if (isAttack)
+                        animator.SetTrigger("attack");
+                    else
+                        animator.SetBool("walk", play);
             }
         }
     }
