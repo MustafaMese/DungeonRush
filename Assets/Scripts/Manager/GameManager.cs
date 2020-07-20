@@ -14,11 +14,6 @@ namespace DungeonRush
                 Application.targetFrameRate = 60;
                 moveSchedular = FindObjectOfType<MoveSchedular>();
             }
-
-            private void Update()
-            {
-                
-            }
         }
     }
 }
