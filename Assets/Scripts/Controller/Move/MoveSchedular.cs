@@ -1,4 +1,5 @@
-﻿using DungeonRush.Managers;
+﻿using DungeonRush.Field;
+using DungeonRush.Managers;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -18,15 +19,17 @@ namespace DungeonRush.Controller
         [SerializeField] int oldTurnNumber;
         [SerializeField] int tourCount;
 
-        public PlayerController pc;
-        public EnemyController ec;
-        public TrapController tc;
+        public PlayerController playerController;
+        public EnemyController enemyController;
+        public TrapController trapController;
+        public Board board;
 
         private void Start()
         {
-            pc = FindObjectOfType<PlayerController>();
-            ec = FindObjectOfType<EnemyController>();
-            tc = FindObjectOfType<TrapController>();
+            playerController = FindObjectOfType<PlayerController>();
+            enemyController = FindObjectOfType<EnemyController>();
+            trapController = FindObjectOfType<TrapController>();
+            board = FindObjectOfType<Board>();
 
             tourCount = 0;
             tourText.text = tourCount.ToString();
@@ -64,7 +67,10 @@ namespace DungeonRush.Controller
             else
             {
                 if (oldTurnNumber == 0)
+                {
                     turnNumber = 1;
+                    board.SetTileDarkness();
+                }
                 else
                     turnNumber = 0;
 
@@ -78,15 +84,15 @@ namespace DungeonRush.Controller
             }
             else if (turnNumber == 0)
             {
-                pc.Begin();
+                playerController.Begin();
             }
             else if (turnNumber == 1)
             {
-                ec.Begin();
+                enemyController.Begin();
             }
             else if (turnNumber == 2)
             {
-                tc.Begin();
+                trapController.Begin();
             }
         }
     }

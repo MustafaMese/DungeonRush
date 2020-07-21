@@ -26,7 +26,7 @@ namespace DungeonRush.Controller
             ms = FindObjectOfType<MoveSchedular>();
             mover = player.GetComponent<Mover>();
             attacker = player.GetComponent<DynamicAttacker>();
-            FindObjectOfType<MoveSchedular>().pc = this;
+            FindObjectOfType<MoveSchedular>().playerController = this;
             Begin();
         }
 
