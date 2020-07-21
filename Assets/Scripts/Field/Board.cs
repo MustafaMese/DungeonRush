@@ -45,7 +45,7 @@ namespace DungeonRush
                     //        int number = Random.Range(0, 101);
                     //        if (number < 20)
                     //            cm.AddCard(GiveRandomCard(cm.enemyCards), cardPlaces[i], this, false, false);
-                    //        else if(number < 28)
+                    //        else if (number < 28)
                     //            cm.AddCard(GiveRandomCard(cm.itemCards), cardPlaces[i], this, false, false);
                     //    }
                     //}

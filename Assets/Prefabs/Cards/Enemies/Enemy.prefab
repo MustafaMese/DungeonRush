@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 3055322803219196748}
   - component: {fileID: 385931742185610795}
   - component: {fileID: 7616904273129147796}
-  - component: {fileID: -1329455596959954929}
   - component: {fileID: -6689683383463227786}
   - component: {fileID: -474957396755857396}
+  - component: {fileID: 4093322611771117245}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Card
@@ -74,27 +74,6 @@ MonoBehaviour:
   startMoving: 0
   moveFinished: 0
   animator: {fileID: 0}
---- !u!114 &-1329455596959954929
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1003901059469522988}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 71a2adf8dcbcf1f40ab96608a369fc40, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  attackFinished: 0
-  isItemUser: 0
-  isSkillUser: 0
-  range: 0.8
-  power: 5
-  attackStyle: {fileID: 0}
-  particulPrefab: {fileID: 3127093274123257427, guid: e93796174c9ff5a49ba387c7cecc940b,
-    type: 3}
-  animator: {fileID: 0}
 --- !u!114 &-6689683383463227786
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -107,6 +86,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8dc75e4d3851a245a6f5b1e6a78db18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  model: {fileID: 0}
 --- !u!114 &-474957396755857396
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -120,4 +100,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 0
+  animator: {fileID: 0}
+--- !u!114 &4093322611771117245
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1003901059469522988}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee3edaf9d184fde44b8f9ce8e6494364, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isItemUser: 0
+  isSkillUser: 0
+  range: 0.8
+  power: 5
+  attackStyle: {fileID: 0}
+  particulPrefab: {fileID: 0}
   animator: {fileID: 0}

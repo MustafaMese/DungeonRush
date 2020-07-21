@@ -57,21 +57,13 @@ namespace DungeonRush
             {
                 return characterType;
             }
-            public bool IsItemUser()
-            {
-                return GetComponent<ItemUser>();
-            }
-            public bool IsAttacker()
-            {
-                return GetComponent<Attacker>();
-            }
             public bool CanAttack(Card enemy)
             {
-                return GetComponent<Attacker>().CanMove(enemy);
+                return GetComponent<IAttacker>().CanMove(enemy);
             }
             public void ExecuteAttack()
             {
-                GetComponent<Attacker>().Attack();
+                GetComponent<IAttacker>().Attack();
             }
             public Shift GetShift()
             {

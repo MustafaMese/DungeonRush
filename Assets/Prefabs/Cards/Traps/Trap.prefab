@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 3583272195443232812}
   - component: {fileID: 8130074268858005188}
   - component: {fileID: 3555962785972340220}
-  - component: {fileID: 3046005766956900481}
   - component: {fileID: 3488578222218515644}
+  - component: {fileID: 8307086034720154006}
   m_Layer: 0
   m_Name: Trap
   m_TagString: Untagged
@@ -116,27 +116,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   model: {fileID: 5669223558640415318}
---- !u!114 &3046005766956900481
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5669223558640415318}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 71a2adf8dcbcf1f40ab96608a369fc40, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  attackFinished: 0
-  isItemUser: 0
-  isSkillUser: 0
-  range: 0.8
-  power: 5
-  attackStyle: {fileID: 11400000, guid: be73707879522e34aaea2795f3e21801, type: 2}
-  particulPrefab: {fileID: 3127093274123257427, guid: e93796174c9ff5a49ba387c7cecc940b,
-    type: 3}
-  animator: {fileID: 0}
 --- !u!114 &3488578222218515644
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -153,3 +132,18 @@ MonoBehaviour:
   startMoving: 0
   moveFinished: 0
   animator: {fileID: 0}
+--- !u!114 &8307086034720154006
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5669223558640415318}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72a72d5cad90c7d409d4b7636ff204fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  power: 2
+  attackStyle: {fileID: 0}
+  particulPrefab: {fileID: 0}

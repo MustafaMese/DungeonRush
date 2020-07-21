@@ -17,7 +17,7 @@ namespace DungeonRush.Controller
         private ProcessHandleChecker moveProcess;
         private MoveSchedular ms;
         private Mover mover;
-        private Attacker attacker;
+        private DynamicAttacker attacker;
 
         private void Start()
         {
@@ -25,7 +25,7 @@ namespace DungeonRush.Controller
             player = GetComponent<PlayerCard>();
             ms = FindObjectOfType<MoveSchedular>();
             mover = player.GetComponent<Mover>();
-            attacker = player.GetComponent<Attacker>();
+            attacker = player.GetComponent<DynamicAttacker>();
             FindObjectOfType<MoveSchedular>().pc = this;
             Begin();
         }
@@ -89,9 +89,9 @@ namespace DungeonRush.Controller
             }
             else if (attackProcess.continuing)
             {
-                if (attacker.attackFinished)
+                if (attacker.GetAttackFinished())
                 {
-                    attacker.attackFinished = false;
+                    attacker.SetAttackFinished(false);
                     attackProcess.EndProcess();
                 }
             }

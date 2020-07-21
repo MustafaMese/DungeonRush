@@ -11,11 +11,11 @@ GameObject:
   - component: {fileID: 3055322803219196748}
   - component: {fileID: 7381328597454595953}
   - component: {fileID: 1591864951829196857}
-  - component: {fileID: 7147871325311128375}
   - component: {fileID: 4091481314613496153}
   - component: {fileID: -280077000644605062}
   - component: {fileID: 3667906809812512254}
   - component: {fileID: 5641049783462244617}
+  - component: {fileID: 2822980956701917791}
   m_Layer: 0
   m_Name: Player
   m_TagString: Card
@@ -77,27 +77,6 @@ MonoBehaviour:
   startMoving: 0
   moveFinished: 0
   animator: {fileID: 4755967413534033559}
---- !u!114 &7147871325311128375
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1003901059469522988}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 71a2adf8dcbcf1f40ab96608a369fc40, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  attackFinished: 0
-  isItemUser: 1
-  isSkillUser: 1
-  range: 0.8
-  power: 5
-  attackStyle: {fileID: 11400000, guid: 3ad909746a3710d459d5103ebb019e66, type: 2}
-  particulPrefab: {fileID: 3127093274123257427, guid: e93796174c9ff5a49ba387c7cecc940b,
-    type: 3}
-  animator: {fileID: 4755967413534033559}
 --- !u!114 &4091481314613496153
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -110,7 +89,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ac7fb1cfee3f894e9f10b17c6d58754, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemBone: {fileID: 0}
+  itemBone: {fileID: 1535930889743290764}
   item: {fileID: 0}
 --- !u!114 &-280077000644605062
 MonoBehaviour:
@@ -154,6 +133,26 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e5127d728048b0447918b6aeac209c21, type: 2}
   attackerSkillList:
   - {fileID: 11400000, guid: 9b5e0e25270546d44955fad521e035a0, type: 2}
+--- !u!114 &2822980956701917791
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1003901059469522988}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee3edaf9d184fde44b8f9ce8e6494364, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isItemUser: 1
+  isSkillUser: 1
+  range: 0.8
+  power: 5
+  attackStyle: {fileID: 11400000, guid: 3ad909746a3710d459d5103ebb019e66, type: 2}
+  particulPrefab: {fileID: 3127093274123257427, guid: e93796174c9ff5a49ba387c7cecc940b,
+    type: 3}
+  animator: {fileID: 4755967413534033559}
 --- !u!95 &4755967413534033559
 Animator:
   serializedVersion: 3
@@ -646,6 +645,12 @@ GameObject:
 --- !u!4 &8695446391189289684 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4508439174936866388, guid: d637decc78123d041909212bb53a809d,
+    type: 3}
+  m_PrefabInstance: {fileID: 5061307001571316864}
+  m_PrefabAsset: {fileID: 0}
+--- !u!212 &1535930889743290764 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 6011714958720091404, guid: d637decc78123d041909212bb53a809d,
     type: 3}
   m_PrefabInstance: {fileID: 5061307001571316864}
   m_PrefabAsset: {fileID: 0}

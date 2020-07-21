@@ -25,14 +25,14 @@ namespace DungeonRush.Controller
         private TrapController trapController;
 
         private Mover mover;
-        private Attacker attacker;
+        private IAttacker attacker;
         public GameObject model;
 
         private void Start()
         {
             card = GetComponent<Card>();
             mover = card.GetComponent<Mover>();
-            attacker = card.GetComponent<Attacker>();
+            attacker = card.GetComponent<IAttacker>();
 
             cardType = card.GetCardType();
 
@@ -118,9 +118,9 @@ namespace DungeonRush.Controller
             }
             else if (attackProcess.continuing)
             {
-                if (attacker.attackFinished)
+                if (attacker.GetAttackFinished())
                 {
-                    attacker.attackFinished = false;
+                    attacker.SetAttackFinished(false);
                     attackProcess.EndProcess();
                 }
             }

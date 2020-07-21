@@ -1,20 +1,17 @@
 ﻿using DungeonRush.Cards;
-using DungeonRush.Managers;
 using UnityEngine;
 using DG.Tweening;
 using DungeonRush.Data;
 using System.Collections;
 using DungeonRush.Skills;
-using System;
 using DungeonRush.Attacking;
 
 namespace DungeonRush
 {
     namespace Property
     {
-        public class Attacker : MonoBehaviour
+        public class DynamicAttacker : MonoBehaviour, IAttacker
         {
-            [HideInInspector] public bool attackFinished = false;
             [SerializeField] bool isItemUser = false;
             [SerializeField] bool isSkillUser = false;
             [SerializeField] float range = 0.8f;
@@ -24,6 +21,7 @@ namespace DungeonRush
             [SerializeField] GameObject particulPrefab;
             private GameObject particulPrefabInstance;
 
+            private bool attackFinished = false;
             private Card card;
             private ItemUser itemUser;
             private SkillUser skillUser;
@@ -132,6 +130,16 @@ namespace DungeonRush
                         animator.SetTrigger("attack");
                     else
                         animator.SetBool("walk", play);
+            }
+
+            public bool GetAttackFinished()
+            {
+                return attackFinished;
+            }
+
+            public void SetAttackFinished(bool b)
+            {
+                attackFinished = b;
             }
         }
     }
