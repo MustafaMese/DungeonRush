@@ -11,9 +11,12 @@ namespace DungeonRush.Property
         [SerializeField] Animator animator;
 
         private Card card;
+        private ItemUser itemUser;
         private void Start()
         {
             card = GetComponent<Card>();
+            if(GetComponent<ItemUser>())
+                itemUser = GetComponent<ItemUser>();
         }
 
         private void Update()
@@ -48,6 +51,11 @@ namespace DungeonRush.Property
         {
             if (isDamage)
             {
+                int armor = 0;
+                if (itemUser && itemUser.GetArmor() != null)
+                    armor = itemUser.GetArmor().power;
+                amount -= armor;
+
                 UpdateAnimation();
                 health -= amount;
             }

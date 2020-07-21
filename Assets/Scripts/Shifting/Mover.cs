@@ -91,7 +91,8 @@ namespace DungeonRush
                     card.GetComponent<ItemUser>().TakePotion(i);
                 else if (i.GetItemType() == ItemType.WEAPON)
                     card.GetComponent<ItemUser>().TakeWeapon(i);
-
+                else if (i.GetItemType() == ItemType.ARMOR)
+                    card.GetComponent<ItemUser>().TakeArmor(i);
 
             }
 

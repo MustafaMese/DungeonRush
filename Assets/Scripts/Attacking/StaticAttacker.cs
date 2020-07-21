@@ -31,7 +31,6 @@ namespace DungeonRush.Property
 
         private IEnumerator Damage(Move move)
         {
-            print("hobb");
             attackStyle.Attack(move, power);
             yield return new WaitForSeconds(0.2f);
 

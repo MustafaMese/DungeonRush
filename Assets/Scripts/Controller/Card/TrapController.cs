@@ -35,22 +35,16 @@ namespace DungeonRush.Controller
 
             if (IsRunning())
             {
-                print("heyy");
                 if (determineProcess.IsRunning())
                 {
-                    print("1");
                     Board.touched = true;
                     DetermineActiveTraps();
                     moveFinished = true;
                 }
                 else if (assigningProcess.IsRunning())
                 {
-                    print("5");
                     if (trapIndex < trapCards.Count)
-                    {
-                        print("6");
                         MoveControllers();
-                    }
                     else
                         FinishMovement();
                 }
@@ -60,19 +54,16 @@ namespace DungeonRush.Controller
         #region DETERMINIG METHODS
         private void DetermineActiveTraps()
         {
-            print("2");
             trapCards = GetActiveTraps();
             determineProcess.Finish();
             assigningProcess.StartProcess();
             if(trapCards == null || trapCards.Count <= 0)
             {
-                print("4");
                 Stop();
             }
         }
         private List<AIController> GetActiveTraps()
         {
-            print("3");
             List<AIController> l = new List<AIController>();
 
             for (int i = 0; i < subscribedTraps.Count; i++)
@@ -93,16 +84,13 @@ namespace DungeonRush.Controller
         #region ASSIGNING PROCESS
         private void MoveControllers()
         {
-            print("7");
             if (moveFinished && trapCards[trapIndex] != null)
             {
-                print("8");
                 trapCards[trapIndex].Run();
                 moveFinished = false;
             }
             else if (trapCards[trapIndex] == null)
             {
-                print("9");
                 trapIndex++;
                 moveFinished = true;
             }

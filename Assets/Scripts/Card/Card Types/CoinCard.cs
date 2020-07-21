@@ -38,16 +38,6 @@ namespace DungeonRush
                 this.health.Set(health);
             }
 
-            public override void IncreaseHealth(int health)
-            {
-                this.health.ChangeHealth(false, health);
-            }
-
-            public override void DecreaseHealth(int damage)
-            {
-                this.health.ChangeHealth(true, damage);
-            }
-
             public override void SetTile(Tile coordinate)
             {
                 this.tile = coordinate;

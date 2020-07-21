@@ -8,9 +8,14 @@ namespace DungeonRush
     {
         public class ItemUser : MonoBehaviour
         {
-            [SerializeField] SpriteRenderer itemBone;
+            public bool isWeaponUser;
+            public bool isArmorUser;
 
-            public Item item;
+            [SerializeField] SpriteRenderer weaponBone;
+            [SerializeField] SpriteRenderer armorBone;
+
+            public Item weapon;
+            public Item armor;
             private Card card;
 
             private void Start()
@@ -18,33 +23,57 @@ namespace DungeonRush
                 card = GetComponent<Card>();
             }
 
-            public Item GetItem()
-            {
-                return item;
-            }
-
+            #region WEAPON
             public void TakeWeapon(Item item)
             {
-                SetItem(item);
+                SetWeapon(item);
             }
-
-            public void SetItem(Item item)
+            private void SetWeapon(Item item)
             {
-                if (this.item != null)
+                if (this.weapon != null)
                 {
-                    Destroy(this.item.gameObject);
+                    Destroy(this.weapon.gameObject);
                 }
-                this.item = null;
-                this.item = item;
-                this.item.GetRenderer().sprite = null;
-                itemBone.sprite = item.itemSprite;
+                this.weapon = null;
+                this.weapon = item;
+                this.weapon.GetRenderer().sprite = null;
+                weaponBone.sprite = item.itemSprite;
             }
+            public Item GetWeapon()
+            {
+                return weapon;
+            }
+            #endregion
 
+            #region ARMOR
+            public void TakeArmor(Item item)
+            {
+                SetArmor(item);
+            }
+            private void SetArmor(Item item)
+            {
+                if (this.armor != null)
+                {
+                    Destroy(this.armor.gameObject);
+                }
+                this.armor = null;
+                this.armor = item;
+                this.armor.GetRenderer().sprite = null;
+                armorBone.sprite = item.itemSprite;
+            }
+            public Item GetArmor()
+            {
+                return armor;
+            }
+            #endregion
+
+            #region POTION
             public void TakePotion(Item item)
             {
-                card.IncreaseHealth(item.GetDamage());
+                card.IncreaseHealth(item.GetPower());
                 Destroy(item.gameObject);
             }
+            #endregion
         }
     }
 }

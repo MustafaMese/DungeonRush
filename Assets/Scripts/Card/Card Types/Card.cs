@@ -43,8 +43,6 @@ namespace DungeonRush
 
             public abstract string GetCardName();
             public abstract int GetHealth();
-            public abstract void DecreaseHealth(int damage);
-            public abstract void IncreaseHealth(int health);
             public abstract void SetHealth(int health);
             public abstract CardType GetCardType();
             public abstract void SetCardType(CardType type);
@@ -53,6 +51,14 @@ namespace DungeonRush
             public abstract Move GetMove();
             public abstract void SetMove(Move move);
             public abstract void ExecuteMove();
+            public void IncreaseHealth(int h)
+            {
+                health.ChangeHealth(false, h);
+            }
+            public void DecreaseHealth(int h)
+            {
+                health.ChangeHealth(true, h);
+            }
             public Character GetCharacterType()
             {
                 return characterType;

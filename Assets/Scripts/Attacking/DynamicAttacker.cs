@@ -12,7 +12,6 @@ namespace DungeonRush
     {
         public class DynamicAttacker : MonoBehaviour, IAttacker
         {
-            [SerializeField] bool isItemUser = false;
             [SerializeField] bool isSkillUser = false;
             [SerializeField] float range = 0.8f;
             [SerializeField] int power = 5;
@@ -31,7 +30,7 @@ namespace DungeonRush
             {
                 DOTween.Init();
                 card = GetComponent<Card>();
-                if(isItemUser)
+                if(GetComponent<ItemUser>())
                     itemUser = GetComponent<ItemUser>();
                 if (isSkillUser)
                     skillUser = GetComponent<SkillUser>();
@@ -72,8 +71,8 @@ namespace DungeonRush
             private void Damage(Move move)
             {
                 int itemDamage = 0;
-                if (itemUser && itemUser.GetItem() != null)
-                    itemDamage = itemUser.GetItem().GetDamage();
+                if (itemUser && itemUser.GetWeapon() != null)
+                    itemDamage = itemUser.GetWeapon().GetPower();
                 int totalDamage = itemDamage + power;
                 attackStyle.Attack(move, totalDamage);
             }

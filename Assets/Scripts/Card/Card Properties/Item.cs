@@ -10,7 +10,7 @@ namespace DungeonRush.Property
         [SerializeField] SpriteRenderer itemSpriteRenderer;
 
         public ItemType type;
-        public int damage;
+        public int power;
         public Sprite itemSprite;
 
         public SpriteRenderer GetRenderer()
@@ -28,9 +28,9 @@ namespace DungeonRush.Property
             return type;
         }
 
-        public int GetDamage()
+        public int GetPower()
         {
-            return damage;
+            return power;
         }
     }
 
@@ -39,6 +39,7 @@ namespace DungeonRush.Property
         WEAPON,
         POTION,
         POSION,
+        ARMOR,
         NONE = -1
     }
 }
