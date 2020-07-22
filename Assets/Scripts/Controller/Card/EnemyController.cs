@@ -161,5 +161,10 @@ namespace DungeonRush.Controller
         {
             subscribedEnemies.Remove(controller);
         }
+
+        private void OnDestroy()
+        {
+            subscribedEnemies.Clear();
+        }
     }
 }

@@ -150,5 +150,10 @@ namespace DungeonRush.Controller
         {
             subscribedTraps.Remove(controller);
         }
+
+        private void OnDestroy()
+        {
+            subscribedTraps.Clear();
+        }
     }
 }
