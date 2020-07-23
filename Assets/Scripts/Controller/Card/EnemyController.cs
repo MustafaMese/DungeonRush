@@ -10,7 +10,7 @@ namespace DungeonRush.Controller
 {
     public class EnemyController : MonoBehaviour, ICardController
     {
-        [SerializeField] int attackerDistance = 4;
+        [SerializeField] int attackerDistance = 5;
 
         private PlayerController playerController;
         private MoveSchedular ms;
@@ -68,19 +68,38 @@ namespace DungeonRush.Controller
         private List<AIController> GetAttackers()
         {
             List<AIController> l = new List<AIController>();
-
             for (int i = 0; i < subscribedEnemies.Count; i++)
             {
-                if((subscribedEnemies[i].transform.position - playerController.transform.position).sqrMagnitude <= attackerDistance)
-                {
-                    l.Add(subscribedEnemies[i]);
-                    subscribedEnemies[i].ChangeAnimatorState(true);
-                }
-                else
-                    subscribedEnemies[i].ChangeAnimatorState(false);
+                var distance = GetDistance(subscribedEnemies[i].transform.position);
+                SetShadowState(subscribedEnemies[i], distance, attackerDistance - 1);
+                SetAnimationState(l, subscribedEnemies[i], distance, attackerDistance);
             }
 
             return l;
+        }
+
+        private void SetAnimationState(List<AIController> l, AIController a, float distance, float desired)
+        {
+            if (distance <= desired)
+            {
+                l.Add(a);
+                a.ChangeAnimatorState(true);
+            }
+            else
+                a.ChangeAnimatorState(false);
+        }
+
+        private void SetShadowState(AIController c, float distance, int desired)
+        {
+            if (distance < desired)
+                c.ChangeShadowState(false);
+            else
+                c.ChangeShadowState(true);
+        }
+
+        private float GetDistance(Vector3 i)
+        {
+            return (i - playerController.transform.position).sqrMagnitude;
         }
 
         #endregion
@@ -150,8 +169,13 @@ namespace DungeonRush.Controller
             attackerIndex++;
         }
 
-        public void Notify() 
+        public void Notify()
         {
+            for (int i = 0; i < subscribedEnemies.Count; i++)
+            {
+                var distance = GetDistance(subscribedEnemies[i].transform.position);
+                SetShadowState(subscribedEnemies[i], distance, attackerDistance - 1);
+            }
             ms.OnNotify();
         }
 

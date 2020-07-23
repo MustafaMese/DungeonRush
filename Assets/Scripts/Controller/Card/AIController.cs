@@ -26,6 +26,7 @@ namespace DungeonRush.Controller
 
         private Mover mover;
         private IAttacker attacker;
+        private ICustomization customization;
         public GameObject model;
 
         private void Start()
@@ -33,7 +34,7 @@ namespace DungeonRush.Controller
             card = GetComponent<Card>();
             mover = card.GetComponent<Mover>();
             attacker = card.GetComponent<IAttacker>();
-
+            customization = card.GetComponent<ICustomization>();
             cardType = card.GetCardType();
 
             if (cardType == CardType.ENEMY)
@@ -166,6 +167,14 @@ namespace DungeonRush.Controller
         public void ChangeAnimatorState(bool state)
         {
             model.GetComponent<Animator>().enabled = state;
+        }
+
+        public void ChangeShadowState(bool shadow)
+        {
+            if (shadow)
+                customization.OverShadow();
+            else
+                customization.RemoveShadow();
         }
 
         private IEnumerator EndTurn()

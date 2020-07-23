@@ -14,7 +14,8 @@ namespace DungeonRush.Field
         [SerializeField] float emptySpace = 0;
         [SerializeField] float xSpace = 0;
         [SerializeField] float ySpace = 0;
-        [SerializeField] Tile tilePrefab = null;
+        [SerializeField] Tile tilePrefab1 = null;
+        [SerializeField] Tile tilePrefab2 = null;
 
         public static float _XSpace = 0;
         public static float _YSpace = 0;
@@ -79,8 +80,16 @@ namespace DungeonRush.Field
                 {
                     for (int j = 0; j < rowLength; j++)
                     {
-                        var tile = Instantiate(tilePrefab, currentPos, Quaternion.identity, board.transform);
-                        list.Add(tile);
+                        if ((i + j) % 2 == 0)
+                        {
+                            var tile = Instantiate(tilePrefab1, currentPos, Quaternion.identity, board.transform);
+                            list.Add(tile);
+                        }
+                        else
+                        {
+                            var tile = Instantiate(tilePrefab2, currentPos, Quaternion.identity, board.transform);
+                            list.Add(tile);
+                        }
                         currentPos.x += xSpace + emptySpace;
                     }
                     currentPos.x = startPos.x;
