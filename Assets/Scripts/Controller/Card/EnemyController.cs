@@ -73,6 +73,7 @@ namespace DungeonRush.Controller
                 var distance = GetDistance(subscribedEnemies[i].transform.position);
                 SetShadowState(subscribedEnemies[i], distance, attackerDistance - 1);
                 SetAnimationState(l, subscribedEnemies[i], distance, attackerDistance);
+                
             }
 
             return l;

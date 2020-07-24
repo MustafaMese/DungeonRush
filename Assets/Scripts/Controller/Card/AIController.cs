@@ -164,6 +164,7 @@ namespace DungeonRush.Controller
 
         #endregion
 
+        #region STATE METHODS
         public void ChangeAnimatorState(bool state)
         {
             model.GetComponent<Animator>().enabled = state;
@@ -176,6 +177,7 @@ namespace DungeonRush.Controller
             else
                 customization.RemoveShadow();
         }
+        #endregion
 
         private IEnumerator EndTurn()
         {

@@ -13,6 +13,13 @@ public class FlyingCreatureCustomization : MonoBehaviour, ICustomization
     [SerializeField] Material shadow;
     [SerializeField] Material lighted;
 
+    public int oldLayer = 0;
+
+    private void Start()
+    {
+        oldLayer = (int)transform.position.y;
+    }
+
     public void Change()
     {
         throw new System.NotImplementedException();

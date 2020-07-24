@@ -18,6 +18,13 @@ public class HumanoidCustomization : MonoBehaviour, ICustomization
     [SerializeField] Material shadow;
     [SerializeField] Material lighted;
 
+    public int oldLayer = 0;
+
+    private void Start()
+    {
+        oldLayer = (int)transform.position.y;
+    }
+
     public void Change()
     {
 
@@ -59,7 +66,6 @@ public class HumanoidCustomization : MonoBehaviour, ICustomization
 
     public void RemoveShadow()
     {
-
         if (leftArm != null)
             leftArm.material = lighted;
 

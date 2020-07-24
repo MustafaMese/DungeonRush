@@ -7,5 +7,4 @@ public interface ICustomization
     void RemoveShadow();
     void OverShadow();
     void Change();
-    void SetLayers();
 }
