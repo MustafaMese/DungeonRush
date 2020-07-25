@@ -11,7 +11,7 @@ namespace DungeonRush.Attacking
     public class ThreeToOneBoxAttacking : AttackStyle
     {
         private List<Card> tempList = new List<Card>();
-        [SerializeField] float effectTime;
+        [SerializeField] float effectTime = 0f;
 
         public override void Attack(Move move, int damage)
         {

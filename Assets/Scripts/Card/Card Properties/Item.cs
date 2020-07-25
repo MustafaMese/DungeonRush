@@ -7,11 +7,11 @@ namespace DungeonRush.Property
 {
     public class Item : MonoBehaviour
     {
-        [SerializeField] SpriteRenderer itemSpriteRenderer;
+        [SerializeField] SpriteRenderer itemSpriteRenderer = null;
 
         public ItemType type;
-        public int power;
-        public Sprite itemSprite;
+        public int power = 0;
+        public Sprite itemSprite = null;
 
         public SpriteRenderer GetRenderer()
         {

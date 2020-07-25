@@ -9,7 +9,7 @@ namespace DungeonRush.Attacking
     [CreateAssetMenu(menuName = "Attack/ThornTrapAttack")]
     public class ThornTrapAttacking : AttackStyle
     {
-        [SerializeField] float effectTime;
+        [SerializeField] float effectTime = 0f;
 
         public override void Attack(Move move, int damage)
         {

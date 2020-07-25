@@ -28,16 +28,22 @@ namespace DungeonRush.Shifting
                     {
                         Vector2 targetPos = new Vector2(coordinate.x, coordinate.y + 2);
                         Tile targetTile = Board.tilesByCoordinates[targetPos];
-                        ConfigureCardMove(card, targetTile);
-                        return true;
+                        if (targetTile.GetCard() != null && targetTile.GetCard().GetCardType() != CardType.WALL)
+                        {
+                            ConfigureCardMove(card, targetTile);
+                            return true;
+                        }
                     }
 
                     if (coordinate.y < rL - 1)
                     {
                         Vector2 targetPos = new Vector2(coordinate.x, coordinate.y + 1);
                         Tile targetTile = Board.tilesByCoordinates[targetPos];
-                        ConfigureCardMove(card, targetTile);
-                        return true;
+                        if (targetTile.GetCard() != null && targetTile.GetCard().GetCardType() != CardType.WALL)
+                        {
+                            ConfigureCardMove(card, targetTile);
+                            return true;
+                        }
                     }
                     break;
                 case Swipe.DOWN:
@@ -45,16 +51,22 @@ namespace DungeonRush.Shifting
                     {
                         Vector2 targetPos = new Vector2(coordinate.x, coordinate.y - 2);
                         Tile targetTile = Board.tilesByCoordinates[targetPos];
-                        ConfigureCardMove(card, targetTile);
-                        return true;
+                        if (targetTile.GetCard() != null && targetTile.GetCard().GetCardType() != CardType.WALL)
+                        {
+                            ConfigureCardMove(card, targetTile);
+                            return true;
+                        }
                     }
 
                     if (coordinate.y > 0)
                     {
                         Vector2 targetPos = new Vector2(coordinate.x, coordinate.y - 1);
                         Tile targetTile = Board.tilesByCoordinates[targetPos];
-                        ConfigureCardMove(card, targetTile);
-                        return true;
+                        if (targetTile.GetCard() != null && targetTile.GetCard().GetCardType() != CardType.WALL)
+                        {
+                            ConfigureCardMove(card, targetTile);
+                            return true;
+                        }
                     }
                     break;
                 case Swipe.LEFT:
@@ -62,16 +74,22 @@ namespace DungeonRush.Shifting
                     {
                         Vector2 targetPos = new Vector2(coordinate.x - 2, coordinate.y);
                         Tile targetTile = Board.tilesByCoordinates[targetPos];
-                        ConfigureCardMove(card, targetTile);
-                        return true;
+                        if (targetTile.GetCard() != null && targetTile.GetCard().GetCardType() != CardType.WALL)
+                        {
+                            ConfigureCardMove(card, targetTile);
+                            return true;
+                        }
                     }
 
                     if (coordinate.x > 0)
                     {
                         Vector2 targetPos = new Vector2(coordinate.x - 1, coordinate.y);
                         Tile targetTile = Board.tilesByCoordinates[targetPos];
-                        ConfigureCardMove(card, targetTile);
-                        return true;
+                        if (targetTile.GetCard() != null && targetTile.GetCard().GetCardType() != CardType.WALL)
+                        {
+                            ConfigureCardMove(card, targetTile);
+                            return true;
+                        }
                     }
                     break;
                 case Swipe.RIGHT:
@@ -79,16 +97,22 @@ namespace DungeonRush.Shifting
                     {
                         Vector2 targetPos = new Vector2(coordinate.x + 2, coordinate.y);
                         Tile targetTile = Board.tilesByCoordinates[targetPos];
-                        ConfigureCardMove(card, targetTile);
-                        return true;
+                        if (targetTile.GetCard() != null && targetTile.GetCard().GetCardType() != CardType.WALL)
+                        {
+                            ConfigureCardMove(card, targetTile);
+                            return true;
+                        }
                     }
 
                     if (coordinate.x < rL - 1)
                     {
                         Vector2 targetPos = new Vector2(coordinate.x + 1, coordinate.y);
                         Tile targetTile = Board.tilesByCoordinates[targetPos];
-                        ConfigureCardMove(card, targetTile);
-                        return true;
+                        if (targetTile.GetCard() != null && targetTile.GetCard().GetCardType() != CardType.WALL)
+                        {
+                            ConfigureCardMove(card, targetTile);
+                            return true;
+                        }
                     }
                     break;
                 default:

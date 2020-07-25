@@ -65,6 +65,7 @@ namespace DungeonRush.Field
                     DestroyImmediate(board.cardPlaces[i].gameObject);
                 }
                 Board.tilesByListnumbers.Clear();
+                Board.tilesByCoordinates.Clear();
                 board.cardPlaces = null;
             }
         }
@@ -97,6 +98,7 @@ namespace DungeonRush.Field
                 }
 
                 InitializeTiles(list);
+                Board.RowLength = rowLength;
             }
         }
 

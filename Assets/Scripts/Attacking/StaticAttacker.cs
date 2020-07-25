@@ -10,12 +10,12 @@ namespace DungeonRush.Property
     public class StaticAttacker : MonoBehaviour, IAttacker
     {
         [SerializeField] int power = 2;
-        [SerializeField] AttackStyle attackStyle;
+        [SerializeField] AttackStyle attackStyle = null;
         
-        [SerializeField] GameObject particulPrefab;
-        private GameObject particulPrefabInstance;
+        [SerializeField] GameObject particulPrefab = null;
+        private GameObject particulPrefabInstance = null;
 
-        private Card card;
+        private Card card = null;
         private bool attackFinished = false;
         private void Start()
         {

@@ -7,11 +7,11 @@ namespace DungeonRush.Property
     public class Health : MonoBehaviour
     {
         // TODO disapperı ekle.
-        [SerializeField] int health;
-        [SerializeField] Animator animator;
+        [SerializeField] int health = 0;
+        [SerializeField] Animator animator = null;
 
-        private Card card;
-        private ItemUser itemUser;
+        private Card card = null;
+        private ItemUser itemUser = null;
         private void Start()
         {
             card = GetComponent<Card>();

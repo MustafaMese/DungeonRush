@@ -11,22 +11,22 @@ namespace DungeonRush
     {
         public abstract class Card : MonoBehaviour
         {
-            protected Tile tile;
-            protected Health health;
-            protected string cardName;
+            public Tile tile = null;
+            protected Health health = null;
+            protected string cardName = " ";
             protected Move move;
-            protected Mover mover;
-            protected bool isAlive;
+            protected Mover mover = null;
+            protected bool isAlive = false;
             private IMoveController controller;
 
             [SerializeField, Range(0, 1)] float disappearing = 0.1f;
 
             [Header("General Properties")]
-            [HideInInspector] public bool isMoving;
-            [HideInInspector] public bool isBossCard;
-            public CardProperties cardProperties;
+            [HideInInspector] public bool isMoving = false;
+            [HideInInspector] public bool isBossCard = false;
+            public CardProperties cardProperties = null;
             public Character characterType;
-            public Shift shifting;
+            public Shift shifting = null;
 
             public IMoveController Controller { get => controller; set => controller = value; }
 

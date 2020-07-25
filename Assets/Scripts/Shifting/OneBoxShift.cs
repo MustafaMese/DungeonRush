@@ -26,6 +26,8 @@ namespace DungeonRush.Shifting
                     {
                         Vector2 targetPos = new Vector2(coordinate.x, coordinate.y + 1);
                         Tile targetTile = Board.tilesByCoordinates[targetPos];
+                        if (targetTile.GetCard() != null && targetTile.GetCard().GetCardType() == CardType.WALL)
+                            break;
                         ConfigureCardMove(card, targetTile);
                         return true;
                     }
@@ -35,6 +37,8 @@ namespace DungeonRush.Shifting
                     {
                         Vector2 targetPos = new Vector2(coordinate.x, coordinate.y - 1);
                         Tile targetTile = Board.tilesByCoordinates[targetPos];
+                        if (targetTile.GetCard() != null && targetTile.GetCard().GetCardType() == CardType.WALL)
+                            break;
                         ConfigureCardMove(card, targetTile);
                         return true;
                     }
@@ -44,6 +48,8 @@ namespace DungeonRush.Shifting
                     {
                         Vector2 targetPos = new Vector2(coordinate.x - 1, coordinate.y);
                         Tile targetTile = Board.tilesByCoordinates[targetPos];
+                        if (targetTile.GetCard() != null && targetTile.GetCard().GetCardType() == CardType.WALL)
+                            break;
                         ConfigureCardMove(card, targetTile);
                         return true;
                     }
@@ -53,6 +59,8 @@ namespace DungeonRush.Shifting
                     {
                         Vector2 targetPos = new Vector2(coordinate.x + 1, coordinate.y);
                         Tile targetTile = Board.tilesByCoordinates[targetPos];
+                        if (targetTile.GetCard() != null && targetTile.GetCard().GetCardType() == CardType.WALL)
+                            break;
                         ConfigureCardMove(card, targetTile);
                         return true;
                     }

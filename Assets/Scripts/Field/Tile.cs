@@ -9,11 +9,11 @@ namespace DungeonRush
     {
         public class Tile : MonoBehaviour
         {
-            [SerializeField] SpriteRenderer darkness;
-            private Vector2 coordinate;
-            private Card card;
-            private int listNumber;
-            private Card trapCard;
+            [SerializeField] SpriteRenderer darkness = null;
+            public Vector2 coordinate = Vector2.zero;
+            public Card card = null;
+            public int listNumber = 0;
+            public Card trapCard = null;
             
             public void SetDarkness(Sprite sprite)
             {

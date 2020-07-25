@@ -8,15 +8,15 @@ namespace DungeonRush
     {
         public class ItemUser : MonoBehaviour
         {
-            public bool isWeaponUser;
-            public bool isArmorUser;
+            public bool isWeaponUser = false;
+            public bool isArmorUser = false;
 
-            [SerializeField] SpriteRenderer weaponBone;
-            [SerializeField] SpriteRenderer armorBone;
+            [SerializeField] SpriteRenderer weaponBone = null;
+            [SerializeField] SpriteRenderer armorBone = null;
 
-            public Item weapon;
-            public Item armor;
-            private Card card;
+            public Item weapon = null;
+            public Item armor = null;
+            private Card card = null;
 
             private void Start()
             {

@@ -9,7 +9,7 @@ namespace DungeonRush.Attacking
     [CreateAssetMenu(menuName = "Attack/OneBoxAttack", order = 1)]
     public class OneBoxAttacking : AttackStyle
     {
-        [SerializeField] float effectTime;
+        [SerializeField] float effectTime = 0f;
 
         public override void Attack(Move move, int damage)
         {

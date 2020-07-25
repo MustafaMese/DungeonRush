@@ -10,6 +10,7 @@ namespace DungeonRush
 {
     namespace Managers
     {
+        [ExecuteAlways]
         public class CardManager : MonoBehaviour
         {
             private static CardManager instance = null;
@@ -80,26 +81,12 @@ namespace DungeonRush
                 this.instantPlayerTile = tile;
             }
 
-            public void AddToCards(Card m_card, bool inGame)
-            {
-                if(inGame)
-                {
-                    for (int i = 0; i < cards.Count; i++)
-                    {
-                        if (cards[i] == null)
-                        {
-                            cards[i] = m_card;
-                            break;
-                        }
-                    }
-                }
-                else
-                {
-                    cards.Add(m_card);
-                }
-            }
+            #region ADDING METHODS
 
-            public Card AddCard(Card piece, Tile tile, Board board, bool inGame, bool isTrapCard)
+            /// <summary>
+            /// This method using for runtime.
+            /// </summary>
+            public Card AddCard(Card piece, Tile tile, Board board, bool isTrapCard)
             {
                 Card newPiece = Instantiate(piece, tile.transform.position, Quaternion.identity);
                 if(newPiece.GetCardType() != CardType.PLAYER)
@@ -111,26 +98,24 @@ namespace DungeonRush
                     tile.SetCard(newPiece);
 
                 newPiece.SetTile(tile);
-                AddToCards(newPiece, inGame);
+                cards.Add(newPiece);
                 return newPiece;
             }
 
-            public void AddCard(Tile tile)
+            /// <summary>
+            /// In this method, cards are just instantiated. Using for editor.
+            /// </summary>
+            public void AddCard(Card piece, Vector3 pos, Board board, bool isPlayer)
             {
-                int number = UnityEngine.Random.Range(0, 101);
-                if (number < 70)
-                    AddCard(GiveRandomCard(enemyCards), tile, board, true, false);
-                else if (number < 95)
-                    AddCard(GiveRandomCard(itemCards), tile, board, true, false);
+                if (!isPlayer)
+                    Instantiate(piece, pos, Quaternion.identity, board.transform);
                 else
-                    AddCard(GiveRandomCard(coinCards), tile, board, true, false);
+                    Instantiate(piece, pos, Quaternion.identity);
             }
 
-            private Card GiveRandomCard(Card[] card)
-            {
-                int length = card.Length;
-                return card[UnityEngine.Random.Range(0, length)];
-            }
+            #endregion
+
+            #region REMOVE METHODS
 
             public static void RemoveCard(Tile tile, bool isPlayerCard)
             {
@@ -146,14 +131,13 @@ namespace DungeonRush
 
                 Destroy(card.transform.gameObject);
                 tile.SetCard(null);
-
-
             }
 
             public static void RemoveCardForAttacker(int listnumber, bool isPlayer)
             {
                 RemoveCard(Board.tilesByListnumbers[listnumber], isPlayer);
             }
+            #endregion 
         }
     }
 }

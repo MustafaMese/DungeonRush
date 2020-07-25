@@ -1,11 +1,9 @@
 ﻿using DungeonRush.Cards;
+using DungeonRush.Customization;
 using DungeonRush.Data;
-using DungeonRush.Field;
 using DungeonRush.Managers;
 using DungeonRush.Property;
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace DungeonRush.Controller

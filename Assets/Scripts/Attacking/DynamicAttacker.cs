@@ -15,16 +15,16 @@ namespace DungeonRush
             [SerializeField] bool isSkillUser = false;
             [SerializeField] float range = 0.8f;
             [SerializeField] int power = 5;
-            [SerializeField] AttackStyle attackStyle;
+            [SerializeField] AttackStyle attackStyle = null;
 
-            [SerializeField] GameObject particulPrefab;
-            private GameObject particulPrefabInstance;
+            [SerializeField] GameObject particulPrefab = null;
+            private GameObject particulPrefabInstance = null;
 
             private bool attackFinished = false;
-            private Card card;
-            private ItemUser itemUser;
-            private SkillUser skillUser;
-            [SerializeField] Animator animator;
+            private Card card = null;
+            private ItemUser itemUser = null;
+            private SkillUser skillUser = null;
+            [SerializeField] Animator animator = null;
 
             private void Start()
             {

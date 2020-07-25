@@ -7,6 +7,7 @@
         ITEM,
         COIN,
         TRAP,
+        WALL,
         NONE = -1
     }
 }

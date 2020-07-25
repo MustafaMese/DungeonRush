@@ -12,13 +12,13 @@ namespace DungeonRush
     {
         public class Mover : MonoBehaviour
         {
-            public bool isSkillUser;
-            public bool startMoving;
+            public bool isSkillUser = false;
+            public bool startMoving = false;
             public bool moveFinished = false;
 
             private Move move;
-            private SkillUser skillUser;
-            [SerializeField] Animator animator;
+            private SkillUser skillUser = null;
+            [SerializeField] Animator animator = null;
 
             private void Start()
             {
