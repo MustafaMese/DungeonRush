@@ -7,12 +7,11 @@ using UnityEngine;
 namespace DungeonRush.Managers
 {
     [ExecuteInEditMode]
-    public class TileManager : MonoBehaviour
+    public class CardAdder : MonoBehaviour
     {
         private Vector2 defaultCoordinate = new Vector2(-1, -1);
 
         [SerializeField] CardManager cardManager = null;
-        [SerializeField] Board board = null;
         [SerializeField] BoardCreator boardCreator = null;
 
         [TextArea(0, 5)]
@@ -22,7 +21,6 @@ namespace DungeonRush.Managers
         [SerializeField] Card card = null;
         [SerializeField] Vector2 coordinate = new Vector2(-1, -1);
         [SerializeField] bool create = false;
-        [SerializeField] bool isPlayer = false;
 
         private void Update()
         {
@@ -56,7 +54,6 @@ namespace DungeonRush.Managers
         {
             coordinate = defaultCoordinate;
             card = null;
-            isPlayer = false;
         }
     }
 }
