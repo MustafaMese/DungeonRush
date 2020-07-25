@@ -19,8 +19,6 @@ namespace DungeonRush
             protected bool isAlive = false;
             private IMoveController controller;
 
-            [SerializeField, Range(0, 1)] float disappearing = 0.1f;
-
             [Header("General Properties")]
             [HideInInspector] public bool isMoving = false;
             [HideInInspector] public bool isBossCard = false;
