@@ -47,9 +47,8 @@ namespace DungeonRush.Managers
             }
 
             if (coordinate.x >= 0 && coordinate.x < rL && coordinate.y >= 0 && coordinate.y < rL)
-            {
-                cardManager.AddCard(card, coordinate, board, isPlayer);
-            }
+                cardManager.AddCard(card, coordinate);
+
             Reset();
         }
 

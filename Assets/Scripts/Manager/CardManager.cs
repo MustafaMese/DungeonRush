@@ -105,12 +105,9 @@ namespace DungeonRush
             /// <summary>
             /// In this method, cards are just instantiated. Using for editor.
             /// </summary>
-            public void AddCard(Card piece, Vector3 pos, Board board, bool isPlayer)
+            public void AddCard(Card piece, Vector3 pos)
             {
-                if (!isPlayer)
-                    Instantiate(piece, pos, Quaternion.identity, board.transform);
-                else
-                    Instantiate(piece, pos, Quaternion.identity);
+                Instantiate(piece, pos, Quaternion.identity);
             }
 
             #endregion

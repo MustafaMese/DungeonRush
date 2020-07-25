@@ -52,11 +52,17 @@ namespace DungeonRush
                 {
                     Card c = cards[i];
                     Tile t = tilesByCoordinates[c.transform.position];
+                    
                     if (c.GetCardType() == CardType.TRAP)
                         t.SetTrapCard(c);
                     else
                         t.SetCard(c);
+
+                    if (c.GetCardType() != CardType.PLAYER)
+                        c.transform.SetParent(transform);
+
                     c.SetTile(t);
+
                 }
             }
 
