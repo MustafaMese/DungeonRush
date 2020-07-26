@@ -41,7 +41,7 @@ namespace DungeonRush.Field
         public bool display;
 
         private Board board;
-        private List<Tile> outerWall = new List<Tile>();
+        public List<Tile> outerWall = new List<Tile>();
 
         private void Awake()
         {

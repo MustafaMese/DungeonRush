@@ -4,6 +4,7 @@ using DungeonRush.Cards;
 using DungeonRush.Managers;
 using DungeonRush.Property;
 using System;
+using UnityEditor;
 
 namespace DungeonRush
 {
@@ -36,6 +37,16 @@ namespace DungeonRush
 
             private void Start()
             {
+                if(cardPlaces.Count <= 0)
+                {
+                    for (int i = 0; i < transform.childCount; i++)
+                    {
+                        Tile t = transform.GetChild(i).GetComponent<Tile>();
+                        if (t != null)
+                            cardPlaces.Add(transform.GetChild(i).GetComponent<Tile>());
+                    }
+                }
+
                 cm.cards = new List<Card>(FindObjectsOfType<Card>());
                 bCreator.InitializeTiles(cardPlaces);
                 SetCardTiles(cm.cards);
