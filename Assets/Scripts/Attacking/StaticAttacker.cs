@@ -9,9 +9,12 @@ namespace DungeonRush.Property
 {
     public class StaticAttacker : MonoBehaviour, IAttacker
     {
+        [Header("Attacker Properties")]
         [SerializeField] int power = 2;
         [SerializeField] AttackStyle attackStyle = null;
-        
+
+        [Header("Animation Varibles")]
+        [SerializeField] float animationTime = 0.2f;
         [SerializeField] GameObject particulPrefab = null;
         private GameObject particulPrefabInstance = null;
 
@@ -32,7 +35,7 @@ namespace DungeonRush.Property
         private IEnumerator Damage(Move move)
         {
             attackStyle.Attack(move, power);
-            yield return new WaitForSeconds(0.2f);
+            yield return new WaitForSeconds(animationTime);
 
             if (particulPrefabInstance == null)
                 InitializeParticulEffect(move);

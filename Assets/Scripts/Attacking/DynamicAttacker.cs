@@ -12,11 +12,17 @@ namespace DungeonRush
     {
         public class DynamicAttacker : MonoBehaviour, IAttacker
         {
+            [Header("Attacker Properties")]
             [SerializeField] bool isSkillUser = false;
             [SerializeField] float range = 0.8f;
             [SerializeField] int power = 5;
             [SerializeField] AttackStyle attackStyle = null;
 
+            [Header("Animation Varibles")]
+            [SerializeField] float closingToEnemyTime = 0.1f;
+            [SerializeField] float damageTime = 0.1f;
+            [SerializeField] float getBackTime = 0.1f;
+            [SerializeField] Animator animator = null;
             [SerializeField] GameObject particulPrefab = null;
             private GameObject particulPrefabInstance = null;
 
@@ -24,7 +30,6 @@ namespace DungeonRush
             private Card card = null;
             private ItemUser itemUser = null;
             private SkillUser skillUser = null;
-            [SerializeField] Animator animator = null;
 
             private void Start()
             {
@@ -57,7 +62,7 @@ namespace DungeonRush
 
                 Vector2 targetPos = new Vector2(move.GetCardTile().GetCoordinate().x + dir.x * range, move.GetCardTile().GetCoordinate().y + dir.y * range);
                 UpdateAnimation(true, false);
-                move.GetCard().transform.DOMove(targetPos, 0.1f).OnComplete(() => StartCoroutine(FinishAttack(move)));
+                move.GetCard().transform.DOMove(targetPos, closingToEnemyTime).OnComplete(() => StartCoroutine(FinishAttack(move)));
             }
 
             public void Attack()
@@ -84,13 +89,13 @@ namespace DungeonRush
                 UpdateAnimation(true, true);
 
                 Damage(move);
-                yield return new WaitForSeconds(0.1f);
+                yield return new WaitForSeconds(damageTime);
                 if (particulPrefabInstance == null)
                     InitializeParticulEffect(move);
                 else
                     EnableParticulEffect(move);
 
-                move.GetCard().transform.DOMove(move.GetCardTile().GetCoordinate(), 0.1f).OnComplete(() => FinaliseAttack());
+                move.GetCard().transform.DOMove(move.GetCardTile().GetCoordinate(), getBackTime).OnComplete(() => FinaliseAttack());
             }
 
             #region FINALIZE ATTACK AND EFFECTS

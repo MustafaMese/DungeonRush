@@ -12,13 +12,17 @@ namespace DungeonRush
     {
         public class Mover : MonoBehaviour
         {
-            public bool isSkillUser = false;
-            public bool startMoving = false;
-            public bool moveFinished = false;
+            [HideInInspector] public bool startMoving = false;
+            [HideInInspector] public bool moveFinished = false;
 
+            public bool isSkillUser = false;
+            
             private Move move;
             private SkillUser skillUser = null;
+
+            [SerializeField] float movingTime = 0.2f;
             [SerializeField] Animator animator = null;
+
 
             private void Start()
             {
@@ -37,7 +41,7 @@ namespace DungeonRush
                     skillUser.ExecuteMoverSkills();
                 // YÜRÜ.
                 UpdateAnimation(true);
-                move.GetCard().transform.DOMove(move.GetTargetTile().GetCoordinate(), 0.15f).OnComplete(() => TerminateMove());
+                move.GetCard().transform.DOMove(move.GetTargetTile().GetCoordinate(), movingTime).OnComplete(() => TerminateMove());
             }
 
             public void TerminateMove()
