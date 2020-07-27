@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5450838680123620177}
   - component: {fileID: 5450838680123620176}
   m_Layer: 0
-  m_Name: RightSideWall
+  m_Name: LeftSideWall
   m_TagString: Untagged
   m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -52,6 +52,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   darkness: {fileID: 5854016031314695551}
+  coordinate: {x: 0, y: 0}
+  card: {fileID: 0}
+  listNumber: 0
+  trapCard: {fileID: 0}
 --- !u!61 &5450838680123620176
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -153,7 +157,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 230d3f33de1b85c4382ed71120e5605f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 6643bbc05ab8a684da92fa6a2fc853b3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
