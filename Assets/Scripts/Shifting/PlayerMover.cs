@@ -5,25 +5,25 @@ using DungeonRush.Field;
 using DungeonRush.Managers;
 using DungeonRush.Data;
 using DungeonRush.Skills;
+using DungeonRush.Shifting;
 
 namespace DungeonRush 
 {
     namespace Property
     {
-        public class Mover : MonoBehaviour
+        // TODO İlerleme şekilleri de değişiklik gösterebilir.
+        public class PlayerMover : MonoBehaviour, IMover
         {
+            private Move move;
             [HideInInspector] public bool startMoving = false;
-            [HideInInspector] public bool moveFinished = false;
+            [HideInInspector] public bool isMoveFinished = false;
 
             public bool isSkillUser = false;
-            
-            private Move move;
             private SkillUser skillUser = null;
 
+            [SerializeField] Shift shifting = null;
             [SerializeField] float movingTime = 0.2f;
             [SerializeField] Animator animator = null;
-
-
             private void Start()
             {
                 DOTween.Init();
@@ -44,11 +44,10 @@ namespace DungeonRush
                 move.GetCard().transform.DOMove(move.GetTargetTile().GetCoordinate(), movingTime).OnComplete(() => TerminateMove());
             }
 
-            public void TerminateMove()
+            private void TerminateMove()
             {
                 // YÜRÜMEYİ BİTİR.
                 UpdateAnimation(false);
-                move.GetCard().isMoving = false;
                 move.GetCard().transform.position = move.GetTargetTile().GetCoordinate();
                 MoveType moveType = move.GetMoveType();
                 Card card = move.GetCard();
@@ -70,7 +69,7 @@ namespace DungeonRush
                         break;
                 }
 
-                moveFinished = true;
+                isMoveFinished = true;
                 move.Reset();
             }
 
@@ -104,6 +103,31 @@ namespace DungeonRush
             {  
                 if(move.GetCard().GetCardType() != CardType.TRAP)
                    animator.SetBool("walk", b);
+            }
+
+            public Move GetMove()
+            {
+                return move;
+            }
+
+            public void SetMove(Move move)
+            {
+                this.move = move;
+            }
+
+            public Shift GetShift()
+            {
+                return shifting;
+            }
+
+            public bool IsMoveFinished()
+            {
+                return isMoveFinished;
+            }
+
+            public void SetIsMoveFinished(bool b)
+            {
+                isMoveFinished = b;
             }
         }
     }

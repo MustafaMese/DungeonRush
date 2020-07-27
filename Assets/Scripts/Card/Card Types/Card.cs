@@ -11,44 +11,72 @@ namespace DungeonRush
     {
         public abstract class Card : MonoBehaviour
         {
-            public Tile tile = null;
+            protected Tile tile = null;
             protected Health health = null;
             protected string cardName = " ";
-            protected Move move;
-            protected Mover mover = null;
-            protected bool isAlive = false;
+            protected IMover mover = null;
+            protected IAttacker attacker = null;
             private IMoveController controller;
 
             [Header("General Properties")]
-            [HideInInspector] public bool isMoving = false;
-            [HideInInspector] public bool isBossCard = false;
             public CardProperties cardProperties = null;
             public Character characterType;
-            public Shift shifting = null;
 
             public IMoveController Controller { get => controller; set => controller = value; }
 
             public void Start()
             {
-                isMoving = false;
-                isBossCard = false;
                 health = GetComponent<Health>();
                 cardName = cardProperties.cardName;
-                mover = GetComponent<Mover>();
-                move = new Move();
+                mover = GetComponent<IMover>();
+                attacker = GetComponent<IAttacker>();
                 Controller = GetComponent<IMoveController>();
             }
 
-            public abstract string GetCardName();
-            public abstract int GetHealth();
-            public abstract void SetHealth(int health);
-            public abstract CardType GetCardType();
-            public abstract void SetCardType(CardType type);
-            public abstract Tile GetTile();
-            public abstract void SetTile(Tile coordinate);
-            public abstract Move GetMove();
-            public abstract void SetMove(Move move);
-            public abstract void ExecuteMove();
+            public int GetHealth()
+            {
+                return health.Get();
+            }
+
+            public string GetCardName()
+            {
+                return cardName;
+            }
+
+            public Tile GetTile()
+            {
+                return tile;
+            }
+
+            public CardType GetCardType()
+            {
+                return cardProperties.cardType;
+            }
+
+            public void SetTile(Tile coordinate)
+            {
+                this.tile = coordinate;
+            }
+
+            public void SetCardType(CardType type)
+            {
+                cardProperties.cardType = type;
+            }
+
+            public Move GetMove()
+            {
+                return mover.GetMove();
+            }
+
+            public void SetMove(Move move)
+            {
+                mover.SetMove(move);
+            }
+
+            public void ExecuteMove()
+            {
+                mover.Move();
+            }
             public void IncreaseHealth(int h)
             {
                 health.ChangeHealth(false, h);
@@ -63,15 +91,15 @@ namespace DungeonRush
             }
             public bool CanAttack(Card enemy)
             {
-                return GetComponent<IAttacker>().CanMove(enemy);
+                return attacker.CanMove(enemy);
             }
             public void ExecuteAttack()
             {
-                GetComponent<IAttacker>().Attack();
+                attacker.Attack();
             }
             public Shift GetShift()
             {
-                return shifting;
+                return mover.GetShift();
             }
         }
     }

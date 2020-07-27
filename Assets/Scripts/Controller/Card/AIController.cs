@@ -22,7 +22,7 @@ namespace DungeonRush.Controller
         private EnemyController enemyController;
         private TrapController trapController;
 
-        private Mover mover;
+        private IMover mover;
         private IAttacker attacker;
         private ICustomization customization;
         public GameObject model;
@@ -30,7 +30,7 @@ namespace DungeonRush.Controller
         private void Start()
         {
             card = GetComponent<Card>();
-            mover = card.GetComponent<Mover>();
+            mover = card.GetComponent<IMover>();
             attacker = card.GetComponent<IAttacker>();
             customization = card.GetComponent<ICustomization>();
             cardType = card.GetCardType();
@@ -145,9 +145,9 @@ namespace DungeonRush.Controller
             else if (moveProcess.continuing)
             {
                 
-                if (mover.moveFinished)
+                if (mover.IsMoveFinished())
                 {
-                    mover.moveFinished = false;
+                    mover.SetIsMoveFinished(false);
                     moveProcess.EndProcess();
                 }
             }
