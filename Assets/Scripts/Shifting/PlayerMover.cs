@@ -15,8 +15,7 @@ namespace DungeonRush
         public class PlayerMover : MonoBehaviour, IMover
         {
             private Move move;
-            [HideInInspector] public bool startMoving = false;
-            [HideInInspector] public bool isMoveFinished = false;
+            private bool isMoveFinished = false;
 
             public bool isSkillUser = false;
             private SkillUser skillUser = null;
@@ -34,9 +33,6 @@ namespace DungeonRush
 
             public void Move()
             {
-                if (move.GetCard() == null)
-                    move = GetComponent<Card>().GetMove();
-
                 if (isSkillUser)
                     skillUser.ExecuteMoverSkills();
                 // YÜRÜ.

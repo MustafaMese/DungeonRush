@@ -9,7 +9,14 @@ namespace DungeonRush
     {
         public class PlayerCard : Card
         {
-            
+            [SerializeField] PlayerMover eventMover;
+            public override void ExecuteMove()
+            {
+                print("Buradaysan devam et oç");
+                mover.Move();
+            }
+
+            // TODO Move a göre is move finished methodlarını yazıcaksın.
         }
     }
 }

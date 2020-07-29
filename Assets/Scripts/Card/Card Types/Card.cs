@@ -16,7 +16,7 @@ namespace DungeonRush
             protected string cardName = " ";
             protected IMover mover = null;
             protected IAttacker attacker = null;
-            private IMoveController controller;
+            protected IMoveController controller;
 
             [Header("General Properties")]
             public CardProperties cardProperties = null;
@@ -73,7 +73,7 @@ namespace DungeonRush
                 mover.SetMove(move);
             }
 
-            public void ExecuteMove()
+            public virtual void ExecuteMove()
             {
                 mover.Move();
             }
@@ -100,6 +100,14 @@ namespace DungeonRush
             public Shift GetShift()
             {
                 return mover.GetShift();
+            }
+            public virtual bool IsMoveFinished()
+            {
+                return mover.IsMoveFinished();
+            }
+            public virtual void SetIsMoveFinished(bool b)
+            {
+                mover.SetIsMoveFinished(b);
             }
         }
     }

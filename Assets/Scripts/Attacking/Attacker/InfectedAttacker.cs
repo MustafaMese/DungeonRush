@@ -10,10 +10,9 @@ namespace DungeonRush
 {
     namespace Property
     {
-        public class DynamicAttacker : MonoBehaviour, IAttacker
+        public class InfectedAttacker : MonoBehaviour, IAttacker
         {
             [Header("Attacker Properties")]
-            [SerializeField] bool isSkillUser = false;
             [SerializeField] float range = 0.8f;
             [SerializeField] int power = 5;
             [SerializeField] AttackStyle attackStyle = null;
@@ -28,17 +27,11 @@ namespace DungeonRush
 
             private bool attackFinished = false;
             private Card card = null;
-            private ItemUser itemUser = null;
-            private SkillUser skillUser = null;
 
             private void Start()
             {
                 DOTween.Init();
                 card = GetComponent<Card>();
-                if(GetComponent<ItemUser>())
-                    itemUser = GetComponent<ItemUser>();
-                if (isSkillUser)
-                    skillUser = GetComponent<SkillUser>();
             }
 
             // Saldırı eylemi için false, ilerleme eyleme için true.
@@ -68,18 +61,12 @@ namespace DungeonRush
             public void Attack()
             {
                 attackFinished = false;
-                if (isSkillUser)
-                    skillUser.ExecuteAttackerSkills();
                 MoveToAttackRange();
             }
 
             private void Damage(Move move)
             {
-                int itemDamage = 0;
-                if (itemUser && itemUser.GetWeapon() != null)
-                    itemDamage = itemUser.GetWeapon().GetPower();
-                int totalDamage = itemDamage + power;
-                attackStyle.Attack(move, totalDamage);
+                attackStyle.Attack(move, power);
             }
 
             private IEnumerator FinishAttack(Move move)
