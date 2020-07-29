@@ -18,7 +18,7 @@ namespace DungeonRush
             HUMANOID,
             DEMON,
             THIEF,
-            ITEM,
+            ITEM_EVENT,
             WALL,
             TRAP
         }

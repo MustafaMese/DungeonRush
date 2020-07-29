@@ -22,6 +22,23 @@ MonoBehaviour:
   animator: {fileID: 7690782891292757259}
   particulPrefab: {fileID: 3127093274123257427, guid: e93796174c9ff5a49ba387c7cecc940b,
     type: 3}
+--- !u!114 &3411032857821823475
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2690095733121364912}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e52d16fa2eb2b214dbc221c87763ad5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 7690782891292757259}
+  shifting: {fileID: 11400000, guid: b63af612c90819841857890a9a82e19c, type: 2}
+  range: 0.8
+  movingTime: 0.1
+  achievingTime: 0.2
 --- !u!1001 &2935134611781421980
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -104,6 +121,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Feridun
       objectReference: {fileID: 0}
+    - target: {fileID: 1131599490514875660, guid: 3d78076d2cee5794ea5ea9d2f147a51f,
+        type: 3}
+      propertyPath: eventMover
+      value: 
+      objectReference: {fileID: 4516197683542883237}
     - target: {fileID: 1138882818421013314, guid: 3d78076d2cee5794ea5ea9d2f147a51f,
         type: 3}
       propertyPath: m_LocalRotation.z
@@ -767,6 +789,18 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 2935134611781421980}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4516197683542883237 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1591864951829196857, guid: 3d78076d2cee5794ea5ea9d2f147a51f,
+    type: 3}
+  m_PrefabInstance: {fileID: 2935134611781421980}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2690095733121364912}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fa7938d024e9f448b58f360dc68e6e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!95 &7690782891292757259 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 4755967413534033559, guid: 3d78076d2cee5794ea5ea9d2f147a51f,

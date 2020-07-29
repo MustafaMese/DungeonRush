@@ -8,6 +8,7 @@
         COIN,
         TRAP,
         WALL,
+        EVENT,
         NONE = -1
     }
 }

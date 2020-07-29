@@ -23,16 +23,23 @@ namespace DungeonRush
             [SerializeField] Shift shifting = null;
             [SerializeField] float movingTime = 0.2f;
             [SerializeField] Animator animator = null;
+
+            private Card card;
+
             private void Start()
             {
                 DOTween.Init();
                 move = new Move();
+                card = GetComponent<Card>();
                 if (isSkillUser)
                     skillUser = GetComponent<SkillUser>();
             }
 
             public void Move()
             {
+                if (move.GetCard() == null)
+                    move = card.GetMove();
+
                 if (isSkillUser)
                     skillUser.ExecuteMoverSkills();
                 // YÜRÜ.
@@ -99,16 +106,6 @@ namespace DungeonRush
             {  
                 if(move.GetCard().GetCardType() != CardType.TRAP)
                    animator.SetBool("walk", b);
-            }
-
-            public Move GetMove()
-            {
-                return move;
-            }
-
-            public void SetMove(Move move)
-            {
-                this.move = move;
             }
 
             public Shift GetShift()

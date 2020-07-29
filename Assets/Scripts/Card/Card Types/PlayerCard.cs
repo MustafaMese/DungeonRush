@@ -9,14 +9,37 @@ namespace DungeonRush
     {
         public class PlayerCard : Card
         {
-            [SerializeField] PlayerMover eventMover;
+            [SerializeField] EventMover eventMover = null;
+            public bool isEventMove = false;
             public override void ExecuteMove()
             {
-                print("Buradaysan devam et oç");
-                mover.Move();
+                if(GetMove().GetMoveType() != MoveType.EVENT)
+                    mover.Move();
+                else
+                {
+                    eventMover.Move();
+                    isEventMove = true;
+                } 
             }
 
-            // TODO Move a göre is move finished methodlarını yazıcaksın.
+            public override bool IsMoveFinished()
+            {
+                if (!isEventMove)
+                    return mover.IsMoveFinished();
+                else
+                    return eventMover.IsMoveFinished();
+            }
+
+            public override void SetIsMoveFinished(bool b)
+            {
+                if (!isEventMove)
+                    mover.SetIsMoveFinished(b);
+                else
+                {
+                    isEventMove = b;
+                    eventMover.SetIsMoveFinished(b);
+                }
+            }
         }
     }
 }

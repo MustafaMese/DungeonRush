@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using DG.Tweening;
+using DungeonRush.Cards;
 using DungeonRush.Data;
 using DungeonRush.Shifting;
 using UnityEngine;
@@ -12,20 +13,28 @@ namespace DungeonRush.Property
         private Move move;
         private bool isMoveFinished = false;
 
-        [SerializeField] Animator animator;
+        [SerializeField] Animator animator = null;
         [SerializeField] Shift shifting = null;
         [SerializeField] float range = 0f;
         [SerializeField] float movingTime = 0f;
         [SerializeField] float achievingTime = 0;
 
+        private Card card;
+
         private void Start()
         {
             DOTween.Init();
             move = new Move();
+            card = GetComponent<Card>();
         }
 
         public void Move()
         {
+            if (move.GetCard() == null)
+                move = card.GetMove();
+
+            print(move.GetCard());
+
             // YÜRÜME ANİM.
             UpdateAnimation(true, false);
             MoveToTheRange();
@@ -44,7 +53,23 @@ namespace DungeonRush.Property
         {
             UpdateAnimation(false, true);
             yield return new WaitForSeconds(achievingTime);
+            var item = move.GetTargetTile().GetCard().GetComponent<IAcquirable>().GetAcquirable();
+            if (item != null)
+                ItemMove(card, item);
             move.GetCard().transform.DOMove(move.GetCardTile().GetCoordinate(), movingTime).OnComplete(() => Finalise());
+        }
+
+        private void ItemMove(Card card, Item i)
+        {
+            print("Itemı alıyorum.");
+
+            if (i.GetItemType() == ItemType.POTION)
+                card.GetComponent<ItemUser>().TakePotion(i);
+            else if (i.GetItemType() == ItemType.WEAPON)
+                card.GetComponent<ItemUser>().TakeWeapon(i);
+            else if (i.GetItemType() == ItemType.ARMOR)
+                card.GetComponent<ItemUser>().TakeArmor(i);
+
         }
 
         private void Finalise()

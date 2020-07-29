@@ -149,6 +149,8 @@ namespace DungeonRush.Shifting
                     return MoveType.ITEM;
                 case CardType.COIN:
                     return MoveType.COIN;
+                case CardType.EVENT:
+                    return MoveType.EVENT;
                 default:
                     return MoveType.EMPTY;
             }

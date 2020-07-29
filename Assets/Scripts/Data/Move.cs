@@ -70,6 +70,7 @@ namespace DungeonRush
             ATTACK,
             ITEM,
             COIN,
+            EVENT,
             EMPTY
         }
     }

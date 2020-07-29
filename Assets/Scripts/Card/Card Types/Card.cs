@@ -13,6 +13,7 @@ namespace DungeonRush
         {
             protected Tile tile = null;
             protected Health health = null;
+            protected Move move;
             protected string cardName = " ";
             protected IMover mover = null;
             protected IAttacker attacker = null;
@@ -31,6 +32,7 @@ namespace DungeonRush
                 mover = GetComponent<IMover>();
                 attacker = GetComponent<IAttacker>();
                 Controller = GetComponent<IMoveController>();
+                move = new Move();
             }
 
             public int GetHealth()
@@ -65,12 +67,12 @@ namespace DungeonRush
 
             public Move GetMove()
             {
-                return mover.GetMove();
+                return move;
             }
 
             public void SetMove(Move move)
             {
-                mover.SetMove(move);
+                this.move = move;
             }
 
             public virtual void ExecuteMove()
