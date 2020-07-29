@@ -5,13 +5,19 @@ using UnityEngine;
 
 namespace DungeonRush.Cards
 {
-    public class EventCard : Card, IAcquirable
+    public class EventCard : Card, IGameEvent
     {
-        [SerializeField] ItemCard item;
+        [SerializeField] ItemCard item = null;
+        [SerializeField] EventType eventType;
 
-        public Item GetAcquirable()
+        public Item GetItem()
         {
             return item.GetComponent<Item>();
+        }
+
+        public EventType GetEventType()
+        {
+            return eventType;
         }
     }
 }

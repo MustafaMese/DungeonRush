@@ -13,6 +13,7 @@ namespace DungeonRush.Property
         private Move move;
         private bool isMoveFinished = false;
 
+        [SerializeField] LoadManager loadManager;
         [SerializeField] Animator animator = null;
         [SerializeField] Shift shifting = null;
         [SerializeField] float range = 0f;
@@ -20,7 +21,8 @@ namespace DungeonRush.Property
         [SerializeField] float achievingTime = 0;
 
         private Card card;
-
+        private IGameEvent gameEvent;
+   
         private void Start()
         {
             DOTween.Init();
@@ -46,14 +48,25 @@ namespace DungeonRush.Property
             Vector2 targetPos = new Vector2(move.GetCardTile().GetCoordinate().x + dir.x * range, move.GetCardTile().GetCoordinate().y + dir.y * range);
             // YÜRÜMEYİ BİTİR
             UpdateAnimation(false, false);
-            move.GetCard().transform.DOMove(targetPos, movingTime).OnComplete(() => StartCoroutine(FinishMovement()));
+
+            // Event'e göre pozisyon al.
+            gameEvent = move.GetTargetTile().GetCard().GetComponent<IGameEvent>();
+
+            if (gameEvent == null)
+                Finalise();
+
+            if (gameEvent.GetEventType() == EventType.TREASURE)
+                move.GetCard().transform.DOMove(targetPos, movingTime).OnComplete(() => StartCoroutine(FinishGettingTreasureMovement()));
+            else if (gameEvent.GetEventType() == EventType.PORTAL)
+                loadManager.LoadNextScene();
         }
 
-        private IEnumerator FinishMovement()
+        #region EVENT METHODS
+        private IEnumerator FinishGettingTreasureMovement()
         {
             UpdateAnimation(false, true);
             yield return new WaitForSeconds(achievingTime);
-            var item = move.GetTargetTile().GetCard().GetComponent<IAcquirable>().GetAcquirable();
+            var item = gameEvent.GetItem();
             if (item != null)
                 ItemMove(card, item);
             move.GetCard().transform.DOMove(move.GetCardTile().GetCoordinate(), movingTime).OnComplete(() => Finalise());
@@ -72,20 +85,14 @@ namespace DungeonRush.Property
 
         }
 
-        private void Finalise()
+        private void PortalMove()
         {
-            isMoveFinished = true;
-            move.Reset();
-        }
+            UpdateAnimation(false, true);
 
-        private Vector3 GetDirection(Move move)
-        {
-            var heading = move.GetTargetTile().GetCoordinate() - move.GetCardTile().GetCoordinate();
-            var distance = heading.magnitude;
-            var direction = heading / distance;
-            return direction;
         }
+        #endregion
 
+        #region IMOVER METHODS
         public Shift GetShift()
         {
             return shifting;
@@ -109,6 +116,22 @@ namespace DungeonRush.Property
         public void SetMove(Move move)
         {
             this.move = move;
+        }
+        #endregion
+
+        private void Finalise()
+        {
+            isMoveFinished = true;
+            move.Reset();
+            gameEvent = null;
+        }
+
+        private Vector3 GetDirection(Move move)
+        {
+            var heading = move.GetTargetTile().GetCoordinate() - move.GetCardTile().GetCoordinate();
+            var distance = heading.magnitude;
+            var direction = heading / distance;
+            return direction;
         }
 
         private void UpdateAnimation(bool play, bool isAchieved)

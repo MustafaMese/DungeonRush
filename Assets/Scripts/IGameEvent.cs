@@ -3,8 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IAcquirable
+public interface IGameEvent
 {
-    Item GetAcquirable();
-
+    Item GetItem();
+    EventType GetEventType();
 }

@@ -27,7 +27,7 @@ public class LoadManager : MonoBehaviour
         }
     }
 
-    public void InstantLoadScene()
+    public void LoadNextScene()
     {
         var scene = SceneManager.GetActiveScene();
         SceneManager.LoadScene(scene.buildIndex + 1);
