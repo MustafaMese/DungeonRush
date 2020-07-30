@@ -24,6 +24,8 @@ namespace DungeonRush.Controller
         public TrapController trapController;
         public Board board;
 
+        public bool isGameStarted = false;
+
         private void Start()
         {
             playerController = FindObjectOfType<PlayerController>();
@@ -39,6 +41,16 @@ namespace DungeonRush.Controller
 
         private void Update()
         {
+            if(GameManager.gameState == GameState.BEGIN)
+                isGameStarted = true;
+
+            if(isGameStarted)
+            {
+                isGameStarted = false;
+                playerController.Begin();
+                GameManager.gameState = GameState.PLAY;
+            }
+
             if (notify) 
             {
                 OnNotify();

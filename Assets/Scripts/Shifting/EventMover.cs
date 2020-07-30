@@ -66,7 +66,7 @@ namespace DungeonRush.Property
         {
             UpdateAnimation(false, true);
             yield return new WaitForSeconds(achievingTime);
-            var item = gameEvent.GetItem();
+            var item = gameEvent.GetEvent();
             if (item != null)
                 ItemMove(card, item);
             move.GetCard().transform.DOMove(move.GetCardTile().GetCoordinate(), movingTime).OnComplete(() => Finalise());

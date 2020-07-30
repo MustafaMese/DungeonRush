@@ -1,23 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using DungeonRush.Property;
+using DungeonRush.Managers;
 using UnityEngine;
 
 namespace DungeonRush.Cards
 {
-    public class EventCard : Card, IGameEvent
+    public abstract class EventCard : Card, IGameEvent
     {
-        [SerializeField] ItemCard item = null;
-        [SerializeField] EventType eventType;
+        [SerializeField] protected EventType eventType;
 
-        public Item GetItem()
-        {
-            return item.GetComponent<Item>();
-        }
-
+        public abstract void GetEvent(Card card);
         public EventType GetEventType()
         {
-            return eventType;
+            return eventType;    
         }
     }
 }
