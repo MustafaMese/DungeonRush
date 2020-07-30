@@ -13,7 +13,6 @@ namespace DungeonRush.Property
         private Move move;
         private bool isMoveFinished = false;
 
-        [SerializeField] LoadManager loadManager;
         [SerializeField] Animator animator = null;
         [SerializeField] Shift shifting = null;
         [SerializeField] float range = 0f;
@@ -34,8 +33,6 @@ namespace DungeonRush.Property
         {
             if (move.GetCard() == null)
                 move = card.GetMove();
-
-            print(move.GetCard());
 
             // YÜRÜME ANİM.
             UpdateAnimation(true, false);
@@ -58,7 +55,7 @@ namespace DungeonRush.Property
             if (gameEvent.GetEventType() == EventType.TREASURE)
                 move.GetCard().transform.DOMove(targetPos, movingTime).OnComplete(() => StartCoroutine(FinishGettingTreasureMovement()));
             else if (gameEvent.GetEventType() == EventType.PORTAL)
-                loadManager.LoadNextScene();
+                gameEvent.GetEvent(card);
         }
 
         #region EVENT METHODS
@@ -66,23 +63,8 @@ namespace DungeonRush.Property
         {
             UpdateAnimation(false, true);
             yield return new WaitForSeconds(achievingTime);
-            var item = gameEvent.GetEvent();
-            if (item != null)
-                ItemMove(card, item);
+            gameEvent.GetEvent(card);
             move.GetCard().transform.DOMove(move.GetCardTile().GetCoordinate(), movingTime).OnComplete(() => Finalise());
-        }
-
-        private void ItemMove(Card card, Item i)
-        {
-            print("Itemı alıyorum.");
-
-            if (i.GetItemType() == ItemType.POTION)
-                card.GetComponent<ItemUser>().TakePotion(i);
-            else if (i.GetItemType() == ItemType.WEAPON)
-                card.GetComponent<ItemUser>().TakeWeapon(i);
-            else if (i.GetItemType() == ItemType.ARMOR)
-                card.GetComponent<ItemUser>().TakeArmor(i);
-
         }
 
         private void PortalMove()

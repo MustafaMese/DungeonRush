@@ -7,9 +7,18 @@ using UnityEngine;
 public class PortalEventCard : EventCard
 {
     [SerializeField] LoadManager loadManager;
+    [SerializeField] GameManager gameManager;
 
-    public void GetEvent(Card card)
+    public override void GetEvent(Card card)
     {
+        GameManager.gameState = GameState.STOP;
+        StartCoroutine(FadeOut());
+    }
 
+    private IEnumerator FadeOut()
+    {
+        yield return gameManager.FadeOut(2f);
+        print("FadeOut");
+        loadManager.LoadNextScene();
     }
 }

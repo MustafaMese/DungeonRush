@@ -20,7 +20,7 @@ namespace DungeonRush
                 Application.targetFrameRate = 45;
                 moveSchedular = FindObjectOfType<MoveSchedular>();
 
-                StartCoroutine(FadeOutIn());
+                StartCoroutine(StartGame());
             }
 
             private void Update()
@@ -32,20 +32,13 @@ namespace DungeonRush
                 }
             }
 
-            private void StartGame()
+            private IEnumerator StartGame()
             {
+                yield return FadeIn(1f);
                 gameState = GameState.BEGIN;
             }
 
-            private IEnumerator FadeOutIn()
-            {
-                yield return FadeOut(3f);
-                print("Faded out");
-                yield return FadeIn(1f);
-                print("Faded in");
-            }
-
-            private IEnumerator FadeOut(float time)
+            public IEnumerator FadeOut(float time)
             {
                 while(canvasGroup.alpha < 1)
                 {
@@ -54,7 +47,7 @@ namespace DungeonRush
                 }
             }
 
-            private IEnumerator FadeIn(float time)
+            public IEnumerator FadeIn(float time)
             {
                 while(canvasGroup.alpha > 0)
                 {
