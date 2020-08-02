@@ -15,55 +15,50 @@ namespace DungeonRush.Property
 
         [Header("Animation Varibles")]
         [SerializeField] float animationTime = 0.2f;
-        [SerializeField] GameObject particulPrefab = null;
-        private GameObject particulPrefabInstance = null;
+
+        private ObjectPool poolForAttackStyle = new ObjectPool();
+        private GameObject effectObject = null;
 
         private Card card = null;
         private bool attackFinished = false;
         private void Start()
         {
             card = GetComponent<Card>();
+
+            effectObject = attackStyle.GetEffect();
+            poolForAttackStyle.SetObject(effectObject);
+            poolForAttackStyle.FillPool(2);
         }
 
         public void Attack()
         {
             attackFinished = false;
             Move move = card.GetMove();
-            StartCoroutine(Damage(move));
+            Damage(move);
         }
 
-        private IEnumerator Damage(Move move)
+        private void Damage(Move move)
         {
-            attackStyle.Attack(move, power);
-            yield return new WaitForSeconds(animationTime);
+            Vector3 cardPos = move.GetCardTile().GetCoordinate();
+            float time = attackStyle.GetAnimationTime();
 
-            if (particulPrefabInstance == null)
-                InitializeParticulEffect(move);
-            else
-                EnableParticulEffect(move);
+            attackStyle.Attack(move, power);
+            StartCoroutine(StartAttackAnimation(poolForAttackStyle, cardPos, time));
+        }
+
+        private IEnumerator StartAttackAnimation(ObjectPool pool, Vector3 tPos, float time)
+        {
+            GameObject obj = pool.PullObjectFromPool();
+            attackStyle.SetEffectPosition(obj, tPos);
+            yield return new WaitForSeconds(time);
+            pool.AddObjectToPool(obj);
             FinaliseAttack();
         }
 
-        #region FINALIZE ATTACK AND EFFECTS
-        private void EnableParticulEffect(Move move)
-        {
-            particulPrefabInstance.SetActive(true);
-            particulPrefabInstance.transform.position = move.GetTargetTile().GetCoordinate();
-        }
-
-        private void InitializeParticulEffect(Move move)
-        {
-            particulPrefabInstance = Instantiate(particulPrefab, move.GetTargetTile().GetCoordinate(), Quaternion.identity, this.transform);
-        }
-
-
         private void FinaliseAttack()
         {
-            particulPrefabInstance.SetActive(false);
             attackFinished = true;
         }
-
-        #endregion
 
         public bool CanMove(Card enemy)
         {

@@ -8,10 +8,20 @@ namespace DungeonRush.Skills
     {
         public bool isMover;
         public bool isAttacker;
-        public int cooldown;
-
-        public abstract void Initialize(Move move);
+        [SerializeField] protected int cooldown;
+        [SerializeField] protected float effectTime;
 
         public abstract void Execute(Move move);
+        public abstract void DisableObject();
+
+        public int GetCooldown()
+        {
+            return cooldown;
+        }
+
+        public float GetEffectTime()
+        {
+            return effectTime;
+        }
     }
 }

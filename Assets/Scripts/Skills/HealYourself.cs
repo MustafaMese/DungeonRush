@@ -1,6 +1,5 @@
 ﻿using DungeonRush.Cards;
 using DungeonRush.Data;
-using DungeonRush.Effects;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,24 +9,41 @@ namespace DungeonRush.Skills
     [CreateAssetMenu(menuName = "Skill/Healing")]
     public class HealYourself : Skill
     {
-        public int healPower = 2;
-        public float effectTime = 0.3f;
-        public EffectObject healAnimationPrefab;
+        [SerializeField] int healPower = 2;
 
-        public override void Initialize(Move move)
-        {
-            
-        }
+        [SerializeField] GameObject healPrefab = null;
+        private GameObject healPrefabInstance = null;
 
         public override void Execute(Move move)
         {
             Card card = move.GetCard();
             card.IncreaseHealth(healPower);
+            AnimateObject(card.transform);
+        }
 
-            if (healAnimationPrefab.prefab == null)
-                healAnimationPrefab.InitializeObject(effectTime, card.transform.position, card.transform, true);
+        private void AnimateObject(Transform t)
+        {
+            if (healPrefabInstance == null)
+                InitializeObject(t.position, t);
             else
-                healAnimationPrefab.EnableObject(effectTime, card.transform.position);
+                EnableObject(t.position);
+        }
+
+        public override void DisableObject()
+        {
+            if (healPrefabInstance != null)
+                healPrefabInstance.SetActive(false);
+        }
+
+        private void InitializeObject(Vector3 pos, Transform parent)
+        {
+            healPrefabInstance = Instantiate(healPrefab, pos, Quaternion.identity, parent);
+        }
+
+        private void EnableObject(Vector3 pos)
+        {
+            healPrefabInstance.SetActive(true);
+            healPrefabInstance.transform.position = pos;
         }
 
     }

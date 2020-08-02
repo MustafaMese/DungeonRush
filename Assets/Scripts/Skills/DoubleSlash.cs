@@ -1,6 +1,5 @@
 ﻿using DungeonRush.Cards;
 using DungeonRush.Data;
-using DungeonRush.Effects;
 using DungeonRush.Field;
 using UnityEngine;
 
@@ -9,76 +8,50 @@ namespace DungeonRush.Skills
     [CreateAssetMenu(menuName = "Skill/DoubleSlash", order = 1)]
     public class DoubleSlash : Skill
     {
-        public int slashPower = 2;
-        public float effectTime = 0.3f;
-        public EffectObject slashAnimationPrefab;
+        [SerializeField] int slashPower = 2;
+        [SerializeField] GameObject doubleSlashPrefab = null;
+        private GameObject doubleSlashInstance = null;
+
+        private Transform cardTransform;
 
         public override void Execute(Move move)
         {
-            Card targetCard = move.GetTargetTile().GetCard();
-            Card card = move.GetCard();
+            Tile targetTile = move.GetTargetTile();
+            Card targetCard = targetTile.GetCard();
+            cardTransform = move.GetCard().transform;
             
             if(targetCard != null)
                 targetCard.DecreaseHealth(slashPower);
 
-            var dir = GetDirection(move);
-            Vector3 pos = Vector3.zero;
+            AnimateObject(targetTile.GetCoordinate(), targetTile.transform);
+        }
 
-            if (slashAnimationPrefab.prefab == null)
-            {
-                pos = SetPosition(move.GetTargetTile(), dir, pos);
-                slashAnimationPrefab.InitializeObject(effectTime, pos, card.transform, true);
-            }
+        private void AnimateObject(Vector3 target, Transform cardT)
+        {
+            if (doubleSlashInstance == null)
+                InitializeObject(target, cardT);
             else
-            {
-                pos = SetPosition(move.GetTargetTile(), dir, pos);
-                slashAnimationPrefab.EnableObject(effectTime, pos);
-            }
+                EnableObject(target, cardT);
         }
 
-        private Vector3 SetPosition(Tile targetCard, Vector3 dir, Vector3 pos)
+        private void InitializeObject(Vector3 pos, Transform parent)
         {
-            if (dir.x != 0)
-            {
-                if (dir.x < 0)
-                {
-                    Vector3 coordinate = targetCard.transform.position;
-                    pos = new Vector3(coordinate.x + 1, coordinate.y, coordinate.z);
-                }
-                else if (dir.x > 0)
-                {
-                    Vector3 coordinate = targetCard.transform.position;
-                    pos = new Vector3(coordinate.x - 1, coordinate.y, coordinate.z);
-                }
-            }
-            else if (dir.y != 0)
-            {
-                if (dir.y < 0)
-                {
-                    Vector3 coordinate = targetCard.transform.position;
-                    pos = new Vector3(coordinate.x, coordinate.y + 1, coordinate.z);
-                }
-                else if (dir.y > 0)
-                {
-                    Vector3 coordinate = targetCard.transform.position;
-                    pos = new Vector3(coordinate.x, coordinate.y - 1, coordinate.z);
-                }
-            }
-
-            return pos;
+            doubleSlashInstance = Instantiate(doubleSlashPrefab, pos, Quaternion.identity, parent);
         }
 
-        private Vector3 GetDirection(Move move)
+        private void EnableObject(Vector3 pos, Transform parent)
         {
-            var heading = move.GetTargetTile().transform.position - move.GetCardTile().transform.position;
-            var distance = heading.magnitude;
-            var direction = heading / distance;
-            return direction;
+            doubleSlashInstance.SetActive(true);
+            doubleSlashInstance.transform.SetParent(parent);
+            doubleSlashInstance.transform.position = pos;
         }
-
-        public override void Initialize(Move move)
+        public override void DisableObject()
         {
-            throw new System.NotImplementedException();
+            if (doubleSlashInstance != null)
+            {
+                doubleSlashInstance.SetActive(false);
+                doubleSlashInstance.transform.SetParent(cardTransform);
+            }
         }
     }
 }

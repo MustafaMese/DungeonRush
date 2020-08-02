@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using DungeonRush.Cards;
 using DungeonRush.Data;
 using DungeonRush.Field;
+using DungeonRush.Property;
 using UnityEngine;
 
 namespace DungeonRush.Attacking
@@ -11,7 +12,6 @@ namespace DungeonRush.Attacking
     public class ThreeToOneBoxAttacking : AttackStyle
     {
         private List<Card> tempList = new List<Card>();
-        [SerializeField] float effectTime = 0f;
 
         public override void Attack(Move move, int damage)
         {
@@ -23,18 +23,11 @@ namespace DungeonRush.Attacking
                 if(tempList[i] != null)
                     tempList[i].DecreaseHealth(damage);
             }
-
-            Transform card = move.GetCard().transform;
-            Vector3 tPos = move.GetTargetTile().GetCoordinate();
-            SetEffectPosition(tPos, card);
         }
 
-        private void SetEffectPosition(Vector3 tPos, Transform card)
+        public override void SetEffectPosition(GameObject effect, Vector3 tPos, Transform card)
         {
-            if (effectPrefab.prefab == null)
-                effectPrefab.InitializeObject(effectTime, tPos, card, true);
-            else
-                effectPrefab.EnableObject(effectTime, tPos);
+            throw new System.NotImplementedException();
         }
 
         private List<Card> FindTargetTiles(Move move)

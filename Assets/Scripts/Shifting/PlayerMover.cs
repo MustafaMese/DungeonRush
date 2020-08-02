@@ -6,6 +6,7 @@ using DungeonRush.Managers;
 using DungeonRush.Data;
 using DungeonRush.Skills;
 using DungeonRush.Shifting;
+using System.Collections;
 
 namespace DungeonRush 
 {
@@ -20,9 +21,13 @@ namespace DungeonRush
             public bool isSkillUser = false;
             private SkillUser skillUser = null;
 
+            [Header("Shifting Properties")]
             [SerializeField] Shift shifting = null;
             [SerializeField] float movingTime = 0.2f;
             [SerializeField] Animator animator = null;
+            [SerializeField] GameObject walkParticul = null;
+            [SerializeField] float particulTime = 0;
+            private ObjectPool pool = new ObjectPool();
 
             private Card card;
 
@@ -33,6 +38,9 @@ namespace DungeonRush
                 card = GetComponent<Card>();
                 if (isSkillUser)
                     skillUser = GetComponent<SkillUser>();
+
+                pool.SetObject(walkParticul);
+                pool.FillPool(4);
             }
 
             public void Move()
@@ -42,9 +50,20 @@ namespace DungeonRush
 
                 if (isSkillUser)
                     skillUser.ExecuteMoverSkills();
-                // YÜRÜ.
+
+                Vector3 pos = move.GetCardTile().GetCoordinate();
+
                 UpdateAnimation(true);
+                StartCoroutine(StartMoveAnimation(pos, particulTime));
                 move.GetCard().transform.DOMove(move.GetTargetTile().GetCoordinate(), movingTime).OnComplete(() => TerminateMove());
+            }
+
+            private IEnumerator StartMoveAnimation(Vector3 pos, float time)
+            {
+                GameObject obj = pool.PullObjectFromPool();
+                obj.transform.position = pos;
+                yield return new WaitForSeconds(time);
+                pool.AddObjectToPool(obj);
             }
 
             private void TerminateMove()

@@ -16,13 +16,17 @@ namespace DungeonRush.Property
         [SerializeField] int power = 5;
         [SerializeField] AttackStyle attackStyle = null;
 
-        [Header("Animation Varibles")]
+        [Header("Animation Variables")]
         [SerializeField] float closingToEnemyTime = 0.1f;
         [SerializeField] float damageTime = 0.1f;
         [SerializeField] float getBackTime = 0.1f;
         [SerializeField] Animator animator = null;
-        [SerializeField] GameObject particulPrefab = null;
-        private GameObject particulPrefabInstance = null;
+        [SerializeField] GameObject particul = null;
+        [SerializeField] float particulTime = 1f;
+
+        private ObjectPool poolForParticul = new ObjectPool();
+        private ObjectPool poolForAttackStyle = new ObjectPool();
+        private GameObject effectObject = null;
 
         private bool attackFinished = false;
         private Card card = null;
@@ -37,6 +41,13 @@ namespace DungeonRush.Property
                 itemUser = GetComponent<ItemUser>();
             if (isSkillUser)
                 skillUser = GetComponent<SkillUser>();
+
+            poolForParticul.SetObject(particul);
+            poolForParticul.FillPool(3);
+
+            effectObject = attackStyle.GetEffect();
+            poolForAttackStyle.SetObject(effectObject);
+            poolForAttackStyle.FillPool(2);
         }
 
         // Saldırı eylemi için false, ilerleme eyleme için true.
@@ -77,45 +88,39 @@ namespace DungeonRush.Property
             if (itemUser && itemUser.GetWeapon() != null)
                 itemDamage = itemUser.GetWeapon().GetPower();
             int totalDamage = itemDamage + power;
+
+            Transform card = move.GetCard().transform;
+            Transform target = move.GetTargetTile().transform;
+            Vector3 tPos = move.GetTargetTile().GetCoordinate();
+            float time = attackStyle.GetAnimationTime();
+
             attackStyle.Attack(move, totalDamage);
+            StartCoroutine(StartAttackAnimation(poolForAttackStyle, tPos, card, target, time));
+            StartCoroutine(StartAttackAnimation(poolForParticul, tPos, card, null, particulTime));
+            
+        }
+
+        private IEnumerator StartAttackAnimation(ObjectPool pool, Vector3 tPos, Transform card, Transform target, float time)
+        {
+            GameObject obj = pool.PullObjectFromPool();
+            attackStyle.SetEffectPosition(obj, tPos, target);
+            yield return new WaitForSeconds(time);
+            attackStyle.SetEffectPosition(obj, tPos, card);
+            pool.AddObjectToPool(obj);
         }
 
         private IEnumerator FinishAttack(Move move)
         {
             UpdateAnimation(false, false);
-
             UpdateAnimation(true, true);
-
             Damage(move);
             yield return new WaitForSeconds(damageTime);
-            if (particulPrefabInstance == null)
-                InitializeParticulEffect(move);
-            else
-                EnableParticulEffect(move);
-
             move.GetCard().transform.DOMove(move.GetCardTile().GetCoordinate(), getBackTime).OnComplete(() => FinaliseAttack());
         }
-
-        #region FINALIZE ATTACK AND EFFECTS
-        private void EnableParticulEffect(Move move)
-        {
-            particulPrefabInstance.SetActive(true);
-            particulPrefabInstance.transform.position = move.GetTargetTile().GetCoordinate();
-        }
-
-        private void InitializeParticulEffect(Move move)
-        {
-            particulPrefabInstance = Instantiate(particulPrefab, move.GetTargetTile().GetCoordinate(), Quaternion.identity, this.transform);
-        }
-
-
         private void FinaliseAttack()
         {
-            particulPrefabInstance.SetActive(false);
             attackFinished = true;
         }
-
-        #endregion
 
         private Vector3 GetDirection(Move move)
         {
@@ -142,6 +147,11 @@ namespace DungeonRush.Property
         public void SetAttackFinished(bool b)
         {
             attackFinished = b;
+        }
+
+        public void SetAttackAnimation()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

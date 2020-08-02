@@ -14,14 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isSkillUser: 1
   range: 0.8
-  power: 5
+  power: 0
   attackStyle: {fileID: 11400000, guid: 3ad909746a3710d459d5103ebb019e66, type: 2}
   closingToEnemyTime: 0.1
   damageTime: 0.1
   getBackTime: 0.1
   animator: {fileID: 7690782891292757259}
-  particulPrefab: {fileID: 3127093274123257427, guid: e93796174c9ff5a49ba387c7cecc940b,
-    type: 3}
 --- !u!114 &3411032857821823475
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -34,7 +32,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e52d16fa2eb2b214dbc221c87763ad5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loadManager: {fileID: 0}
   animator: {fileID: 7690782891292757259}
   shifting: {fileID: 11400000, guid: b63af612c90819841857890a9a82e19c, type: 2}
   range: 0.8
@@ -331,7 +328,7 @@ PrefabInstance:
         type: 3}
       propertyPath: eventMover
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 3411032857821823475}
     - target: {fileID: 1138882818421013314, guid: 3d78076d2cee5794ea5ea9d2f147a51f,
         type: 3}
       propertyPath: m_LocalRotation.z
@@ -832,6 +829,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.031559117
+      objectReference: {fileID: 0}
+    - target: {fileID: 5641049783462244617, guid: 3d78076d2cee5794ea5ea9d2f147a51f,
+        type: 3}
+      propertyPath: attackerSkillList.Array.size
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5906191829748949413, guid: 3d78076d2cee5794ea5ea9d2f147a51f,
         type: 3}

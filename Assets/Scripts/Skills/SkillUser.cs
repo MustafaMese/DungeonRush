@@ -21,13 +21,13 @@ namespace DungeonRush.Skills {
             for (int i = 0; i < moverSkillList.Count; i++)
             {
                 Skill s = moverSkillList[i];
-                moverSkills.Add(s, s.cooldown);
+                moverSkills.Add(s, s.GetCooldown());
             }
 
             for (int i = 0; i < attackerSkillList.Count; i++)
             {
                 Skill s = attackerSkillList[i];
-                attackerSkills.Add(s, s.cooldown);
+                attackerSkills.Add(s, s.GetCooldown());
             }
 
         }
@@ -41,7 +41,8 @@ namespace DungeonRush.Skills {
                 if (moverSkills[s] == 0)
                 {
                     s.Execute(card.GetMove());
-                    moverSkills[s] = s.cooldown;
+                    moverSkills[s] = s.GetCooldown();
+                    StartCoroutine(DisableSkill(s));
                 }
                 else
                 {
@@ -59,13 +60,20 @@ namespace DungeonRush.Skills {
                 if (attackerSkills[s] == 0)
                 {
                     s.Execute(card.GetMove());
-                    attackerSkills[s] = s.cooldown;
+                    attackerSkills[s] = s.GetCooldown();
+                    StartCoroutine(DisableSkill(s));
                 }
                 else
                 {
                     attackerSkills[s]--;
                 }
             }
+        }
+
+        public IEnumerator DisableSkill(Skill s)
+        {
+            yield return new WaitForSeconds(s.GetEffectTime());
+            s.DisableObject();
         }
     }
 }
