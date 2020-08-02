@@ -5,8 +5,6 @@ using UnityEngine.SceneManagement;
 public class LoadManager : MonoBehaviour
 {
     private static LoadManager _instance;
-    private static bool isInLoadingScreen = false;
-
     private void Awake()
     {
         if (_instance != null && _instance != this)
@@ -18,15 +16,6 @@ public class LoadManager : MonoBehaviour
             _instance = this;
         }
     }
-
-    private void Update()
-    {
-        if (!isInLoadingScreen && SceneManager.GetActiveScene().name == "LoadingScreen")
-        {
-            StartCoroutine(LoadNewScene("GameScreen"));
-        }
-    }
-
     public void LoadNextScene()
     {
         var scene = SceneManager.GetActiveScene();
@@ -53,12 +42,10 @@ public class LoadManager : MonoBehaviour
         SceneManager.LoadScene(scene.buildIndex);
     }
 
-    public IEnumerator LoadNewScene(string scene)
+    public IEnumerator LoadNewScene()
     {
-        isInLoadingScreen = true;
-        yield return new WaitForSeconds(2f);
-
-        AsyncOperation ao = SceneManager.LoadSceneAsync(scene);
+        var scene = SceneManager.GetActiveScene();
+        AsyncOperation ao = SceneManager.LoadSceneAsync(scene.buildIndex + 1);
         ao.allowSceneActivation = false;
 
         while (!ao.isDone)
@@ -71,10 +58,10 @@ public class LoadManager : MonoBehaviour
             if (ao.progress == 0.9f)
             {
                 ao.allowSceneActivation = true;
-                isInLoadingScreen = false;
             }
 
             yield return null;
         }
+        print("bum");
     }
 }

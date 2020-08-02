@@ -10,10 +10,10 @@ namespace DungeonRush
         {
             public MoveSchedular moveSchedular;
             [SerializeField] CanvasGroup canvasGroup;
-
             public static GameState gameState = GameState.STOP;
-
             public bool start;
+
+            [SerializeField] float fadeInTime = 0f;
 
             private void Start()
             {
@@ -34,7 +34,9 @@ namespace DungeonRush
 
             private IEnumerator StartGame()
             {
-                yield return FadeIn(1f);
+                print("1");
+                yield return FadeIn(fadeInTime);
+                print("2");
                 gameState = GameState.BEGIN;
             }
 
@@ -58,6 +60,7 @@ namespace DungeonRush
 
             void OnDestroy()
             {
+                print("3");
                 gameState = GameState.STOP;                
             }
         }
