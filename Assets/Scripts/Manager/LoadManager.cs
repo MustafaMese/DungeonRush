@@ -19,7 +19,12 @@ public class LoadManager : MonoBehaviour
     public void LoadNextScene()
     {
         var scene = SceneManager.GetActiveScene();
-        SceneManager.LoadScene(scene.buildIndex + 1);
+        var n = scene.buildIndex + 1;
+
+        if(n != SceneManager.sceneCountInBuildSettings)
+            SceneManager.LoadScene(scene.buildIndex + 1);
+        else
+            SceneManager.LoadScene(0);
     }
 
     public void LoadStartScene()

@@ -9,6 +9,7 @@ namespace DungeonRush.Property
         // TODO disapperı ekle.
         [SerializeField] int health = 0;
         [SerializeField] Animator animator = null;
+        [SerializeField] CircleHealthBar bar;
 
         private Card card = null;
         private ItemUser itemUser = null;
@@ -63,6 +64,7 @@ namespace DungeonRush.Property
                 health += amount;
 
             health = Mathf.Max(0, health);
+            StartCoroutine(bar.ActiveChanges(health));
         }
 
         private void UpdateAnimation()
