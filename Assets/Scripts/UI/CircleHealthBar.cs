@@ -15,6 +15,7 @@ public class CircleHealthBar : MonoBehaviour
     private void Start()
     {
         bar.gameObject.SetActive(false);
+        barBG.gameObject.SetActive(false);
     }
 
     private void HealthChange(float healthValue)
