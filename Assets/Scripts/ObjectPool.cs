@@ -3,41 +3,44 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ObjectPool : MonoBehaviour
+namespace DungeonRush.Data
 {
-    private GameObject prefab;
-    private Stack<GameObject> objectPool = new Stack<GameObject>();
-
-    public void SetObject(GameObject prefab)
+    public class ObjectPool : MonoBehaviour
     {
-        this.prefab = prefab;
-    }
+        private GameObject prefab;
+        private Stack<GameObject> objectPool = new Stack<GameObject>();
 
-    public void FillPool(int count)
-    {
-        for (int i = 0; i < count; i++)
+        public void SetObject(GameObject prefab)
         {
-            GameObject obj = Instantiate(prefab);
-            AddObjectToPool(obj);
-        }
-    }
-
-    public GameObject PullObjectFromPool()
-    {
-        if (objectPool.Count > 0)
-        {
-            GameObject obj = objectPool.Pop();
-            obj.gameObject.SetActive(true);
-
-            return obj;
+            this.prefab = prefab;
         }
 
-        return Instantiate(prefab);
-    }
+        public void FillPool(int count)
+        {
+            for (int i = 0; i < count; i++)
+            {
+                GameObject obj = Instantiate(prefab);
+                AddObjectToPool(obj);
+            }
+        }
 
-    public void AddObjectToPool(GameObject obj)
-    {
-        obj.gameObject.SetActive(false);
-        objectPool.Push(obj);
+        public GameObject PullObjectFromPool()
+        {
+            if (objectPool.Count > 0)
+            {
+                GameObject obj = objectPool.Pop();
+                obj.gameObject.SetActive(true);
+
+                return obj;
+            }
+
+            return Instantiate(prefab);
+        }
+
+        public void AddObjectToPool(GameObject obj)
+        {
+            obj.gameObject.SetActive(false);
+            objectPool.Push(obj);
+        }
     }
 }

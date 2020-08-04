@@ -114,7 +114,7 @@ namespace DungeonRush
 
             #region REMOVE METHODS
 
-            public static void RemoveCard(Tile tile, bool isPlayerCard)
+            public static void RemoveCard(Tile tile)
             {
                 Card card = tile.GetCard();
                 if(card.GetCardType() == CardType.ENEMY)
@@ -130,9 +130,9 @@ namespace DungeonRush
                 tile.SetCard(null);
             }
 
-            public static void RemoveCardForAttacker(int listnumber, bool isPlayer)
+            public static void RemoveCardForAttacker(int listnumber)
             {
-                RemoveCard(Board.tilesByListnumbers[listnumber], isPlayer);
+                RemoveCard(Board.tilesByListnumbers[listnumber]);
             }
             #endregion 
         }

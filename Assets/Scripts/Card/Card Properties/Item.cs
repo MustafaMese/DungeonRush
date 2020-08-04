@@ -38,7 +38,7 @@ namespace DungeonRush.Property
     {
         WEAPON,
         POTION,
-        POSION,
+        POISON,
         ARMOR,
         NONE = -1
     }

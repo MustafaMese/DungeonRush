@@ -1,14 +1,16 @@
 ﻿using DungeonRush.Cards;
 using DungeonRush.Managers;
+using System.Collections;
 using UnityEngine;
 
 namespace DungeonRush.Property
 {
     public class Health : MonoBehaviour
     {
+        [SerializeField] float deathTime = 0.2f;
         [SerializeField] int maxHealth = 0;
         [SerializeField] Animator animator = null;
-        [SerializeField] CircleHealthBar bar;
+        [SerializeField] CircleHealthBar bar = null;
 
         private int health = 0;
         private Card card = null;
@@ -27,18 +29,17 @@ namespace DungeonRush.Property
         {
             if (health <= 0)
             {
-                Death();
+                StartCoroutine(Death());
             }
         }
 
-        private void Death()
+        private IEnumerator Death()
         {
-
             if (card.GetCardType() == CardType.PLAYER)
-                CardManager.RemoveCardForAttacker(card.GetTile().GetListNumber(), true);
-            else
-                CardManager.RemoveCardForAttacker(card.GetTile().GetListNumber(), false);
-            
+                GameManager.gameState = GameState.STOP;
+
+            yield return new WaitForSeconds(deathTime);
+            CardManager.RemoveCardForAttacker(card.GetTile().GetListNumber());
         }
 
         public void Set(int amount)
@@ -60,9 +61,13 @@ namespace DungeonRush.Property
                     armor = itemUser.GetArmor().power;
                 amount -= armor;
 
-                UpdateAnimation();
                 health -= amount;
                 health = Mathf.Max(0, health);
+
+                if (health > 0)
+                    UpdateAnimation(false);
+                else
+                    UpdateAnimation(true);
             }
             else
             {
@@ -73,10 +78,15 @@ namespace DungeonRush.Property
             StartCoroutine(bar.ActiveChanges(health, maxHealth));
         }
 
-        private void UpdateAnimation()
+        private void UpdateAnimation(bool isDeath)
         {
-            if(card.GetCardType() != CardType.TRAP)
-                animator.SetTrigger("hurt");
+            if (card.GetCardType() != CardType.TRAP)
+            {
+                if (!isDeath)
+                    animator.SetTrigger("hurt");
+                else
+                    animator.SetTrigger("death");
+            }
         }
 
         public void IncreaseMaxHealth(int h)

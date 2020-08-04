@@ -12,12 +12,16 @@ namespace DungeonRush.Property
     {
         private Move move;
         private bool isMoveFinished = false;
-
+        
+        [Header("Shifting Properties")]
         [SerializeField] Animator animator = null;
         [SerializeField] Shift shifting = null;
         [SerializeField] float range = 0f;
         [SerializeField] float movingTime = 0f;
         [SerializeField] float achievingTime = 0;
+        [SerializeField] GameObject brokeTreasureParticle = null;
+        [SerializeField] float particleTime = 0;
+        private ObjectPool pool = new ObjectPool();
 
         private Card card;
         private IGameEvent gameEvent;
@@ -27,6 +31,9 @@ namespace DungeonRush.Property
             DOTween.Init();
             move = new Move();
             card = GetComponent<Card>();
+
+            pool.SetObject(brokeTreasureParticle);
+            pool.FillPool(1);
         }
 
         public void Move()
@@ -43,34 +50,45 @@ namespace DungeonRush.Property
         {
             var dir = GetDirection(move);
             Vector2 targetPos = new Vector2(move.GetCardTile().GetCoordinate().x + dir.x * range, move.GetCardTile().GetCoordinate().y + dir.y * range);
-            // YÜRÜMEYİ BİTİR
-            UpdateAnimation(false, false);
-
-            // Event'e göre pozisyon al.
             gameEvent = move.GetTargetTile().GetCard().GetComponent<IGameEvent>();
 
             if (gameEvent == null)
                 Finalise();
 
             if (gameEvent.GetEventType() == EventType.TREASURE)
-                move.GetCard().transform.DOMove(targetPos, movingTime).OnComplete(() => StartCoroutine(FinishGettingTreasureMovement()));
+            {
+                StartCoroutine(StartEventAnimation(targetPos, particleTime));
+                move.GetCard().transform.DOMove(targetPos, movingTime).OnComplete(() => StartCoroutine(TreasureMove()));
+            }
             else if (gameEvent.GetEventType() == EventType.PORTAL)
-                gameEvent.GetEvent(card);
+                move.GetCard().transform.DOMove(targetPos, movingTime).OnComplete(() => StartCoroutine(PortalMove()));
         }
 
         #region EVENT METHODS
-        private IEnumerator FinishGettingTreasureMovement()
+        private IEnumerator StartEventAnimation(Vector3 pos, float time)
         {
+            GameObject obj = pool.PullObjectFromPool();
+            obj.transform.position = pos;
+            yield return new WaitForSeconds(time);
+            pool.AddObjectToPool(obj);
+        }
+
+        private IEnumerator TreasureMove()
+        {
+            UpdateAnimation(false, false);
             UpdateAnimation(false, true);
             yield return new WaitForSeconds(achievingTime);
             gameEvent.GetEvent(card);
             move.GetCard().transform.DOMove(move.GetCardTile().GetCoordinate(), movingTime).OnComplete(() => Finalise());
         }
 
-        private void PortalMove()
+        private IEnumerator PortalMove()
         {
-            UpdateAnimation(false, true);
-
+            UpdateAnimation(true, false);
+            yield return new WaitForSeconds(achievingTime);
+            UpdateAnimation(false, false);
+            gameEvent.GetEvent(card);
+            Finalise();
         }
         #endregion
 
@@ -119,7 +137,7 @@ namespace DungeonRush.Property
         private void UpdateAnimation(bool play, bool isAchieved)
         {
             if (isAchieved)
-                animator.SetTrigger("hurt");
+                animator.SetTrigger("treasure");
             else
                 animator.SetBool("walk", play);
         }

@@ -66,6 +66,8 @@ namespace DungeonRush.Controller
 
         public void OnNotify() 
         {
+            if (GameManager.gameState == GameState.STOP) return;
+
             if(turnNumber != 2)
             {
                 oldTurnNumber = turnNumber;

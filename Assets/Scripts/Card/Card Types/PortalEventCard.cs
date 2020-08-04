@@ -6,8 +6,8 @@ using UnityEngine;
 
 public class PortalEventCard : EventCard
 {
-    [SerializeField] LoadManager loadManager;
-    [SerializeField] GameManager gameManager;
+    [SerializeField] LoadManager loadManager = null;
+    [SerializeField] GameManager gameManager = null;
 
     public override void GetEvent(Card card)
     {

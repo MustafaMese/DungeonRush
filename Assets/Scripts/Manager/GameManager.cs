@@ -8,10 +8,10 @@ namespace DungeonRush
     {
         public class GameManager : MonoBehaviour
         {
-            public MoveSchedular moveSchedular;
-            [SerializeField] CanvasGroup canvasGroup;
+            public MoveSchedular moveSchedular = null;
+            [SerializeField] CanvasGroup canvasGroup = null;
             public static GameState gameState = GameState.STOP;
-            public bool start;
+            public bool start = false;
 
             [SerializeField] float fadeInTime = 0f;
 

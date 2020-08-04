@@ -7,8 +7,8 @@ using DungeonRush.Managers;
 
 public class ImageCloser : MonoBehaviour
 {
-    [SerializeField] GameManager gameManager;
-    [SerializeField] LoadManager loadManager;
+    [SerializeField] GameManager gameManager = null;
+    [SerializeField] LoadManager loadManager = null;
 
     [SerializeField] Image image = null;
     [SerializeField] float endValue = 0f;

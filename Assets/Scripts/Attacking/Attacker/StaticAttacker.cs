@@ -13,9 +13,6 @@ namespace DungeonRush.Property
         [SerializeField] int power = 2;
         [SerializeField] AttackStyle attackStyle = null;
 
-        [Header("Animation Varibles")]
-        [SerializeField] float animationTime = 0.2f;
-
         private ObjectPool poolForAttackStyle = new ObjectPool();
         private GameObject effectObject = null;
 
