@@ -6,11 +6,11 @@ namespace DungeonRush.Property
 {
     public class Health : MonoBehaviour
     {
-        // TODO disapperı ekle.
-        [SerializeField] int health = 0;
+        [SerializeField] int maxHealth = 0;
         [SerializeField] Animator animator = null;
         [SerializeField] CircleHealthBar bar;
 
+        private int health = 0;
         private Card card = null;
         private ItemUser itemUser = null;
         private void Start()
@@ -18,6 +18,9 @@ namespace DungeonRush.Property
             card = GetComponent<Card>();
             if(GetComponent<ItemUser>())
                 itemUser = GetComponent<ItemUser>();
+
+            health = maxHealth;
+            bar.SetMaxHealth(maxHealth);
         }
 
         private void Update()
@@ -59,18 +62,35 @@ namespace DungeonRush.Property
 
                 UpdateAnimation();
                 health -= amount;
+                health = Mathf.Max(0, health);
             }
             else
+            {
                 health += amount;
+                health = Mathf.Min(maxHealth, health);
+            }
 
-            health = Mathf.Max(0, health);
-            StartCoroutine(bar.ActiveChanges(health));
+            StartCoroutine(bar.ActiveChanges(health, maxHealth));
         }
 
         private void UpdateAnimation()
         {
             if(card.GetCardType() != CardType.TRAP)
                 animator.SetTrigger("hurt");
+        }
+
+        public void IncreaseMaxHealth(int h)
+        {
+            maxHealth += h;
+            health += h;
+            StartCoroutine(bar.ActiveChanges(health, maxHealth));
+        }
+
+        public void DecreaseMaxHealth(int h)
+        {
+            maxHealth -= h;
+            health = Mathf.Min(health, maxHealth);
+            StartCoroutine(bar.ActiveChanges(health, maxHealth));
         }
     }
 }
