@@ -4,7 +4,6 @@ using DungeonRush.Field;
 using DungeonRush.Managers;
 using DungeonRush.Property;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 namespace DungeonRush.Shifting
@@ -82,31 +81,7 @@ namespace DungeonRush.Shifting
             Move move = new Move(targetTile, card, moveType, canMove);
             card.SetMove(move);
         }
-        public override Swipe SelectTileToAttack(Dictionary<Tile, Swipe> tiles, Card attacker)
-        {
-            List<Tile> list = new List<Tile>(tiles.Keys);
-            for (int i = 0; i < list.Count; i++)
-            {
-                Tile t = list[i];
-                if (t.GetCard() != null && attacker.GetCharacterType().IsEnemy(t.GetCard().GetCharacterType()))
-                {
-                    return tiles[t];
-                }
-            }
-
-            var number = tiles.Count;
-            number = Random.Range(0, number);
-
-            List<Tile> keys = Enumerable.ToList(tiles.Keys);
-
-            if (keys.Count <= 0)
-                return Swipe.NONE;
-            else
-            {
-                Tile tile = keys[number];
-                return tiles[tile];
-            }
-        }
+        
         public override Dictionary<Tile, Swipe> GetAvaibleTiles(Card card)
         {
             if (card == null) return null;

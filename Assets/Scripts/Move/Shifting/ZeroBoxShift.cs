@@ -33,12 +33,7 @@ namespace DungeonRush.Shifting
 
         public override Dictionary<Tile, Swipe> GetAvaibleTiles(Card card)
         {
-            throw new System.NotImplementedException();
-        }
-
-        public override Swipe SelectTileToAttack(Dictionary<Tile, Swipe> tiles, Card attacker)
-        {
-            throw new System.NotImplementedException();
+            return null;
         }
     }
 }

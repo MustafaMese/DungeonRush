@@ -52,9 +52,7 @@ namespace DungeonRush
 
             private IEnumerator StartGame()
             {
-                print("1");
                 yield return FadeIn(fadeInTime);
-                print("2");
                 gameState = GameState.BEGIN;
             }
 
@@ -78,7 +76,6 @@ namespace DungeonRush
 
             void OnDestroy()
             {
-                print("3");
                 gameState = GameState.STOP;                
             }
         }

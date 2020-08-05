@@ -11,8 +11,6 @@ GameObject:
   - component: {fileID: 8298953274712808277}
   - component: {fileID: 3583272195443232812}
   - component: {fileID: 8130074268858005188}
-  - component: {fileID: 3555962785972340220}
-  - component: {fileID: 3488578222218515644}
   - component: {fileID: 8307086034720154006}
   m_Layer: 0
   m_Name: Trap
@@ -97,41 +95,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5d5d9987896153439120356b5e4697c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  disappearing: 0.1
-  isMoving: 0
-  isBossCard: 0
   cardProperties: {fileID: 11400000, guid: 2d2a3012e18a9034c9c1955ac275493f, type: 2}
   characterType: {fileID: 11400000, guid: 5827e766970a1bd47b18dcd3850e8073, type: 2}
-  shifting: {fileID: 11400000, guid: e698ab6d3026e864d86261d5f2af34a0, type: 2}
---- !u!114 &3555962785972340220
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5669223558640415318}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d8dc75e4d3851a245a6f5b1e6a78db18, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  model: {fileID: 5669223558640415318}
---- !u!114 &3488578222218515644
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5669223558640415318}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8fa7938d024e9f448b58f360dc68e6e4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isSkillUser: 0
-  startMoving: 0
-  moveFinished: 0
-  animator: {fileID: 0}
 --- !u!114 &8307086034720154006
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -146,4 +111,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   power: 2
   attackStyle: {fileID: 0}
-  particulPrefab: {fileID: 0}

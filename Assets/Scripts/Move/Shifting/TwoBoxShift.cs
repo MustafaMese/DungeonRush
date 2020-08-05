@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using DungeonRush.Cards;
 using DungeonRush.Data;
 using DungeonRush.Field;
@@ -249,20 +246,6 @@ namespace DungeonRush.Shifting
             }
 
             return avaibleTiles;
-        }
-        public override Swipe SelectTileToAttack(Dictionary<Tile, Swipe> tiles, Card attacker)
-        {
-            var number = tiles.Count;
-            number = UnityEngine.Random.Range(0, number);
-
-            List<Tile> keys = Enumerable.ToList(tiles.Keys);
-            if (keys.Count <= 0)
-                return Swipe.NONE;
-            else
-            {
-                Tile tile = keys[number];
-                return tiles[tile];
-            }
         }
     }
 }

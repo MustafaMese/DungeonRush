@@ -1,4 +1,5 @@
 ﻿using DungeonRush.Cards;
+using DungeonRush.Customization;
 using DungeonRush.Data;
 using DungeonRush.Field;
 using DungeonRush.Managers;
@@ -17,6 +18,7 @@ namespace DungeonRush.Controller
         private ProcessHandleChecker moveProcess;
         private MoveSchedular ms;
         private IAttacker attacker;
+        private ICustomization customization;
 
         private void Start()
         {
@@ -24,11 +26,18 @@ namespace DungeonRush.Controller
             player = GetComponent<PlayerCard>();
             ms = FindObjectOfType<MoveSchedular>();
             attacker = player.GetComponent<IAttacker>();
+            customization = player.GetComponent<ICustomization>();
             FindObjectOfType<MoveSchedular>().playerController = this;
-            //Begin();
         }
 
         private void Update()
+        {
+            if (!isRunning) return;
+
+            MakeMove();
+        }
+
+        public void MakeMove()
         {
             if (preparingProcess.IsRunning())
             {
@@ -71,7 +80,12 @@ namespace DungeonRush.Controller
 
         private bool DoMove(Swipe swipe)
         {
-            return player.GetShift().Define(player, swipe);
+            bool b = player.GetShift().Define(player, swipe);
+
+            if (b && (swipe == Swipe.UP || swipe == Swipe.DOWN))
+                customization.Change();
+
+            return b;
         }
 
         #endregion

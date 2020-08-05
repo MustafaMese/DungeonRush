@@ -10,8 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3055322803219196748}
   - component: {fileID: 385931742185610795}
-  - component: {fileID: 7616904273129147796}
-  - component: {fileID: -6689683383463227786}
   - component: {fileID: -474957396755857396}
   - component: {fileID: 4093322611771117245}
   m_Layer: 0
@@ -55,37 +53,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardProperties: {fileID: 0}
   characterType: {fileID: 0}
---- !u!114 &7616904273129147796
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1003901059469522988}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8fa7938d024e9f448b58f360dc68e6e4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isSkillUser: 0
-  shifting: {fileID: 0}
-  movingTime: 0.2
-  animator: {fileID: 0}
-  walkParticul: {fileID: 0}
-  particulTime: 0
---- !u!114 &-6689683383463227786
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1003901059469522988}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d8dc75e4d3851a245a6f5b1e6a78db18, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  model: {fileID: 0}
 --- !u!114 &-474957396755857396
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -98,6 +65,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6d09c71aee6114479da1d4877ea958c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deathTime: 0.2
   maxHealth: 0
   animator: {fileID: 0}
   bar: {fileID: 555421382672415127}

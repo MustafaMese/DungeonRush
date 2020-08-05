@@ -1,30 +1,34 @@
 ﻿using DungeonRush.Cards;
 using DungeonRush.Customization;
 using DungeonRush.Data;
+using DungeonRush.Field;
 using DungeonRush.Managers;
 using DungeonRush.Property;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace DungeonRush.Controller
 {
-    public class AIController : MonoBehaviour, IMoveController
+    public abstract class AIController : MonoBehaviour, IMoveController
     {
-        private Swipe swipe;
-        private Card card;
-        private bool isRunning = false;
-        private CardType cardType;
+        protected Swipe swipe;
+        protected Card card;
+        protected bool isRunning = false;
+        protected CardType cardType;
 
-        private ProcessHandleChecker preparingProcess;
-        private ProcessHandleChecker attackProcess;
-        private ProcessHandleChecker moveProcess;
+        protected ProcessHandleChecker preparingProcess;
+        protected ProcessHandleChecker attackProcess;
+        protected ProcessHandleChecker moveProcess;
 
-        private EnemyController enemyController;
-        private TrapController trapController;
-
-        private IMover mover;
-        private IAttacker attacker;
-        private ICustomization customization;
+        protected IMover mover;
+        protected IAttacker attacker;
+        protected ICustomization customization;
         public GameObject model;
+
+        protected abstract void Notify();
+        protected abstract void ChooseController();
+        protected abstract Swipe SelectTileToAttack(Dictionary<Tile, Swipe> tiles, Card attacker);
+        protected abstract void ChangeState();
 
         private void Start()
         {
@@ -34,30 +38,26 @@ namespace DungeonRush.Controller
             customization = card.GetComponent<ICustomization>();
             cardType = card.GetCardType();
 
-            if (cardType == CardType.ENEMY)
-            {
-                enemyController = FindObjectOfType<EnemyController>();
-                EnemyController.subscribedEnemies.Add(this);
-            }
-            else if (cardType == CardType.TRAP)
-            {
-                trapController = FindObjectOfType<TrapController>();
-                TrapController.subscribedTraps.Add(this);
-            }
-
-            
             InitProcessHandlers();
+            ChooseController();
         }
 
         private void Update()
         {
             if (!isRunning) return;
 
+            MakeMove();
+        }
+
+        #region MOVE CONTROLLER METHODS
+
+        public virtual void MakeMove()
+        {
             if (preparingProcess.IsRunning())
             {
                 PrepareMoveProcess();
             }
-            else if (attackProcess.IsRunning()) 
+            else if (attackProcess.IsRunning())
             {
                 AttackProcess();
             }
@@ -67,9 +67,7 @@ namespace DungeonRush.Controller
             }
         }
 
-        #region PREPARE MOVE PROCESS
-
-        public void PrepareMoveProcess()
+        public virtual void PrepareMoveProcess()
         {
             var canMove = DoMove(swipe);
             
@@ -93,17 +91,10 @@ namespace DungeonRush.Controller
 
         private bool DoMove(Swipe swipe)
         {
-            if (cardType == CardType.ENEMY)
-                return card.GetShift().Define(card, swipe);
-            else if (cardType == CardType.TRAP)
-                return card.GetShift().Define(card, Swipe.NONE);
-            else
-                return false;
+            return card.GetShift().Define(card, swipe);
         }
 
-        #endregion
-
-        public void AttackProcess()
+        public virtual void AttackProcess()
         {
             if (attackProcess.start)
             {
@@ -126,7 +117,7 @@ namespace DungeonRush.Controller
             }
         }
 
-        public void MoveProcess()
+        public virtual void MoveProcess()
         {
             if (moveProcess.start)
             {
@@ -150,6 +141,8 @@ namespace DungeonRush.Controller
             }
         }
 
+        #endregion
+
         #region STATE METHODS
         public void ChangeAnimatorState(bool state)
         {
@@ -165,13 +158,6 @@ namespace DungeonRush.Controller
         }
         #endregion
 
-        private void Notify()
-        {
-            if (cardType == CardType.ENEMY)
-                enemyController.OnNotify();
-            else if (cardType == CardType.TRAP)
-                trapController.OnNotify();
-        }
         private void Stop()
         {
             isRunning = false;
@@ -192,11 +178,14 @@ namespace DungeonRush.Controller
 
         public void Run()
         {
-            if (cardType == CardType.ENEMY)
-                swipe = GetCard().GetShift().SelectTileToAttack(GetCard().GetShift().GetAvaibleTiles(GetCard()), GetCard());
+            swipe = SelectTileToAttack(GetCard().GetShift().GetAvaibleTiles(GetCard()), GetCard());
 
+            if (swipe == Swipe.DOWN || swipe == Swipe.UP)
+                customization.Change();
+
+            ChangeState();
             isRunning = true;
             preparingProcess.StartProcess();
-        }0
+        }
     }
 }

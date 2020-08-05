@@ -12,7 +12,6 @@ namespace DungeonRush
 {
     namespace Property
     {
-        // TODO İlerleme şekilleri de değişiklik gösterebilir.
         public class PlayerMover : MonoBehaviour, IMover
         {
             private Move move;
@@ -72,20 +71,19 @@ namespace DungeonRush
                 UpdateAnimation(false);
                 move.GetCard().transform.position = move.GetTargetTile().GetCoordinate();
                 MoveType moveType = move.GetMoveType();
-                Card card = move.GetCard();
                 Card item = move.GetTargetTile().GetCard();
                 switch (moveType)
                 {
                     case MoveType.ITEM:
-                        ItemMove(card, item);
-                        ChangeTiles(card, true);
+                        ItemMove(move.GetCard(), item);
+                        ChangeTiles(true);
                         break;
                     case MoveType.COIN:
                         CoinMove(item);
-                        ChangeTiles(card, false);
+                        ChangeTiles(false);
                         break;
                     case MoveType.EMPTY:
-                        ChangeTiles(card, true);
+                        ChangeTiles(true);
                         break;
                     default:
                         break;
@@ -95,12 +93,9 @@ namespace DungeonRush
                 move.Reset();
             }
 
-            private void ChangeTiles(Card card, bool isEmpty)
+            private void ChangeTiles(bool isEmpty)
             {
-                if (card.GetCardType() == CardType.PLAYER)
-                    Tile.ChangeTile(move, isEmpty, true);
-                else
-                    Tile.ChangeTile(move, isEmpty, false);
+                Tile.ChangeTile(move, isEmpty, true);
             }
 
             private void CoinMove(Card item)
@@ -123,8 +118,7 @@ namespace DungeonRush
 
             private void UpdateAnimation(bool b)
             {  
-                if(move.GetCard().GetCardType() != CardType.TRAP)
-                   animator.SetBool("walk", b);
+                animator.SetBool("walk", b);
             }
 
             public Shift GetShift()

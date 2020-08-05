@@ -33,6 +33,8 @@ namespace DungeonRush
                 attacker = GetComponent<IAttacker>();
                 Controller = GetComponent<IMoveController>();
                 move = new Move();
+
+                
             }
 
             public int GetHealth()

@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿using DungeonRush.Cards;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -15,16 +17,38 @@ namespace DungeonRush.Customization
         [SerializeField] Material shadow = null;
         [SerializeField] Material lighted = null;
 
-        public int oldLayer = 0;
+        private Card card;
+        private string r = "Row ";
 
         private void Start()
         {
-            oldLayer = (int)transform.position.y;
+            card = GetComponent<Card>();
+        }
+
+        private void ChangeLayer(SpriteRenderer sR, int layer)
+        {
+            string sth = String.Concat(r, layer);
+            sR.sortingLayerName = sth;
         }
 
         public void Change()
         {
-            throw new System.NotImplementedException();
+            int layer = (int)card.transform.position.y;
+
+            if (leftArm != null)
+                ChangeLayer(leftArm, layer);
+
+            if (rightArm != null)
+                ChangeLayer(rightArm, layer);
+
+            if (leftLeg != null)
+                ChangeLayer(leftLeg, layer);
+
+            if (rightLeg != null)
+                ChangeLayer(rightLeg, layer);
+
+            if (body != null)
+                ChangeLayer(body, layer);
         }
 
         public void OverShadow()
@@ -63,7 +87,6 @@ namespace DungeonRush.Customization
 
             if (body != null)
                 body.material = lighted;
-
         }
     }
 }
