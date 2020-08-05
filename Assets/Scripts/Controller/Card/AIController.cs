@@ -3,7 +3,6 @@ using DungeonRush.Customization;
 using DungeonRush.Data;
 using DungeonRush.Managers;
 using DungeonRush.Property;
-using System.Collections;
 using UnityEngine;
 
 namespace DungeonRush.Controller
@@ -68,8 +67,6 @@ namespace DungeonRush.Controller
             }
         }
 
-        // TODO Swipe değişkeninden kurtul..
-
         #region PREPARE MOVE PROCESS
 
         public void PrepareMoveProcess()
@@ -106,8 +103,6 @@ namespace DungeonRush.Controller
 
         #endregion
 
-        #region ATTACK PROCESS
-
         public void AttackProcess()
         {
             if (attackProcess.start)
@@ -125,15 +120,11 @@ namespace DungeonRush.Controller
             }
             else if (attackProcess.end)
             {
-                StartCoroutine(EndTurn());
                 Stop();
                 attackProcess.Finish();
                 Notify();
             }
         }
-        #endregion
-
-        #region MOVE PROCESS
 
         public void MoveProcess()
         {
@@ -153,14 +144,11 @@ namespace DungeonRush.Controller
             }
             else if (moveProcess.end)
             {
-                StartCoroutine(EndTurn());
                 Stop();
                 moveProcess.Finish();
                 Notify();
             }
         }
-
-        #endregion
 
         #region STATE METHODS
         public void ChangeAnimatorState(bool state)
@@ -177,10 +165,6 @@ namespace DungeonRush.Controller
         }
         #endregion
 
-        private IEnumerator EndTurn()
-        {
-            yield return new WaitForSeconds(0);
-        }
         private void Notify()
         {
             if (cardType == CardType.ENEMY)
@@ -200,18 +184,12 @@ namespace DungeonRush.Controller
             attackProcess.Init(false);
             moveProcess.Init(false);
         }
-        public void SetSwipe(Swipe s)
-        {
-            swipe = s;
-        }
-        public void SetMove(Move move)
-        {
-            card.SetMove(move);
-        }
+
         public Card GetCard()
         {
             return card;
         }
+
         public void Run()
         {
             if (cardType == CardType.ENEMY)
@@ -219,10 +197,6 @@ namespace DungeonRush.Controller
 
             isRunning = true;
             preparingProcess.StartProcess();
-        }
-        public bool IsRunning()
-        {
-            return isRunning;
-        }
+        }0
     }
 }

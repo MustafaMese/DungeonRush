@@ -1,7 +1,7 @@
 ﻿using DungeonRush.Controller;
 using UnityEngine;
 using System.Collections;
-
+using DungeonRush.Property;
 namespace DungeonRush
 {
     namespace Managers
@@ -15,9 +15,13 @@ namespace DungeonRush
 
             [SerializeField] float fadeInTime = 0f;
 
+            // silinecekler
+            [SerializeField] Health card = null;
+            [SerializeField] GameObject text = null;
+            [SerializeField] LoadManager l = null;
             private void Start()
             {
-                Application.targetFrameRate = 45;
+                Application.targetFrameRate = 60;
                 moveSchedular = FindObjectOfType<MoveSchedular>();
 
                 StartCoroutine(StartGame());
@@ -25,11 +29,25 @@ namespace DungeonRush
 
             private void Update()
             {
+                if(card != null && card.Get() <= 0) 
+                {
+                    StartCoroutine(FinishGame());
+                }
+
                 if(start)
                 {
                     start = false;
                     StartGame();
                 }
+            }
+
+            private IEnumerator FinishGame()
+            {
+                gameState = GameState.STOP;
+                text.gameObject.SetActive(true);
+                yield return new WaitForSeconds(1f);
+                yield return FadeOut(1f);
+                l.LoadNextScene();
             }
 
             private IEnumerator StartGame()
