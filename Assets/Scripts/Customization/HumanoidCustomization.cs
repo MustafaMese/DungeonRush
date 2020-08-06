@@ -21,13 +21,7 @@ namespace DungeonRush.Customization
         [SerializeField] Material shadow = null;
         [SerializeField] Material lighted = null;
 
-        private Card card;
         private string r = "Row ";
-
-        private void Start()
-        {
-            card = GetComponent<Card>();
-        }
 
         private void ChangeLayer(SpriteRenderer sR, int layer)
         {
@@ -35,10 +29,9 @@ namespace DungeonRush.Customization
             sR.sortingLayerName = sth;
         }
 
-        public void Change()
+        public void Change(float posY)
         {
-            float f = card.GetMove().GetTargetTile().GetCoordinate().y;
-            int layer = (int)Math.Truncate(f);
+            int layer = (int)Math.Truncate(posY);
 
             if (leftArm != null)
                 ChangeLayer(leftArm, layer);

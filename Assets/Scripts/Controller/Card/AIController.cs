@@ -162,6 +162,7 @@ namespace DungeonRush.Controller
         {
             isRunning = false;
             swipe = Swipe.NONE;
+            customization.Change(transform.position.y);
             card.GetMove().Reset();
         }
         public void InitProcessHandlers()
@@ -179,9 +180,6 @@ namespace DungeonRush.Controller
         public void Run()
         {
             swipe = SelectTileToAttack(GetCard().GetShift().GetAvaibleTiles(GetCard()), GetCard());
-
-            if (swipe == Swipe.DOWN || swipe == Swipe.UP)
-                customization.Change();
 
             ChangeState();
             isRunning = true;

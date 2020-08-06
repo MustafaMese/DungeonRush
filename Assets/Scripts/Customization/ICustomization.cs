@@ -8,6 +8,6 @@ namespace DungeonRush.Customization
     {
         void RemoveShadow();
         void OverShadow();
-        void Change();
+        void Change(float posY);
     }
 }

@@ -82,9 +82,6 @@ namespace DungeonRush.Controller
         {
             bool b = player.GetShift().Define(player, swipe);
 
-            if (b && (swipe == Swipe.UP || swipe == Swipe.DOWN))
-                customization.Change();
-
             return b;
         }
 
@@ -173,6 +170,7 @@ namespace DungeonRush.Controller
             preparingProcess.Finish();
             attackProcess.Finish();
             moveProcess.Finish();
+            customization.Change(transform.position.y);
             Notify();
         }
         public void Begin() 
