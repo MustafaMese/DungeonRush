@@ -11,6 +11,12 @@ namespace DungeonRush.Controller
     {
         private TrapController trapController;
 
+        protected override void Stop()
+        {
+            isRunning = false;
+            card.GetMove().Reset();
+        }
+
         protected override void ChangeState()
         {
             return;

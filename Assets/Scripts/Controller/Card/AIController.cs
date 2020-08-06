@@ -158,7 +158,7 @@ namespace DungeonRush.Controller
         }
         #endregion
 
-        private void Stop()
+        protected virtual void Stop()
         {
             isRunning = false;
             swipe = Swipe.NONE;
