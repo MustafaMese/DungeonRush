@@ -29,9 +29,14 @@ namespace DungeonRush.Items
             }
 
             var number = it.Count;
-            number = Random.Range(0, number);
 
-            return it[number];
+            if (number > 0)
+            {
+                var s = Random.Range(0, number);
+                return it[s];
+            }
+            else
+                return null;
         }
     } 
 }

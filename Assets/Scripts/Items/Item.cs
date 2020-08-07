@@ -46,6 +46,7 @@ namespace DungeonRush.Items
         POTION,
         POISON,
         ARMOR,
+        MAX_HEALTH_INCREASER,
         NONE = -1
     }
 }

@@ -43,6 +43,9 @@ namespace DungeonRush
                     TakeWeapon(i);
                 else if (i.GetItemType() == ItemType.ARMOR)
                     TakeArmor(i);
+                else if (i.GetItemType() == ItemType.MAX_HEALTH_INCREASER)
+                    TakeMaxHealthIncreaser(i);
+
             }
 
             #region WEAPON
@@ -89,10 +92,16 @@ namespace DungeonRush
             }
             #endregion
 
-            #region POTION
+            #region HEALTH
             private void TakePotion(Item item)
             {
                 card.IncreaseHealth(item.GetPower());
+                Destroy(item.gameObject);
+            }
+
+            private void TakeMaxHealthIncreaser(Item item)
+            {
+                card.IncreaseMaxHealth(item.GetPower());
                 Destroy(item.gameObject);
             }
             #endregion

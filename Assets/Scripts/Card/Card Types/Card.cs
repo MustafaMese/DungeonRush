@@ -99,6 +99,17 @@ namespace DungeonRush
             {
                 mover.Move();
             }
+
+            public void IncreaseMaxHealth(int h)
+            {
+                health.IncreaseMaxHealth(h);
+            }
+
+            public void DecreaseMaxHealth(int h)
+            {
+                health.DecreaseMaxHealth(h);
+            }
+
             public void IncreaseHealth(int h)
             {
                 health.ChangeHealth(false, h);
