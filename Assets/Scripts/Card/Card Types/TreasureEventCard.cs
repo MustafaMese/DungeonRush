@@ -9,14 +9,20 @@ namespace DungeonRush.Cards
 {
     public class TreasureEventCard : EventCard
     {
-        [SerializeField] ItemCard item = null;
+        [SerializeField] ItemType iType;
+        [SerializeField] Item item = null;
         [SerializeField] float disapperTime = 0;
         [SerializeField] SpriteRenderer sprite;
+        [SerializeField] ItemStorage storage = null;
+        protected override void Initialize()
+        {
+            base.Initialize();
+            item = storage.GetRandomItemByType(iType);
+        }
 
         public override void GetEvent(Card card)
         {
-            Item i = item.GetComponent<Item>();
-            ItemMove(card, i);
+            ItemMove(card, item);
             StartCoroutine(Disapper());
         }
 

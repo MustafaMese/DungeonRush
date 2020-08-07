@@ -18,5 +18,20 @@ namespace DungeonRush.Items
 
             return null;
         }
+
+        public Item GetRandomItemByType(ItemType type)
+        {
+            List<Item> it = new List<Item>();
+            for (int i = 0; i < items.Count; i++)
+            {
+                if (items[i].GetItemType() == type && !it.Contains(items[i]))
+                    it.Add(items[i]);
+            }
+
+            var number = it.Count;
+            number = Random.Range(0, number);
+
+            return it[number];
+        }
     } 
 }
