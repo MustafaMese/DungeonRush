@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 using DungeonRush.Managers;
+using DungeonRush.Saving;
 
 public class ImageCloser : MonoBehaviour
 {
@@ -39,6 +40,7 @@ public class ImageCloser : MonoBehaviour
 
     private IEnumerator LoadNewScene()
     {
+        SavingSystem.DeletePlayerInstantSaveFile();
         yield return new WaitForSeconds(endTime);
         StartCoroutine(loadManager.LoadNewScene());
     }

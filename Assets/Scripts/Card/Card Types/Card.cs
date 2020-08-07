@@ -27,19 +27,37 @@ namespace DungeonRush
 
             public void Start()
             {
+                Initialize();
+            }
+
+            protected virtual void Initialize()
+            {
                 health = GetComponent<Health>();
                 cardName = cardProperties.cardName;
                 mover = GetComponent<IMover>();
                 attacker = GetComponent<IAttacker>();
                 Controller = GetComponent<IMoveController>();
                 move = new Move();
+            }
 
-                
+            public void SetCurrentHealth(int amount)
+            {
+                health.SetCurrentHealth(amount);
+            }
+
+            public void SetMaxHealth(int amount)
+            {
+                health.SetMaxHealth(amount);
+            }
+
+            public int GetMaxHealth()
+            {
+                return health.GetMaxHealth();
             }
 
             public int GetHealth()
             {
-                return health.Get();
+                return health.GetCurrentHealth();
             }
 
             public string GetCardName()

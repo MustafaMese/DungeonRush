@@ -2,6 +2,7 @@
 using DungeonRush.Data;
 using DungeonRush.Property;
 using UnityEngine;
+using DungeonRush.Controller;
 
 namespace DungeonRush
 {
@@ -11,6 +12,16 @@ namespace DungeonRush
         {
             [SerializeField] EventMover eventMover = null;
             public bool isEventMove = false;
+
+            [SerializeField] bool isFirstLevel = false;
+
+            protected override void Initialize()
+            {
+                base.Initialize();
+                if(!isFirstLevel)
+                    GetComponent<PlayerController>().LoadPlayer();
+            }
+
             public override void ExecuteMove()
             {
                 if(GetMove().GetMoveType() != MoveType.EVENT)

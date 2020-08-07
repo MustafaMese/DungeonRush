@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using DungeonRush.Managers;
 using DungeonRush.Cards;
 using UnityEngine;
+using DungeonRush.Controller;
 
 public class PortalEventCard : EventCard
 {
@@ -18,6 +19,7 @@ public class PortalEventCard : EventCard
     private IEnumerator FadeOut()
     {
         yield return gameManager.FadeOut(2f);
+        FindObjectOfType<PlayerController>().SavePlayer();
         print("FadeOut");
         loadManager.LoadNextScene();
     }

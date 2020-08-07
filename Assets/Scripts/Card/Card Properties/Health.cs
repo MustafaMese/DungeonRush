@@ -1,4 +1,5 @@
 ﻿using DungeonRush.Cards;
+using DungeonRush.Items;
 using DungeonRush.Managers;
 using System.Collections;
 using UnityEngine;
@@ -12,7 +13,7 @@ namespace DungeonRush.Property
         [SerializeField] Animator animator = null;
         [SerializeField] CircleHealthBar bar = null;
 
-        private int health = 0;
+        [SerializeField] int health = 0;
         private Card card = null;
         private ItemUser itemUser = null;
         private void Start()
@@ -42,12 +43,22 @@ namespace DungeonRush.Property
             CardManager.RemoveCardForAttacker(card.GetTile().GetListNumber());
         }
 
-        public void Set(int amount)
+        public void SetCurrentHealth(int amount)
         {
             health = Mathf.Max(0, amount);
         }
 
-        public int Get()
+        public void SetMaxHealth(int amount)
+        {
+            maxHealth = Mathf.Max(0, amount);
+        }
+
+        public int GetMaxHealth()
+        {
+            return maxHealth;
+        }
+
+        public int GetCurrentHealth()
         {
             return health;
         }
@@ -58,7 +69,7 @@ namespace DungeonRush.Property
             {
                 int armor = 0;
                 if (itemUser && itemUser.GetArmor() != null)
-                    armor = itemUser.GetArmor().power;
+                    armor = itemUser.GetArmor().GetPower();
                 amount -= armor;
 
                 health -= amount;

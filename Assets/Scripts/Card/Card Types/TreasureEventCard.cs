@@ -1,46 +1,44 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using DungeonRush.Property;
-using DungeonRush.Cards;
 using UnityEngine;
 using DungeonRush.Managers;
+using DungeonRush.Items;
 
-public class TreasureEventCard : EventCard
+namespace DungeonRush.Cards
 {
-    [SerializeField] ItemCard item = null;
-    [SerializeField] float disapperTime = 0;
-    [SerializeField] SpriteRenderer sprite;
-
-    public override void GetEvent(Card card)
+    public class TreasureEventCard : EventCard
     {
-        Item i = item.GetComponent<Item>();
-        ItemMove(card, i);
-        StartCoroutine(Disapper());
-    }
+        [SerializeField] ItemCard item = null;
+        [SerializeField] float disapperTime = 0;
+        [SerializeField] SpriteRenderer sprite;
 
-    private void ItemMove(Card card, Item i)
-    {
-        if (i == null) return;
-
-        if (i.GetItemType() == ItemType.POTION)
-            card.GetComponent<ItemUser>().TakePotion(i);
-        else if (i.GetItemType() == ItemType.WEAPON)
-            card.GetComponent<ItemUser>().TakeWeapon(i);
-        else if (i.GetItemType() == ItemType.ARMOR)
-            card.GetComponent<ItemUser>().TakeArmor(i);
-
-    }
-
-    private IEnumerator Disapper()
-    {
-        Color c;
-        while(sprite.color.a > 0)
+        public override void GetEvent(Card card)
         {
-            c = sprite.color;
-            c.a -= Time.deltaTime / disapperTime;
-            sprite.color = c;
-            yield return null;
+            Item i = item.GetComponent<Item>();
+            ItemMove(card, i);
+            StartCoroutine(Disapper());
         }
-        CardManager.RemoveCardForAttacker(GetTile().GetListNumber());
+
+        private void ItemMove(Card card, Item i)
+        {
+            if (i == null) return;
+
+            card.GetComponent<ItemUser>().TakeItem(i);
+
+        }
+
+        private IEnumerator Disapper()
+        {
+            Color c;
+            while (sprite.color.a > 0)
+            {
+                c = sprite.color;
+                c.a -= Time.deltaTime / disapperTime;
+                sprite.color = c;
+                yield return null;
+            }
+            CardManager.RemoveCardForAttacker(GetTile().GetListNumber());
+        }
     }
 }

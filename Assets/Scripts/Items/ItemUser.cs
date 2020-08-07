@@ -1,10 +1,11 @@
 ﻿using DungeonRush.Cards;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
 namespace DungeonRush
 {
-    namespace Property
+    namespace Items
     {
         public class ItemUser : MonoBehaviour
         {
@@ -23,8 +24,29 @@ namespace DungeonRush
                 card = GetComponent<Card>();
             }
 
+            public List<int> GetItemsIDs()
+            {
+                List<int> ids = new List<int>();
+                if (weapon != null)
+                    ids.Add(weapon.GetId());
+                if (armor != null)
+                    ids.Add(armor.GetId());
+
+                return ids;
+            }
+
+            public void TakeItem(Item i)
+            {
+                if (i.GetItemType() == ItemType.POTION)
+                    TakePotion(i);
+                else if (i.GetItemType() == ItemType.WEAPON)
+                    TakeWeapon(i);
+                else if (i.GetItemType() == ItemType.ARMOR)
+                    TakeArmor(i);
+            }
+
             #region WEAPON
-            public void TakeWeapon(Item item)
+            private void TakeWeapon(Item item)
             {
                 SetWeapon(item);
             }
@@ -46,7 +68,7 @@ namespace DungeonRush
             #endregion
 
             #region ARMOR
-            public void TakeArmor(Item item)
+            private void TakeArmor(Item item)
             {
                 SetArmor(item);
             }
@@ -68,7 +90,7 @@ namespace DungeonRush
             #endregion
 
             #region POTION
-            public void TakePotion(Item item)
+            private void TakePotion(Item item)
             {
                 card.IncreaseHealth(item.GetPower());
                 Destroy(item.gameObject);

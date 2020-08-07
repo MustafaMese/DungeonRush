@@ -2,6 +2,8 @@
 using UnityEngine;
 using System.Collections;
 using DungeonRush.Property;
+using DungeonRush.Saving;
+
 namespace DungeonRush
 {
     namespace Managers
@@ -29,16 +31,11 @@ namespace DungeonRush
 
             private void Update()
             {
-                if(card != null && card.Get() <= 0) 
+                if(card != null && card.GetCurrentHealth() <= 0) 
                 {
                     StartCoroutine(FinishGame());
                 }
 
-                if(start)
-                {
-                    start = false;
-                    StartGame();
-                }
             }
 
             private IEnumerator FinishGame()
@@ -76,7 +73,7 @@ namespace DungeonRush
 
             void OnDestroy()
             {
-                gameState = GameState.STOP;                
+                gameState = GameState.STOP;
             }
         }
     }

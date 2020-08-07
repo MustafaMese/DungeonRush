@@ -3,15 +3,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace DungeonRush.Property
+namespace DungeonRush.Items
 {
     public class Item : MonoBehaviour
     {
         [SerializeField] SpriteRenderer itemSpriteRenderer = null;
 
-        public ItemType type;
-        public int power = 0;
+        [SerializeField] ItemType type;
+        [SerializeField] int power = 0;
         public Sprite itemSprite = null;
+        [SerializeField] int id = 0;
+
+        public int GetId()
+        {
+            return id;
+        }
 
         public SpriteRenderer GetRenderer()
         {

@@ -425,6 +425,7 @@ MonoBehaviour:
   maxHealth: 6
   animator: {fileID: 337477938}
   bar: {fileID: 1999214974}
+  health: 0
 --- !u!114 &32448974
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3035,7 +3036,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 23
+  m_RootOrder: 24
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &414351251
 GameObject:
@@ -5396,7 +5397,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 24
+  m_RootOrder: 25
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &837407434
 GameObject:
@@ -6164,6 +6165,7 @@ MonoBehaviour:
   maxHealth: 15
   animator: {fileID: 1768406685}
   bar: {fileID: 943669701}
+  health: 0
 --- !u!114 &964247251
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11229,7 +11231,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 22
+  m_RootOrder: 23
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1727571743
 GameObject:
@@ -11750,6 +11752,7 @@ MonoBehaviour:
   maxHealth: 12
   animator: {fileID: 780911357}
   bar: {fileID: 1565544459}
+  health: 0
 --- !u!114 &1772835057
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12940,6 +12943,75 @@ Transform:
   m_Father: {fileID: 2067320707}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -1222.6641}
+--- !u!1001 &1969449999
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 340590867104653353, guid: 340fa7f2e042858439e31d19cb9656fd,
+        type: 3}
+      propertyPath: m_Name
+      value: ItemStorage
+      objectReference: {fileID: 0}
+    - target: {fileID: 340590867104653355, guid: 340fa7f2e042858439e31d19cb9656fd,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 340590867104653355, guid: 340fa7f2e042858439e31d19cb9656fd,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 340590867104653355, guid: 340fa7f2e042858439e31d19cb9656fd,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 340590867104653355, guid: 340fa7f2e042858439e31d19cb9656fd,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 340590867104653355, guid: 340fa7f2e042858439e31d19cb9656fd,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 340590867104653355, guid: 340fa7f2e042858439e31d19cb9656fd,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 340590867104653355, guid: 340fa7f2e042858439e31d19cb9656fd,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 340590867104653355, guid: 340fa7f2e042858439e31d19cb9656fd,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 22
+      objectReference: {fileID: 0}
+    - target: {fileID: 340590867104653355, guid: 340fa7f2e042858439e31d19cb9656fd,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 340590867104653355, guid: 340fa7f2e042858439e31d19cb9656fd,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 340590867104653355, guid: 340fa7f2e042858439e31d19cb9656fd,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 340fa7f2e042858439e31d19cb9656fd, type: 3}
 --- !u!1 &1970574522
 GameObject:
   m_ObjectHideFlags: 0
@@ -13672,6 +13744,7 @@ MonoBehaviour:
   maxHealth: 8
   animator: {fileID: 1356150712}
   bar: {fileID: 577666325}
+  health: 0
 --- !u!114 &2002280421
 MonoBehaviour:
   m_ObjectHideFlags: 0

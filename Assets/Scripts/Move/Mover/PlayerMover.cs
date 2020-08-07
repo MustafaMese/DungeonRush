@@ -7,6 +7,7 @@ using DungeonRush.Data;
 using DungeonRush.Skills;
 using DungeonRush.Shifting;
 using System.Collections;
+using DungeonRush.Items;
 
 namespace DungeonRush 
 {
@@ -106,13 +107,7 @@ namespace DungeonRush
             private void ItemMove(Card card, Card item)
             {
                 Item i = item.GetComponent<Item>();
-
-                if (i.GetItemType() == ItemType.POTION)
-                    card.GetComponent<ItemUser>().TakePotion(i);
-                else if (i.GetItemType() == ItemType.WEAPON)
-                    card.GetComponent<ItemUser>().TakeWeapon(i);
-                else if (i.GetItemType() == ItemType.ARMOR)
-                    card.GetComponent<ItemUser>().TakeArmor(i);
+                card.GetComponent<ItemUser>().TakeItem(i);
 
             }
 

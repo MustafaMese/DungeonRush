@@ -2,6 +2,7 @@
 using DungeonRush.Attacking;
 using DungeonRush.Cards;
 using DungeonRush.Data;
+using DungeonRush.Items;
 using DungeonRush.Skills;
 using System.Collections;
 using UnityEngine;

@@ -2,8 +2,10 @@
 using DungeonRush.Customization;
 using DungeonRush.Data;
 using DungeonRush.Field;
+using DungeonRush.Items;
 using DungeonRush.Managers;
 using DungeonRush.Property;
+using DungeonRush.Saving;
 using System.Collections;
 using UnityEngine;
 
@@ -28,6 +30,7 @@ namespace DungeonRush.Controller
             attacker = player.GetComponent<IAttacker>();
             customization = player.GetComponent<ICustomization>();
             FindObjectOfType<MoveSchedular>().playerController = this;
+
         }
 
         private void Update()
@@ -53,7 +56,7 @@ namespace DungeonRush.Controller
             }
         }
 
-        #region PREPARE MOVE METHODS
+        #region MOVE METHODS
         public void PrepareMoveProcess()
         {
             if (!Board.touched && SwipeManager.swipeDirection != Swipe.NONE)
@@ -85,10 +88,6 @@ namespace DungeonRush.Controller
             return b;
         }
 
-        #endregion
-
-        #region ATTACKING METHODS
-
         public void AttackProcess()
         {
             if (attackProcess.start)
@@ -106,22 +105,17 @@ namespace DungeonRush.Controller
             }
             else if (attackProcess.end)
             {
-                StartCoroutine(EndTurn());
                 Stop();
                 Board.touched = false;
             }
         }
 
-        #endregion
-
-        #region MOVE PROCESS
-
         public void MoveProcess()
         {
             if (moveProcess.start)
             {
-                 player.ExecuteMove();
-                 moveProcess.ContinuingProcess(false); 
+                player.ExecuteMove();
+                moveProcess.ContinuingProcess(false);
             }
             else if (moveProcess.continuing)
             {
@@ -133,7 +127,6 @@ namespace DungeonRush.Controller
             }
             else if (moveProcess.end)
             {
-                StartCoroutine(EndTurn());
                 Stop();
                 Board.touched = false;
             }
@@ -141,11 +134,7 @@ namespace DungeonRush.Controller
 
         #endregion
 
-        private IEnumerator EndTurn()
-        {
-            yield return new WaitForSeconds(0.2f);
-        }
-
+        #region MOVE CONTROLLER METHODS
         public void InitProcessHandlers()
         {
             preparingProcess.Init(false);
@@ -181,6 +170,30 @@ namespace DungeonRush.Controller
         private void Notify()
         {
             ms.OnNotify();
+        }
+        #endregion
+
+        public void SavePlayer()
+        {
+            SavingSystem.SavePlayerInstantProgress(player);
+        }
+
+        public void LoadPlayer()
+        {
+            PlayerData data = SavingSystem.LoadPlayerInstantProgress();
+
+            if (data == null) return;
+
+            player.SetMaxHealth(data.maxHealth);
+            player.SetCurrentHealth(data.currentHealth);
+
+            var itemStorage = FindObjectOfType<ItemStorage>();
+
+            for (int i = 0; i < data.uniqueIDs.Length; i++)
+            {
+                Item item = itemStorage.GetItem(data.uniqueIDs[i]);
+                player.GetComponent<ItemUser>().TakeItem(item);
+            }
         }
     }
 }
