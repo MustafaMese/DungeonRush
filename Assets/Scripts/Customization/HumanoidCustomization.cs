@@ -7,6 +7,7 @@ namespace DungeonRush.Customization
 {
     public class HumanoidCustomization : MonoBehaviour, ICustomization
     {
+        [SerializeField] Canvas characterCanvas = null;
         [SerializeField] SpriteRenderer leftArm = null;
         [SerializeField] SpriteRenderer rightArm = null;
         [SerializeField] SpriteRenderer leftLeg = null;
@@ -29,9 +30,18 @@ namespace DungeonRush.Customization
             sR.sortingLayerName = sth;
         }
 
+        private void ChangeLayer(Canvas c, int layer)
+        {
+            string sth = String.Concat(r, layer);
+            c.sortingLayerName = sth;
+        }
+
         public void Change(float posY)
         {
             int layer = (int)Math.Truncate(posY);
+
+            if (characterCanvas != null)
+                ChangeLayer(characterCanvas, layer);
 
             if (leftArm != null)
                 ChangeLayer(leftArm, layer);

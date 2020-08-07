@@ -8,6 +8,7 @@ namespace DungeonRush.Customization
 {
     public class FlyingCreatureCustomization : MonoBehaviour, ICustomization
     {
+        [SerializeField] Canvas characterCanvas = null;
         [SerializeField] SpriteRenderer rightLeg = null;
         [SerializeField] SpriteRenderer leftLeg = null;
         [SerializeField] SpriteRenderer leftArm = null;
@@ -19,6 +20,12 @@ namespace DungeonRush.Customization
 
         private string r = "Row ";
 
+        private void ChangeLayer(Canvas c, int layer)
+        {
+            string sth = String.Concat(r, layer);
+            c.sortingLayerName = sth;
+        }
+
         private void ChangeLayer(SpriteRenderer sR, int layer)
         {
             string sth = String.Concat(r, layer);
@@ -28,6 +35,9 @@ namespace DungeonRush.Customization
         public void Change(float posY)
         {
             int layer = (int)Math.Truncate(posY);
+
+            if (characterCanvas != null)
+                ChangeLayer(characterCanvas, layer);
 
             if (leftArm != null)
                 ChangeLayer(leftArm, layer);

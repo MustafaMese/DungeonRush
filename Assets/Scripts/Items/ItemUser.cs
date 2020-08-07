@@ -96,13 +96,11 @@ namespace DungeonRush
             private void TakePotion(Item item)
             {
                 card.IncreaseHealth(item.GetPower());
-                Destroy(item.gameObject);
             }
 
             private void TakeMaxHealthIncreaser(Item item)
             {
                 card.IncreaseMaxHealth(item.GetPower());
-                Destroy(item.gameObject);
             }
             #endregion
         }
