@@ -81,7 +81,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &8674719080137604010
+--- !u!114 &2627893124832943452
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -90,36 +90,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 7254278232254385426}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: be77ab43f5995224587adb042da152a4, type: 3}
+  m_Script: {fileID: 11500000, guid: 6cd4d355be73c02468084423b9acb9ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterCanvas: {fileID: 3588849218706778986}
-  leftArm: {fileID: 7658825139632620496}
-  rightArm: {fileID: 7805493361214593110}
-  leftLeg: {fileID: 2147491067189191630}
-  rightLeg: {fileID: 668394147988339848}
-  body: {fileID: 2994028155137933260}
-  bodyArmor: {fileID: 8533826142680828392}
-  head: {fileID: 3534593366344859188}
-  headArmor: {fileID: 0}
-  leftBoot: {fileID: 0}
-  rightBoot: {fileID: 0}
-  shadow: {fileID: 2100000, guid: 943b33980a870a54c9163867b510bb42, type: 2}
-  lighted: {fileID: 2100000, guid: 84f4f57980c3b454680a7e68c6f089d9, type: 2}
---- !u!114 &8128270615847737003
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7254278232254385426}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8000743a58c1b934e98a566812dc4f97, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  attackerDistance: 5
-  attackerCards: []
+  shifting: {fileID: 11400000, guid: b63af612c90819841857890a9a82e19c, type: 2}
+  movingTime: 0.2
+  animator: {fileID: 2376987534617631384}
+  walkParticul: {fileID: 6786193914759864789, guid: 0ca4dde660901ac4d97cd523481d4872,
+    type: 3}
+  particulTime: 1
 --- !u!114 &2994119429282589617
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -133,6 +112,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   model: {fileID: 2325544679963767650}
+--- !u!114 &8674719080137604010
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7254278232254385426}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be77ab43f5995224587adb042da152a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterCanvas: {fileID: 0}
+  leftArm: {fileID: 7658825139632620496}
+  rightArm: {fileID: 7805493361214593110}
+  leftLeg: {fileID: 2147491067189191630}
+  rightLeg: {fileID: 668394147988339848}
+  body: {fileID: 2994028155137933260}
+  bodyArmor: {fileID: 8533826142680828392}
+  head: {fileID: 3534593366344859188}
+  headArmor: {fileID: 0}
+  leftBoot: {fileID: 0}
+  rightBoot: {fileID: 0}
+  shadow: {fileID: 2100000, guid: 943b33980a870a54c9163867b510bb42, type: 2}
+  lighted: {fileID: 2100000, guid: 84f4f57980c3b454680a7e68c6f089d9, type: 2}
 --- !u!1001 &3741809549622736548
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1277,7 +1281,7 @@ PrefabInstance:
         type: 3}
       propertyPath: attackStyle
       value: 
-      objectReference: {fileID: 11400000, guid: 1e9da2e04dffa7b42856abad45622769,
+      objectReference: {fileID: 11400000, guid: 3ad909746a3710d459d5103ebb019e66,
         type: 2}
     - target: {fileID: 4093322611771117245, guid: 733517a4bf866b94aa4cded94ec54d29,
         type: 3}
@@ -1290,6 +1294,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8084531181890196352, guid: e93796174c9ff5a49ba387c7cecc940b,
         type: 3}
+    - target: {fileID: 4093322611771117245, guid: 733517a4bf866b94aa4cded94ec54d29,
+        type: 3}
+      propertyPath: power
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 733517a4bf866b94aa4cded94ec54d29, type: 3}
 --- !u!1 &7254278232254385426 stripped
@@ -1301,12 +1310,6 @@ GameObject:
 --- !u!224 &4838100515131317874 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3055322803219196748, guid: 733517a4bf866b94aa4cded94ec54d29,
-    type: 3}
-  m_PrefabInstance: {fileID: 7584850327817336126}
-  m_PrefabAsset: {fileID: 0}
---- !u!223 &3588849218706778986 stripped
-Canvas:
-  m_CorrespondingSourceObject: {fileID: 6380732565836930644, guid: 733517a4bf866b94aa4cded94ec54d29,
     type: 3}
   m_PrefabInstance: {fileID: 7584850327817336126}
   m_PrefabAsset: {fileID: 0}
