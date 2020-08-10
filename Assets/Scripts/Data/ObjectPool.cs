@@ -42,5 +42,17 @@ namespace DungeonRush.Data
             obj.gameObject.SetActive(false);
             objectPool.Push(obj);
         }
+
+        public void DeleteObjectsInPool()
+        {
+            print("Siliyorum");
+            int count = objectPool.Count;
+            for(int i = 0; i < count; i++)
+            {
+                GameObject obj = objectPool.Pop();
+                Destroy(obj.gameObject);
+                print("Sildim");
+            }
+        }
     }
 }

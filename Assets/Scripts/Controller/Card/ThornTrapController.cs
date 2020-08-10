@@ -33,8 +33,9 @@ namespace DungeonRush.Controller
             trapController.OnNotify();
         }
 
-        protected override Swipe SelectTileToAttack(Dictionary<Tile, Swipe> tiles, Card attacker)
+        protected override Swipe SelectTileToAttack(Card attacker)
         {
+            isMoving = true;
             return Swipe.NONE;
         }
     }

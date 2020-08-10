@@ -1,4 +1,5 @@
-﻿using DungeonRush.Cards;
+﻿using DungeonRush.Attacking;
+using DungeonRush.Cards;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,8 +12,19 @@ namespace DungeonRush.Items
 
         [SerializeField] ItemType type;
         [SerializeField] int power = 0;
-        public Sprite itemSprite = null;
+        [SerializeField] Sprite itemSprite = null;
         [SerializeField] int id = 0;
+        [SerializeField] AttackStyle attackStyle;
+
+        public AttackStyle GetAttackStyle()
+        {
+            return attackStyle;
+        }
+
+        public Sprite GetSprite()
+        {
+            return itemSprite;
+        }
 
         public int GetId()
         {

@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using DungeonRush.Cards;
 using DungeonRush.Data;
 using DungeonRush.Field;

@@ -1,5 +1,8 @@
-﻿using DungeonRush.Cards;
+﻿using System.Collections.Generic;
+using DungeonRush.Cards;
 using DungeonRush.Data;
+using DungeonRush.Field;
+using DungeonRush.Managers;
 using UnityEngine;
 
 namespace DungeonRush.Attacking

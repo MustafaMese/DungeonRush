@@ -1,4 +1,5 @@
-﻿using DungeonRush.Cards;
+﻿using DungeonRush.Attacking;
+using DungeonRush.Cards;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,5 +12,7 @@ namespace DungeonRush.Property
         void Attack();
         bool GetAttackFinished();
         void SetAttackFinished(bool b);
+        void SetAttackStyle(AttackStyle attackStyle);
+        AttackStyle GetAttackStyle();
     }
 }

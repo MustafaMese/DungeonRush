@@ -73,11 +73,13 @@ namespace DungeonRush.Shifting
         private void ConfigureCardMove(Card card, Tile targetTile)
         {
             MoveType moveType = FindMoveType(targetTile);
+
             bool canMove;
-            if (moveType == MoveType.EMPTY)
+            if (moveType != MoveType.ATTACK)
                 canMove = true;
             else
-                canMove = card.CanAttack(targetTile.GetCard());
+                canMove = false;
+
             Move move = new Move(targetTile, card, moveType, canMove);
             card.SetMove(move);
         }
@@ -94,7 +96,7 @@ namespace DungeonRush.Shifting
             {
                 var targetCoordinate = new Vector2(coordinate.x, coordinate.y + 1);
                 var upperTile = Board.tilesByCoordinates[targetCoordinate];
-                if (upperTile.GetCard() == null || card.GetCharacterType().IsEnemy(upperTile.GetCard().GetCharacterType())) 
+                if (upperTile.GetCard() == null) 
                 {
                     avaibleTiles.Add(upperTile, Swipe.UP);
                 }
@@ -104,7 +106,7 @@ namespace DungeonRush.Shifting
             {
                 var targetCoordinate = new Vector2(coordinate.x, coordinate.y - 1);
                 var lowerTile = Board.tilesByCoordinates[targetCoordinate];
-                if (lowerTile.GetCard() == null || card.GetCharacterType().IsEnemy(lowerTile.GetCard().GetCharacterType()))
+                if (lowerTile.GetCard() == null)
                 {
                     avaibleTiles.Add(lowerTile, Swipe.DOWN);
                 }
@@ -114,7 +116,7 @@ namespace DungeonRush.Shifting
             {
                 var targetCoordinate = new Vector2(coordinate.x - 1, coordinate.y);
                 var leftTile = Board.tilesByCoordinates[targetCoordinate];
-                if (leftTile.GetCard() == null || card.GetCharacterType().IsEnemy(leftTile.GetCard().GetCharacterType()))
+                if (leftTile.GetCard() == null)
                 {
                     avaibleTiles.Add(leftTile, Swipe.LEFT);
                 }
@@ -124,7 +126,7 @@ namespace DungeonRush.Shifting
             {
                 var targetCoordinate = new Vector2(coordinate.x + 1, coordinate.y);
                 var rightTile = Board.tilesByCoordinates[targetCoordinate];
-                if (rightTile.GetCard() == null || card.GetCharacterType().IsEnemy(rightTile.GetCard().GetCharacterType()))
+                if (rightTile.GetCard() == null)
                 {
                     avaibleTiles.Add(rightTile, Swipe.RIGHT);
                 }
@@ -143,9 +145,9 @@ namespace DungeonRush.Shifting
             CardType type = t.GetCard().GetCardType();
             switch (type)
             {
-                case CardType.PLAYER:
-                    return MoveType.ATTACK;
                 case CardType.ENEMY:
+                    return MoveType.ATTACK;
+                case CardType.PLAYER:
                     return MoveType.ATTACK;
                 case CardType.ITEM:
                     return MoveType.ITEM;

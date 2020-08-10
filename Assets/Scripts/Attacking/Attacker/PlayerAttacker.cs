@@ -43,12 +43,16 @@ namespace DungeonRush.Property
             if (isSkillUser)
                 skillUser = GetComponent<SkillUser>();
 
-            poolForParticul.SetObject(particul);
-            poolForParticul.FillPool(3);
+            FillThePool(poolForParticul, particul, 3);
 
             effectObject = attackStyle.GetEffect();
-            poolForAttackStyle.SetObject(effectObject);
-            poolForAttackStyle.FillPool(2);
+            FillThePool(poolForAttackStyle, effectObject, 2);
+        }
+
+        private void FillThePool(ObjectPool pool, GameObject effect, int objectCount)
+        {
+            pool.SetObject(effect);
+            pool.FillPool(objectCount);
         }
 
         // Saldırı eylemi için false, ilerleme eyleme için true.
@@ -150,9 +154,17 @@ namespace DungeonRush.Property
             attackFinished = b;
         }
 
-        public void SetAttackAnimation()
+        public void SetAttackStyle(AttackStyle attackStyle)
         {
-            throw new System.NotImplementedException();
+            poolForAttackStyle.DeleteObjectsInPool();
+            this.attackStyle = attackStyle;
+            effectObject = attackStyle.GetEffect();
+            FillThePool(poolForAttackStyle, effectObject, 2);
+        }
+
+        public AttackStyle GetAttackStyle()
+        {
+            return attackStyle;
         }
     }
 }

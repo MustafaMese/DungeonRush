@@ -79,5 +79,15 @@ namespace DungeonRush.Property
         {
             attackFinished = b;
         }
+
+        public void SetAttackStyle(AttackStyle attackStyle)
+        {
+            this.attackStyle = attackStyle;
+        }
+
+        public AttackStyle GetAttackStyle()
+        {
+            return attackStyle;
+        }
     }
 }

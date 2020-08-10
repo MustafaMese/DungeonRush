@@ -1,6 +1,6 @@
 ﻿using DungeonRush.Cards;
+using DungeonRush.Property;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 
 namespace DungeonRush
@@ -18,10 +18,12 @@ namespace DungeonRush
             public Item weapon = null;
             public Item armor = null;
             private Card card = null;
+            private IAttacker attacker;
 
             private void Start()
             {
                 card = GetComponent<Card>();
+                attacker = GetComponent<IAttacker>();
             }
 
             public List<int> GetItemsIDs()
@@ -52,6 +54,7 @@ namespace DungeonRush
             private void TakeWeapon(Item item)
             {
                 SetWeapon(item);
+                attacker.SetAttackStyle(item.GetAttackStyle());
             }
             private void SetWeapon(Item item)
             {
@@ -62,7 +65,7 @@ namespace DungeonRush
                 this.weapon = null;
                 this.weapon = item;
                 this.weapon.GetRenderer().sprite = null;
-                weaponBone.sprite = item.itemSprite;
+                weaponBone.sprite = item.GetSprite();
             }
             public Item GetWeapon()
             {
@@ -84,7 +87,7 @@ namespace DungeonRush
                 this.armor = null;
                 this.armor = item;
                 this.armor.GetRenderer().sprite = null;
-                armorBone.sprite = item.itemSprite;
+                armorBone.sprite = item.GetSprite();
             }
             public Item GetArmor()
             {

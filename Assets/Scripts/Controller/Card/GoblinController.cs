@@ -28,7 +28,7 @@ namespace DungeonRush.Controller
                     break;
                 case State.ATTACK2:
                     print("Ben bir goblinim ve saldıracağim.");
-                    //state = State.MOVE;
+                    state = State.MOVE;
                     break;
                 default:
                     break;
@@ -46,22 +46,29 @@ namespace DungeonRush.Controller
             enemyController.OnNotify();
         }
 
-        protected override Swipe SelectTileToAttack(Dictionary<Tile, Swipe> tiles, Card attacker)
+        protected override Swipe SelectTileToAttack(Card card)
         {
-            List<Tile> list = new List<Tile>(tiles.Keys);
-            if (state == State.ATTACK1 || state == State.ATTACK2)
+            List<Tile> list;
+            Dictionary<Tile, Swipe> tiles;
+            if (state == State.ATTACK1 || state == State.ATTACK2) 
             {
+                tiles = card.GetAttackStyle().GetAvaibleTiles(card);
+                list = new List<Tile>(tiles.Keys);
+
                 for (int i = 0; i < list.Count; i++)
                 {
                     Tile t = list[i];
-                    print("1");
-                    if (t.GetCard() != null && attacker.GetCharacterType().IsEnemy(t.GetCard().GetCharacterType()))
+                    if (t.GetCard() != null && card.GetCharacterType().IsEnemy(t.GetCard().GetCharacterType()))
                     {
+                        isMoving = false;
                         return tiles[t];
                     }
                 }
             }
 
+            tiles = card.GetShift().GetAvaibleTiles(card);
+            list = new List<Tile>(tiles.Keys);
+            isMoving = true;
             int count = tiles.Count;
             int number = GiveRandomEncounter(list, count);
             if (number != -1)

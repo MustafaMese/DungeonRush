@@ -42,33 +42,56 @@ namespace DungeonRush.Controller {
             enemyController.OnNotify();
         }
 
-        protected override Swipe SelectTileToAttack(Dictionary<Tile, Swipe> tiles, Card attacker)
+        protected override Swipe SelectTileToAttack(Card attacker)
         {
+            List<Tile> list;
+            Dictionary<Tile, Swipe> tiles;
+
             if (state == State.ATTACK)
             {
-                List<Tile> list = new List<Tile>(tiles.Keys);
+                tiles = card.GetAttackStyle().GetAvaibleTiles(card);
+                list = new List<Tile>(tiles.Keys);
                 for (int i = 0; i < list.Count; i++)
                 {
                     Tile t = list[i];
                     if (t.GetCard() != null && attacker.GetCharacterType().IsEnemy(t.GetCard().GetCharacterType()))
                     {
+                        isMoving = false;
                         return tiles[t];
                     }
                 }
             }
 
-            var number = tiles.Count;
-            number = Random.Range(0, number);
-
-            List<Tile> keys = Enumerable.ToList(tiles.Keys);
-
-            if (keys.Count <= 0 || (state == State.MOVE && keys[number].IsTileOccupied()))
-                return Swipe.NONE;
-            else
+            tiles = card.GetShift().GetAvaibleTiles(card);
+            list = new List<Tile>(tiles.Keys);
+            isMoving = true;
+            int count = tiles.Count;
+            int number = GiveRandomEncounter(list, count);
+            if (number != -1)
             {
-                Tile tile = keys[number];
-                return tiles[tile];
+                Tile t = list[number];
+                return tiles[t];
             }
+            else
+                return Swipe.NONE;
+        }
+        private int GiveRandomEncounter(List<Tile> list, int count)
+        {
+            int number = Random.Range(0, count);
+
+            if (!list[number].IsTileOccupied())
+                return number;
+
+            for (int i = 0; i < list.Count; i++)
+            {
+                if (i == number) continue;
+
+                Tile t = list[i];
+                if (!t.IsTileOccupied())
+                    return i;
+            }
+
+            return -1;
         }
     }
 }

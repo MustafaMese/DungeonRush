@@ -11,6 +11,7 @@ namespace DungeonRush.Controller
 {
     public abstract class AIController : MonoBehaviour, IMoveController
     {
+        protected bool isMoving = false;
         protected Swipe swipe;
         protected Card card;
         protected bool isRunning = false;
@@ -27,7 +28,7 @@ namespace DungeonRush.Controller
 
         protected abstract void Notify();
         protected abstract void ChooseController();
-        protected abstract Swipe SelectTileToAttack(Dictionary<Tile, Swipe> tiles, Card attacker);
+        protected abstract Swipe SelectTileToAttack(Card card);
         protected abstract void ChangeState();
 
         private void Start()
@@ -91,7 +92,10 @@ namespace DungeonRush.Controller
 
         private bool DoMove(Swipe swipe)
         {
-            return card.GetShift().Define(card, swipe);
+            if (isMoving)
+                return card.GetShift().Define(card, swipe);
+            else
+                return card.GetAttackStyle().Define(card, swipe);
         }
 
         public virtual void AttackProcess()
@@ -179,7 +183,7 @@ namespace DungeonRush.Controller
 
         public void Run()
         {
-            swipe = SelectTileToAttack(GetCard().GetShift().GetAvaibleTiles(GetCard()), GetCard());
+            swipe = SelectTileToAttack(GetCard());
             ChangeState();
             isRunning = true;
             preparingProcess.StartProcess();

@@ -1,4 +1,5 @@
-﻿using DungeonRush.Controller;
+﻿using DungeonRush.Attacking;
+using DungeonRush.Controller;
 using DungeonRush.Data;
 using DungeonRush.Field;
 using DungeonRush.Property;
@@ -133,6 +134,10 @@ namespace DungeonRush
             public Shift GetShift()
             {
                 return mover.GetShift();
+            }
+            public AttackStyle GetAttackStyle()
+            {
+                return attacker.GetAttackStyle();
             }
             public virtual bool IsMoveFinished()
             {
