@@ -46,7 +46,6 @@ namespace DungeonRush.Controller
             number = Random.Range(0, number);
 
             List<Tile> keys = Enumerable.ToList(tiles.Keys);
-
             if (keys.Count <= 0 || (state == State.MOVE && keys[number].IsTileOccupied()))
                 return Swipe.NONE;
             else

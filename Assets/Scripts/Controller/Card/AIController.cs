@@ -180,7 +180,6 @@ namespace DungeonRush.Controller
         public void Run()
         {
             swipe = SelectTileToAttack(GetCard().GetShift().GetAvaibleTiles(GetCard()), GetCard());
-
             ChangeState();
             isRunning = true;
             preparingProcess.StartProcess();

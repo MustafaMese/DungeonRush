@@ -27,7 +27,8 @@ namespace DungeonRush.Attacking
 
         public override void SetEffectPosition(GameObject effect, Vector3 tPos, Transform card)
         {
-            throw new System.NotImplementedException();
+            effect.transform.position = tPos;
+            effect.transform.SetParent(card);
         }
 
         private List<Card> FindTargetTiles(Move move)
@@ -44,13 +45,13 @@ namespace DungeonRush.Attacking
                 if (coordinate.x < rL - 1)
                 {
                     Tile upperT = Board.tilesByCoordinates[new Vector2(coordinate.x + 1, coordinate.y)];
-                    if (upperT.GetCard() != null)
+                    if (upperT.GetCard() != null && upperT.GetComponent<Health>())
                         tempList.Add(upperT.GetCard());
                 }
                 if (coordinate.x > 0)
                 {
                     Tile lowerT = Board.tilesByCoordinates[new Vector2(coordinate.x - 1, coordinate.y)];
-                    if(lowerT.GetCard() != null)
+                    if(lowerT.GetCard() != null && lowerT.GetComponent<Health>())
                         tempList.Add(lowerT.GetCard());
                 }
             }
@@ -59,13 +60,13 @@ namespace DungeonRush.Attacking
                 if (coordinate.y < rL - 1)
                 {
                     Tile upperT = Board.tilesByCoordinates[new Vector2(coordinate.x, coordinate.y + 1)];
-                    if (upperT.GetCard() != null)
+                    if (upperT.GetCard() != null && upperT.GetComponent<Health>())
                         tempList.Add(upperT.GetCard());
                 }
                 if (coordinate.y > 0)
                 {
                     Tile lowerT = Board.tilesByCoordinates[new Vector2(coordinate.x, coordinate.y - 1)];
-                    if (lowerT.GetCard() != null)
+                    if (lowerT.GetCard() != null && lowerT.GetComponent<Health>())
                         tempList.Add(lowerT.GetCard());
                 }
             }
