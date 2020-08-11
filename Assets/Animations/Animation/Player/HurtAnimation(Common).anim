@@ -286,7 +286,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: CharacterShadow
+    path: Shadow
   m_ScaleCurves:
   - curve:
       serializedVersion: 2
@@ -321,7 +321,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: CharacterShadow
+    path: Shadow
   m_FloatCurves:
   - curve:
       serializedVersion: 2
@@ -1815,7 +1815,7 @@ AnimationClip:
       customType: 4
       isPPtrCurve: 0
     - serializedVersion: 2
-      path: 2397352571
+      path: 1926924059
       attribute: 3
       script: {fileID: 0}
       typeID: 4
@@ -2081,7 +2081,7 @@ AnimationClip:
       customType: 0
       isPPtrCurve: 0
     - serializedVersion: 2
-      path: 2397352571
+      path: 1926924059
       attribute: 1
       script: {fileID: 0}
       typeID: 4
@@ -4311,6 +4311,34 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
+        value: 1
+        inSlope: Infinity
+        outSlope: Infinity
+        tangentMode: 103
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 0.33333334
+        value: 1
+        inSlope: Infinity
+        outSlope: Infinity
+        tangentMode: 103
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_IsActive
+    path: Shadow
+    classID: 1
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
         value: 0.007
         inSlope: 0
         outSlope: 0
@@ -4340,7 +4368,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalPosition.x
-    path: CharacterShadow
+    path: Shadow
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -4377,7 +4405,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalPosition.y
-    path: CharacterShadow
+    path: Shadow
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -4414,7 +4442,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalPosition.z
-    path: CharacterShadow
+    path: Shadow
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -4451,7 +4479,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalScale.x
-    path: CharacterShadow
+    path: Shadow
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -4488,7 +4516,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalScale.y
-    path: CharacterShadow
+    path: Shadow
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -4525,36 +4553,8 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalScale.z
-    path: CharacterShadow
-    classID: 4
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 1
-        inSlope: Infinity
-        outSlope: Infinity
-        tangentMode: 103
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 0.33333334
-        value: 1
-        inSlope: Infinity
-        outSlope: Infinity
-        tangentMode: 103
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: m_IsActive
     path: Shadow
-    classID: 1
+    classID: 4
     script: {fileID: 0}
   m_EulerEditorCurves:
   - curve:
