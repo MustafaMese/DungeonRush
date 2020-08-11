@@ -4,6 +4,7 @@ using DungeonRush.Data;
 using DungeonRush.Field;
 using DungeonRush.Managers;
 using DungeonRush.Property;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -187,6 +188,33 @@ namespace DungeonRush.Controller
             ChangeState();
             isRunning = true;
             preparingProcess.StartProcess();
+        }
+
+        protected int GiveRandomEncounter(List<Tile> list, int count)
+        {
+
+            int number = UnityEngine.Random.Range(0, count);
+            try
+            {
+                if (!list[number].IsTileOccupied())
+                    return number;
+            }
+            catch (Exception e)
+            {
+                print("Hata buldum. -1 döndürüyorum");
+                return -1;
+            }
+
+            for (int i = 0; i < list.Count; i++)
+            {
+                if (i == number) continue;
+
+                Tile t = list[i];
+                if (!t.IsTileOccupied())
+                    return i;
+            }
+
+            return -1;
         }
     }
 }

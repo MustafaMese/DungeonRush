@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 3055322803219196748}
   - component: {fileID: 385931742185610795}
   - component: {fileID: -474957396755857396}
-  - component: {fileID: 4093322611771117245}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Card
@@ -69,27 +68,7 @@ MonoBehaviour:
   maxHealth: 0
   animator: {fileID: 0}
   bar: {fileID: 555421382672415127}
---- !u!114 &4093322611771117245
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1003901059469522988}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee3edaf9d184fde44b8f9ce8e6494364, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  range: 0.8
-  power: 5
-  attackStyle: {fileID: 0}
-  closingToEnemyTime: 0.1
-  damageTime: 0.1
-  getBackTime: 0.1
-  animator: {fileID: 0}
-  particul: {fileID: 0}
-  particulTime: 1
+  health: 0
 --- !u!1001 &4375490401074370340
 PrefabInstance:
   m_ObjectHideFlags: 0

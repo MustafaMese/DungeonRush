@@ -9,8 +9,8 @@ namespace DungeonRush.Controller
 {
     public class GoblinController : AIController
     {
-        private enum State { MOVE, ATTACK1, ATTACK2};
-        private State state = State.ATTACK1;
+        public enum State { MOVE, ATTACK1, ATTACK2};
+        public State state = State.ATTACK1;
 
         private EnemyController enemyController;
 
@@ -78,25 +78,6 @@ namespace DungeonRush.Controller
             }
             else
                 return Swipe.NONE;
-        }
-
-        private int GiveRandomEncounter(List<Tile> list, int count)
-        {
-            int number = Random.Range(0, count);
-
-            if (!list[number].IsTileOccupied())
-                return number;
-
-            for (int i = 0; i < list.Count; i++)
-            {
-                if (i == number) continue;
-
-                Tile t = list[i];
-                if (!t.IsTileOccupied())
-                    return i;
-            }
-
-            return -1;
         }
     }
 }

@@ -94,6 +94,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   model: {fileID: 2325544679963767650}
+  state: 1
 --- !u!114 &2627893124832943452
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -137,6 +138,25 @@ MonoBehaviour:
   rightBoot: {fileID: 0}
   shadow: {fileID: 2100000, guid: 943b33980a870a54c9163867b510bb42, type: 2}
   lighted: {fileID: 2100000, guid: 84f4f57980c3b454680a7e68c6f089d9, type: 2}
+--- !u!114 &1022608799474984054
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7254278232254385426}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0eda1f878a4407f4b95c0f885daf6b7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackStyle: {fileID: 11400000, guid: 3ad909746a3710d459d5103ebb019e66, type: 2}
+  power: 5
+  damageTime: 0.3
+  animator: {fileID: 2376987534617631384}
+  fadingParticul: {fileID: 4927719506064170808, guid: 69b3c6b93b639be499851b323199dc73,
+    type: 3}
+  particulTime: 1
 --- !u!1001 &3741809549622736548
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1299,7 +1319,8 @@ PrefabInstance:
       propertyPath: power
       value: 4
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4093322611771117245, guid: 733517a4bf866b94aa4cded94ec54d29, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 733517a4bf866b94aa4cded94ec54d29, type: 3}
 --- !u!1 &7254278232254385426 stripped
 GameObject:

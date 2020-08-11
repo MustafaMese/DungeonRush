@@ -75,23 +75,5 @@ namespace DungeonRush.Controller {
             else
                 return Swipe.NONE;
         }
-        private int GiveRandomEncounter(List<Tile> list, int count)
-        {
-            int number = Random.Range(0, count);
-
-            if (!list[number].IsTileOccupied())
-                return number;
-
-            for (int i = 0; i < list.Count; i++)
-            {
-                if (i == number) continue;
-
-                Tile t = list[i];
-                if (!t.IsTileOccupied())
-                    return i;
-            }
-
-            return -1;
-        }
     }
 }

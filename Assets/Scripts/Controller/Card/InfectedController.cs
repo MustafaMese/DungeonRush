@@ -9,8 +9,8 @@ namespace DungeonRush.Controller
 {
     public class InfectedController : AIController
     {
-        private enum State { WAIT, ATTACK, MOVE};
-        private State state = State.WAIT;
+        public enum State { WAIT, ATTACK, MOVE};
+        public State state = State.WAIT;
 
         private EnemyController enemyController;
 
@@ -80,23 +80,6 @@ namespace DungeonRush.Controller
                     break;
             }
         }
-        private int GiveRandomEncounter(List<Tile> list, int count)
-        {
-            int number = Random.Range(0, count);
-
-            if (!list[number].IsTileOccupied())
-                return number;
-
-            for (int i = 0; i < list.Count; i++)
-            {
-                if (i == number) continue;
-
-                Tile t = list[i];
-                if (!t.IsTileOccupied())
-                    return i;
-            }
-
-            return -1;
-        }
+        
     }
 }
