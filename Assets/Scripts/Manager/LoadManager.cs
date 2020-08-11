@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using DungeonRush.Managers;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -16,6 +17,16 @@ public class LoadManager : MonoBehaviour
             _instance = this;
         }
     }
+
+    private void Update()
+    {
+        if (GameManager.gameState == GameState.LEVEL_TRANSITION)
+           LoadNextScene();
+
+        if (GameManager.gameState == GameState.START)
+            StartCoroutine(LoadNewScene());
+    }
+
     public void LoadNextScene()
     {
         var scene = SceneManager.GetActiveScene();

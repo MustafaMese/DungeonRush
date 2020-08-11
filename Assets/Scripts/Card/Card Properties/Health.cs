@@ -37,7 +37,7 @@ namespace DungeonRush.Property
         private IEnumerator Death()
         {
             if (card.GetCardType() == CardType.PLAYER)
-                GameManager.gameState = GameState.STOP;
+                GameManager.gameState = GameState.STOP_GAME;
 
             yield return new WaitForSeconds(deathTime);
             CardManager.RemoveCardForAttacker(card.GetTile().GetListNumber());

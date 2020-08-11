@@ -9,14 +9,18 @@ using DungeonRush.Saving;
 public class ImageCloser : MonoBehaviour
 {
     [SerializeField] GameManager gameManager = null;
-    [SerializeField] LoadManager loadManager = null;
 
     [SerializeField] Image image = null;
     [SerializeField] float endValue = 0f;
-    [SerializeField] float endTime = 0f;
+    private float endTime = 0f;
 
     private bool touched = false;
-    
+
+    private void Start()
+    {
+        endTime = GameManager._fadeOutTime;
+    }
+
     private void Update()
     {
         if(!touched && Input.anyKey)
@@ -35,13 +39,13 @@ public class ImageCloser : MonoBehaviour
 
     private IEnumerator FadeOut()
     {
-        yield return gameManager.FadeOut(endTime);
+        yield return gameManager.FadeOut();
     }
 
     private IEnumerator LoadNewScene()
     {
         SavingSystem.DeletePlayerInstantSaveFile();
         yield return new WaitForSeconds(endTime);
-        StartCoroutine(loadManager.LoadNewScene());
+        GameManager.gameState = GameState.START;
     }
 }

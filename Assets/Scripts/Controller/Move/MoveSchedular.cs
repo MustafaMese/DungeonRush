@@ -41,7 +41,7 @@ namespace DungeonRush.Controller
 
         private void Update()
         {
-            if(GameManager.gameState == GameState.BEGIN) 
+            if(GameManager.gameState == GameState.BEGIN_LEVEL) 
             {
                 playerController.Begin();
                 GameManager.gameState = GameState.PLAY;
@@ -56,7 +56,7 @@ namespace DungeonRush.Controller
 
         public void OnNotify() 
         {
-            if (GameManager.gameState == GameState.STOP || GameManager.gameState == GameState.PAUSE) return;
+            if (GameManager.gameState == GameState.STOP_GAME || GameManager.gameState == GameState.PAUSE) return;
 
             if(turnNumber != 2)
             {

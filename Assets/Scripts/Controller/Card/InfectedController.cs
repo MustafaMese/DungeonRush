@@ -14,6 +14,12 @@ namespace DungeonRush.Controller
 
         private EnemyController enemyController;
 
+        protected override void Initialize()
+        {
+            base.Initialize();
+            exclamation.SetActive(false);
+        }
+
         protected override void ChooseController()
         {
             enemyController = FindObjectOfType<EnemyController>();
@@ -69,11 +75,13 @@ namespace DungeonRush.Controller
                     state = State.MOVE;
                     break;
                 case State.ATTACK:
+                    exclamation.SetActive(false);
                     print("Ben bi zombiyim ve hareket edicem");
                     state = State.WAIT;
                     break;
                 case State.MOVE:
                     print("Ben bi zombiyim ve saldırıcam");
+                    exclamation.SetActive(true);
                     state = State.ATTACK;
                     break;
                 default:

@@ -25,7 +25,9 @@ namespace DungeonRush.Controller
         protected IMover mover;
         protected IAttacker attacker;
         protected ICustomization customization;
-        public GameObject model;
+
+        [SerializeField] GameObject model;
+        [SerializeField] protected GameObject exclamation;
 
         protected abstract void Notify();
         protected abstract void ChooseController();
@@ -34,11 +36,7 @@ namespace DungeonRush.Controller
 
         private void Start()
         {
-            card = GetComponent<Card>();
-            mover = card.GetComponent<IMover>();
-            attacker = card.GetComponent<IAttacker>();
-            customization = card.GetComponent<ICustomization>();
-            cardType = card.GetCardType();
+            Initialize();
 
             InitProcessHandlers();
             ChooseController();
@@ -49,6 +47,15 @@ namespace DungeonRush.Controller
             if (!isRunning) return;
 
             MakeMove();
+        }
+
+        protected virtual void Initialize()
+        {
+            card = GetComponent<Card>();
+            mover = card.GetComponent<IMover>();
+            attacker = card.GetComponent<IAttacker>();
+            customization = card.GetComponent<ICustomization>();
+            cardType = card.GetCardType();
         }
 
         #region MOVE CONTROLLER METHODS

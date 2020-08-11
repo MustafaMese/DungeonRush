@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using DungeonRush.Cards;
 using DungeonRush.Data;
 using DungeonRush.Field;
+using DungeonRush.Property;
 using UnityEngine;
 
 namespace DungeonRush.Attacking
@@ -11,10 +12,20 @@ namespace DungeonRush.Attacking
     public class FourDirectionAttacking : AttackStyle
     {
         private List<Card> tempList = new List<Card>();
+        private Vector2[] directions = { new Vector2(1, 0), new Vector2(-1, 0), new Vector2(0, 1), new Vector2(0, -1),
+                                            new Vector2(1, 1), new Vector2(1, -1), new Vector2(-1, 1), new Vector2(-1, -1) };
 
         public override void Attack(Move move, int damage)
         {
-            throw new System.NotImplementedException();
+            FindTargetTiles(move);
+            for (int i = 0; i < tempList.Count; i++)
+            {
+                if(tempList[i] != null)
+                {
+                    Card card = tempList[i];
+                    card.DecreaseHealth(damage);
+                }
+            }
         }
 
         public override void SetEffectPosition(GameObject effect, Vector3 tPos, Transform card = null)
@@ -22,12 +33,24 @@ namespace DungeonRush.Attacking
             effect.transform.position = tPos;
         }
 
-        private List<Card> FindTargetTiles(Move move)
+        private void FindTargetTiles(Move move)
         {
             tempList.Clear();
             int rL = Board.RowLength;
             Tile t = move.GetCardTile();
             Vector2 coordinate = t.GetCoordinate();
+
+            for (int i = 0; i < directions.Length; i++)
+            {
+                Vector2 direction = directions[i];
+                Vector2 targetCoordinate = coordinate + direction;
+                if(targetCoordinate.x < rL && targetCoordinate.x > 0 && targetCoordinate.y < rL && targetCoordinate.y > 0)
+                {
+                    Card card = Board.tilesByCoordinates[targetCoordinate].GetCard();
+                    if(card.GetCardType() == CardType.ENEMY || card.GetCardType() == CardType.PLAYER)
+                        tempList.Add(card);
+                }
+            }
         }
     }
 }

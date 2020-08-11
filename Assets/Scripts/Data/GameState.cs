@@ -1,7 +1,9 @@
 ﻿public enum GameState
 {
-    BEGIN,
+    START,
+    BEGIN_LEVEL,
     PLAY,
     PAUSE,
-    STOP
+    LEVEL_TRANSITION,
+    STOP_GAME
 }

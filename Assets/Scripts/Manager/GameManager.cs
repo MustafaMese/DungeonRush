@@ -10,54 +10,40 @@ namespace DungeonRush
     {
         public class GameManager : MonoBehaviour
         {
-            public MoveSchedular moveSchedular = null;
             [SerializeField] CanvasGroup canvasGroup = null;
-            public static GameState gameState = GameState.STOP;
+
+            public static GameState gameState = GameState.STOP_GAME;
             public bool start = false;
 
-            [SerializeField] float fadeInTime = 0f;
+            [SerializeField] float fadeInTime = 1f;
+            [SerializeField] float fadeOutTime = 2f;
 
-            // silinecekler
-            [SerializeField] Health card = null;
-            [SerializeField] GameObject text = null;
-            [SerializeField] LoadManager l = null;
-            private void Start()
+            public static float _fadeInTime = 0f;
+            public static float _fadeOutTime = 0f;
+
+            private void Awake()
             {
                 Application.targetFrameRate = 60;
-                moveSchedular = FindObjectOfType<MoveSchedular>();
+                _fadeInTime = fadeInTime;
+                _fadeOutTime = fadeOutTime;
+            }
 
+            private void Start()
+            {
                 StartCoroutine(StartGame());
-            }
-
-            private void Update()
-            {
-                if(card != null && card.GetCurrentHealth() <= 0) 
-                {
-                    StartCoroutine(FinishGame());
-                }
-
-            }
-
-            private IEnumerator FinishGame()
-            {
-                gameState = GameState.STOP;
-                text.gameObject.SetActive(true);
-                yield return new WaitForSeconds(1f);
-                yield return FadeOut(1f);
-                l.LoadNextScene();
             }
 
             private IEnumerator StartGame()
             {
                 yield return FadeIn(fadeInTime);
-                gameState = GameState.BEGIN;
+                gameState = GameState.BEGIN_LEVEL;
             }
 
-            public IEnumerator FadeOut(float time)
+            public IEnumerator FadeOut()
             {
                 while(canvasGroup.alpha < 1)
                 {
-                    canvasGroup.alpha += Time.deltaTime / time;
+                    canvasGroup.alpha += Time.deltaTime / fadeOutTime;
                     yield return null;
                 }
             }
@@ -73,7 +59,7 @@ namespace DungeonRush
 
             void OnDestroy()
             {
-                gameState = GameState.STOP;
+                gameState = GameState.STOP_GAME;
             }
         }
     }
