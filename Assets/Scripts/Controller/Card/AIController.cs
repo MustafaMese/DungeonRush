@@ -79,7 +79,6 @@ namespace DungeonRush.Controller
         public virtual void PrepareMoveProcess()
         {
             var canMove = DoMove(swipe);
-            
             if (canMove)
             {
                 preparingProcess.Finish();
@@ -100,6 +99,7 @@ namespace DungeonRush.Controller
 
         private bool DoMove(Swipe swipe)
         {
+            print("swi" + swipe);
             if (isMoving)
                 return card.GetShift().Define(card, swipe);
             else
@@ -199,17 +199,30 @@ namespace DungeonRush.Controller
 
         protected int GiveRandomEncounter(List<Tile> list, int count)
         {
+            int missCount = 0;
+            int number = -1;
 
-            int number = UnityEngine.Random.Range(0, count);
-            try
+            foreach (var item in list)
             {
-                if (!list[number].IsTileOccupied())
-                    return number;
+                print(item.GetCoordinate());
             }
-            catch (Exception e)
+
+            while (missCount < 3)
             {
-                print("Hata buldum. -1 döndürüyorum");
-                return -1;
+                number = UnityEngine.Random.Range(0, count);
+                print(number + " " + count);
+                try
+                {
+                    if (!list[number].IsTileOccupied())
+                        return number;
+                }
+                catch (Exception e)
+                {
+                    print("Hata buldum. -1 döndürüyorum");
+                    return -1;
+                }
+
+                missCount++;
             }
 
             for (int i = 0; i < list.Count; i++)

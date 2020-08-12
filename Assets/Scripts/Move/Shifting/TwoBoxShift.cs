@@ -15,7 +15,7 @@ namespace DungeonRush.Shifting
         {
             int rL = Board.RowLength;
             Vector2 coordinate = card.GetTile().transform.position;
-
+            Debug.Log("c " + coordinate);
             switch (swipe)
             {
                 case Swipe.NONE:
@@ -23,6 +23,7 @@ namespace DungeonRush.Shifting
                 case Swipe.UP:
                     if (coordinate.y < rL - 2)
                     {
+                        Debug.Log("1");
                         Vector2 targetPos = new Vector2(coordinate.x, coordinate.y + 2);
                         Tile targetTile = Board.tilesByCoordinates[targetPos];
                         if (targetTile.GetCard() == null)
@@ -42,6 +43,7 @@ namespace DungeonRush.Shifting
                             return true;
                         }
                     }
+                    Debug.Log("gobba");
                     break;
                 case Swipe.DOWN:
                     if (coordinate.y > 1)
@@ -192,7 +194,7 @@ namespace DungeonRush.Shifting
                 var lowerTile = Board.tilesByCoordinates[targetCoordinate];
                 if (lowerTile.GetCard() == null || card.GetCharacterType().IsEnemy(lowerTile.GetCard().GetCharacterType()))
                 {
-                    avaibleTiles.Add(lowerTile, Swipe.UP);
+                    avaibleTiles.Add(lowerTile, Swipe.DOWN);
                 }
             }
             if(!lower && coordinate.y > 0)

@@ -19,15 +19,12 @@ namespace DungeonRush.Controller
             switch (state)
             {
                 case State.MOVE:
-                    print("Ben bir goblinim ve ilerleyeceğim");
                     state = State.ATTACK1;
                     break;
                 case State.ATTACK1:
-                    print("Ben bir goblinim ve saldıracağım");
                     state = State.ATTACK2;
                     break;
                 case State.ATTACK2:
-                    print("Ben bir goblinim ve saldıracağim.");
                     state = State.MOVE;
                     break;
                 default:
@@ -50,7 +47,7 @@ namespace DungeonRush.Controller
         {
             List<Tile> list;
             Dictionary<Tile, Swipe> tiles;
-            if (state == State.ATTACK1 || state == State.ATTACK2) 
+            if (state == State.ATTACK1 || state == State.ATTACK2)
             {
                 tiles = card.GetAttackStyle().GetAvaibleTiles(card);
                 list = new List<Tile>(tiles.Keys);

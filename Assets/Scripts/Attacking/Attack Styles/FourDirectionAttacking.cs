@@ -47,7 +47,7 @@ namespace DungeonRush.Attacking
                 if(targetCoordinate.x < rL && targetCoordinate.x > 0 && targetCoordinate.y < rL && targetCoordinate.y > 0)
                 {
                     Card card = Board.tilesByCoordinates[targetCoordinate].GetCard();
-                    if(card.GetCardType() == CardType.ENEMY || card.GetCardType() == CardType.PLAYER)
+                    if(card != null && (card.GetCardType() == CardType.ENEMY || card.GetCardType() == CardType.PLAYER))
                         tempList.Add(card);
                 }
             }
