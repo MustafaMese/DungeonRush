@@ -37,6 +37,17 @@ namespace DungeonRush
                 return ids;
             }
 
+            public List<string> GetItemsNames()
+            {
+                List<string> names = new List<string>();
+                if (weapon != null)
+                    names.Add(weapon.GetItemName());
+                if (armor != null)
+                    names.Add(armor.GetItemName());
+
+                return names;
+            }
+
             public void TakeItem(Item i)
             {
                 if (i.GetItemType() == ItemType.POTION)

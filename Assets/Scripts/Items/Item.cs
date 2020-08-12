@@ -1,5 +1,6 @@
 ﻿using DungeonRush.Attacking;
 using DungeonRush.Cards;
+using DungeonRush.Property;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,12 +10,17 @@ namespace DungeonRush.Items
     public class Item : MonoBehaviour
     {
         [SerializeField] SpriteRenderer itemSpriteRenderer = null;
-
+        [SerializeField] CardProperties properties = null;
         [SerializeField] ItemType type;
         [SerializeField] int power = 0;
         [SerializeField] Sprite itemSprite = null;
         [SerializeField] int id = 0;
         [SerializeField] AttackStyle attackStyle;
+
+        public string GetItemName()
+        {
+            return properties.cardName;
+        }
 
         public AttackStyle GetAttackStyle()
         {

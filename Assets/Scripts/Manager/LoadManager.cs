@@ -38,7 +38,7 @@ public class LoadManager : MonoBehaviour
             SceneManager.LoadScene(0);
     }
 
-    public void LoadStartScene()
+    public static void LoadStartScene()
     {
         SceneManager.LoadScene("StartScreen");
     }

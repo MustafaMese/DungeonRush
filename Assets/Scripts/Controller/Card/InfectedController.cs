@@ -71,16 +71,13 @@ namespace DungeonRush.Controller
             switch (state)
             {
                 case State.WAIT:
-                    print("Ben bi zombiyim ve bekleyeceğim");
                     state = State.MOVE;
                     break;
                 case State.ATTACK:
                     exclamation.SetActive(false);
-                    print("Ben bi zombiyim ve hareket edicem");
                     state = State.WAIT;
                     break;
                 case State.MOVE:
-                    print("Ben bi zombiyim ve saldırıcam");
                     exclamation.SetActive(true);
                     state = State.ATTACK;
                     break;

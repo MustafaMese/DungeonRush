@@ -89,10 +89,7 @@ namespace DungeonRush.Property
 
         private void Damage(Move move)
         {
-            int itemDamage = 0;
-            if (itemUser && itemUser.GetWeapon() != null)
-                itemDamage = itemUser.GetWeapon().GetPower();
-            int totalDamage = itemDamage + power;
+            int totalDamage = GetDamage();
 
             Transform card = move.GetCard().transform;
             Transform target = move.GetTargetTile().transform;
@@ -102,7 +99,16 @@ namespace DungeonRush.Property
             attackStyle.Attack(move, totalDamage);
             StartCoroutine(StartAttackAnimation(poolForAttackStyle, tPos, card, target, time));
             StartCoroutine(StartAttackAnimation(poolForParticul, tPos, card, null, particulTime));
-            
+
+        }
+
+        public int GetDamage()
+        {
+            int itemDamage = 0;
+            if (itemUser && itemUser.GetWeapon() != null)
+                itemDamage = itemUser.GetWeapon().GetPower();
+            int totalDamage = itemDamage + power;
+            return totalDamage;
         }
 
         private IEnumerator StartAttackAnimation(ObjectPool pool, Vector3 tPos, Transform card, Transform target, float time)

@@ -3,6 +3,8 @@ using DungeonRush.Data;
 using DungeonRush.Property;
 using UnityEngine;
 using DungeonRush.Controller;
+using System.Collections.Generic;
+using DungeonRush.Items;
 
 namespace DungeonRush
 {
@@ -12,14 +14,19 @@ namespace DungeonRush
         {
             [SerializeField] EventMover eventMover = null;
             public bool isEventMove = false;
-
             [SerializeField] bool isFirstLevel = false;
+
+            PlayerAttacker playerAttacker;
+            ItemUser itemUser;
 
             protected override void Initialize()
             {
                 base.Initialize();
                 if(!isFirstLevel)
                     GetComponent<PlayerController>().LoadPlayer();
+
+                playerAttacker = GetComponent<PlayerAttacker>();
+                itemUser = GetComponent<ItemUser>();
             }
 
             public override void ExecuteMove()
@@ -50,6 +57,16 @@ namespace DungeonRush
                     isEventMove = b;
                     eventMover.SetIsMoveFinished(b);
                 }
+            }
+
+            public int GetDamage()
+            {
+                return playerAttacker.GetDamage();
+            }
+
+            public List<string> GetItemNames()
+            {
+                return itemUser.GetItemsNames();
             }
         }
     }
