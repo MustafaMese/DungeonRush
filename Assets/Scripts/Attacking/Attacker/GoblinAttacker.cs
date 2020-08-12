@@ -50,6 +50,7 @@ namespace DungeonRush.Attacking
 
         private IEnumerator FinishAttack(Move move)
         {
+            UpdateAnimation(true, true);
             Damage(move);
             yield return new WaitForSeconds(damageTime);
             attackFinished = true;
