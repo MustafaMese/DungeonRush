@@ -8,6 +8,7 @@ namespace DungeonRush.Property
 {
     public class Health : MonoBehaviour
     {
+        [SerializeField] bool isPlayer = false;
         [SerializeField] float deathTime = 0.2f;
         [SerializeField] int maxHealth = 0;
         [SerializeField] Animator animator = null;
@@ -36,11 +37,19 @@ namespace DungeonRush.Property
 
         private IEnumerator Death()
         {
-            if (card.GetCardType() == CardType.PLAYER)
+            if (isPlayer)
+            {
                 GameManager.gameState = GameState.STOP_GAME;
-
-            yield return new WaitForSeconds(deathTime);
-            CardManager.RemoveCardForAttacker(card.GetTile().GetListNumber());
+                FindObjectOfType<DefeatedPanel>().SetDefeat();
+                yield return new WaitForSeconds(1f);
+                yield return FindObjectOfType<GameManager>().FadeOut();
+                GameManager.gameState = GameState.END;
+            }
+            else
+            {
+                yield return new WaitForSeconds(deathTime);
+                CardManager.RemoveCardForAttacker(card.GetTile().GetListNumber());
+            }
         }
 
         public void SetCurrentHealth(int amount)

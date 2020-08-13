@@ -21,10 +21,13 @@ public class LoadManager : MonoBehaviour
     private void Update()
     {
         if (GameManager.gameState == GameState.LEVEL_TRANSITION)
-           LoadNextScene();
+            LoadNextScene();
 
         if (GameManager.gameState == GameState.START)
             StartCoroutine(LoadNewScene());
+
+        if (GameManager.gameState == GameState.END)
+            LoadStartScene();
     }
 
     public void LoadNextScene()
