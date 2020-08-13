@@ -99,7 +99,6 @@ namespace DungeonRush.Controller
 
         private bool DoMove(Swipe swipe)
         {
-            print("swi" + swipe);
             if (isMoving)
                 return card.GetShift().Define(card, swipe);
             else
@@ -201,16 +200,9 @@ namespace DungeonRush.Controller
         {
             int missCount = 0;
             int number = -1;
-
-            foreach (var item in list)
-            {
-                print(item.GetCoordinate());
-            }
-
             while (missCount < 3)
             {
                 number = UnityEngine.Random.Range(0, count);
-                print(number + " " + count);
                 try
                 {
                     if (!list[number].IsTileOccupied())
