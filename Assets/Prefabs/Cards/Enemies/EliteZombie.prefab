@@ -71,15 +71,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   range: 0.8
-  power: 5
-  attackStyle: {fileID: 11400000, guid: 3ad909746a3710d459d5103ebb019e66, type: 2}
+  attackStyle: {fileID: 11400000, guid: c8a6fa5523a172448a9d2b2665e7e3ac, type: 2}
   closingToEnemyTime: 0.1
   damageTime: 0.1
   getBackTime: 0.1
   animator: {fileID: 6629059003048522109}
-  particul: {fileID: 8084531181890196352, guid: e93796174c9ff5a49ba387c7cecc940b,
-    type: 3}
-  particulTime: 1
 --- !u!1 &7891651791365718630
 GameObject:
   m_ObjectHideFlags: 0
@@ -1365,6 +1361,16 @@ PrefabInstance:
       propertyPath: maxHealth
       value: 30
       objectReference: {fileID: 0}
+    - target: {fileID: -474957396755857396, guid: 733517a4bf866b94aa4cded94ec54d29,
+        type: 3}
+      propertyPath: health
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 26338852969488674, guid: 733517a4bf866b94aa4cded94ec54d29,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0.611
+      objectReference: {fileID: 0}
     - target: {fileID: 385931742185610795, guid: 733517a4bf866b94aa4cded94ec54d29,
         type: 3}
       propertyPath: cardProperties
@@ -1382,10 +1388,20 @@ PrefabInstance:
       propertyPath: m_Name
       value: EliteZombie
       objectReference: {fileID: 0}
+    - target: {fileID: 1797177488424430091, guid: 733517a4bf866b94aa4cded94ec54d29,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0.6110225
+      objectReference: {fileID: 0}
     - target: {fileID: 2325938035697369725, guid: 733517a4bf866b94aa4cded94ec54d29,
         type: 3}
       propertyPath: m_AnchoredPosition.x
       value: -0.253
+      objectReference: {fileID: 0}
+    - target: {fileID: 2325938035697369725, guid: 733517a4bf866b94aa4cded94ec54d29,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0.611
       objectReference: {fileID: 0}
     - target: {fileID: 3055322803219196748, guid: 733517a4bf866b94aa4cded94ec54d29,
         type: 3}
@@ -1501,8 +1517,7 @@ PrefabInstance:
         type: 3}
       propertyPath: attackStyle
       value: 
-      objectReference: {fileID: 11400000, guid: 3ad909746a3710d459d5103ebb019e66,
-        type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 4093322611771117245, guid: 733517a4bf866b94aa4cded94ec54d29,
         type: 3}
       propertyPath: animator

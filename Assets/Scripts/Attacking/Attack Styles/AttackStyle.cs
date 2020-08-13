@@ -12,6 +12,7 @@ namespace DungeonRush.Attacking
     {
         [SerializeField] protected GameObject effectObject;
         [SerializeField] protected float animationTime;
+        [SerializeField] protected int power;
 
         public abstract void Attack(Move move, int damage);
         public abstract void SetEffectPosition(GameObject effect, Vector3 tPos, Transform card = null);
@@ -121,6 +122,10 @@ namespace DungeonRush.Attacking
                     break;
             }
             return false;
+        }
+        public int GetPower()
+        {
+            return power;
         }
         public GameObject GetEffect()
         {

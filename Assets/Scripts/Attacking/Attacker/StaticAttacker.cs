@@ -10,9 +10,9 @@ namespace DungeonRush.Property
     public class StaticAttacker : MonoBehaviour, IAttacker
     {
         [Header("Attacker Properties")]
-        [SerializeField] int power = 2;
         [SerializeField] AttackStyle attackStyle = null;
 
+        private int power = 0; 
         private ObjectPool poolForAttackStyle = new ObjectPool();
         private GameObject effectObject = null;
 
@@ -25,6 +25,8 @@ namespace DungeonRush.Property
             effectObject = attackStyle.GetEffect();
             poolForAttackStyle.SetObject(effectObject);
             poolForAttackStyle.FillPool(2);
+
+            power = attackStyle.GetPower();
         }
 
         public void Attack()
@@ -83,6 +85,7 @@ namespace DungeonRush.Property
         public void SetAttackStyle(AttackStyle attackStyle)
         {
             this.attackStyle = attackStyle;
+            power = attackStyle.GetPower();
         }
 
         public AttackStyle GetAttackStyle()

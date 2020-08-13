@@ -146,15 +146,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   range: 0.8
-  power: 5
-  attackStyle: {fileID: 11400000, guid: 3ad909746a3710d459d5103ebb019e66, type: 2}
+  attackStyle: {fileID: 11400000, guid: f5bcd1d8937edbb4badf9813846f4025, type: 2}
   closingToEnemyTime: 0.1
   damageTime: 0.1
   getBackTime: 0.1
   animator: {fileID: 8951025076001599417}
-  particul: {fileID: 8084531181890196352, guid: e93796174c9ff5a49ba387c7cecc940b,
-    type: 3}
-  particulTime: 1
 --- !u!1001 &1078595112752014755
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -668,8 +664,7 @@ PrefabInstance:
         type: 3}
       propertyPath: attackStyle
       value: 
-      objectReference: {fileID: 11400000, guid: 3ad909746a3710d459d5103ebb019e66,
-        type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: -474957396755857396, guid: 733517a4bf866b94aa4cded94ec54d29,
         type: 3}
       propertyPath: animator
@@ -678,7 +673,7 @@ PrefabInstance:
     - target: {fileID: -474957396755857396, guid: 733517a4bf866b94aa4cded94ec54d29,
         type: 3}
       propertyPath: health
-      value: 3
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: -474957396755857396, guid: 733517a4bf866b94aa4cded94ec54d29,
         type: 3}
@@ -846,8 +841,7 @@ PrefabInstance:
         type: 3}
       propertyPath: attackStyle
       value: 
-      objectReference: {fileID: 11400000, guid: 3ad909746a3710d459d5103ebb019e66,
-        type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 4093322611771117245, guid: 733517a4bf866b94aa4cded94ec54d29,
         type: 3}
       propertyPath: particulPrefab

@@ -13,18 +13,15 @@ namespace DungeonRush
         {
             [Header("Attacker Properties")]
             [SerializeField] float range = 0.8f;
-            [SerializeField] int power = 5;
             [SerializeField] AttackStyle attackStyle = null;
+            private int power = 0;
 
             [Header("Animation Variables")]
             [SerializeField] float closingToEnemyTime = 0.1f;
             [SerializeField] float damageTime = 0.1f;
             [SerializeField] float getBackTime = 0.1f;
             [SerializeField] Animator animator = null;
-            [SerializeField] GameObject particul = null;
-            [SerializeField] float particulTime = 1f;
 
-            private ObjectPool poolForParticul = new ObjectPool();
             private ObjectPool poolForAttackStyle = new ObjectPool();
             private GameObject effectObject = null;
 
@@ -36,10 +33,10 @@ namespace DungeonRush
                 DOTween.Init();
                 card = GetComponent<Card>();
 
-                FillThePool(poolForParticul, particul, 3);
-
                 effectObject = attackStyle.GetEffect();
                 FillThePool(poolForAttackStyle, effectObject, 2);
+
+                power = attackStyle.GetPower();
             }
 
             private void FillThePool(ObjectPool pool, GameObject effect, int objectCount)
@@ -87,7 +84,6 @@ namespace DungeonRush
 
                 attackStyle.Attack(move, power);
                 StartCoroutine(StartAttackAnimation(poolForAttackStyle, tPos, card, target, time));
-                StartCoroutine(StartAttackAnimation(poolForParticul, tPos, card, null, particulTime));
 
             }
 
@@ -146,6 +142,7 @@ namespace DungeonRush
                 this.attackStyle = attackStyle;
                 effectObject = attackStyle.GetEffect();
                 FillThePool(poolForAttackStyle, effectObject, 2);
+                power = attackStyle.GetPower();
             }
 
             public AttackStyle GetAttackStyle()

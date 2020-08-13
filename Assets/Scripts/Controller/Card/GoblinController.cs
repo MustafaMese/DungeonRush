@@ -20,11 +20,14 @@ namespace DungeonRush.Controller
             {
                 case State.MOVE:
                     state = State.ATTACK1;
+                    exclamation.SetActive(true);
                     break;
                 case State.ATTACK1:
+                    exclamation.SetActive(true);
                     state = State.ATTACK2;
                     break;
                 case State.ATTACK2:
+                    exclamation.SetActive(false);
                     state = State.MOVE;
                     break;
                 default:

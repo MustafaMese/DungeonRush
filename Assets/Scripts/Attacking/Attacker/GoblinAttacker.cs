@@ -10,15 +10,14 @@ namespace DungeonRush.Attacking
 {
     public class GoblinAttacker : MonoBehaviour, IAttacker
     {
+        [Header("Attacker Properties")]
         [SerializeField] AttackStyle attackStyle = null;
-
-        [SerializeField] int power = 5;
         [SerializeField] float damageTime = 0.3f;
-        [SerializeField] Animator animator = null;
-        [SerializeField] GameObject fadingParticul = null;
-        [SerializeField] float particulTime = 1f;
+        private int power = 0;
 
-        private ObjectPool poolForParticul = new ObjectPool();
+        [Header("Animation Variables")]
+        [SerializeField] Animator animator = null;
+
         private ObjectPool poolForAttackStyle = new ObjectPool();
         private GameObject effectObject = null;
 
@@ -29,9 +28,10 @@ namespace DungeonRush.Attacking
         {
             DOTween.Init();
             card = GetComponent<Card>();
-            FillThePool(poolForParticul, fadingParticul, 3);
             effectObject = attackStyle.GetEffect();
             FillThePool(poolForAttackStyle, effectObject, 2);
+
+            power = attackStyle.GetPower();
         }
 
         private void FillThePool(ObjectPool pool, GameObject effect, int objectCount)
@@ -64,7 +64,6 @@ namespace DungeonRush.Attacking
 
             attackStyle.Attack(move, power);
             StartCoroutine(StartAttackAnimation(poolForAttackStyle, cardPos, card, time));
-            StartCoroutine(StartAttackAnimation(poolForParticul, cardPos, card, particulTime));
         }
 
         public bool CanMove(Card enemy)
@@ -108,6 +107,8 @@ namespace DungeonRush.Attacking
             this.attackStyle = attackStyle;
             effectObject = attackStyle.GetEffect();
             FillThePool(poolForAttackStyle, effectObject, 2);
+
+            power = attackStyle.GetPower();
         }
 
         private void UpdateAnimation(bool play, bool isAttack)

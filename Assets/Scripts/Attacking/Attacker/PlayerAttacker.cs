@@ -14,18 +14,15 @@ namespace DungeonRush.Property
         [Header("Attacker Properties")]
         [SerializeField] bool isSkillUser = false;
         [SerializeField] float range = 0.8f;
-        [SerializeField] int power = 5;
         [SerializeField] AttackStyle attackStyle = null;
+        private int power = 0;
 
         [Header("Animation Variables")]
         [SerializeField] float closingToEnemyTime = 0.1f;
         [SerializeField] float damageTime = 0.1f;
         [SerializeField] float getBackTime = 0.1f;
         [SerializeField] Animator animator = null;
-        [SerializeField] GameObject particul = null;
-        [SerializeField] float particulTime = 1f;
 
-        private ObjectPool poolForParticul = new ObjectPool();
         private ObjectPool poolForAttackStyle = new ObjectPool();
         private GameObject effectObject = null;
 
@@ -43,10 +40,10 @@ namespace DungeonRush.Property
             if (isSkillUser)
                 skillUser = GetComponent<SkillUser>();
 
-            FillThePool(poolForParticul, particul, 3);
-
             effectObject = attackStyle.GetEffect();
             FillThePool(poolForAttackStyle, effectObject, 2);
+
+            power = attackStyle.GetPower();
         }
 
         private void FillThePool(ObjectPool pool, GameObject effect, int objectCount)
@@ -89,26 +86,19 @@ namespace DungeonRush.Property
 
         private void Damage(Move move)
         {
-            int totalDamage = GetDamage();
-
             Transform card = move.GetCard().transform;
             Transform target = move.GetTargetTile().transform;
             Vector3 tPos = move.GetTargetTile().GetCoordinate();
             float time = attackStyle.GetAnimationTime();
 
-            attackStyle.Attack(move, totalDamage);
+            attackStyle.Attack(move, power);
             StartCoroutine(StartAttackAnimation(poolForAttackStyle, tPos, card, target, time));
-            StartCoroutine(StartAttackAnimation(poolForParticul, tPos, card, null, particulTime));
 
         }
 
         public int GetDamage()
         {
-            int itemDamage = 0;
-            if (itemUser && itemUser.GetWeapon() != null)
-                itemDamage = itemUser.GetWeapon().GetPower();
-            int totalDamage = itemDamage + power;
-            return totalDamage;
+            return power;
         }
 
         private IEnumerator StartAttackAnimation(ObjectPool pool, Vector3 tPos, Transform card, Transform target, float time)
@@ -166,6 +156,7 @@ namespace DungeonRush.Property
             this.attackStyle = attackStyle;
             effectObject = attackStyle.GetEffect();
             FillThePool(poolForAttackStyle, effectObject, 2);
+            power = attackStyle.GetPower();
         }
 
         public AttackStyle GetAttackStyle()

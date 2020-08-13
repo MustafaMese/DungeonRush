@@ -19,11 +19,11 @@ namespace DungeonRush.Controller {
             switch (state)
             {
                 case State.ATTACK:
-                    print("Ben bi yarasayım ve hareket edicem");
+                    exclamation.SetActive(false);
                     state = State.MOVE;
                     break;
                 case State.MOVE:
-                    print("Ben bi yarasayım ve saldırıcam");
+                    exclamation.SetActive(true);
                     state = State.ATTACK;
                     break;
                 default:
