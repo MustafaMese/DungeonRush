@@ -80,7 +80,7 @@ namespace DungeonRush.Property
                 if (itemUser && itemUser.GetArmor() != null)
                     armor = itemUser.GetArmor().GetPower();
                 amount -= armor;
-
+                amount = Mathf.Max(0, amount);
                 health -= amount;
                 health = Mathf.Max(0, health);
 
