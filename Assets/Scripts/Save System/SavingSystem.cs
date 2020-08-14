@@ -26,6 +26,9 @@ namespace DungeonRush.Saving
         public static PlayerData LoadPlayerInstantProgress()
         {
             string path = Application.persistentDataPath + playerPath;
+
+            Debug.Log(Application.persistentDataPath);
+                
             if (File.Exists(path))
             {
                 BinaryFormatter formatter = new BinaryFormatter();

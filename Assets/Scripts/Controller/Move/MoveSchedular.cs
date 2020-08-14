@@ -11,7 +11,6 @@ namespace DungeonRush.Controller
     {
         public TextMeshProUGUI tourText;
 
-        [SerializeField] bool notify = false;
         /// <summary>
         /// -1 for Nothing, 0 for Player, 1 for NonPlayers, 2 for Traps
         /// </summary>
@@ -65,8 +64,6 @@ namespace DungeonRush.Controller
 
                 if (oldTurnNumber == 0)
                     IncreaseTour();
-
-               // OnNotify();
             }
             else
             {

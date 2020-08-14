@@ -50,9 +50,6 @@ namespace DungeonRush
                 cm.cards = new List<Card>(FindObjectsOfType<Card>());
                 bCreator.InitializeTiles(cardPlaces);
                 SetCardTiles(cm.cards);
-                //cm.AddCard(cm.playerCard, cardPlaces[0], this, false);
-                //AddDynamicCards();
-                //AddStaticCards();
                 DeterminePlayerTile();
                 SetTileDarkness();
             }

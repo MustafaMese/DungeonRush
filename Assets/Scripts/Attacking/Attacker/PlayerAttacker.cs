@@ -16,6 +16,9 @@ namespace DungeonRush.Property
         [SerializeField] float range = 0.8f;
         [SerializeField] AttackStyle attackStyle = null;
         private int power = 0;
+        
+        [SerializeField] TextPopup textPopup = null;
+        private ObjectPool poolFoTextPopup = new ObjectPool();
 
         [Header("Animation Variables")]
         [SerializeField] float closingToEnemyTime = 0.1f;
@@ -28,17 +31,16 @@ namespace DungeonRush.Property
 
         private bool attackFinished = false;
         private Card card = null;
-        private ItemUser itemUser = null;
         private SkillUser skillUser = null;
 
         private void Start()
         {
             DOTween.Init();
             card = GetComponent<Card>();
-            if (GetComponent<ItemUser>())
-                itemUser = GetComponent<ItemUser>();
             if (isSkillUser)
                 skillUser = GetComponent<SkillUser>();
+
+            FillThePool(poolFoTextPopup, textPopup.gameObject, 2);
 
             effectObject = attackStyle.GetEffect();
             FillThePool(poolForAttackStyle, effectObject, 2);
@@ -93,12 +95,23 @@ namespace DungeonRush.Property
 
             attackStyle.Attack(move, power);
             StartCoroutine(StartAttackAnimation(poolForAttackStyle, tPos, card, target, time));
-
+            StartCoroutine(StartTextPopup(poolFoTextPopup, tPos, power));
         }
 
         public int GetDamage()
         {
             return power;
+        }
+        
+        private IEnumerator StartTextPopup(ObjectPool pool, Vector3 tPos, int damage)
+        {
+            GameObject obj = pool.PullObjectFromPool();
+            obj.transform.position = tPos;
+            TextPopup objTxt = obj.GetComponent<TextPopup>();
+            objTxt.Setup(damage, tPos);
+            float t = objTxt.GetDisapperTime();
+            yield return new WaitForSeconds(t);
+            pool.AddObjectToPool(obj);
         }
 
         private IEnumerator StartAttackAnimation(ObjectPool pool, Vector3 tPos, Transform card, Transform target, float time)
