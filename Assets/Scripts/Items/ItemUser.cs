@@ -69,9 +69,9 @@ namespace DungeonRush
             }
             private void SetWeapon(Item item)
             {
-                if (this.weapon != null)
+                if (this.weapon != null && this.weapon.gameObject != null)
                 {
-                    Destroy(this.weapon.gameObject);
+                    this.weapon.gameObject.SetActive(false);
                 }
                 this.weapon = null;
                 this.weapon = item;
@@ -93,7 +93,7 @@ namespace DungeonRush
             {
                 if (this.armor != null)
                 {
-                    Destroy(this.armor.gameObject);
+                    this.armor.gameObject.SetActive(false);
                 }
                 this.armor = null;
                 this.armor = item;

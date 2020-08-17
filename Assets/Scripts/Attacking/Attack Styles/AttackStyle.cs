@@ -123,6 +123,10 @@ namespace DungeonRush.Attacking
             }
             return false;
         }
+        public virtual List<Card> GetAttackedCards()
+        {
+            return null;
+        }
         public int GetPower()
         {
             return power;

@@ -76,13 +76,16 @@ public class PauseMenu : MonoBehaviour
 
     public void MainMenu()
     {
+        Resume();
         GameManager.gameState = GameState.STOP_GAME;
         StartCoroutine(GoToMainMenu());
     }
 
     private IEnumerator GoToMainMenu()
     {
-        yield return gameManager.FadeOut();
+        StartCoroutine(gameManager.FadeOut());
+        var t = GameManager._fadeOutTime;
+        yield return new WaitForSeconds(t);
         LoadManager.LoadStartScene();
     }
 }

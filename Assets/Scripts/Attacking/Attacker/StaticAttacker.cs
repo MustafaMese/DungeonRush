@@ -12,6 +12,9 @@ namespace DungeonRush.Property
         [Header("Attacker Properties")]
         [SerializeField] AttackStyle attackStyle = null;
 
+        [SerializeField] TextPopup textPopup = null;
+        private ObjectPool poolForTextPopup = new ObjectPool();
+
         private int power = 0; 
         private ObjectPool poolForAttackStyle = new ObjectPool();
         private GameObject effectObject = null;
@@ -23,10 +26,19 @@ namespace DungeonRush.Property
             card = GetComponent<Card>();
 
             effectObject = attackStyle.GetEffect();
+
+            FillThePool(poolForTextPopup, textPopup.gameObject, 2);
+
             poolForAttackStyle.SetObject(effectObject);
             poolForAttackStyle.FillPool(2);
 
             power = attackStyle.GetPower();
+        }
+
+        private void FillThePool(ObjectPool pool, GameObject effect, int objectCount)
+        {
+            pool.SetObject(effect);
+            pool.FillPool(objectCount);
         }
 
         public void Attack()
@@ -43,6 +55,18 @@ namespace DungeonRush.Property
 
             attackStyle.Attack(move, power);
             StartCoroutine(StartAttackAnimation(poolForAttackStyle, cardPos, time));
+            StartCoroutine(StartTextPopup(poolForTextPopup, cardPos, power));
+        }
+
+        private IEnumerator StartTextPopup(ObjectPool pool, Vector3 tPos, int damage)
+        {
+            GameObject obj = pool.PullObjectFromPool();
+            obj.transform.position = tPos;
+            TextPopup objTxt = obj.GetComponent<TextPopup>();
+            objTxt.Setup(damage, tPos);
+            float t = objTxt.GetDisapperTime();
+            yield return new WaitForSeconds(t);
+            pool.AddObjectToPool(obj);
         }
 
         private IEnumerator StartAttackAnimation(ObjectPool pool, Vector3 tPos, float time)

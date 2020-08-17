@@ -39,11 +39,8 @@ namespace DungeonRush.Property
         {
             if (isPlayer)
             {
-                GameManager.gameState = GameState.STOP_GAME;
                 FindObjectOfType<DefeatedPanel>().SetDefeat();
-                yield return new WaitForSeconds(1f);
-                yield return FindObjectOfType<GameManager>().FadeOut();
-                GameManager.gameState = GameState.END;
+                this.enabled = false;
             }
             else
             {

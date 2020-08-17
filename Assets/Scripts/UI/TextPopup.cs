@@ -25,15 +25,14 @@ public class TextPopup : MonoBehaviour
             textMeshPro.color = normalHit;
         else
             textMeshPro.color = criticalHit;
-        print("Ben burdayım");
         textMeshPro.text = damage.ToString();
         Move(target);
     }
 
     private void Move(Vector3 target)
     {
-        Vector2 targetPos = new Vector2(target.x + xSpace, target.y + ySpace);
-        print(targetPos);
+        float number = Random.Range(-xSpace * 2, xSpace * 2);
+        Vector2 targetPos = new Vector2(target.x + number, target.y + ySpace);
         transform.DOMove(targetPos, disapperTime);
     }
 

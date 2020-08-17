@@ -18,7 +18,7 @@ namespace DungeonRush.Property
         private int power = 0;
         
         [SerializeField] TextPopup textPopup = null;
-        private ObjectPool poolFoTextPopup = new ObjectPool();
+        private ObjectPool poolForTextPopup = new ObjectPool();
 
         [Header("Animation Variables")]
         [SerializeField] float closingToEnemyTime = 0.1f;
@@ -40,7 +40,7 @@ namespace DungeonRush.Property
             if (isSkillUser)
                 skillUser = GetComponent<SkillUser>();
 
-            FillThePool(poolFoTextPopup, textPopup.gameObject, 2);
+            FillThePool(poolForTextPopup, textPopup.gameObject, 2);
 
             effectObject = attackStyle.GetEffect();
             FillThePool(poolForAttackStyle, effectObject, 2);
@@ -95,7 +95,7 @@ namespace DungeonRush.Property
 
             attackStyle.Attack(move, power);
             StartCoroutine(StartAttackAnimation(poolForAttackStyle, tPos, card, target, time));
-            StartCoroutine(StartTextPopup(poolFoTextPopup, tPos, power));
+            StartCoroutine(StartTextPopup(poolForTextPopup, tPos, power));
         }
 
         public int GetDamage()

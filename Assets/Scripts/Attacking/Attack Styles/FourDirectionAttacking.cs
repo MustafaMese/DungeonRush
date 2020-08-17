@@ -11,24 +11,28 @@ namespace DungeonRush.Attacking
     [CreateAssetMenu(menuName = "Attack/FourDirectionAttack")]
     public class FourDirectionAttacking : AttackStyle
     {
-        
+        List<Card> tempList = new List<Card>();
+
         private Vector2[] directions = { new Vector2(1, 0), new Vector2(-1, 0), new Vector2(0, 1), new Vector2(0, -1),
                                             new Vector2(1, 1), new Vector2(1, -1), new Vector2(-1, 1), new Vector2(-1, -1) };
 
         public override void Attack(Move move, int damage)
         {
-            List<Card> tempList = FindTargetTiles(move);
+            tempList = FindTargetTiles(move);
 
             for (int i = 0; i < tempList.Count; i++)
             {
                 if(tempList[i] != null)
                 {
-                   
                     Card card = tempList[i];
-                    Debug.Log(card.GetCardType());
                     card.DecreaseHealth(damage);
                 }
             }
+        }
+
+        public override List<Card> GetAttackedCards()
+        {
+            return tempList;
         }
 
         public override void SetEffectPosition(GameObject effect, Vector3 tPos, Transform card = null)
@@ -38,7 +42,7 @@ namespace DungeonRush.Attacking
 
         private List<Card> FindTargetTiles(Move move)
         {
-            List<Card> tempList = new List<Card>();
+            tempList.Clear();
             int rL = Board.RowLength;
             Tile t = move.GetCardTile();
             Vector2 coordinate = t.GetCoordinate();
@@ -50,7 +54,6 @@ namespace DungeonRush.Attacking
                 Debug.Log(targetCoordinate);
                 if (targetCoordinate.x < rL && targetCoordinate.x >= 0 && targetCoordinate.y < rL && targetCoordinate.y >= 0)
                 {
-                    
                     Card card = Board.tilesByCoordinates[targetCoordinate].GetCard();
                     if(card != null && (card.GetCardType() == CardType.ENEMY || card.GetCardType() == CardType.PLAYER))
                         tempList.Add(card);
