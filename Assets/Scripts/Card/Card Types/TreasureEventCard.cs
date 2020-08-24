@@ -14,10 +14,14 @@ namespace DungeonRush.Cards
         [SerializeField] float disapperTime = 0;
         [SerializeField] SpriteRenderer sprite;
         [SerializeField] ItemStorage storage = null;
+
         protected override void Initialize()
         {
             base.Initialize();
             item = storage.GetRandomItemByType(iType);
+
+            if (iType == ItemType.MAX_HEALTH_INCREASER || iType == ItemType.POTION)
+                sprite.sprite = item.GetSprite();
         }
 
         public override void GetEvent(Card card)

@@ -99,6 +99,7 @@ namespace DungeonRush.Attacking
             objTxt.Setup(damage, tPos);
             float t = objTxt.GetDisapperTime();
             yield return new WaitForSeconds(t);
+            obj.transform.SetParent(this.transform);
             pool.AddObjectToPool(obj);
         }
 
