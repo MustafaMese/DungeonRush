@@ -13,7 +13,8 @@ namespace DungeonRush.Items
         [SerializeField] CardProperties properties = null;
         [SerializeField] ItemType type;
         [SerializeField] int power = 0;
-        [SerializeField] Sprite itemSprite = null;
+        [SerializeField] Sprite itemSmallSprite = null;
+        [SerializeField] Sprite itemBigSprite = null;
         [SerializeField] int id = 0;
         [SerializeField] AttackStyle attackStyle;
 
@@ -27,9 +28,14 @@ namespace DungeonRush.Items
             return attackStyle;
         }
 
-        public Sprite GetSprite()
+        public Sprite GetSmallSprite()
         {
-            return itemSprite;
+            return itemSmallSprite;
+        }
+
+        public Sprite GetBigSprite()
+        {
+            return itemBigSprite;
         }
 
         public int GetId()
@@ -40,11 +46,6 @@ namespace DungeonRush.Items
         public SpriteRenderer GetRenderer()
         {
             return itemSpriteRenderer;
-        }
-
-        public Sprite GetItem()
-        {
-            return itemSprite;
         }
 
         public ItemType GetItemType()

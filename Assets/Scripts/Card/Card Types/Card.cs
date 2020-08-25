@@ -41,6 +41,11 @@ namespace DungeonRush
                 move = new Move();
             }
 
+            public Sprite GetCharacterIcon()
+            {
+                return cardProperties.characterIcon;
+            }
+
             public void SetCurrentHealth(int amount)
             {
                 health.SetCurrentHealth(amount);

@@ -17,7 +17,7 @@ public class FollowCamera : MonoBehaviour
         if (target == null)
             target = FindObjectOfType<PlayerController>().transform;
 
-        transform.position = new Vector3(target.position.x, target.position.y, transform.position.z);
+        transform.position = new Vector3(target.position.x, target.position.y + 1, transform.position.z);
     }
 
 }

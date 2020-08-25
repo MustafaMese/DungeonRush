@@ -23,10 +23,13 @@ namespace DungeonRush.Controller
         public static List<AIController> subscribedEnemies = new List<AIController>();
         public List<AIController> attackerCards;
 
+        private TurnCanvas tc;
+
         private void Start()
         {
             playerController = FindObjectOfType<PlayerController>();
             ms = FindObjectOfType<MoveSchedular>();
+            tc = FindObjectOfType<TurnCanvas>();
             InitProcessHandlers();
         }
 
@@ -40,6 +43,7 @@ namespace DungeonRush.Controller
                 {
                     Board.touched = true;
                     DetermineAttackers();
+                    tc.SetCardIcons(attackerCards);
                     moveFinished = true;
                 }
                 else if (assigningProcess.IsRunning())
@@ -111,6 +115,16 @@ namespace DungeonRush.Controller
         {
             if (moveFinished && attackerCards[attackerIndex] != null)
             {
+                if (attackerIndex > 0)
+                {
+                    print("1");
+                    tc.Next();
+                }
+                else
+                {
+                    print("2");
+                    tc.SetImages(0);
+                }
                 attackerCards[attackerIndex].Run();
                 moveFinished = false;
             }

@@ -11,6 +11,7 @@ namespace DungeonRush
             public string cardName;
             public CardType cardType;
             public Character character;
+            public Sprite characterIcon;
         }
     }
 }

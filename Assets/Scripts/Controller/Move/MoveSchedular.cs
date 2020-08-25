@@ -23,6 +23,8 @@ namespace DungeonRush.Controller
         public TrapController trapController;
         public Board board;
 
+        private TurnCanvas tc;
+
         public bool isGameStarted = false;
 
         private void Start()
@@ -31,7 +33,7 @@ namespace DungeonRush.Controller
             enemyController = FindObjectOfType<EnemyController>();
             trapController = FindObjectOfType<TrapController>();
             board = FindObjectOfType<Board>();
-
+            tc = FindObjectOfType<TurnCanvas>();
             tourCount = 0;
             tourText.text = tourCount.ToString();
             turnNumber = 0;
@@ -85,10 +87,13 @@ namespace DungeonRush.Controller
             }
             else if (turnNumber == 0)
             {
+                tc.SetImageAsPlayerIcon();
+                StartCoroutine(tc.ActivatePanel(true));
                 playerController.Begin();
             }
             else if (turnNumber == 1)
             {
+                StartCoroutine(tc.ActivatePanel(false));
                 enemyController.Begin();
             }
             else if (turnNumber == 2)

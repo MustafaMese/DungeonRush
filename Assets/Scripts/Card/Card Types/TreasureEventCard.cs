@@ -21,7 +21,7 @@ namespace DungeonRush.Cards
             item = storage.GetRandomItemByType(iType);
 
             if (iType == ItemType.MAX_HEALTH_INCREASER || iType == ItemType.POTION)
-                sprite.sprite = item.GetSprite();
+                sprite.sprite = item.GetSmallSprite();
         }
 
         public override void GetEvent(Card card)

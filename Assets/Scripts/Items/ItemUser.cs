@@ -53,12 +53,23 @@ namespace DungeonRush
                 if (i.GetItemType() == ItemType.POTION)
                     TakePotion(i);
                 else if (i.GetItemType() == ItemType.WEAPON)
+                {
                     TakeWeapon(i);
+                    SetPickupCanvas(i);
+                }
                 else if (i.GetItemType() == ItemType.ARMOR)
+                {
                     TakeArmor(i);
+                    SetPickupCanvas(i);
+                }
                 else if (i.GetItemType() == ItemType.MAX_HEALTH_INCREASER)
                     TakeMaxHealthIncreaser(i);
+            }
 
+            private static void SetPickupCanvas(Item i)
+            {
+                var obj = FindObjectOfType<PickItemCanvas>();
+                obj.EnablePanel(i);
             }
 
             #region WEAPON
@@ -76,7 +87,7 @@ namespace DungeonRush
                 this.weapon = null;
                 this.weapon = item;
                 this.weapon.GetRenderer().sprite = null;
-                weaponBone.sprite = item.GetSprite();
+                weaponBone.sprite = item.GetSmallSprite();
             }
             public Item GetWeapon()
             {
@@ -98,7 +109,7 @@ namespace DungeonRush
                 this.armor = null;
                 this.armor = item;
                 this.armor.GetRenderer().sprite = null;
-                armorBone.sprite = item.GetSprite();
+                armorBone.sprite = item.GetSmallSprite();
             }
             public Item GetArmor()
             {

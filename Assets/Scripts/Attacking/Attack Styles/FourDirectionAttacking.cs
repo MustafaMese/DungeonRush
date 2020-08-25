@@ -51,7 +51,6 @@ namespace DungeonRush.Attacking
             {
                 Vector2 direction = directions[i];
                 Vector2 targetCoordinate = coordinate + direction;
-                Debug.Log(targetCoordinate);
                 if (targetCoordinate.x < rL && targetCoordinate.x >= 0 && targetCoordinate.y < rL && targetCoordinate.y >= 0)
                 {
                     Card card = Board.tilesByCoordinates[targetCoordinate].GetCard();
