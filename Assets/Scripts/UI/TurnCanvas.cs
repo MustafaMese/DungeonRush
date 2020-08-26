@@ -49,7 +49,6 @@ public class TurnCanvas : MonoBehaviour
     {
         while (canvasGroup.alpha > 0)
         {
-            print("selam canım");
             canvasGroup.alpha -= Time.deltaTime / 0.1f;
             yield return null;
         }
@@ -73,6 +72,7 @@ public class TurnCanvas : MonoBehaviour
     public void SetCardIcons(List<AIController> aIs)
     {
         bool lastOne = false;
+        activeIndex = 0;
         cards.Clear();
         for (int i = 0; i < aIs.Count; i++)
         {
@@ -86,13 +86,19 @@ public class TurnCanvas : MonoBehaviour
 
     public void SetImages(int index)
     {
+        print("1");
+
         if (index > 0 && cards.Count > index - 1 && cards[index - 1].image != null)
             images[0].sprite = cards[index - 1].image;
         else
             images[0].sprite = playerIcon;
 
         if (cards.Count > index && cards[index].image != null)
+        {
+            print("2");
             images[1].sprite = cards[index].image;
+            Debug.Log(images[1].sprite);
+        }
 
         if (cards.Count > index + 1 && cards[index + 1].image != null)
             images[2].sprite = cards[index + 1].image;

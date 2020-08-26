@@ -116,15 +116,9 @@ namespace DungeonRush.Controller
             if (moveFinished && attackerCards[attackerIndex] != null)
             {
                 if (attackerIndex > 0)
-                {
-                    print("1");
                     tc.Next();
-                }
                 else
-                {
-                    print("2");
                     tc.SetImages(0);
-                }
                 attackerCards[attackerIndex].Run();
                 moveFinished = false;
             }

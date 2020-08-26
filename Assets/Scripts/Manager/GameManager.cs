@@ -41,6 +41,7 @@ namespace DungeonRush
 
             public IEnumerator FadeOut()
             {
+                canvasGroup.gameObject.SetActive(true);
                 while(canvasGroup.alpha < 1)
                 {
                     canvasGroup.alpha += Time.deltaTime / fadeOutTime;
@@ -55,6 +56,7 @@ namespace DungeonRush
                     canvasGroup.alpha -= Time.deltaTime / time;
                     yield return null;
                 }
+                canvasGroup.gameObject.SetActive(false);
             }
 
             void OnDestroy()

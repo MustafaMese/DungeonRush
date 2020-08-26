@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4730797087967498184}
   - component: {fileID: 4730797087967498185}
-  - component: {fileID: 5203820694560756425}
+  - component: {fileID: 365830783}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -44,14 +44,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a7ab17b72b448a45b4c63323c236b18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSchedular: {fileID: 0}
   canvasGroup: {fileID: 0}
   start: 0
-  fadeInTime: 0
-  card: {fileID: 0}
-  text: {fileID: 0}
-  l: {fileID: 0}
---- !u!114 &5203820694560756425
+  fadeInTime: 1
+  fadeOutTime: 2
+--- !u!114 &365830783
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -60,15 +57,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 4730797087967498182}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bdfdd3c217aaca24693ce8d08aa22f34, type: 3}
+  m_Script: {fileID: 11500000, guid: af63b8ed12c32384ea34293fd357012c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  displayRect:
+  startRect:
     serializedVersion: 2
-    x: 0
-    y: 0
-    width: 200
-    height: 100
-  fontSize: 20
-  fontColor: {r: 1, g: 0, b: 0, a: 1}
-  prefix: 'FPS: '
+    x: 15
+    y: 15
+    width: 250
+    height: 90
+  updateColor: 1
+  allowDrag: 1
+  frequency: 0.5
+  nbDecimal: 1

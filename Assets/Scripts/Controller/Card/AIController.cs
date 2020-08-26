@@ -158,6 +158,7 @@ namespace DungeonRush.Controller
         public void ChangeAnimatorState(bool state)
         {
             model.GetComponent<Animator>().enabled = state;
+            customization.ChangeSkinState(state);
         }
 
         public void ChangeShadowState(bool shadow)

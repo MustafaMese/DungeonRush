@@ -20,10 +20,14 @@ namespace DungeonRush
             private Card card = null;
             private IAttacker attacker;
 
+            private bool isBeginning;
+
             private void Start()
             {
                 card = GetComponent<Card>();
                 attacker = GetComponent<IAttacker>();
+
+                isBeginning = true;
             }
 
             public List<int> GetItemsIDs()
@@ -55,18 +59,24 @@ namespace DungeonRush
                 else if (i.GetItemType() == ItemType.WEAPON)
                 {
                     TakeWeapon(i);
-                    SetPickupCanvas(i);
+                    if (!isBeginning)
+                        SetPickupCanvas(i);
+                    else
+                        isBeginning = false;
                 }
                 else if (i.GetItemType() == ItemType.ARMOR)
                 {
                     TakeArmor(i);
-                    SetPickupCanvas(i);
+                    if (!isBeginning)
+                        SetPickupCanvas(i);
+                    else
+                        isBeginning = false;
                 }
                 else if (i.GetItemType() == ItemType.MAX_HEALTH_INCREASER)
                     TakeMaxHealthIncreaser(i);
             }
 
-            private static void SetPickupCanvas(Item i)
+            private void SetPickupCanvas(Item i)
             {
                 var obj = FindObjectOfType<PickItemCanvas>();
                 obj.EnablePanel(i);

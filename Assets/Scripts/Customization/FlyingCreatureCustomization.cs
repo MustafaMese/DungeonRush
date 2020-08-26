@@ -3,17 +3,16 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.U2D.Animation;
 
 namespace DungeonRush.Customization
 {
     public class FlyingCreatureCustomization : MonoBehaviour, ICustomization
     {
         [SerializeField] Canvas characterCanvas = null;
-        [SerializeField] SpriteRenderer rightLeg = null;
-        [SerializeField] SpriteRenderer leftLeg = null;
-        [SerializeField] SpriteRenderer leftArm = null;
-        [SerializeField] SpriteRenderer rightArm = null;
-        [SerializeField] SpriteRenderer body = null;
+
+        [SerializeField] List<SpriteRenderer> sprites = new List<SpriteRenderer>();
+        [SerializeField] List<SpriteSkin> skins = new List<SpriteSkin>();
 
         [SerializeField] Material shadow = null;
         [SerializeField] Material lighted = null;
@@ -36,61 +35,29 @@ namespace DungeonRush.Customization
         {
             int layer = (int)Math.Truncate(posY);
 
+            for (int i = 0; i < sprites.Count; i++)
+                ChangeLayer(sprites[i], layer);
+
             if (characterCanvas != null)
                 ChangeLayer(characterCanvas, layer);
-
-            if (leftArm != null)
-                ChangeLayer(leftArm, layer);
-
-            if (rightArm != null)
-                ChangeLayer(rightArm, layer);
-
-            if (leftLeg != null)
-                ChangeLayer(leftLeg, layer);
-
-            if (rightLeg != null)
-                ChangeLayer(rightLeg, layer);
-
-            if (body != null)
-                ChangeLayer(body, layer);
         }
 
         public void OverShadow()
         {
-
-            if (leftArm != null)
-                leftArm.material = shadow;
-
-            if (rightArm != null)
-                rightArm.material = shadow;
-
-            if (leftLeg != null)
-                leftLeg.material = shadow;
-
-            if (rightLeg != null)
-                rightLeg.material = shadow;
-
-            if (body != null)
-                body.material = shadow;
+            for (int i = 0; i < sprites.Count; i++)
+                sprites[i].material = shadow;
         }
 
         public void RemoveShadow()
         {
+            for (int i = 0; i < sprites.Count; i++)
+                sprites[i].material = lighted;
+        }
 
-            if (leftArm != null)
-                leftArm.material = lighted;
-
-            if (rightArm != null)
-                rightArm.material = lighted;
-
-            if (leftLeg != null)
-                leftLeg.material = lighted;
-
-            if (rightLeg != null)
-                rightLeg.material = lighted;
-
-            if (body != null)
-                body.material = lighted;
+        public void ChangeSkinState(bool state)
+        {
+            for (int i = 0; i < skins.Count; i++)
+                skins[i].enabled = state;
         }
     }
 }

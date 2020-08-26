@@ -3,26 +3,21 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.U2D.Animation;
+
 namespace DungeonRush.Customization
 {
     public class HumanoidCustomization : MonoBehaviour, ICustomization
     {
+        private const string r = "Row ";
+
         [SerializeField] Canvas characterCanvas = null;
-        [SerializeField] SpriteRenderer leftArm = null;
-        [SerializeField] SpriteRenderer rightArm = null;
-        [SerializeField] SpriteRenderer leftLeg = null;
-        [SerializeField] SpriteRenderer rightLeg = null;
-        [SerializeField] SpriteRenderer body = null;
-        [SerializeField] SpriteRenderer bodyArmor = null;
-        [SerializeField] SpriteRenderer head = null;
-        [SerializeField] SpriteRenderer headArmor = null;
-        [SerializeField] SpriteRenderer leftBoot = null;
-        [SerializeField] SpriteRenderer rightBoot = null;
+
+        [SerializeField] List<SpriteRenderer> sprites = new List<SpriteRenderer>();
+        [SerializeField] List<SpriteSkin> skins = new List<SpriteSkin>();
 
         [SerializeField] Material shadow = null;
         [SerializeField] Material lighted = null;
-
-        private string r = "Row ";
 
         private void ChangeLayer(SpriteRenderer sR, int layer)
         {
@@ -43,101 +38,26 @@ namespace DungeonRush.Customization
             if (characterCanvas != null)
                 ChangeLayer(characterCanvas, layer);
 
-            if (leftArm != null)
-                ChangeLayer(leftArm, layer);
-
-            if (rightArm != null)
-                ChangeLayer(rightArm, layer);
-
-            if (leftLeg != null)
-                ChangeLayer(leftLeg, layer);
-
-            if (rightLeg != null)
-                ChangeLayer(rightLeg, layer);
-
-            if (body != null)
-                ChangeLayer(body, layer);
-
-            if (bodyArmor != null)
-                ChangeLayer(bodyArmor, layer);
-
-            if (head != null)
-                ChangeLayer(head, layer);
-
-            if (headArmor != null)
-                ChangeLayer(headArmor, layer);
-
-            if (leftBoot != null)
-                ChangeLayer(leftBoot, layer);
-
-            if (rightBoot != null)
-                ChangeLayer(rightBoot, layer);
+            for (int i = 0; i < sprites.Count; i++)
+                ChangeLayer(sprites[i], layer);
         }
 
         public void OverShadow()
         {
-            if (leftArm != null)
-                leftArm.material = shadow;
-
-            if (rightArm != null)
-                rightArm.material = shadow;
-
-            if (leftLeg != null)
-                leftLeg.material = shadow;
-
-            if (rightLeg != null)
-                rightLeg.material = shadow;
-
-            if (body != null)
-                body.material = shadow;
-
-            if (bodyArmor != null)
-                bodyArmor.material = shadow;
-
-            if (head != null)
-                head.material = shadow;
-
-            if (headArmor != null)
-                headArmor.material = shadow;
-
-            if (leftBoot != null)
-                leftBoot.material = shadow;
-
-            if (rightBoot != null)
-                rightBoot.material = shadow;
+            for (int i = 0; i < sprites.Count; i++)
+                sprites[i].material = shadow;
         }
 
         public void RemoveShadow()
         {
-            if (leftArm != null)
-                leftArm.material = lighted;
+            for (int i = 0; i < sprites.Count; i++)
+                sprites[i].material = lighted;
+        }
 
-            if (rightArm != null)
-                rightArm.material = lighted;
-
-            if (leftLeg != null)
-                leftLeg.material = lighted;
-
-            if (rightLeg != null)
-                rightLeg.material = lighted;
-
-            if (body != null)
-                body.material = lighted;
-
-            if (bodyArmor != null)
-                bodyArmor.material = lighted;
-
-            if (head != null)
-                head.material = lighted;
-
-            if (headArmor != null)
-                headArmor.material = lighted;
-
-            if (leftBoot != null)
-                leftBoot.material = lighted;
-
-            if (rightBoot != null)
-                rightBoot.material = lighted;
+        public void ChangeSkinState(bool state)
+        {
+            for (int i = 0; i < skins.Count; i++)
+                skins[i].enabled = state;
         }
     }
 }

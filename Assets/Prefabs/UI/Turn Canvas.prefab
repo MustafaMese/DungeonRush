@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 6095422901881509984}
   - component: {fileID: 6095422901881509987}
   - component: {fileID: 6095422901881509986}
-  - component: {fileID: 6095422901881510013}
   - component: {fileID: 6095422901881509985}
   - component: {fileID: 6095422901881509990}
   m_Layer: 5
@@ -84,23 +83,6 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
---- !u!114 &6095422901881510013
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6095422901881510012}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_IgnoreReversedGraphics: 1
-  m_BlockingObjects: 0
-  m_BlockingMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
 --- !u!114 &6095422901881509985
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -130,8 +112,8 @@ CanvasGroup:
   m_GameObject: {fileID: 6095422901881510012}
   m_Enabled: 1
   m_Alpha: 1
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
 --- !u!1 &6095422902064307720
 GameObject:

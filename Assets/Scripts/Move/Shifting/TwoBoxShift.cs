@@ -15,7 +15,6 @@ namespace DungeonRush.Shifting
         {
             int rL = Board.RowLength;
             Vector2 coordinate = card.GetTile().transform.position;
-            Debug.Log("c " + coordinate);
             switch (swipe)
             {
                 case Swipe.NONE:
