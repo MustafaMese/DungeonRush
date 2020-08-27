@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class DefeatedPanel : MonoBehaviour
 {
@@ -20,6 +21,7 @@ public class DefeatedPanel : MonoBehaviour
     [SerializeField] TextMeshProUGUI encounterText;
     [SerializeField] TextMeshProUGUI goldText;
     [SerializeField] TextMeshProUGUI xpText;
+    [SerializeField] Button button;
 
     private PlayerCard player;
 
@@ -34,12 +36,14 @@ public class DefeatedPanel : MonoBehaviour
     {
         GameManager.gameState = GameState.STOP_GAME;
         defeatedPanel.SetActive(true);
+        button.gameObject.SetActive(true);
         DeactivatePanels();
         SetValues();
     }
 
     public void MainMenu()
     {
+        print("wow");
         StartCoroutine(Fading());
     }
 
