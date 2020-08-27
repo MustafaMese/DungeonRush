@@ -87,7 +87,7 @@ namespace DungeonRush.Controller
             }
             else if (turnNumber == 0)
             {
-                tc.SetImageAsPlayerIcon();
+                tc.Initialize();
                 StartCoroutine(tc.ActivatePanel(true));
                 playerController.Begin();
             }

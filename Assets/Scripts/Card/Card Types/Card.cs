@@ -41,6 +41,11 @@ namespace DungeonRush
                 move = new Move();
             }
 
+            public int GetLevel()
+            {
+                return cardProperties.level;
+            }
+
             public Sprite GetCharacterIcon()
             {
                 return cardProperties.characterIcon;

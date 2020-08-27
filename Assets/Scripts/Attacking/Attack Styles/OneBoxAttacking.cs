@@ -14,7 +14,7 @@ namespace DungeonRush.Attacking
         public override void Attack(Move move, int damage)
         {
             Card targetCard = move.GetTargetTile().GetCard();
-            if(targetCard != null)
+            if (targetCard != null)
                 targetCard.DecreaseHealth(damage);
         }
 

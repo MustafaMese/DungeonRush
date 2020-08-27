@@ -25,6 +25,7 @@ public class TurnCanvas : MonoBehaviour
 
     [SerializeField] TextMeshProUGUI textMesh;
     [SerializeField] Sprite playerIcon;
+    [SerializeField] Sprite nooneIcon;
     [SerializeField] List<Image> images = new List<Image>();
     [SerializeField] List<UIImage> cards = new List<UIImage>();
     [SerializeField] CanvasGroup canvasGroup;
@@ -33,7 +34,7 @@ public class TurnCanvas : MonoBehaviour
 
     private void Start()
     {
-        SetImageAsPlayerIcon();
+        Initialize();
     }
 
     private IEnumerator EnablePanel()
@@ -102,8 +103,10 @@ public class TurnCanvas : MonoBehaviour
 
         if (cards.Count > index + 1 && cards[index + 1].image != null)
             images[2].sprite = cards[index + 1].image;
+        else
+            images[2].sprite = nooneIcon;
 
-        if(cards.Count > index && cards[index].lastOne)
+        if (cards.Count > index && cards[index].lastOne)
             images[2].sprite = playerIcon;
     }
 
@@ -113,14 +116,14 @@ public class TurnCanvas : MonoBehaviour
         SetImages(activeIndex);
     }
 
-    public void SetImageAsPlayerIcon()
+    public void Initialize()
     {
         if (cards.Count > 0)
             images[0].sprite = cards[cards.Count - 1].image;
         else
-            images[0].sprite = null;
+            images[0].sprite = nooneIcon;
 
         images[1].sprite = playerIcon;
-        images[2].sprite = null;
+        images[2].sprite = nooneIcon;
     }
 }

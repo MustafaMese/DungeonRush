@@ -2,6 +2,7 @@
 using DungeonRush.Attacking;
 using DungeonRush.Cards;
 using DungeonRush.Data;
+using DungeonRush.Field;
 using DungeonRush.Items;
 using DungeonRush.Skills;
 using System.Collections;
@@ -32,6 +33,7 @@ namespace DungeonRush.Property
         private bool attackFinished = false;
         private Card card = null;
         private SkillUser skillUser = null;
+        private CollectableManager collectableManager = null;
 
         private void Start()
         {
@@ -46,6 +48,7 @@ namespace DungeonRush.Property
             FillThePool(poolForAttackStyle, effectObject, 2);
 
             power = attackStyle.GetPower();
+            collectableManager = FindObjectOfType<CollectableManager>();
         }
 
         private void FillThePool(ObjectPool pool, GameObject effect, int objectCount)
@@ -88,13 +91,19 @@ namespace DungeonRush.Property
 
         private void Damage(Move move)
         {
-            Transform card = move.GetCard().transform;
-            Transform target = move.GetTargetTile().transform;
+            Card card = move.GetCard();
+            Tile target = move.GetTargetTile();
             Vector3 tPos = move.GetTargetTile().GetCoordinate();
             float time = attackStyle.GetAnimationTime();
 
+            int total = target.GetCard().GetHealth() - power;
+            if (total <= 0)
+                collectableManager.AddCoins(target.transform.position, target.GetCard().GetLevel());
+
             attackStyle.Attack(move, power);
-            StartCoroutine(StartAttackAnimation(poolForAttackStyle, tPos, card, target, time));
+
+
+            StartCoroutine(StartAttackAnimation(poolForAttackStyle, tPos, card.transform, target.transform, time));
             StartCoroutine(StartTextPopup(poolForTextPopup, tPos, power));
         }
 

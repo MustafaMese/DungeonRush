@@ -14,7 +14,7 @@ namespace DungeonRush.Controller
     public class PlayerController : MonoBehaviour, ICardController, IMoveController
     {
         private bool isRunning = false;
-        private Card player;
+        private PlayerCard player;
         private ProcessHandleChecker preparingProcess;
         private ProcessHandleChecker attackProcess;
         private ProcessHandleChecker moveProcess;
@@ -173,6 +173,7 @@ namespace DungeonRush.Controller
         }
         #endregion
 
+        #region SAVING METHODS
         public void SavePlayer()
         {
             SavingSystem.SavePlayerInstantProgress(player);
@@ -186,6 +187,7 @@ namespace DungeonRush.Controller
 
             player.SetMaxHealth(data.maxHealth);
             player.SetCurrentHealth(data.currentHealth);
+            player.Coins = data.gold;
 
             var itemStorage = FindObjectOfType<ItemStorage>();
 
@@ -195,5 +197,7 @@ namespace DungeonRush.Controller
                 player.GetComponent<ItemUser>().TakeItem(item);
             }
         }
+
+        #endregion
     }
 }

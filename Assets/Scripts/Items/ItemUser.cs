@@ -54,26 +54,37 @@ namespace DungeonRush
 
             public void TakeItem(Item i)
             {
-                if (i.GetItemType() == ItemType.POTION)
-                    TakePotion(i);
-                else if (i.GetItemType() == ItemType.WEAPON)
+                switch (i.GetItemType())
                 {
-                    TakeWeapon(i);
-                    if (!isBeginning)
-                        SetPickupCanvas(i);
-                    else
-                        isBeginning = false;
+                    case ItemType.WEAPON:
+                        TakeWeapon(i);
+                        if (!isBeginning)
+                            SetPickupCanvas(i);
+                        else
+                            isBeginning = false;
+                        break;
+                    case ItemType.POTION:
+                        TakePotion(i);
+                        break;
+                    case ItemType.POISON:
+                        break;
+                    case ItemType.ARMOR:
+                        TakeArmor(i);
+                        if (!isBeginning)
+                            SetPickupCanvas(i);
+                        else
+                            isBeginning = false;
+                        break;
+                    case ItemType.MAX_HEALTH_INCREASER:
+                        TakeMaxHealthIncreaser(i);
+                        break;
+                    case ItemType.COIN:
+                        break;
+                    case ItemType.NONE:
+                        break;
+                    default:
+                        break;
                 }
-                else if (i.GetItemType() == ItemType.ARMOR)
-                {
-                    TakeArmor(i);
-                    if (!isBeginning)
-                        SetPickupCanvas(i);
-                    else
-                        isBeginning = false;
-                }
-                else if (i.GetItemType() == ItemType.MAX_HEALTH_INCREASER)
-                    TakeMaxHealthIncreaser(i);
             }
 
             private void SetPickupCanvas(Item i)
@@ -91,9 +102,8 @@ namespace DungeonRush
             private void SetWeapon(Item item)
             {
                 if (this.weapon != null && this.weapon.gameObject != null)
-                {
                     this.weapon.gameObject.SetActive(false);
-                }
+
                 this.weapon = null;
                 this.weapon = item;
                 this.weapon.GetRenderer().sprite = null;
@@ -113,9 +123,8 @@ namespace DungeonRush
             private void SetArmor(Item item)
             {
                 if (this.armor != null)
-                {
                     this.armor.gameObject.SetActive(false);
-                }
+
                 this.armor = null;
                 this.armor = item;
                 this.armor.GetRenderer().sprite = null;

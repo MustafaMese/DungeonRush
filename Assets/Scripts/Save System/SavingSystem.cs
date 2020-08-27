@@ -9,11 +9,11 @@ namespace DungeonRush.Saving
 {
     public static class SavingSystem
     {
-        private const string playerPath = "/playerInstant.sav";
-        public static void SavePlayerInstantProgress(Card player)
+        private const string instantPath = "/playerInstant.sav";
+        public static void SavePlayerInstantProgress(PlayerCard player)
         {
             BinaryFormatter formatter = new BinaryFormatter();
-            string path = Application.persistentDataPath + playerPath;
+            string path = Application.persistentDataPath + instantPath;
             Debug.Log(path);
             FileStream stream = new FileStream(path, FileMode.Create);
 
@@ -25,7 +25,7 @@ namespace DungeonRush.Saving
 
         public static PlayerData LoadPlayerInstantProgress()
         {
-            string path = Application.persistentDataPath + playerPath;
+            string path = Application.persistentDataPath + instantPath;
 
             Debug.Log(Application.persistentDataPath);
                 
@@ -48,7 +48,7 @@ namespace DungeonRush.Saving
 
         public static void DeletePlayerInstantSaveFile()
         {
-            string path = Application.persistentDataPath + playerPath;
+            string path = Application.persistentDataPath + instantPath;
             if (File.Exists(path))
             {
                 File.Delete(path);

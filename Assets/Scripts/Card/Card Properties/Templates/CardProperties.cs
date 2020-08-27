@@ -12,6 +12,9 @@ namespace DungeonRush
             public CardType cardType;
             public Character character;
             public Sprite characterIcon;
+
+            [Header("Enemy only")]
+            public int level;
         }
     }
 }

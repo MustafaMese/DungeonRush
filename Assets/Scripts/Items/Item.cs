@@ -16,6 +16,8 @@ namespace DungeonRush.Items
         [SerializeField] Sprite itemSmallSprite = null;
         [SerializeField] Sprite itemBigSprite = null;
         [SerializeField] int id = 0;
+
+        [Header("For weapons")]
         [SerializeField] AttackStyle attackStyle;
 
         public string GetItemName()
@@ -66,6 +68,7 @@ namespace DungeonRush.Items
         POISON,
         ARMOR,
         MAX_HEALTH_INCREASER,
+        COIN,
         NONE = -1
     }
 }

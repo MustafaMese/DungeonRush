@@ -25,7 +25,6 @@ namespace DungeonRush
             public PlayerCard playerCard;
             public EnemyCard[] enemyCards;
             public ItemCard[] itemCards;
-            public CoinCard[] coinCards;
             public EnemyCard[] trapCards;
 
             public List<Card> cards = new List<Card>();

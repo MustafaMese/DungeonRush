@@ -13,20 +13,34 @@ namespace DungeonRush
         public class PlayerCard : Card
         {
             [SerializeField] EventMover eventMover = null;
-            public bool isEventMove = false;
+            private bool isEventMove = false;
             [SerializeField] bool isFirstLevel = false;
 
             PlayerAttacker playerAttacker;
             ItemUser itemUser;
 
+            [SerializeField] private int experience = 0;
+            public int Experience
+            {
+                get { return experience; }
+                set { experience = value; }
+            }
+
+            [SerializeField] private int coins = 0;
+            public int Coins
+            {
+                get { return coins; }
+                set { coins = value; }
+            }
+
             protected override void Initialize()
             {
                 base.Initialize();
-                if(!isFirstLevel)
-                    GetComponent<PlayerController>().LoadPlayer();
-
                 playerAttacker = GetComponent<PlayerAttacker>();
                 itemUser = GetComponent<ItemUser>();
+
+                if (!isFirstLevel)
+                    GetComponent<PlayerController>().LoadPlayer();
             }
 
             public override void ExecuteMove()
