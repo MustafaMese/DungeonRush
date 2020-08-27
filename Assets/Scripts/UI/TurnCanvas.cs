@@ -41,7 +41,7 @@ public class TurnCanvas : MonoBehaviour
     {
         while (canvasGroup.alpha < 1)
         {
-            canvasGroup.alpha += Time.deltaTime / 0.1f;
+            canvasGroup.alpha += Time.deltaTime / 0.02f;
             yield return null;
         }
     }
@@ -50,24 +50,17 @@ public class TurnCanvas : MonoBehaviour
     {
         while (canvasGroup.alpha > 0)
         {
-            canvasGroup.alpha -= Time.deltaTime / 0.1f;
+            canvasGroup.alpha -= Time.deltaTime / 0.02f;
             yield return null;
         }
     }
 
-    private void ChangeText(bool playerTurn)
+    public void ChangeText(bool playerTurn)
     {
         if (playerTurn)
             textMesh.text = playerTurnText;
         else
             textMesh.text = enemyTurnText;
-    }
-
-    public IEnumerator ActivatePanel(bool playerTurn)
-    {
-        yield return DisablePanel();
-        ChangeText(playerTurn);
-        yield return EnablePanel();
     }
 
     public void SetCardIcons(List<AIController> aIs)
@@ -87,19 +80,13 @@ public class TurnCanvas : MonoBehaviour
 
     public void SetImages(int index)
     {
-        print("1");
-
         if (index > 0 && cards.Count > index - 1 && cards[index - 1].image != null)
             images[0].sprite = cards[index - 1].image;
         else
             images[0].sprite = playerIcon;
 
         if (cards.Count > index && cards[index].image != null)
-        {
-            print("2");
             images[1].sprite = cards[index].image;
-            Debug.Log(images[1].sprite);
-        }
 
         if (cards.Count > index + 1 && cards[index + 1].image != null)
             images[2].sprite = cards[index + 1].image;

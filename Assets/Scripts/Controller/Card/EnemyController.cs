@@ -43,7 +43,11 @@ namespace DungeonRush.Controller
                 {
                     Board.touched = true;
                     DetermineAttackers();
-                    tc.SetCardIcons(attackerCards);
+                    if (attackerCards.Count > 0)
+                    {
+                        tc.ChangeText(false);
+                        tc.SetCardIcons(attackerCards);
+                    }
                     moveFinished = true;
                 }
                 else if (assigningProcess.IsRunning())

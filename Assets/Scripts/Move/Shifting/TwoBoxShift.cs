@@ -22,7 +22,6 @@ namespace DungeonRush.Shifting
                 case Swipe.UP:
                     if (coordinate.y < rL - 2)
                     {
-                        Debug.Log("1");
                         Vector2 targetPos = new Vector2(coordinate.x, coordinate.y + 2);
                         Tile targetTile = Board.tilesByCoordinates[targetPos];
                         if (targetTile.GetCard() == null)
@@ -42,7 +41,6 @@ namespace DungeonRush.Shifting
                             return true;
                         }
                     }
-                    Debug.Log("gobba");
                     break;
                 case Swipe.DOWN:
                     if (coordinate.y > 1)

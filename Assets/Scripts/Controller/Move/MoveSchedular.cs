@@ -88,12 +88,11 @@ namespace DungeonRush.Controller
             else if (turnNumber == 0)
             {
                 tc.Initialize();
-                StartCoroutine(tc.ActivatePanel(true));
+                tc.ChangeText(true);
                 playerController.Begin();
             }
             else if (turnNumber == 1)
             {
-                StartCoroutine(tc.ActivatePanel(false));
                 enemyController.Begin();
             }
             else if (turnNumber == 2)
