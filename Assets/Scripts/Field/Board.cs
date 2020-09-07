@@ -130,19 +130,22 @@ namespace DungeonRush
             }
             public void SetTileDarkness()
             {
-                Tile playerTile = cm.instantPlayerTile;
-                Vector3 coordinate = playerTile.GetCoordinate();
-
                 for (int i = 0; i < cardPlaces.Count; i++)
-                {
-                    float distance = (cardPlaces[i].transform.position - coordinate).sqrMagnitude;
-                    if (distance <= 3)
-                        cardPlaces[i].SetDarkness(null);
-                    else if (distance <= 6)
-                        cardPlaces[i].SetDarkness(darknessGray);
-                    else
-                        cardPlaces[i].SetDarkness(darknessBlack);
-                }
+                    cardPlaces[i].SetDarkness(null);
+
+                //Tile playerTile = cm.instantPlayerTile;
+                //Vector3 coordinate = playerTile.GetCoordinate();
+
+                //for (int i = 0; i < cardPlaces.Count; i++)
+                //{
+                //    float distance = (cardPlaces[i].transform.position - coordinate).sqrMagnitude;
+                //    if (distance <= 3)
+                //        cardPlaces[i].SetDarkness(null);
+                //    else if (distance <= 6)
+                //        cardPlaces[i].SetDarkness(darknessGray);
+                //    else
+                //        cardPlaces[i].SetDarkness(darknessBlack);
+                //}
             }
             public void SetTiles(Dictionary<int, Tile> t)
             {

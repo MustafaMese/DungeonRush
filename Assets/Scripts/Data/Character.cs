@@ -23,7 +23,7 @@ namespace DungeonRush
             TRAP
         }
 
-        [CreateAssetMenu(menuName = "Card/Character")]
+        [CreateAssetMenu(menuName = "ScriptableObjects/Card/Character")]
         public class Character : ScriptableObject
         {
             public CharacterType cT;

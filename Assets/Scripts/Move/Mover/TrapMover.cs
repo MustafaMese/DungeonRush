@@ -7,31 +7,11 @@ using UnityEngine;
 
 namespace DungeonRush.Property
 {
-    public class TrapMover : MonoBehaviour, IMover
+    public class TrapMover : Mover
     {
-        private bool isMoveFinished = false;
-
-        [Header("Shifting Properties")]
-        [SerializeField] Shift shifting = null;
-
-        public Shift GetShift()
+        public override void Move()
         {
-            return shifting;
-        }
-
-        public bool IsMoveFinished()
-        {
-            return isMoveFinished;
-        }
-
-        public void Move()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void SetIsMoveFinished(bool b)
-        {
-            isMoveFinished = b;
+            print("Tuzaklar ilerlemez");
         }
     }
 }

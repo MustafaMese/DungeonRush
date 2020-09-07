@@ -18,14 +18,14 @@ namespace DungeonRush
             public Item weapon = null;
             public Item armor = null;
             private Card card = null;
-            private IAttacker attacker;
+            private Attacker attacker;
 
             private bool isBeginning;
 
             private void Start()
             {
                 card = GetComponent<Card>();
-                attacker = GetComponent<IAttacker>();
+                attacker = GetComponent<Attacker>();
 
                 isBeginning = true;
             }

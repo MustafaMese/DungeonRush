@@ -5,7 +5,7 @@ namespace DungeonRush
 {
     namespace Property
     {
-        [CreateAssetMenu(menuName = "Card/Template")]
+        [CreateAssetMenu(menuName = "ScriptableObjects/Card/Template")]
         public class CardProperties : ScriptableObject
         {
             public string cardName;

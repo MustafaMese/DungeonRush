@@ -19,7 +19,7 @@ namespace DungeonRush.Controller
         private ProcessHandleChecker attackProcess;
         private ProcessHandleChecker moveProcess;
         private MoveSchedular ms;
-        private IAttacker attacker;
+        private Attacker attacker;
         private ICustomization customization;
 
         private void Start()
@@ -27,7 +27,7 @@ namespace DungeonRush.Controller
             InitProcessHandlers();
             player = GetComponent<PlayerCard>();
             ms = FindObjectOfType<MoveSchedular>();
-            attacker = player.GetComponent<IAttacker>();
+            attacker = player.GetComponent<Attacker>();
             customization = player.GetComponent<ICustomization>();
             FindObjectOfType<MoveSchedular>().playerController = this;
 

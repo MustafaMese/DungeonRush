@@ -13,37 +13,18 @@ namespace DungeonRush
 {
     namespace Property
     {
-        public class PlayerMover : MonoBehaviour, IMover
+        public class PlayerMover : Mover
         {
-            private Move move;
-            private bool isMoveFinished = false;
-
             public bool isSkillUser = false;
             private SkillUser skillUser = null;
-
-            [Header("Shifting Properties")]
-            [SerializeField] Shift shifting = null;
-            [SerializeField] float movingTime = 0.2f;
-            [SerializeField] Animator animator = null;
-            [SerializeField] GameObject walkParticul = null;
-            [SerializeField] float particulTime = 0;
-            private ObjectPool pool = new ObjectPool();
-
-            private Card card;
-
-            private void Start()
+            
+            protected override void Initialize()
             {
-                DOTween.Init();
-                move = new Move();
-                card = GetComponent<Card>();
                 if (isSkillUser)
                     skillUser = GetComponent<SkillUser>();
-
-                pool.SetObject(walkParticul);
-                pool.FillPool(4);
             }
 
-            public void Move()
+            public override void Move()
             {
                 if (move.GetCard() == null)
                     move = card.GetMove();
@@ -58,17 +39,8 @@ namespace DungeonRush
                 move.GetCard().transform.DOMove(move.GetTargetTile().GetCoordinate(), movingTime).OnComplete(() => TerminateMove());
             }
 
-            private IEnumerator StartMoveAnimation(Vector3 pos, float time)
-            {
-                GameObject obj = pool.PullObjectFromPool();
-                obj.transform.position = pos;
-                yield return new WaitForSeconds(time);
-                pool.AddObjectToPool(obj);
-            }
-
             private void TerminateMove()
             {
-                // YÜRÜMEYİ BİTİR.
                 UpdateAnimation(false);
                 move.GetCard().transform.position = move.GetTargetTile().GetCoordinate();
                 MoveType moveType = move.GetMoveType();
@@ -110,26 +82,7 @@ namespace DungeonRush
                 card.GetComponent<ItemUser>().TakeItem(i);
 
             }
-
-            private void UpdateAnimation(bool b)
-            {  
-                animator.SetBool("walk", b);
-            }
-
-            public Shift GetShift()
-            {
-                return shifting;
-            }
-
-            public bool IsMoveFinished()
-            {
-                return isMoveFinished;
-            }
-
-            public void SetIsMoveFinished(bool b)
-            {
-                isMoveFinished = b;
-            }
+            
         }
     }
 }

@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace DungeonRush.Attacking
 {
-    [CreateAssetMenu(menuName = "Attack/ThreeToOneBoxAttacking")]
+    [CreateAssetMenu(menuName = "ScriptableObjects/Attack/ThreeToOneBoxAttacking")]
     public class ThreeToOneBoxAttacking : AttackStyle
     {
         private List<Card> tempList = new List<Card>();

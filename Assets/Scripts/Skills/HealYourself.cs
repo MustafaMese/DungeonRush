@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace DungeonRush.Skills
 {
-    [CreateAssetMenu(menuName = "Skill/Healing")]
+    [CreateAssetMenu(menuName = "ScriptableObjects/Skill/Healing")]
     public class HealYourself : Skill
     {
         [SerializeField] int healPower = 2;

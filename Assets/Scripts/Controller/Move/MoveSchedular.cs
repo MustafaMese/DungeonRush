@@ -72,7 +72,7 @@ namespace DungeonRush.Controller
                 if (oldTurnNumber == 0)
                 {
                     turnNumber = 1;
-                    board.SetTileDarkness();
+                    //board.SetTileDarkness();
                 }
                 else
                     turnNumber = 0;

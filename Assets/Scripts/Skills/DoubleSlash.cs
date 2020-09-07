@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace DungeonRush.Skills
 {
-    [CreateAssetMenu(menuName = "Skill/DoubleSlash", order = 1)]
+    [CreateAssetMenu(menuName = "ScriptableObjects/Skill/DoubleSlash")]
     public class DoubleSlash : Skill
     {
         [SerializeField] int slashPower = 2;

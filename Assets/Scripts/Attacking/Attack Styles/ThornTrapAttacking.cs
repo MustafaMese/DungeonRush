@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace DungeonRush.Attacking
 {
-    [CreateAssetMenu(menuName = "Attack/ThornTrapAttack")]
+    [CreateAssetMenu(menuName = "ScriptableObjects/Attack/ThornTrapAttack")]
     public class ThornTrapAttacking : AttackStyle
     {
         public override void Attack(Move move, int damage)

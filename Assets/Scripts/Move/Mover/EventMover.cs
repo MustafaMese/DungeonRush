@@ -8,35 +8,15 @@ using UnityEngine;
 
 namespace DungeonRush.Property
 {
-    public class EventMover : MonoBehaviour, IMover
+    public class EventMover : Mover
     {
-        private Move move;
-        private bool isMoveFinished = false;
-        
         [Header("Shifting Properties")]
-        [SerializeField] Animator animator = null;
-        [SerializeField] Shift shifting = null;
         [SerializeField] float range = 0f;
-        [SerializeField] float movingTime = 0f;
         [SerializeField] float achievingTime = 0;
-        [SerializeField] GameObject brokeTreasureParticle = null;
-        [SerializeField] float particleTime = 0;
-        private ObjectPool pool = new ObjectPool();
 
-        private Card card;
         private IGameEvent gameEvent;
-   
-        private void Start()
-        {
-            DOTween.Init();
-            move = new Move();
-            card = GetComponent<Card>();
 
-            pool.SetObject(brokeTreasureParticle);
-            pool.FillPool(1);
-        }
-
-        public void Move()
+        public override void Move()
         {
             if (move.GetCard() == null)
                 move = card.GetMove();
@@ -57,7 +37,7 @@ namespace DungeonRush.Property
 
             if (gameEvent.GetEventType() == EventType.TREASURE)
             {
-                StartCoroutine(StartEventAnimation(targetPos, particleTime));
+                StartCoroutine(StartEventAnimation(targetPos, particulTime));
                 move.GetCard().transform.DOMove(targetPos, movingTime).OnComplete(() => StartCoroutine(TreasureMove()));
             }
             else if (gameEvent.GetEventType() == EventType.PORTAL)
@@ -89,33 +69,6 @@ namespace DungeonRush.Property
             UpdateAnimation(false, false);
             gameEvent.GetEvent(card);
             Finalise();
-        }
-        #endregion
-
-        #region IMOVER METHODS
-        public Shift GetShift()
-        {
-            return shifting;
-        }
-
-        public bool IsMoveFinished()
-        {
-            return isMoveFinished;
-        }
-
-        public void SetIsMoveFinished(bool b)
-        {
-            isMoveFinished = b;
-        }
-
-        public Move GetMove()
-        {
-            return move;
-        }
-
-        public void SetMove(Move move)
-        {
-            this.move = move;
         }
         #endregion
 

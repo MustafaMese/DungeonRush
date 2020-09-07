@@ -8,46 +8,12 @@ using UnityEngine;
 
 namespace DungeonRush.Attacking
 {
-    public class GoblinAttacker : MonoBehaviour, IAttacker
+    public class GoblinAttacker : Attacker
     {
         [Header("Attacker Properties")]
-        [SerializeField] AttackStyle attackStyle = null;
         [SerializeField] float damageTime = 0.3f;
-        private int power = 0;
 
-        [SerializeField] TextPopup textPopup = null;
-        private ObjectPool poolForTextPopup = new ObjectPool();
-
-        [Header("Animation Variables")]
-        [SerializeField] Animator animator = null;
-
-        private ObjectPool poolForAttackStyle = new ObjectPool();
-        private GameObject effectObject = null;
-
-        private bool attackFinished = false;
-        private Card card = null;
-
-        private void Start()
-        {
-            DOTween.Init();
-            card = GetComponent<Card>();
-
-            FillThePool(poolForTextPopup, textPopup.gameObject, 2);
-
-            effectObject = attackStyle.GetEffect();
-            FillThePool(poolForAttackStyle, effectObject, 2);
-
-            power = attackStyle.GetPower();
-        }
-
-        private void FillThePool(ObjectPool pool, GameObject effect, int objectCount)
-        {
-            pool.SetObject(effect);
-            pool.FillPool(objectCount);
-        }
-
-
-        public void Attack()
+        public override void Attack()
         {
             attackFinished = false;
             Move move = card.GetMove();
@@ -78,70 +44,12 @@ namespace DungeonRush.Attacking
             }
         }
 
-        public bool CanMove(Card enemy)
-        {
-            switch (enemy.GetCardType())
-            {
-                case CardType.PLAYER:
-                    return false;
-                case CardType.ENEMY:
-                    return false;
-            }
-
-            return true;
-        }
-
-        private IEnumerator StartTextPopup(ObjectPool pool, Vector3 tPos, int damage)
-        {
-            GameObject obj = pool.PullObjectFromPool();
-            obj.transform.position = tPos;
-            TextPopup objTxt = obj.GetComponent<TextPopup>();
-            objTxt.Setup(damage, tPos);
-            float t = objTxt.GetDisapperTime();
-            yield return new WaitForSeconds(t);
-            obj.transform.SetParent(this.transform);
-            pool.AddObjectToPool(obj);
-        }
-
         private IEnumerator StartAttackAnimation(ObjectPool pool, Vector3 tPos, Transform card, float time)
         {
             GameObject obj = pool.PullObjectFromPool();
             attackStyle.SetEffectPosition(obj, tPos, card);
             yield return new WaitForSeconds(time);
             pool.AddObjectToPool(obj);
-        }
-
-        public bool GetAttackFinished()
-        {
-            return attackFinished;
-        }
-        public AttackStyle GetAttackStyle()
-        {
-            return attackStyle;
-        }
-
-        public void SetAttackFinished(bool b)
-        {
-            attackFinished = b;
-        }
-
-        public void SetAttackStyle(AttackStyle attackStyle)
-        {
-            poolForAttackStyle.DeleteObjectsInPool();
-            this.attackStyle = attackStyle;
-            effectObject = attackStyle.GetEffect();
-            FillThePool(poolForAttackStyle, effectObject, 2);
-
-            power = attackStyle.GetPower();
-        }
-
-        private void UpdateAnimation(bool play, bool isAttack)
-        {
-            if (card.GetCardType() != CardType.TRAP)
-                if (isAttack)
-                    animator.SetTrigger("attack");
-                else
-                    animator.SetBool("walk", play);
         }
     }
 }

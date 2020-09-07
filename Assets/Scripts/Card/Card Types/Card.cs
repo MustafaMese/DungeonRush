@@ -16,8 +16,8 @@ namespace DungeonRush
             protected Health health = null;
             protected Move move;
             protected string cardName = " ";
-            protected IMover mover = null;
-            protected IAttacker attacker = null;
+            protected Mover mover = null;
+            protected Attacker attacker = null;
             protected IMoveController controller;
 
             [Header("General Properties")]
@@ -35,8 +35,8 @@ namespace DungeonRush
             {
                 health = GetComponent<Health>();
                 cardName = cardProperties.cardName;
-                mover = GetComponent<IMover>();
-                attacker = GetComponent<IAttacker>();
+                mover = GetComponent<Mover>();
+                attacker = GetComponent<Attacker>();
                 Controller = GetComponent<IMoveController>();
                 move = new Move();
             }

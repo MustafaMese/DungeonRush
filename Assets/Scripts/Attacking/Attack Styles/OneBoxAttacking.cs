@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace DungeonRush.Attacking
 {
-    [CreateAssetMenu(menuName = "Attack/OneBoxAttack", order = 1)]
+    [CreateAssetMenu(menuName = "ScriptableObjects/Attack/OneBoxAttack", order = 1)]
     public class OneBoxAttacking : AttackStyle
     {
         public override void Attack(Move move, int damage)

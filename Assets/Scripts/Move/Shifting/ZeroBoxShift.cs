@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace DungeonRush.Shifting
 {
-    [CreateAssetMenu(menuName = "Shift/ZeroBoxShift")]
+    [CreateAssetMenu(menuName = "ScriptableObjects/Shift/ZeroBoxShift")]
     public class ZeroBoxShift : Shift
     {
         public override bool Define(Card card, Swipe swipe)

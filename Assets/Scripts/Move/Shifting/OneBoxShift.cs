@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace DungeonRush.Shifting
 {
-    [CreateAssetMenu(menuName = "Shift/OneBoxShift", order = 1)]
+    [CreateAssetMenu(menuName = "ScriptableObjects/Shift/OneBoxShift")]
     public class OneBoxShift : Shift
     {
         public override bool Define(Card card, Swipe swipe)

@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace DungeonRush.Attacking
 {
-    [CreateAssetMenu(menuName = "Attack/FourDirectionAttack")]
+    [CreateAssetMenu(menuName = "ScriptableObjects/Attack/FourDirectionAttack")]
     public class FourDirectionAttacking : AttackStyle
     {
         List<Card> tempList = new List<Card>();

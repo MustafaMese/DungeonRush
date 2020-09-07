@@ -22,8 +22,8 @@ namespace DungeonRush.Controller
         protected ProcessHandleChecker attackProcess;
         protected ProcessHandleChecker moveProcess;
 
-        protected IMover mover;
-        protected IAttacker attacker;
+        protected Mover mover;
+        protected Attacker attacker;
         protected ICustomization customization;
 
         [SerializeField] GameObject model;
@@ -52,8 +52,8 @@ namespace DungeonRush.Controller
         protected virtual void Initialize()
         {
             card = GetComponent<Card>();
-            mover = card.GetComponent<IMover>();
-            attacker = card.GetComponent<IAttacker>();
+            mover = card.GetComponent<Mover>();
+            attacker = card.GetComponent<Attacker>();
             customization = card.GetComponent<ICustomization>();
             cardType = card.GetCardType();
         }

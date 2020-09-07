@@ -10,21 +10,8 @@ using UnityEngine;
 
 namespace DungeonRush.Property
 {
-    public class EnemyMover : MonoBehaviour, IMover
+    public class EnemyMover : Mover
     {
-        private Move move;
-        private bool isMoveFinished = false;
-
-        [Header("Shifting Properties")]
-        [SerializeField] Shift shifting = null;
-        [SerializeField] float movingTime = 0.2f;
-        [SerializeField] Animator animator = null;
-        [SerializeField] GameObject walkParticul = null;
-        [SerializeField] float particulTime = 0;
-
-        private ObjectPool pool = new ObjectPool();
-        private Card card;
-
         private void Start()
         {
             DOTween.Init();
@@ -34,17 +21,7 @@ namespace DungeonRush.Property
             pool.FillPool(4);
         }
 
-        public Shift GetShift()
-        {
-            return shifting;
-        }
-
-        public bool IsMoveFinished()
-        {
-            return isMoveFinished;
-        }
-
-        public void Move()
+        public override void Move()
         {
             if (move.GetCard() == null)
                 move = card.GetMove();
@@ -64,23 +41,5 @@ namespace DungeonRush.Property
             move.Reset();
         }
 
-        private IEnumerator StartMoveAnimation(Vector3 pos, float time)
-        {
-            GameObject obj = pool.PullObjectFromPool();
-            obj.transform.position = pos;
-            yield return new WaitForSeconds(time);
-            pool.AddObjectToPool(obj);
-        }
-
-        public void SetIsMoveFinished(bool b)
-        {
-            isMoveFinished = b;
-        }
-
-        private void UpdateAnimation(bool b)
-        {
-            if (move.GetCard().GetCardType() != CardType.TRAP)
-                animator.SetBool("walk", b);
-        }
     }
 }

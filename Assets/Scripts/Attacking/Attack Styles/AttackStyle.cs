@@ -135,12 +135,10 @@ namespace DungeonRush.Attacking
         {
             return effectObject;
         }
-
         public float GetAnimationTime()
         {
             return animationTime;
         }
-
         protected void ConfigureCardMove(Card card, Tile targetTile)
         {
             Move move = new Move(targetTile, card, MoveType.ATTACK, false);
