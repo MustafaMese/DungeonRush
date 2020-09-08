@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.U2D.Animation;
+using UnityEngine.UI;
 
 namespace DungeonRush.Customization
 {
@@ -46,12 +47,16 @@ namespace DungeonRush.Customization
         {
             for (int i = 0; i < sprites.Count; i++)
                 sprites[i].material = shadow;
+
+            characterCanvas.gameObject.SetActive(false);
         }
 
         public void RemoveShadow()
         {
             for (int i = 0; i < sprites.Count; i++)
                 sprites[i].material = lighted;
+
+            characterCanvas.gameObject.SetActive(true);
         }
 
         public void ChangeSkinState(bool state)

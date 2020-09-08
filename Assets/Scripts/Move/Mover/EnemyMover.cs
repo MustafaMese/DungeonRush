@@ -12,15 +12,6 @@ namespace DungeonRush.Property
 {
     public class EnemyMover : Mover
     {
-        private void Start()
-        {
-            DOTween.Init();
-            move = new Move();
-            card = GetComponent<Card>();
-            pool.SetObject(walkParticul);
-            pool.FillPool(4);
-        }
-
         public override void Move()
         {
             if (move.GetCard() == null)

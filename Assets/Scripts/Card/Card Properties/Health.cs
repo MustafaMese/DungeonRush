@@ -37,6 +37,7 @@ namespace DungeonRush.Property
 
         private IEnumerator Death()
         {
+            UpdateAnimation(true);
             if (isPlayer)
             {
                 FindObjectOfType<DefeatedPanel>().SetDefeat();
@@ -73,18 +74,19 @@ namespace DungeonRush.Property
         {
             if (isDamage)
             {
-                int armor = 0;
-                if (itemUser && itemUser.GetArmor() != null)
-                    armor = itemUser.GetArmor().GetPower();
-                amount -= armor;
-                amount = Mathf.Max(0, amount);
-                health -= amount;
-                health = Mathf.Max(0, health);
+                CalculateBlockedDamageByArmor(amount);
 
                 if (health > 0)
                     UpdateAnimation(false);
                 else
-                    UpdateAnimation(true);
+                {
+                    if (card.LifeCount > 0)
+                    {
+                        print("Tekrar dirildi.");
+                        health = (int)(maxHealth * 30 / 100);
+                        card.LifeCount--;
+                    }
+                }
             }
             else
             {
@@ -93,6 +95,17 @@ namespace DungeonRush.Property
             }
 
             StartCoroutine(bar.ActiveChanges(health, maxHealth));
+        }
+
+        private void CalculateBlockedDamageByArmor(int amount)
+        {
+            int armor = 0;
+            if (itemUser && itemUser.GetArmor() != null)
+                armor = itemUser.GetArmor().GetPower();
+            amount -= armor;
+            amount = Mathf.Max(0, amount);
+            health -= amount;
+            health = Mathf.Max(0, health);
         }
 
         private void UpdateAnimation(bool isDeath)

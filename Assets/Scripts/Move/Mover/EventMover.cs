@@ -47,10 +47,10 @@ namespace DungeonRush.Property
         #region EVENT METHODS
         private IEnumerator StartEventAnimation(Vector3 pos, float time)
         {
-            GameObject obj = pool.PullObjectFromPool();
+            GameObject obj = walkParticulPool.PullObjectFromPool();
             obj.transform.position = pos;
             yield return new WaitForSeconds(time);
-            pool.AddObjectToPool(obj);
+            walkParticulPool.AddObjectToPool(obj);
         }
 
         private IEnumerator TreasureMove()

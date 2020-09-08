@@ -61,11 +61,15 @@ namespace DungeonRush.Property
             if (total <= 0)
                 collectableManager.AddCoins(target.transform.position, target.GetCard().GetLevel());
 
-            attackStyle.Attack(move, power);
+            bool isCritic = IsCriticAttack();
 
+            if (!isCritic)
+                attackStyle.Attack(move, power);
+            else
+                attackStyle.Attack(move, power * 2);
 
             StartCoroutine(StartAttackAnimation(poolForAttackStyle, tPos, card.transform, target.transform, time));
-            StartCoroutine(StartTextPopup(poolForTextPopup, tPos, power));
+            StartCoroutine(StartTextPopup(poolForTextPopup, tPos, power, isCritic));
         }
 
         public int GetDamage()

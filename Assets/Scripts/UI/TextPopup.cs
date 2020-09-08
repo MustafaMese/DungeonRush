@@ -22,9 +22,16 @@ public class TextPopup : MonoBehaviour
     public void Setup(int damage, Vector3 target, bool isCriticalHit = false)
     {
         if (!isCriticalHit)
+        {
             textMeshPro.color = normalHit;
+            textMeshPro.text = damage.ToString();
+        }
         else
+        {
             textMeshPro.color = criticalHit;
+            damage = damage * 2;
+            textMeshPro.text = damage.ToString();
+        }
         textMeshPro.text = damage.ToString();
         Move(target);
     }

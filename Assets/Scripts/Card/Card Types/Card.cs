@@ -24,6 +24,21 @@ namespace DungeonRush
             public CardProperties cardProperties = null;
             public Character characterType;
 
+            #region CARD STATS
+            private int maximumHealth = 0;
+            private int criticChance = 0;
+            private int dodgeChance = 0;
+            private int lifeCount = 0;
+            private int moveCount = 0;
+            private int lootChance = 0;
+            public int MaximumHealth { get => maximumHealth; set => maximumHealth = value; }
+            public int CriticChance { get => criticChance; set => criticChance = value; }
+            public int DodgeChance { get => dodgeChance; set => dodgeChance = value; }
+            public int LifeCount { get => lifeCount; set => lifeCount = value; }
+            public int MoveCount { get => moveCount; set => moveCount = value; }
+            public int LootChance { get => lootChance; set => lootChance = value; }
+            #endregion
+
             public IMoveController Controller { get => controller; set => controller = value; }
 
             public void Start()
@@ -38,7 +53,26 @@ namespace DungeonRush
                 mover = GetComponent<Mover>();
                 attacker = GetComponent<Attacker>();
                 Controller = GetComponent<IMoveController>();
+
+                SetStats();
+
                 move = new Move();
+            }
+
+            protected void SetStats()
+            {
+                if(cardProperties.cardStats != null)
+                {
+                    maximumHealth = cardProperties.cardStats.maximumHealth;
+                    criticChance = cardProperties.cardStats.criticChance;
+                    dodgeChance = cardProperties.cardStats.dodgeChance;
+                    lifeCount = cardProperties.cardStats.lifeCount;
+                    moveCount = cardProperties.cardStats.moveCount;
+                    lootChance = cardProperties.cardStats.lootChance;
+
+                    if (maximumHealth > 0)
+                        SetMaxHealth(maximumHealth);
+                }
             }
 
             public int GetLevel()
@@ -127,6 +161,15 @@ namespace DungeonRush
             }
             public void DecreaseHealth(int h)
             {
+                int dodgeChance = DodgeChance * 2;
+                if(dodgeChance > 0)
+                {
+                    int number = Random.Range(0, 100);
+                    if (number <= dodgeChance)
+                        print("Dodged");
+                        return;
+                }
+
                 health.ChangeHealth(true, h);
             }
             public Character GetCharacterType()

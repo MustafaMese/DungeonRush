@@ -14,7 +14,7 @@ namespace DungeonRush.Property
         [SerializeField] protected TextPopup textPopup = null;
         [SerializeField] Animator animator = null;
 
-        protected int power = 0;
+        public int power = 0;
         protected bool attackFinished = false; 
         protected ObjectPool poolForTextPopup = new ObjectPool();
         protected ObjectPool poolForAttackStyle = new ObjectPool();
@@ -25,9 +25,9 @@ namespace DungeonRush.Property
         {
             DOTween.Init();
             card = GetComponent<Card>();
-            FillThePool(poolForTextPopup, textPopup.gameObject, 2);
+            FillThePool(poolForTextPopup, textPopup.gameObject, 1);
             effectObject = attackStyle.GetEffect();
-            FillThePool(poolForAttackStyle, effectObject, 2);
+            FillThePool(poolForAttackStyle, effectObject, 1);
             power = attackStyle.GetPower();
             Initialize();
         }
@@ -50,14 +50,28 @@ namespace DungeonRush.Property
             return true;
         }
 
-        protected IEnumerator StartTextPopup(ObjectPool pool, Vector3 tPos, int damage)
+        protected bool IsCriticAttack()
+        {
+            int criticChance = card.CriticChance * 2;
+            if (criticChance > 0)
+            {
+                int number = Random.Range(0, 100);
+                if (number <= criticChance)
+                    return true;
+            }
+            return false;
+        }
+
+        protected IEnumerator StartTextPopup(ObjectPool pool, Vector3 tPos, int damage, bool isCritical = false)
         {
             GameObject obj = pool.PullObjectFromPool();
             obj.transform.position = tPos;
             TextPopup objTxt = obj.GetComponent<TextPopup>();
-            objTxt.Setup(damage, tPos);
+            objTxt.Setup(damage, tPos, isCritical);
+
             float t = objTxt.GetDisapperTime();
             yield return new WaitForSeconds(t);
+
             obj.transform.SetParent(this.transform);
             pool.AddObjectToPool(obj);
         }

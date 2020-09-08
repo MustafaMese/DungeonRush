@@ -169,6 +169,7 @@ namespace DungeonRush.Controller
         }
         private void Notify()
         {
+            // Instant move countu da ekle.
             ms.OnNotify();
         }
         #endregion

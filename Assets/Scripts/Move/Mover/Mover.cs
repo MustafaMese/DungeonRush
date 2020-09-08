@@ -16,11 +16,10 @@ namespace DungeonRush.Property
         [SerializeField] protected GameObject walkParticul = null;
         [SerializeField] protected float particulTime = 0;
         
-        protected ObjectPool pool = new ObjectPool();
+        protected ObjectPool walkParticulPool = new ObjectPool();
         protected bool isMoveFinished = false;
         protected Move move;
         protected Card card;
-
 
         private void Start()
         {
@@ -28,8 +27,8 @@ namespace DungeonRush.Property
             move = new Move();
             card = GetComponent<Card>();
 
-            pool.SetObject(walkParticul);
-            pool.FillPool(4);
+            walkParticulPool.SetObject(walkParticul);
+            walkParticulPool.FillPool(2);
             Initialize();
         }
 
@@ -56,10 +55,12 @@ namespace DungeonRush.Property
 
         protected IEnumerator StartMoveAnimation(Vector3 pos, float time)
         {
-            GameObject obj = pool.PullObjectFromPool();
+            GameObject obj = walkParticulPool.PullObjectFromPool();
             obj.transform.position = pos;
+            obj.transform.SetParent(null);
             yield return new WaitForSeconds(time);
-            pool.AddObjectToPool(obj);
+            obj.transform.SetParent(transform);
+            walkParticulPool.AddObjectToPool(obj);
         }
     }
 }
