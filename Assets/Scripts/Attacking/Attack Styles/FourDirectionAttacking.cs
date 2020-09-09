@@ -30,8 +30,9 @@ namespace DungeonRush.Attacking
             }
         }
 
-        public override List<Card> GetAttackedCards()
+        public override List<Card> GetAttackedCards(Move move)
         {
+            tempList = FindTargetTiles(move);
             return tempList;
         }
 

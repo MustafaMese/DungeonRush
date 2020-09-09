@@ -39,8 +39,11 @@ namespace DungeonRush.Data
 
         public void AddObjectToPool(GameObject obj)
         {
-            obj.gameObject.SetActive(false);
-            objectPool.Push(obj);
+            if (obj != null)
+            {
+                obj.gameObject.SetActive(false);
+                objectPool.Push(obj);
+            }
         }
 
         public void DeleteObjectsInPool()

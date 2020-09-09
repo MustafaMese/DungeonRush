@@ -23,7 +23,7 @@ namespace DungeonRush.Property
 
             attackStyle.Attack(move, power);
             StartCoroutine(StartAttackAnimation(poolForAttackStyle, cardPos, time));
-            StartCoroutine(StartTextPopup(poolForTextPopup, cardPos, power));
+            StartCoroutine(card.StartTextPopup(cardPos, power));
         }
 
         private IEnumerator StartAttackAnimation(ObjectPool pool, Vector3 tPos, float time)

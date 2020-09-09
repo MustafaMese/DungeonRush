@@ -12,6 +12,7 @@ public class TextPopup : MonoBehaviour
     [SerializeField] TextMeshPro textMeshPro = null;
     [SerializeField] Color normalHit;
     [SerializeField] Color criticalHit;
+    [SerializeField] Color missHit;
     [SerializeField] float disapperTime = 0;
 
     private void Start()
@@ -32,7 +33,13 @@ public class TextPopup : MonoBehaviour
             damage = damage * 2;
             textMeshPro.text = damage.ToString();
         }
-        textMeshPro.text = damage.ToString();
+        Move(target);
+    }
+
+    public void Setup(string text, Vector3 target)
+    {
+        textMeshPro.color = missHit;
+        textMeshPro.text = text;
         Move(target);
     }
 

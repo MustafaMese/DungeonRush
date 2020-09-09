@@ -43,7 +43,16 @@ namespace DungeonRush.Controller
 
         protected override void Notify()
         {
-            enemyController.OnNotify();
+            if (card.InstantMoveCount > 0)
+            {
+                Run();
+                card.InstantMoveCount--;
+            }
+            else
+            {
+                card.InstantMoveCount = card.TotalMoveCount;
+                enemyController.OnNotify();
+            }
         }
 
         protected override Swipe SelectTileToAttack(Card card)

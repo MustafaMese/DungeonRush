@@ -35,14 +35,9 @@ namespace DungeonRush
 
             private void Damage(Move move)
             {
-                Transform card = move.GetCard().transform;
-                Transform target = move.GetTargetTile().transform;
-                Vector3 tPos = move.GetTargetTile().GetCoordinate();
                 float time = attackStyle.GetAnimationTime();
-
-                attackStyle.Attack(move, power);
-                StartCoroutine(StartAttackAnimation(poolForAttackStyle, tPos, card, target, time));
-                StartCoroutine(StartTextPopup(poolForTextPopup, tPos, power));
+                AttackAction(move);
+                StartCoroutine(StartAttackAnimation(poolForAttackStyle, move, time));
             }
 
             private IEnumerator FinishAttack(Move move)

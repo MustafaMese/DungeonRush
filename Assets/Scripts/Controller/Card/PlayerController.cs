@@ -18,19 +18,20 @@ namespace DungeonRush.Controller
         private ProcessHandleChecker preparingProcess;
         private ProcessHandleChecker attackProcess;
         private ProcessHandleChecker moveProcess;
-        private MoveSchedular ms;
+        private MoveSchedular moveSchedular;
         private Attacker attacker;
         private ICustomization customization;
+        private EnemyController enemyController;
 
         private void Start()
         {
             InitProcessHandlers();
             player = GetComponent<PlayerCard>();
-            ms = FindObjectOfType<MoveSchedular>();
+            moveSchedular = FindObjectOfType<MoveSchedular>();
+            enemyController = FindObjectOfType<EnemyController>();
             attacker = player.GetComponent<Attacker>();
             customization = player.GetComponent<ICustomization>();
             FindObjectOfType<MoveSchedular>().playerController = this;
-
         }
 
         private void Update()
@@ -169,8 +170,17 @@ namespace DungeonRush.Controller
         }
         private void Notify()
         {
-            // Instant move countu da ekle.
-            ms.OnNotify();
+            enemyController.ConfigureSurroundingCardsSkinStates();
+            if (player.InstantMoveCount > 0)
+            {
+                Begin();
+                player.InstantMoveCount--;
+            }
+            else
+            {
+                player.InstantMoveCount = player.TotalMoveCount;
+                moveSchedular.OnNotify();
+            }
         }
         #endregion
 

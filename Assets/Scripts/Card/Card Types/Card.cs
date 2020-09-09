@@ -4,6 +4,7 @@ using DungeonRush.Data;
 using DungeonRush.Field;
 using DungeonRush.Property;
 using DungeonRush.Shifting;
+using System.Collections;
 using UnityEngine;
 
 namespace DungeonRush
@@ -20,6 +21,9 @@ namespace DungeonRush
             protected Attacker attacker = null;
             protected IMoveController controller;
 
+            [HideInInspector] public ObjectPool poolForTextPopup;
+            [SerializeField] protected TextPopup textPopup = null;
+
             [Header("General Properties")]
             public CardProperties cardProperties = null;
             public Character characterType;
@@ -29,18 +33,20 @@ namespace DungeonRush
             private int criticChance = 0;
             private int dodgeChance = 0;
             private int lifeCount = 0;
-            private int moveCount = 0;
+            private int totalMoveCount = 0;
+            private int instantMoveCount = 0;
             private int lootChance = 0;
             public int MaximumHealth { get => maximumHealth; set => maximumHealth = value; }
             public int CriticChance { get => criticChance; set => criticChance = value; }
             public int DodgeChance { get => dodgeChance; set => dodgeChance = value; }
             public int LifeCount { get => lifeCount; set => lifeCount = value; }
-            public int MoveCount { get => moveCount; set => moveCount = value; }
+            public int TotalMoveCount { get => totalMoveCount; set => totalMoveCount = value; }
+            public int InstantMoveCount { get => instantMoveCount; set => instantMoveCount = value; }
             public int LootChance { get => lootChance; set => lootChance = value; }
             #endregion
 
             public IMoveController Controller { get => controller; set => controller = value; }
-
+            
             public void Start()
             {
                 Initialize();
@@ -53,10 +59,17 @@ namespace DungeonRush
                 mover = GetComponent<Mover>();
                 attacker = GetComponent<Attacker>();
                 Controller = GetComponent<IMoveController>();
-
                 SetStats();
-
+                poolForTextPopup = new ObjectPool();
+                FillThePool(poolForTextPopup, textPopup.gameObject, 3);
                 move = new Move();
+            }
+
+            protected void FillThePool(ObjectPool pool, GameObject effect, int objectCount)
+            {
+                print(pool == null);
+                pool.SetObject(effect);
+                pool.FillPool(objectCount);
             }
 
             protected void SetStats()
@@ -67,7 +80,7 @@ namespace DungeonRush
                     criticChance = cardProperties.cardStats.criticChance;
                     dodgeChance = cardProperties.cardStats.dodgeChance;
                     lifeCount = cardProperties.cardStats.lifeCount;
-                    moveCount = cardProperties.cardStats.moveCount;
+                    totalMoveCount = cardProperties.cardStats.moveCount;
                     lootChance = cardProperties.cardStats.lootChance;
 
                     if (maximumHealth > 0)
@@ -161,15 +174,6 @@ namespace DungeonRush
             }
             public void DecreaseHealth(int h)
             {
-                int dodgeChance = DodgeChance * 2;
-                if(dodgeChance > 0)
-                {
-                    int number = Random.Range(0, 100);
-                    if (number <= dodgeChance)
-                        print("Dodged");
-                        return;
-                }
-
                 health.ChangeHealth(true, h);
             }
             public Character GetCharacterType()
@@ -199,6 +203,32 @@ namespace DungeonRush
             public virtual void SetIsMoveFinished(bool b)
             {
                 mover.SetIsMoveFinished(b);
+            }
+
+            public IEnumerator StartTextPopup(Vector3 tPos, string text)
+            {
+                GameObject obj = poolForTextPopup.PullObjectFromPool();
+                obj.transform.position = tPos;
+                TextPopup objTxt = obj.GetComponent<TextPopup>();
+                objTxt.Setup(text, tPos);
+
+                float t = objTxt.GetDisapperTime();
+                yield return new WaitForSeconds(t);
+
+                obj.transform.SetParent(this.transform);
+                poolForTextPopup.AddObjectToPool(obj);
+            }
+
+            public IEnumerator StartTextPopup(Vector3 tPos, int damage, bool isCritical = false)
+            {
+                GameObject obj = poolForTextPopup.PullObjectFromPool();
+                obj.transform.position = tPos;
+                TextPopup objTxt = obj.GetComponent<TextPopup>();
+                objTxt.Setup(damage, tPos, isCritical);
+                obj.transform.SetParent(transform);
+                float t = objTxt.GetDisapperTime();
+                yield return new WaitForSeconds(t);
+                poolForTextPopup.AddObjectToPool(obj);
             }
         }
     }

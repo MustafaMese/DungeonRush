@@ -132,5 +132,6 @@ namespace DungeonRush.Property
             health = Mathf.Min(health, maxHealth);
             StartCoroutine(bar.ActiveChanges(health, maxHealth));
         }
+
     }
 }

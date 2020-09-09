@@ -79,31 +79,30 @@ namespace DungeonRush.Controller
             for (int i = 0; i < subscribedEnemies.Count; i++)
             {
                 var distance = GetDistance(subscribedEnemies[i].transform.position);
-                SetShadowState(subscribedEnemies[i], distance, attackerDistance - 1);
-                SetAnimationState(l, subscribedEnemies[i], distance, attackerDistance);
-                
+                if (distance <= attackerDistance)
+                {
+                    SetAttackerSkinState(subscribedEnemies[i], false);
+                    l.Add(subscribedEnemies[i]);
+                }
+                else
+                    SetAttackerSkinState(subscribedEnemies[i], true);
             }
 
             return l;
         }
 
-        private void SetAnimationState(List<AIController> l, AIController a, float distance, float desired)
+        public void SetAttackerSkinState(AIController ai, bool shadowed)
         {
-            if (distance <= desired)
+            if (shadowed)
             {
-                l.Add(a);
-                a.ChangeAnimatorState(true);
+                ai.ChangeShadowState(true);
+                ai.ChangeAnimatorState(false);
             }
             else
-                a.ChangeAnimatorState(false);
-        }
-
-        private void SetShadowState(AIController c, float distance, int desired)
-        {
-            if (distance < desired)
-                c.ChangeShadowState(false);
-            else
-                c.ChangeShadowState(true);
+            {
+                ai.ChangeShadowState(false);
+                ai.ChangeAnimatorState(true);
+            }
         }
 
         private float GetDistance(Vector3 i)
@@ -184,12 +183,20 @@ namespace DungeonRush.Controller
 
         public void Notify()
         {
+            ConfigureSurroundingCardsSkinStates();
+            ms.OnNotify();
+        }
+
+        public void ConfigureSurroundingCardsSkinStates()
+        {
             for (int i = 0; i < subscribedEnemies.Count; i++)
             {
                 var distance = GetDistance(subscribedEnemies[i].transform.position);
-                SetShadowState(subscribedEnemies[i], distance, attackerDistance - 1);
+                if (distance <= attackerDistance)
+                    SetAttackerSkinState(subscribedEnemies[i], false);
+                else
+                    SetAttackerSkinState(subscribedEnemies[i], true);
             }
-            ms.OnNotify();
         }
 
         #endregion

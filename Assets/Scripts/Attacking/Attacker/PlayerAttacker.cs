@@ -52,24 +52,15 @@ namespace DungeonRush.Property
 
         private void Damage(Move move)
         {
-            Card card = move.GetCard();
             Tile target = move.GetTargetTile();
-            Vector3 tPos = move.GetTargetTile().GetCoordinate();
             float time = attackStyle.GetAnimationTime();
 
-            int total = target.GetCard().GetHealth() - power;
-            if (total <= 0)
+            StartCoroutine(StartAttackAnimation(poolForAttackStyle, move, time));
+            AttackAction(move);
+
+            if(target.GetCard() == null || target.GetCard().GetHealth() <= 0)
                 collectableManager.AddCoins(target.transform.position, target.GetCard().GetLevel());
 
-            bool isCritic = IsCriticAttack();
-
-            if (!isCritic)
-                attackStyle.Attack(move, power);
-            else
-                attackStyle.Attack(move, power * 2);
-
-            StartCoroutine(StartAttackAnimation(poolForAttackStyle, tPos, card.transform, target.transform, time));
-            StartCoroutine(StartTextPopup(poolForTextPopup, tPos, power, isCritic));
         }
 
         public int GetDamage()

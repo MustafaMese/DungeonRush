@@ -123,7 +123,7 @@ namespace DungeonRush.Attacking
             }
             return false;
         }
-        public virtual List<Card> GetAttackedCards()
+        public virtual List<Card> GetAttackedCards(Move move)
         {
             return null;
         }

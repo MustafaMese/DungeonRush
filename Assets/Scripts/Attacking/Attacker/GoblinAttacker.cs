@@ -30,24 +30,19 @@ namespace DungeonRush.Attacking
 
         private void Damage(Move move)
         {
-            Transform card = move.GetCard().transform;
-            Vector3 cardPos = card.position;
             float time = attackStyle.GetAnimationTime();
+            StartCoroutine(StartAttackAnimation(poolForAttackStyle, move, time));
 
-            attackStyle.Attack(move, power);
-            StartCoroutine(StartAttackAnimation(poolForAttackStyle, cardPos, card, time));
-            List<Card> cards = attackStyle.GetAttackedCards();
-            for (int i = 0; i < cards.Count; i++)
-            {
-                Vector3 pos = cards[i].transform.position;
-                StartCoroutine(StartTextPopup(poolForTextPopup, pos, power));
-            }
+            List<Card> cards = attackStyle.GetAttackedCards(move);
+            AttackAction(cards, move);
         }
 
-        private IEnumerator StartAttackAnimation(ObjectPool pool, Vector3 tPos, Transform card, float time)
+        protected override IEnumerator StartAttackAnimation(ObjectPool pool, Move move, float time)
         {
+            Transform cardTransform = move.GetCard().transform;
+
             GameObject obj = pool.PullObjectFromPool();
-            attackStyle.SetEffectPosition(obj, tPos, card);
+            attackStyle.SetEffectPosition(obj, cardTransform.position, cardTransform);
             yield return new WaitForSeconds(time);
             pool.AddObjectToPool(obj);
         }
