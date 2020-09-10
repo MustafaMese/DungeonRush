@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackStyle: {fileID: 11400000, guid: dd96ebb321b052842913d35f7d7ff36f, type: 2}
-  damageTime: 0.3
-  textPopup: {fileID: 0}
   animator: {fileID: 6654273287599037373}
+  power: 0
+  damageTime: 0.3
 --- !u!114 &1058328746683819633
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -718,6 +718,12 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 8777ac922c4294e4880d0adf7d9361cb,
         type: 2}
+    - target: {fileID: 385931742185610795, guid: 733517a4bf866b94aa4cded94ec54d29,
+        type: 3}
+      propertyPath: textPopup
+      value: 
+      objectReference: {fileID: 9129021430530541807, guid: d284076925d56484c9541ce1f6da8de6,
+        type: 3}
     - target: {fileID: 1003901059469522988, guid: 733517a4bf866b94aa4cded94ec54d29,
         type: 3}
       propertyPath: m_Name
