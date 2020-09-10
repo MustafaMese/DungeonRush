@@ -21,6 +21,7 @@ namespace DungeonRush.Controller
         private MoveSchedular moveSchedular;
         private Attacker attacker;
         private ICustomization customization;
+        private StatusController statusController;
         private EnemyController enemyController;
 
         private void Start()
@@ -31,6 +32,7 @@ namespace DungeonRush.Controller
             enemyController = FindObjectOfType<EnemyController>();
             attacker = player.GetComponent<Attacker>();
             customization = player.GetComponent<ICustomization>();
+            statusController = player.GetComponent<StatusController>();
             FindObjectOfType<MoveSchedular>().playerController = this;
         }
 
@@ -167,6 +169,7 @@ namespace DungeonRush.Controller
         {
             Run();
             preparingProcess.StartProcess();
+            statusController.ActivateStatuses();
         }
         private void Notify()
         {

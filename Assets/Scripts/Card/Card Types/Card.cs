@@ -20,6 +20,7 @@ namespace DungeonRush
             protected Mover mover = null;
             protected Attacker attacker = null;
             protected IMoveController controller;
+            protected StatusController statusController;
 
             [HideInInspector] public ObjectPool poolForTextPopup;
             [SerializeField] protected TextPopup textPopup = null;
@@ -59,6 +60,7 @@ namespace DungeonRush
                 mover = GetComponent<Mover>();
                 attacker = GetComponent<Attacker>();
                 Controller = GetComponent<IMoveController>();
+                statusController = GetComponent<StatusController>();
                 SetStats();
                 poolForTextPopup = new ObjectPool();
                 FillThePool(poolForTextPopup, textPopup.gameObject, 3);
