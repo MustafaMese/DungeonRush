@@ -25,6 +25,7 @@ namespace DungeonRush.Controller
         protected Mover mover;
         protected Attacker attacker;
         protected ICustomization customization;
+        protected StatusController statusController;
 
         [SerializeField] GameObject model;
         [SerializeField] protected GameObject exclamation;
@@ -55,6 +56,7 @@ namespace DungeonRush.Controller
             mover = card.GetComponent<Mover>();
             attacker = card.GetComponent<Attacker>();
             customization = card.GetComponent<ICustomization>();
+            statusController = card.GetComponent<StatusController>();
             cardType = card.GetCardType();
         }
 
@@ -169,6 +171,11 @@ namespace DungeonRush.Controller
                 customization.RemoveShadow();
         }
         #endregion
+
+        public void ActivateStatuses()
+        {
+            statusController.ActivateStatuses();
+        }
 
         protected virtual void Stop()
         {

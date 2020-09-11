@@ -38,7 +38,7 @@ namespace DungeonRush
                 base.Initialize();
                 playerAttacker = GetComponent<PlayerAttacker>();
                 itemUser = GetComponent<ItemUser>();
-
+                InstantMoveCount = TotalMoveCount;
                 if (!isFirstLevel)
                     GetComponent<PlayerController>().LoadPlayer();
             }

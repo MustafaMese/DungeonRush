@@ -169,8 +169,13 @@ namespace DungeonRush.Controller
         {
             Run();
             preparingProcess.StartProcess();
+        }
+
+        public void ActivateStatuses()
+        {
             statusController.ActivateStatuses();
         }
+
         private void Notify()
         {
             enemyController.ConfigureSurroundingCardsSkinStates();

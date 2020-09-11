@@ -123,6 +123,7 @@ namespace DungeonRush.Controller
                 else
                     tc.SetImages(0);
                 attackerCards[attackerIndex].Run();
+                attackerCards[attackerIndex].ActivateStatuses();
                 moveFinished = false;
             }
             else if (attackerCards[attackerIndex] == null)
