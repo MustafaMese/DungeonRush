@@ -12,27 +12,32 @@ public class StatusController : MonoBehaviour
     public class StatusData
     {
         public Status status;
-        public ObjectPool poolForStatusEffect = new ObjectPool();
-        public ObjectPool poolForTextPopup = new ObjectPool();
+        public ObjectPool poolForStatusEffect;
+        public ObjectPool poolForTextPopup;
 
         public int turnCount;
 
         public StatusData(Status status, GameObject statusEffect, GameObject textPopup)
         {
             this.status = status;
+
+            poolForStatusEffect = new ObjectPool();
+            poolForTextPopup = new ObjectPool();
+
             poolForStatusEffect.SetObject(statusEffect);
+            poolForStatusEffect.FillPool(1);
             poolForTextPopup.SetObject(textPopup);
+            poolForTextPopup.FillPool(1);
             turnCount = status.TurnCount;
         }
     }
 
-    public Status STATUS;
     public List<StatusData> activeStatuses = new List<StatusData>();
     private Card card;
+
     private void Start()
     {
         card = GetComponent<Card>();
-        AddStatus(STATUS);
     }
 
     public void AddStatus(Status status)
@@ -68,11 +73,11 @@ public class StatusController : MonoBehaviour
     private void ApplyStatus(StatusData statusData)
     {
         statusData.status.Execute(card);
-        StartCoroutine(AnimateTextPopup(statusData));
-        StartCoroutine(AnimateEffect(statusData));
+        StartCoroutine(TextPopup(statusData));
+        StartCoroutine(Animate(statusData));
     }
 
-    private IEnumerator AnimateEffect(StatusData statusData)
+    private IEnumerator Animate(StatusData statusData)
     {
         GameObject obj = statusData.poolForStatusEffect.PullObjectFromPool();
         obj.transform.SetParent(transform);
@@ -82,7 +87,7 @@ public class StatusController : MonoBehaviour
         StatusControl(statusData);
     }
 
-    private IEnumerator AnimateTextPopup(StatusData statusData)
+    private IEnumerator TextPopup(StatusData statusData)
     {
         GameObject obj = statusData.poolForTextPopup.PullObjectFromPool();
         obj.transform.SetParent(transform);

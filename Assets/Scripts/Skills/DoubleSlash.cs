@@ -8,50 +8,30 @@ namespace DungeonRush.Skills
     [CreateAssetMenu(menuName = "ScriptableObjects/Skill/DoubleSlash")]
     public class DoubleSlash : Skill
     {
-        [SerializeField] int slashPower = 2;
-        [SerializeField] GameObject doubleSlashPrefab = null;
-        private GameObject doubleSlashInstance = null;
-
-        private Transform cardTransform;
-
         public override void Execute(Move move)
         {
             Tile targetTile = move.GetTargetTile();
             Card targetCard = targetTile.GetCard();
-            cardTransform = move.GetCard().transform;
             
             if(targetCard != null)
-                targetCard.DecreaseHealth(slashPower);
-
-            AnimateObject(targetTile.GetCoordinate(), targetTile.transform);
+                targetCard.DecreaseHealth(Power);
         }
 
-        private void AnimateObject(Vector3 target, Transform cardT)
+        public override void PositionEffect(GameObject effect, Move move)
         {
-            if (doubleSlashInstance == null)
-                InitializeObject(target, cardT);
-            else
-                EnableObject(target, cardT);
+            Transform t = move.GetTargetTile().transform;
+            effect.transform.SetParent(t);
+            effect.transform.position = t.position;
         }
 
-        private void InitializeObject(Vector3 pos, Transform parent)
+        public override Vector3 PositionTextPopup(GameObject textPopup, Move move)
         {
-            doubleSlashInstance = Instantiate(doubleSlashPrefab, pos, Quaternion.identity, parent);
-        }
+            Transform t = move.GetTargetTile().transform;
+            textPopup.transform.SetParent(t);
+            textPopup.transform.position = t.position;
 
-        private void EnableObject(Vector3 pos, Transform parent)
-        {
-            doubleSlashInstance.SetActive(true);
-            doubleSlashInstance.transform.SetParent(parent);
-            doubleSlashInstance.transform.position = pos;
-        }
-        public override void DisableObject()
-        {
-            if (doubleSlashInstance != null)
-            {
-                doubleSlashInstance.SetActive(false);
-                doubleSlashInstance.transform.SetParent(cardTransform);
-            }
+            Vector3 targetPosition = t.position;
+            return targetPosition;
         }
     }
 }

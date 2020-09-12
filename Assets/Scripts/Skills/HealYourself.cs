@@ -1,7 +1,5 @@
 ﻿using DungeonRush.Cards;
 using DungeonRush.Data;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace DungeonRush.Skills
@@ -9,42 +7,27 @@ namespace DungeonRush.Skills
     [CreateAssetMenu(menuName = "ScriptableObjects/Skill/Healing")]
     public class HealYourself : Skill
     {
-        [SerializeField] int healPower = 2;
-
-        [SerializeField] GameObject healPrefab = null;
-        private GameObject healPrefabInstance = null;
-
         public override void Execute(Move move)
         {
             Card card = move.GetCard();
-            card.IncreaseHealth(healPower);
-            AnimateObject(card.transform);
+            card.IncreaseHealth(Power);
         }
 
-        private void AnimateObject(Transform t)
+        public override void PositionEffect(GameObject effect, Move move)
         {
-            if (healPrefabInstance == null)
-                InitializeObject(t.position, t);
-            else
-                EnableObject(t.position);
+            Transform t = move.GetCard().transform;
+            effect.transform.SetParent(t);
+            effect.transform.position = t.position;
         }
 
-        public override void DisableObject()
+        public override Vector3 PositionTextPopup(GameObject textPopup, Move move)
         {
-            if (healPrefabInstance != null)
-                healPrefabInstance.SetActive(false);
-        }
+            Transform t = move.GetCard().transform;
+            textPopup.transform.SetParent(t);
+            textPopup.transform.position = t.position;
 
-        private void InitializeObject(Vector3 pos, Transform parent)
-        {
-            healPrefabInstance = Instantiate(healPrefab, pos, Quaternion.identity, parent);
+            Vector3 targetPosition = t.position;
+            return targetPosition;
         }
-
-        private void EnableObject(Vector3 pos)
-        {
-            healPrefabInstance.SetActive(true);
-            healPrefabInstance.transform.position = pos;
-        }
-
     }
 }
