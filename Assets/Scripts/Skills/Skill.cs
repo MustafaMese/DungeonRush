@@ -25,5 +25,6 @@ namespace DungeonRush.Skills
         public abstract void Execute(Move move);
         public abstract void PositionEffect(GameObject effect, Move move);
         public abstract Vector3 PositionTextPopup(GameObject textPopup, Move move);
+        public virtual int GetGameobjectCount(bool isTextPopup = false) { return 1; }
     }
 }
