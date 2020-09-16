@@ -7,18 +7,14 @@ using DungeonRush.Controller;
 
 public class PortalEventCard : EventCard
 {
-    [SerializeField] GameManager gameManager = null;
-
     public override void GetEvent(Card card)
     {
-        GameManager.gameState = GameState.STOP_GAME;
-        StartCoroutine(FadeOut());
+        Portal();
     }
 
-    private IEnumerator FadeOut()
+    private void Portal()
     {
-        yield return gameManager.FadeOut();
         FindObjectOfType<PlayerController>().SavePlayer();
-        GameManager.gameState = GameState.LEVEL_TRANSITION;
+        GameManager.Instance.SetGameState(GameState.LEVEL_TRANSITION);
     }
 }

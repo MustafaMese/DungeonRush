@@ -6,6 +6,20 @@ using DungeonRush.Data;
 
 public class CollectableManager : MonoBehaviour
 {
+    private static CollectableManager instance = null;
+    // Game Instance Singleton
+    public static CollectableManager Instance
+    {
+        get { return instance; }
+        set { instance = value; }
+    }
+
+    private void Awake()
+    {
+        Instance = this;
+        PrepareCoins();
+    }
+
     [Header("UI References")]
     [SerializeField] GameObject animatedCoinPrefab;
 
@@ -16,10 +30,6 @@ public class CollectableManager : MonoBehaviour
 
     private ObjectPool objectPool = new ObjectPool();
     private PlayerCard player;
-    private void Awake()
-    {
-        PrepareCoins();
-    }
 
     private void Start()
     {

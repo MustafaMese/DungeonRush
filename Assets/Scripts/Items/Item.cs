@@ -1,24 +1,26 @@
 ﻿using DungeonRush.Attacking;
 using DungeonRush.Cards;
 using DungeonRush.Property;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 
 namespace DungeonRush.Items
 {
-    public class Item : MonoBehaviour
+    [CreateAssetMenu(menuName = "ScriptableObjects/Item")]
+    public class Item : ScriptableObject
     {
-        [SerializeField] SpriteRenderer itemSpriteRenderer = null;
         [SerializeField] CardProperties properties = null;
         [SerializeField] ItemType type;
         [SerializeField] int power = 0;
         [SerializeField] Sprite itemSmallSprite = null;
         [SerializeField] Sprite itemBigSprite = null;
-        [SerializeField] int id = 0;
 
         [Header("For weapons")]
         [SerializeField] AttackStyle attackStyle;
+
 
         public string GetItemName()
         {
@@ -40,14 +42,9 @@ namespace DungeonRush.Items
             return itemBigSprite;
         }
 
-        public int GetId()
+        public string GetId()
         {
-            return id;
-        }
-
-        public SpriteRenderer GetRenderer()
-        {
-            return itemSpriteRenderer;
+            return properties.cardName;
         }
 
         public ItemType GetItemType()
@@ -60,15 +57,15 @@ namespace DungeonRush.Items
             return power;
         }
     }
+}
 
-    public enum ItemType
-    {
-        WEAPON,
-        POTION,
-        POISON,
-        ARMOR,
-        MAX_HEALTH_INCREASER,
-        COIN,
-        NONE = -1
-    }
+public enum ItemType
+{
+    WEAPON,
+    POTION,
+    POISON,
+    ARMOR,
+    MAX_HEALTH_INCREASER,
+    COIN,
+    NONE = -1
 }

@@ -18,22 +18,18 @@ namespace DungeonRush.Controller
         private ProcessHandleChecker preparingProcess;
         private ProcessHandleChecker attackProcess;
         private ProcessHandleChecker moveProcess;
-        private MoveSchedular moveSchedular;
         private Attacker attacker;
         private ICustomization customization;
         private StatusController statusController;
-        private EnemyController enemyController;
 
         private void Start()
         {
             InitProcessHandlers();
             player = GetComponent<PlayerCard>();
-            moveSchedular = FindObjectOfType<MoveSchedular>();
-            enemyController = FindObjectOfType<EnemyController>();
             attacker = player.GetComponent<Attacker>();
             customization = player.GetComponent<ICustomization>();
             statusController = player.GetComponent<StatusController>();
-            FindObjectOfType<MoveSchedular>().playerController = this;
+            MoveSchedular.Instance.playerController = this;
         }
 
         private void Update()
@@ -178,7 +174,7 @@ namespace DungeonRush.Controller
 
         private void Notify()
         {
-            enemyController.ConfigureSurroundingCardsSkinStates();
+            MoveSchedular.Instance.enemyController.ConfigureSurroundingCardsSkinStates();
             if (player.InstantMoveCount > 0)
             {
                 Begin();
@@ -187,7 +183,7 @@ namespace DungeonRush.Controller
             else
             {
                 player.InstantMoveCount = player.TotalMoveCount;
-                moveSchedular.OnNotify();
+                MoveSchedular.Instance.OnNotify();
             }
         }
         #endregion
@@ -208,11 +204,10 @@ namespace DungeonRush.Controller
             player.SetCurrentHealth(data.currentHealth);
             player.Coins = data.gold;
 
-            var itemStorage = FindObjectOfType<ItemStorage>();
 
             for (int i = 0; i < data.uniqueIDs.Length; i++)
             {
-                Item item = itemStorage.GetItem(data.uniqueIDs[i]);
+                Item item = ItemDB.Instance.GetItem(data.uniqueIDs[i]);
                 player.GetComponent<ItemUser>().TakeItem(item);
             }
         }

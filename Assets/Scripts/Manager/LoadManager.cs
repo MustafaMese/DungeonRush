@@ -1,33 +1,20 @@
-﻿using DungeonRush.Managers;
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class LoadManager : MonoBehaviour
+public class LoadManager : MonoBehaviour 
 {
-    private static LoadManager _instance;
-    private void Awake()
+    private static LoadManager instance = null;
+    // Game Instance Singleton
+    public static LoadManager Instance
     {
-        if (_instance != null && _instance != this)
-        {
-            Destroy(this.gameObject);
-        }
-        else
-        {
-            _instance = this;
-        }
+        get { return instance; }
+        set { instance = value; }
     }
 
-    private void Update()
+    private void Awake()
     {
-        if (GameManager.gameState == GameState.LEVEL_TRANSITION)
-            LoadNextScene();
-
-        if (GameManager.gameState == GameState.START)
-            StartCoroutine(LoadNewScene());
-
-        if (GameManager.gameState == GameState.END)
-            LoadStartScene();
+        Instance = this;
     }
 
     public void LoadNextScene()
@@ -41,12 +28,12 @@ public class LoadManager : MonoBehaviour
             SceneManager.LoadScene(0);
     }
 
-    public static void LoadStartScene()
+    public void LoadStartScene()
     {
         SceneManager.LoadScene("StartScreen");
     }
 
-    public static void LoadLoseScene()
+    public void LoadLoseScene()
     {
         SceneManager.LoadScene("LoseScreen");
     }

@@ -140,7 +140,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
-  m_Maskable: 1
+  m_Maskable: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -2228,6 +2228,7 @@ GameObject:
   - component: {fileID: 9135044266118810217}
   - component: {fileID: 9135044266118810216}
   - component: {fileID: 9135044266118810223}
+  - component: {fileID: 553548646}
   m_Layer: 5
   m_Name: DefeatCanvas
   m_TagString: Untagged
@@ -2312,15 +2313,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defeatedPanel: {fileID: 3224276997122468730}
-  gameManager: {fileID: 0}
   dungeonText: {fileID: 5930015320503676683}
   encounterText: {fileID: 6265971230658049807}
   goldText: {fileID: 8123850918592038732}
   xpText: {fileID: 3620168050917125036}
   button: {fileID: 1698479118}
-  panels:
-  - {fileID: 0}
-  - {fileID: 0}
+--- !u!114 &553548646
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9135044266118810218}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
 --- !u!1 &9164878670095497454
 GameObject:
   m_ObjectHideFlags: 0

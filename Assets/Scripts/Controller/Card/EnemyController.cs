@@ -2,6 +2,7 @@
 using DungeonRush.Data;
 using DungeonRush.Field;
 using DungeonRush.Managers;
+using DungeonRush.UI;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,7 +14,6 @@ namespace DungeonRush.Controller
         [SerializeField] int attackerDistance = 5;
 
         private PlayerController playerController;
-        private MoveSchedular ms;
         private ProcessHandleChecker determineProcess;
         private ProcessHandleChecker assigningProcess;
         private bool moveFinished = false;
@@ -23,13 +23,9 @@ namespace DungeonRush.Controller
         public static List<AIController> subscribedEnemies = new List<AIController>();
         public List<AIController> attackerCards;
 
-        private TurnCanvas tc;
-
         private void Start()
         {
             playerController = FindObjectOfType<PlayerController>();
-            ms = FindObjectOfType<MoveSchedular>();
-            tc = FindObjectOfType<TurnCanvas>();
             InitProcessHandlers();
         }
 
@@ -44,10 +40,7 @@ namespace DungeonRush.Controller
                     Board.touched = true;
                     DetermineAttackers();
                     if (attackerCards.Count > 0)
-                    {
-                        tc.ChangeText(false);
-                        tc.SetCardIcons(attackerCards);
-                    }
+                        UIManager.Instance.InitalizeEnemyTurn(attackerCards);
                     moveFinished = true;
                 }
                 else if (assigningProcess.IsRunning())
@@ -118,10 +111,7 @@ namespace DungeonRush.Controller
         {
             if (moveFinished && attackerCards[attackerIndex] != null)
             {
-                if (attackerIndex > 0)
-                    tc.Next();
-                else
-                    tc.SetImages(0);
+                UIManager.Instance.ChangeIcons(attackerIndex);
                 attackerCards[attackerIndex].Run();
                 attackerCards[attackerIndex].ActivateStatuses();
                 moveFinished = false;
@@ -185,7 +175,7 @@ namespace DungeonRush.Controller
         public void Notify()
         {
             ConfigureSurroundingCardsSkinStates();
-            ms.OnNotify();
+            MoveSchedular.Instance.OnNotify();
         }
 
         public void ConfigureSurroundingCardsSkinStates()

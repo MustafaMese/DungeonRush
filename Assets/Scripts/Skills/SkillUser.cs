@@ -48,7 +48,7 @@ namespace DungeonRush.Skills {
         private void Start()
         {
             card = GetComponent<Card>();
-            AddSkill(SKILL);
+            //AddSkill(SKILL);
         }
 
         public void AddSkill(Skill skill)

@@ -13,7 +13,7 @@ public class PlayerData
     public int gold;
     public int xp;
 
-    public int[] uniqueIDs;
+    public string[] uniqueIDs;
 
     public PlayerData(PlayerCard player)
     {

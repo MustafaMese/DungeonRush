@@ -13,12 +13,11 @@ namespace DungeonRush.Cards
         [SerializeField] Item item = null;
         [SerializeField] float disapperTime = 0;
         [SerializeField] SpriteRenderer sprite;
-        [SerializeField] ItemStorage storage = null;
 
         protected override void Initialize()
         {
-            base.Initialize();
-            item = storage.GetRandomItemByType(iType);
+            //base.Initialize();
+            item = ItemDB.Instance.GetRandomItemByType(iType);
 
             if (iType == ItemType.MAX_HEALTH_INCREASER || iType == ItemType.POTION)
                 sprite.sprite = item.GetSmallSprite();
@@ -48,7 +47,7 @@ namespace DungeonRush.Cards
                 sprite.color = c;
                 yield return null;
             }
-            CardManager.RemoveCardForAttacker(GetTile().GetListNumber());
+            CardManager.RemoveCardForAttacker(GetTile().GetCoordinate());
         }
     }
 }

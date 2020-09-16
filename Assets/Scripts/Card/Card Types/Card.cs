@@ -69,7 +69,6 @@ namespace DungeonRush
 
             protected void FillThePool(ObjectPool pool, GameObject effect, int objectCount)
             {
-                print(pool == null);
                 pool.SetObject(effect);
                 pool.FillPool(objectCount);
             }

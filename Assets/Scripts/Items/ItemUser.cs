@@ -1,5 +1,6 @@
 ﻿using DungeonRush.Cards;
 using DungeonRush.Property;
+using DungeonRush.UI;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -27,12 +28,12 @@ namespace DungeonRush
                 card = GetComponent<Card>();
                 attacker = GetComponent<Attacker>();
 
-                isBeginning = true;
+                isBeginning = false;
             }
 
-            public List<int> GetItemsIDs()
+            public List<string> GetItemsIDs()
             {
-                List<int> ids = new List<int>();
+                List<string> ids = new List<string>();
                 if (weapon != null)
                     ids.Add(weapon.GetId());
                 if (armor != null)
@@ -89,8 +90,7 @@ namespace DungeonRush
 
             private void SetPickupCanvas(Item i)
             {
-                var obj = FindObjectOfType<PickItemCanvas>();
-                obj.EnablePanel(i);
+                UIManager.Instance.EnableItemCanvas(i);
             }
 
             #region WEAPON
@@ -101,12 +101,7 @@ namespace DungeonRush
             }
             private void SetWeapon(Item item)
             {
-                if (this.weapon != null && this.weapon.gameObject != null)
-                    this.weapon.gameObject.SetActive(false);
-
-                this.weapon = null;
                 this.weapon = item;
-                this.weapon.GetRenderer().sprite = null;
                 weaponBone.sprite = item.GetSmallSprite();
             }
             public Item GetWeapon()
@@ -122,12 +117,7 @@ namespace DungeonRush
             }
             private void SetArmor(Item item)
             {
-                if (this.armor != null)
-                    this.armor.gameObject.SetActive(false);
-
-                this.armor = null;
                 this.armor = item;
-                this.armor.GetRenderer().sprite = null;
                 armorBone.sprite = item.GetSmallSprite();
             }
             public Item GetArmor()

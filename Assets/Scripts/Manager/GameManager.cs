@@ -1,8 +1,6 @@
 ﻿using DungeonRush.Controller;
 using UnityEngine;
-using System.Collections;
-using DungeonRush.Property;
-using DungeonRush.Saving;
+using DungeonRush.UI;
 
 namespace DungeonRush
 {
@@ -10,58 +8,68 @@ namespace DungeonRush
     {
         public class GameManager : MonoBehaviour
         {
-            [SerializeField] CanvasGroup canvasGroup = null;
+            private static GameManager instance = null;
+            // Game Instance Singleton
+            public static GameManager Instance
+            {
+                get
+                {
+                    return instance;
+                }
+                set { instance = value; }
+            }
 
-            public static GameState gameState = GameState.STOP_GAME;
-            public bool start = false;
+            public GameState gameState = GameState.DEFEAT;
 
-            [SerializeField] float fadeInTime = 1f;
-            [SerializeField] float fadeOutTime = 2f;
-
-            public static float _fadeInTime = 0f;
-            public static float _fadeOutTime = 0f;
+            [SerializeField] UIManager uiManagerPrefab;
+            [SerializeField] LoadManager loadManagerPrefab;
+            [SerializeField] CardManager cardManagerPrefab;
+            [SerializeField] MoveSchedular moveSchedularPrefab;
+            [SerializeField] CollectableManager collectableManagerPrefab;
+            [SerializeField] SwipeManager swipeManagerPrefab;
 
             private void Awake()
             {
+                if (Instance != null)
+                    Destroy(Instance);
+                else
+                {
+                    Instance = this;
+                    DontDestroyOnLoad(this);
+                }
+
+                Initialize();
+            }
+
+            private void OnLevelWasLoaded(int level)
+            {
+                Initialize();
+            }
+
+            protected void Initialize()
+            {
                 Application.targetFrameRate = 60;
-                _fadeInTime = fadeInTime;
-                _fadeOutTime = fadeOutTime;
+
+                Instantiate(uiManagerPrefab);
+                Instantiate(loadManagerPrefab);
+                Instantiate(cardManagerPrefab);
+                Instantiate(moveSchedularPrefab);
+                Instantiate(collectableManagerPrefab);
+                Instantiate(swipeManagerPrefab);
+
+                SetGameState(GameState.BEGIN_LEVEL);
             }
 
-            private void Start()
+            public void SetGameState(GameState state, UIState uiState = UIState.NONE)
             {
-                StartCoroutine(StartGame());
-            }
-
-            private IEnumerator StartGame()
-            {
-                yield return FadeIn(fadeInTime);
-                gameState = GameState.BEGIN_LEVEL;
-            }
-
-            public IEnumerator FadeOut()
-            {
-                canvasGroup.gameObject.SetActive(true);
-                while(canvasGroup.alpha < 1)
-                {
-                    canvasGroup.alpha += Time.deltaTime / fadeOutTime;
-                    yield return null;
-                }
-            }
-
-            public IEnumerator FadeIn(float time)
-            {
-                while(canvasGroup.alpha > 0)
-                {
-                    canvasGroup.alpha -= Time.deltaTime / time;
-                    yield return null;
-                }
-                canvasGroup.gameObject.SetActive(false);
+                gameState = state;
+                UIManager.Instance.UpdateCanvasState(gameState, uiState);
             }
 
             void OnDestroy()
             {
-                gameState = GameState.STOP_GAME;
+                enabled = false;
+                gameState = GameState.START;
             }
         }
     }

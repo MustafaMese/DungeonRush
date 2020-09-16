@@ -22,14 +22,12 @@ namespace DungeonRush.Property
         [SerializeField] float getBackTime = 0.1f;
         
         private SkillUser skillUser = null;
-        private CollectableManager collectableManager = null;
 
         protected override void Initialize()
         {
             base.Initialize();
             if (isSkillUser)
                 skillUser = GetComponent<SkillUser>();
-            collectableManager = FindObjectOfType<CollectableManager>();
         }
 
         private void MoveToAttackRange()
@@ -59,7 +57,7 @@ namespace DungeonRush.Property
             AttackAction(move);
 
             if(target.GetCard() == null || target.GetCard().GetHealth() <= 0)
-                collectableManager.AddCoins(target.transform.position, target.GetCard().GetLevel());
+                CollectableManager.Instance.AddCoins(target.transform.position, target.GetCard().GetLevel());
 
         }
 

@@ -1,5 +1,6 @@
 ﻿using DungeonRush.Field;
 using DungeonRush.Managers;
+using DungeonRush.UI;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -9,8 +10,13 @@ namespace DungeonRush.Controller
 {
     public class MoveSchedular : MonoBehaviour
     {
-        public TextMeshProUGUI tourText;
-
+        private static MoveSchedular instance = null;
+        // Game Instance Singleton
+        public static MoveSchedular Instance
+        {
+            get { return instance; }
+            set { instance = value; }
+        }
         /// <summary>
         /// -1 for Nothing, 0 for Player, 1 for NonPlayers, 2 for Traps
         /// </summary>
@@ -19,45 +25,43 @@ namespace DungeonRush.Controller
         [SerializeField] int tourCount;
 
         public PlayerController playerController;
+
+        [SerializeField] EnemyController enemyControllerPrefab;
+        [SerializeField] TrapController trapControllerPrefab;
+
         public EnemyController enemyController;
-        public TrapController trapController;
-        public Board board;
+        private TrapController trapController;
 
-        private TurnCanvas turnCanvas;
-
-        public bool isGameStarted = false;
-
-        private void Start()
+        private void Awake()
         {
-            playerController = FindObjectOfType<PlayerController>();
-            enemyController = FindObjectOfType<EnemyController>();
-            trapController = FindObjectOfType<TrapController>();
-            board = FindObjectOfType<Board>();
-            turnCanvas = FindObjectOfType<TurnCanvas>();
-            tourCount = 0;
-            tourText.text = tourCount.ToString();
-            turnNumber = 0;
-            oldTurnNumber = -1;
+            Instance = this;
         }
 
-        private void Update()
+        protected void Initialize()
         {
-            if(GameManager.gameState == GameState.BEGIN_LEVEL) 
-            {
-                playerController.Begin();
-                GameManager.gameState = GameState.PLAY;
-            }
+            tourCount = 0;
+            turnNumber = 0;
+            oldTurnNumber = -1;
+
+            enemyController = Instantiate(enemyControllerPrefab);
+            trapController = Instantiate(trapControllerPrefab);
+        }
+
+        public void StartGame()
+        {
+            Initialize();
+            playerController.Begin();
+            GameManager.Instance.SetGameState(GameState.PLAY);
         }
 
         public void IncreaseTour() 
         {
             tourCount++;
-            tourText.text = tourCount.ToString();
         }
 
         public void OnNotify() 
         {
-            if (GameManager.gameState == GameState.STOP_GAME || GameManager.gameState == GameState.PAUSE) return;
+            if (GameManager.Instance.gameState == GameState.DEFEAT || GameManager.Instance.gameState == GameState.PAUSE) return;
 
             if(turnNumber != 2)
             {
@@ -87,8 +91,7 @@ namespace DungeonRush.Controller
             }
             else if (turnNumber == 0)
             {
-                turnCanvas.Initialize();
-                turnCanvas.ChangeText(true);
+                UIManager.Instance.InitializePlayerTurn();
                 playerController.Begin();
                 playerController.ActivateStatuses();
             }

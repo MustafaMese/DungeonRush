@@ -79,7 +79,6 @@ namespace DungeonRush.Field
                     DestroyImmediate(outerWall[i].gameObject);
                 }
 
-                Board.tilesByListnumbers.Clear();
                 Board.tilesByCoordinates.Clear();
                 outerWall.Clear();
                 board.cardPlaces = null;
@@ -210,7 +209,6 @@ namespace DungeonRush.Field
                 pos.SetCoordinate(pos.transform.position);
                 pos.SetCard(null);
                 pos.SetListNumber(i);
-                Board.tilesByListnumbers.Add(i, pos);
                 Board.tilesByCoordinates.Add(pos.transform.position, pos);
             }
             board.SetCardPlaces(cardPlaces);

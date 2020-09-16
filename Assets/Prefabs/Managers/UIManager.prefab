@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &3970455011409390342
+--- !u!1 &784432218013409408
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,22 +8,22 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 3970455011409390340}
-  - component: {fileID: 3970455011409390343}
+  - component: {fileID: 784432218013409410}
+  - component: {fileID: 784432218013409409}
   m_Layer: 0
-  m_Name: MoveSchedular
+  m_Name: UIManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &3970455011409390340
+--- !u!4 &784432218013409410
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3970455011409390342}
+  m_GameObject: {fileID: 784432218013409408}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -31,23 +31,25 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3970455011409390343
+--- !u!114 &784432218013409409
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3970455011409390342}
+  m_GameObject: {fileID: 784432218013409408}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d9664b9b62251094a8f437954419be38, type: 3}
+  m_Script: {fileID: 11500000, guid: 24bbead7a7c2e0742a9ab2715600f16f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  turnNumber: 0
-  oldTurnNumber: 0
-  tourCount: 0
-  playerController: {fileID: 0}
-  enemyControllerPrefab: {fileID: 917317290034131675, guid: 7f60ffa2472b06c40801b018ca4f5187,
+  pauseMenuPrefab: {fileID: 1817792468600524893, guid: 8d6556b369a0f43479da3113a133288c,
     type: 3}
-  trapControllerPrefab: {fileID: 2748724027339495976, guid: 8cbf8774f538e124f8703494030732ec,
+  defeatedPanelPrefab: {fileID: 9135044266118810223, guid: bc813e94d483bb74cb3ecf0ba0c576b4,
+    type: 3}
+  pickItemCanvasPrefab: {fileID: 5636871498217233156, guid: 90cb80ef8537e324e9c7557222597710,
+    type: 3}
+  fadingCanvasPrefab: {fileID: 1875602063, guid: 4570fe21f1ece9942afa8711b6b75310,
+    type: 3}
+  turnCanvasPrefab: {fileID: 6095422901881509985, guid: 5f31313c9a8d9ae43b67b2ee7b298069,
     type: 3}

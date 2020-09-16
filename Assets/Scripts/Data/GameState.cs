@@ -5,6 +5,6 @@
     PLAY,
     PAUSE,
     LEVEL_TRANSITION,
-    STOP_GAME,
+    DEFEAT,
     END
 }

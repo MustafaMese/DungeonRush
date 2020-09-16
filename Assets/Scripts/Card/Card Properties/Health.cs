@@ -40,13 +40,13 @@ namespace DungeonRush.Property
             UpdateAnimation(true);
             if (isPlayer)
             {
-                FindObjectOfType<DefeatedPanel>().SetDefeat();
                 this.enabled = false;
+                GameManager.Instance.SetGameState(GameState.DEFEAT);
             }
             else
             {
                 yield return new WaitForSeconds(deathTime);
-                CardManager.RemoveCardForAttacker(card.GetTile().GetListNumber());
+                CardManager.RemoveCardForAttacker(card.GetTile().GetCoordinate());
             }
         }
 

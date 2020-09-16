@@ -12,8 +12,6 @@ namespace DungeonRush.Controller
         public enum State { MOVE, ATTACK1, ATTACK2};
         public State state = State.ATTACK1;
 
-        private EnemyController enemyController;
-
         protected override void ChangeState()
         {
             switch (state)
@@ -37,7 +35,6 @@ namespace DungeonRush.Controller
 
         protected override void ChooseController()
         {
-            enemyController = FindObjectOfType<EnemyController>();
             EnemyController.subscribedEnemies.Add(this);
         }
 
@@ -51,7 +48,7 @@ namespace DungeonRush.Controller
             else
             {
                 card.InstantMoveCount = card.TotalMoveCount;
-                enemyController.OnNotify();
+                MoveSchedular.Instance.enemyController.OnNotify();
             }
         }
 

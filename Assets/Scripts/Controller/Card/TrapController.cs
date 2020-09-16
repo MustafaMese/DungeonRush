@@ -12,7 +12,6 @@ namespace DungeonRush.Controller
         [SerializeField] int activeTrapDistance = 4;
 
         private PlayerController playerController;
-        private MoveSchedular ms;
         private ProcessHandleChecker determineProcess;
         private ProcessHandleChecker assigningProcess;
         private bool moveFinished = false;
@@ -25,7 +24,6 @@ namespace DungeonRush.Controller
         private void Start()
         {
             playerController = FindObjectOfType<PlayerController>();
-            ms = FindObjectOfType<MoveSchedular>();
             InitProcessHandlers();
         }
 
@@ -136,7 +134,7 @@ namespace DungeonRush.Controller
         }
         public void Notify()
         {
-            ms.OnNotify();
+            MoveSchedular.Instance.OnNotify();
         }
         public void OnNotify()
         {

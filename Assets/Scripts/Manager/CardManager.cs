@@ -21,26 +21,15 @@ namespace DungeonRush
                 set { instance = value; }
             }
 
-            [Header("Characters")]
-            public PlayerCard playerCard;
-            public EnemyCard[] enemyCards;
-            public ItemCard[] itemCards;
-            public EnemyCard[] trapCards;
-
             public List<Card> cards = new List<Card>();
             public Tile instantPlayerTile;
 
-            public Board board;
-
-
             private void Awake()
             {
-                Instance = this;
-            }
-
-            private void Start()
-            {
-                board = FindObjectOfType<Board>();
+                if (Instance != null)
+                    Destroy(Instance);
+                else
+                    Instance = this;
             }
 
             public void ReshuffleCards() 
@@ -50,29 +39,6 @@ namespace DungeonRush
                 {
                     cards.Add(card);
                 }
-            }
-
-            public PlayerCard GetPlayerCard()
-            {
-                return this.playerCard;
-            }
-
-            public Card GetCard(Tile tile)
-            {
-                for (int i = 0; i < cards.Count; i++)
-                {
-                    Card card = cards[i];
-                    if (card.GetTile() == tile)
-                    {
-                        return card;
-                    }
-                }
-                throw new Exception("Error 31");
-            }
-
-            public Tile GetInstantPlayerTile()
-            {
-                return this.instantPlayerTile;
             }
 
             public void SetInstantPlayerTile(Tile tile)
@@ -129,9 +95,9 @@ namespace DungeonRush
                 tile.SetCard(null);
             }
 
-            public static void RemoveCardForAttacker(int listnumber)
+            public static void RemoveCardForAttacker(Vector2 coordinate)
             {
-                RemoveCard(Board.tilesByListnumbers[listnumber]);
+                RemoveCard(Board.tilesByCoordinates[coordinate]);
             }
             #endregion 
         }

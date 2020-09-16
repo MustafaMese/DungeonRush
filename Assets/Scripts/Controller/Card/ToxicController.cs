@@ -33,13 +33,12 @@ namespace DungeonRush.Controller {
 
         protected override void ChooseController()
         {
-            enemyController = FindObjectOfType<EnemyController>();
             EnemyController.subscribedEnemies.Add(this);
         }
 
         protected override void Notify()
         {
-            enemyController.OnNotify();
+            MoveSchedular.Instance.enemyController.OnNotify();
         }
 
         protected override Swipe SelectTileToAttack(Card attacker)

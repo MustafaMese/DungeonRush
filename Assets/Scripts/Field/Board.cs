@@ -17,15 +17,10 @@ namespace DungeonRush
 
             public static int RowLength;
             public List<Tile> cardPlaces = new List<Tile>();
-            public static Dictionary<int, Tile> tilesByListnumbers = new Dictionary<int, Tile>();
             public static Dictionary<Vector2, Tile> tilesByCoordinates = new Dictionary<Vector2, Tile>();
             public static bool touched;
-            public CardManager cm;
             public BoardCreator bCreator;
             public int playerStartTile = 0;
-
-            [SerializeField] Sprite darknessGray = null;
-            [SerializeField] Sprite darknessBlack = null;
 
             private void Awake()
             {
@@ -47,9 +42,9 @@ namespace DungeonRush
                     }
                 }
 
-                cm.cards = new List<Card>(FindObjectsOfType<Card>());
+                CardManager.Instance.cards = new List<Card>(FindObjectsOfType<Card>());
                 bCreator.InitializeTiles(cardPlaces);
-                SetCardTiles(cm.cards);
+                SetCardTiles(CardManager.Instance.cards);
                 DeterminePlayerTile();
                 SetTileDarkness();
             }
@@ -77,39 +72,16 @@ namespace DungeonRush
             #region CARDS
             public void DeterminePlayerTile()
             {
-                for (int i = 0; i < cm.cards.Count; i++)
+                int count = CardManager.Instance.cards.Count;
+                List<Card> cmCards = new List<Card>(CardManager.Instance.cards);
+                for (int i = 0; i < count; i++)
                 {
-                    Card card = cm.cards[i];
+                    Card card = cmCards[i];
                     if (card.GetCardType() == CardType.PLAYER)
-                        cm.instantPlayerTile = card.GetTile();
+                        CardManager.Instance.instantPlayerTile = card.GetTile();
                 }
             }
-            private void AddStaticCards()
-            {
-                for (int i = 0; i < cardPlaces.Count; i++)
-                {
-                    if (cardPlaces[i].GetTrapCard() == null)
-                    {
-                        int number = UnityEngine.Random.Range(0, 101);
-                        if (number < 3)
-                            cm.AddCard(GiveRandomCard(cm.trapCards), cardPlaces[i], this, true);
-                    }
-                }
-            }
-            private void AddDynamicCards()
-            {
-                for (int i = 0; i < cardPlaces.Count; i++)
-                {
-                    if (cardPlaces[i].GetCard() == null)
-                    {
-                        int number = UnityEngine.Random.Range(0, 101);
-                        if (number < 20)
-                            cm.AddCard(GiveRandomCard(cm.enemyCards), cardPlaces[i], this, false);
-                        else if (number < 28)
-                            cm.AddCard(GiveRandomCard(cm.itemCards), cardPlaces[i], this, false);
-                    }
-                }
-            }
+
             public Card GiveRandomCard(Card[] card)
             {
                 int length = card.Length;
@@ -118,39 +90,12 @@ namespace DungeonRush
             #endregion
 
             #region TILES AND CARD PLACES
-            public void CardPlacesToTiles()
-            {
-                tilesByListnumbers.Clear();
-                tilesByCoordinates.Clear();
-                foreach (var tile in cardPlaces)
-                {
-                    tilesByListnumbers.Add(tile.GetListNumber(), tile);
-                    tilesByCoordinates.Add(tile.GetCoordinate(), tile);
-                }
-            }
             public void SetTileDarkness()
             {
                 for (int i = 0; i < cardPlaces.Count; i++)
                     cardPlaces[i].SetDarkness(null);
-
-                //Tile playerTile = cm.instantPlayerTile;
-                //Vector3 coordinate = playerTile.GetCoordinate();
-
-                //for (int i = 0; i < cardPlaces.Count; i++)
-                //{
-                //    float distance = (cardPlaces[i].transform.position - coordinate).sqrMagnitude;
-                //    if (distance <= 3)
-                //        cardPlaces[i].SetDarkness(null);
-                //    else if (distance <= 6)
-                //        cardPlaces[i].SetDarkness(darknessGray);
-                //    else
-                //        cardPlaces[i].SetDarkness(darknessBlack);
-                //}
             }
-            public void SetTiles(Dictionary<int, Tile> t)
-            {
-                tilesByListnumbers = t;
-            }
+
             public void SetCardPlaces(List<Tile> cardPlaces)
             {
                 this.cardPlaces = cardPlaces;
@@ -163,7 +108,6 @@ namespace DungeonRush
 
             private void OnDestroy()
             {
-                tilesByListnumbers.Clear();
                 tilesByCoordinates.Clear();
                 touched = false;
             }
