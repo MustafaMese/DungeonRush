@@ -24,32 +24,57 @@ public class StatusController : MonoBehaviour
             poolForStatusEffect = new ObjectPool();
             poolForTextPopup = new ObjectPool();
 
-            poolForStatusEffect.SetObject(statusEffect);
-            poolForStatusEffect.FillPool(1);
-            poolForTextPopup.SetObject(textPopup);
-            poolForTextPopup.FillPool(1);
+            if (statusEffect != null)
+            {
+                poolForStatusEffect.SetObject(statusEffect);
+                poolForStatusEffect.FillPool(1);
+            }
+
+            if (textPopup != null)
+            {
+                poolForTextPopup.SetObject(textPopup);
+                poolForTextPopup.FillPool(1);
+            }
+
             turnCount = status.TurnCount;
         }
     }
 
+    public List<StatusType> statusTypes = new List<StatusType>();
     public List<StatusData> activeStatuses = new List<StatusData>();
     private Card card;
+
+    public List<Status> STATUSES = new List<Status>();
 
     private void Start()
     {
         card = GetComponent<Card>();
+        for (int i = 0; i < STATUSES.Count; i++)
+        {
+            if(STATUSES[i] != null)
+                AddStatus(STATUSES[i]);
+        }
     }
 
     public void AddStatus(Status status)
     {
-        GameObject effect = Instantiate(status.Effect, transform);
-        GameObject textPopup = Instantiate(status.TextPopUp, transform);
+        GameObject effect = null;
+        GameObject textPopup = null;
+
+        if (status.Effect != null)
+        {
+            effect = Instantiate(status.Effect, transform);
+            effect.SetActive(false);
+        }
+        if (status.TextPopUp != null)
+        {
+            textPopup = Instantiate(status.TextPopUp, transform);
+            textPopup.gameObject.SetActive(false);
+        }
+
         StatusData sd = new StatusData(status, effect, textPopup);
-
-        effect.SetActive(false);
-        textPopup.gameObject.SetActive(false);
-
         activeStatuses.Add(sd);
+        statusTypes.Add(status.StatusType);
     }
 
     public void ActivateStatuses()
@@ -66,6 +91,7 @@ public class StatusController : MonoBehaviour
         if (statusData.turnCount <= 0)
         {
             activeStatuses.Remove(statusData);
+            statusTypes.Remove(statusData.status.StatusType);
             StartCoroutine(KillStatus(statusData));
         }
     }
@@ -73,8 +99,10 @@ public class StatusController : MonoBehaviour
     private void ApplyStatus(StatusData statusData)
     {
         statusData.status.Execute(card);
-        StartCoroutine(TextPopup(statusData));
-        StartCoroutine(Animate(statusData));
+        if(statusData.status.TextPopUp != null)
+            StartCoroutine(TextPopup(statusData));
+        if(statusData.status.Effect != null)
+            StartCoroutine(Animate(statusData));
     }
 
     private IEnumerator Animate(StatusData statusData)

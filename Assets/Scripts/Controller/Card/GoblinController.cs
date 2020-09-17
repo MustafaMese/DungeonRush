@@ -1,9 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using DungeonRush.Cards;
-using DungeonRush.Field;
+﻿using DungeonRush.Cards;
 using DungeonRush.Managers;
-using UnityEngine;
 
 namespace DungeonRush.Controller
 {
@@ -14,6 +10,13 @@ namespace DungeonRush.Controller
 
         protected override void ChangeState()
         {
+            if (statusAct.anger)
+            {
+                state = State.ATTACK2;
+                exclamation.SetActive(false);
+                return;
+            }
+
             switch (state)
             {
                 case State.MOVE:
@@ -52,38 +55,15 @@ namespace DungeonRush.Controller
             }
         }
 
-        protected override Swipe SelectTileToAttack(Card card)
+        protected override Swipe SelectTileForSwipe(Card card)
         {
-            List<Tile> list;
-            Dictionary<Tile, Swipe> tiles;
-            if (state == State.ATTACK1 || state == State.ATTACK2)
-            {
-                tiles = card.GetAttackStyle().GetAvaibleTiles(card);
-                list = new List<Tile>(tiles.Keys);
+            if ((state == State.ATTACK1 || state == State.ATTACK2) && statusAct.canAttack)
+                return SelectTileToAttack(card);
 
-                for (int i = 0; i < list.Count; i++)
-                {
-                    Tile t = list[i];
-                    if (t.GetCard() != null && card.GetCharacterType().IsEnemy(t.GetCard().GetCharacterType()))
-                    {
-                        isMoving = false;
-                        return tiles[t];
-                    }
-                }
-            }
+            if (statusAct.canMove)
+                return SelectTileToMove(card);
 
-            tiles = card.GetShift().GetAvaibleTiles(card);
-            list = new List<Tile>(tiles.Keys);
-            isMoving = true;
-            int count = tiles.Count;
-            int number = GiveRandomEncounter(list, count);
-            if (number != -1)
-            {
-                Tile t = list[number];
-                return tiles[t];
-            }
-            else
-                return Swipe.NONE;
+            return Swipe.NONE;
         }
     }
 }

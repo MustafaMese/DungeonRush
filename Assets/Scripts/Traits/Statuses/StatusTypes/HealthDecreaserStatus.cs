@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using DungeonRush.Cards;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "ScriptableObjects/Status/Heal")]
-public class HealStatus : Status
+[CreateAssetMenu(menuName = "ScriptableObjects/Status/HealthDecreaser")]
+public class HealthDecreaserStatus : Status
 {
     public override void Execute(Card card)
     {
-        card.IncreaseHealth(Power);
+        card.DecreaseHealth(Power);
     }
 }

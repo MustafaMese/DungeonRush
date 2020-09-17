@@ -12,12 +12,45 @@ namespace DungeonRush.Controller
 {
     public abstract class AIController : MonoBehaviour, IMoveController
     {
+        public struct StatusActControl
+        {
+            public bool canMove;
+            public bool canAttack;
+            public bool anger;
+
+            public void Reset()
+            {
+                canMove = true;
+                canAttack = true;
+                anger = false;
+            }
+
+            public void ActControl(List<StatusType> list)
+            {
+                for (int i = 0; i < list.Count; i++)
+                {
+                    if (list[i] == StatusType.DISARMED)
+                        canAttack = false;
+                    else if (list[i] == StatusType.ENTANGLED)
+                        canMove = false;
+                    else if (list[i] == StatusType.STUNNED)
+                    {
+                        canMove = false;
+                        canAttack = false;
+                    }
+                    else if (list[i] == StatusType.ANGER)
+                        anger = true;
+                }
+            }
+        }
+        protected StatusActControl statusAct;
+
         protected bool isMoving = false;
         protected Swipe swipe;
         protected Card card;
         protected bool isRunning = false;
         protected CardType cardType;
-
+        
         protected ProcessHandleChecker preparingProcess;
         protected ProcessHandleChecker attackProcess;
         protected ProcessHandleChecker moveProcess;
@@ -32,7 +65,7 @@ namespace DungeonRush.Controller
 
         protected abstract void Notify();
         protected abstract void ChooseController();
-        protected abstract Swipe SelectTileToAttack(Card card);
+        protected abstract Swipe SelectTileForSwipe(Card card);
         protected abstract void ChangeState();
 
         private void Start()
@@ -57,6 +90,7 @@ namespace DungeonRush.Controller
             attacker = card.GetComponent<Attacker>();
             customization = card.GetComponent<ICustomization>();
             statusController = card.GetComponent<StatusController>();
+            statusAct = new StatusActControl();
             cardType = card.GetCardType();
         }
 
@@ -107,7 +141,7 @@ namespace DungeonRush.Controller
                 return card.GetAttackStyle().Define(card, swipe);
         }
 
-        public virtual void AttackProcess()
+        public void AttackProcess()
         {
             if (attackProcess.start)
             {
@@ -130,7 +164,7 @@ namespace DungeonRush.Controller
             }
         }
 
-        public virtual void MoveProcess()
+        public void MoveProcess()
         {
             if (moveProcess.start)
             {
@@ -154,6 +188,45 @@ namespace DungeonRush.Controller
             }
         }
 
+        protected Swipe SelectTileToAttack(Card card)
+        {
+            List<Tile> list;
+            Dictionary<Tile, Swipe> tiles;
+
+            tiles = card.GetAttackStyle().GetAvaibleTiles(card);
+            list = new List<Tile>(tiles.Keys);
+            for (int i = 0; i < list.Count; i++)
+            {
+                Tile t = list[i];
+                if (t.GetCard() != null && card.GetCharacterType().IsEnemy(t.GetCard().GetCharacterType()))
+                {
+                    isMoving = false;
+                    return tiles[t];
+                }
+            }
+
+            return Swipe.NONE;
+        }
+
+        protected Swipe SelectTileToMove(Card card)
+        {
+            List<Tile> list;
+            Dictionary<Tile, Swipe> tiles;
+
+            tiles = card.GetShift().GetAvaibleTiles(card);
+            list = new List<Tile>(tiles.Keys);
+            isMoving = true;
+            int count = tiles.Count;
+            int number = GiveRandomEncounter(list, count);
+            if (number != -1)
+            {
+                Tile t = list[number];
+                return tiles[t];
+            }
+            else
+                return Swipe.NONE;
+        }
+
         #endregion
 
         #region STATE METHODS
@@ -172,6 +245,7 @@ namespace DungeonRush.Controller
         }
         #endregion
 
+        #region CARD CONTROL METHODS
         public void ActivateStatuses()
         {
             statusController.ActivateStatuses();
@@ -198,7 +272,9 @@ namespace DungeonRush.Controller
 
         public void Run()
         {
-            swipe = SelectTileToAttack(GetCard());
+            statusAct.Reset();
+            statusAct.ActControl(statusController.statusTypes);
+            swipe = SelectTileForSwipe(GetCard());
             ChangeState();
             isRunning = true;
             preparingProcess.StartProcess();
@@ -236,5 +312,7 @@ namespace DungeonRush.Controller
 
             return -1;
         }
+
+        #endregion
     }
 }

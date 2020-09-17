@@ -71,6 +71,9 @@ namespace DungeonRush.Controller
             List<AIController> l = new List<AIController>();
             for (int i = 0; i < subscribedEnemies.Count; i++)
             {
+                print("Selam tatlım");
+                subscribedEnemies[i].ActivateStatuses();
+
                 var distance = GetDistance(subscribedEnemies[i].transform.position);
                 if (distance <= attackerDistance)
                 {
@@ -113,7 +116,6 @@ namespace DungeonRush.Controller
             {
                 UIManager.Instance.ChangeIcons(attackerIndex);
                 attackerCards[attackerIndex].Run();
-                attackerCards[attackerIndex].ActivateStatuses();
                 moveFinished = false;
             }
             else if (attackerCards[attackerIndex] == null)

@@ -28,43 +28,27 @@ namespace DungeonRush.Controller
             MoveSchedular.Instance.enemyController.OnNotify();
         }
 
-        protected override Swipe SelectTileToAttack(Card attacker)
+        protected override Swipe SelectTileForSwipe(Card attacker)
         {
             if (state == State.WAIT) return Swipe.NONE;
 
-            List<Tile> list;
-            Dictionary<Tile, Swipe> tiles;
+            if (state == State.ATTACK && statusAct.canAttack)
+                return SelectTileToAttack(card);
 
-            if (state == State.ATTACK)
-            {
-                tiles = card.GetAttackStyle().GetAvaibleTiles(card);
-                list = new List<Tile>(tiles.Keys);
-                for (int i = 0; i < list.Count; i++)
-                {
-                    Tile t = list[i];
-                    if (t.GetCard() != null && attacker.GetCharacterType().IsEnemy(t.GetCard().GetCharacterType()))
-                    {
-                        isMoving = false;
-                        return tiles[t];
-                    }
-                }
-            }
+            if (statusAct.canMove)
+                return SelectTileToMove(card);
 
-            tiles = card.GetShift().GetAvaibleTiles(card);
-            list = new List<Tile>(tiles.Keys);
-            isMoving = true;
-            int count = tiles.Count;
-            int number = GiveRandomEncounter(list, count);
-            if (number != -1)
-            {
-                Tile t = list[number];
-                return tiles[t];
-            }
-            else
-                return Swipe.NONE;
+            return Swipe.NONE;
         }
         protected override void ChangeState()
         {
+            if (statusAct.anger)
+            {
+                state = State.ATTACK;
+                exclamation.SetActive(false);
+                return;
+            }
+
             switch (state)
             {
                 case State.WAIT:

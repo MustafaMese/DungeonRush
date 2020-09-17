@@ -11,8 +11,37 @@ namespace DungeonRush.Property
 {
     public abstract class Attacker : MonoBehaviour
     {
+        public struct StatusActControl
+        {
+            public int extraDodgeChance;
+            public int extraCriticChance;
+
+            public void Reset()
+            {
+                extraCriticChance = 0;
+                extraCriticChance = 0;
+            }
+
+            public void ActControl(List<StatusType> list)
+            {
+                for (int i = 0; i < list.Count; i++)
+                {
+                    if (list[i] == StatusType.SLOWED)
+                    {
+                        extraDodgeChance--;
+                        extraCriticChance--;
+                    }
+                    else if (list[i] == StatusType.HASTE)
+                    {
+                        extraCriticChance++;
+                        extraDodgeChance++;
+                    }
+                }
+            }
+        }
+        protected StatusActControl statusAct;
+
         [SerializeField] protected AttackStyle attackStyle = null;
-        
         [SerializeField] Animator animator = null;
 
         public int power = 0;
@@ -21,14 +50,17 @@ namespace DungeonRush.Property
         protected ObjectPool poolForAttackStyle = new ObjectPool();
         protected GameObject effectObject = null;
         protected Card card = null;
+        protected StatusController statusController = null;
 
         private void Start()
         {
             DOTween.Init();
             card = GetComponent<Card>();
+            statusController = card.GetComponent<StatusController>();
             effectObject = attackStyle.GetEffect();
             FillThePool(poolForAttackStyle, effectObject, 1);
             power = attackStyle.GetPower();
+            statusAct = new StatusActControl();
             Initialize();
         }
 
@@ -52,7 +84,9 @@ namespace DungeonRush.Property
 
         protected bool IsCriticAttack()
         {
-            int criticChance = card.CriticChance * 2;
+            int criticChance = card.CriticChance + statusAct.extraCriticChance;
+            criticChance *= 2;
+
             if (criticChance > 0)
             {
                 int number = Random.Range(0, 100);
@@ -132,7 +166,9 @@ namespace DungeonRush.Property
 
         protected bool IsMissed(Card card)
         {
-            int dodgeChance = card.DodgeChance * 2;
+            int dodgeChance = card.DodgeChance + statusAct.extraDodgeChance;
+            dodgeChance *= 2;
+
             if (dodgeChance > 0)
             {
                 int number = Random.Range(0, 100);
@@ -147,6 +183,8 @@ namespace DungeonRush.Property
             Card card = move.GetCard();
             Tile target = move.GetTargetTile();
             Vector3 tPos = target.transform.position;
+            statusAct.Reset();
+            statusAct.ActControl(statusController.statusTypes);
 
             bool isMissed = IsMissed(target.GetCard());
             if (isMissed)
