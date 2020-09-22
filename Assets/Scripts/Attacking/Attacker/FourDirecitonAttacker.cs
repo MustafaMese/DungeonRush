@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace DungeonRush.Attacking
 {
-    public class GoblinAttacker : Attacker
+    public class FourDirecitonAttacker : Attacker
     {
         [Header("Attacker Properties")]
         [SerializeField] float damageTime = 0.3f;
@@ -39,12 +39,14 @@ namespace DungeonRush.Attacking
 
         protected override IEnumerator StartAttackAnimation(ObjectPool pool, Move move, float time)
         {
-            Transform cardTransform = move.GetCard().transform;
-
-            GameObject obj = pool.PullObjectFromPool();
-            attackStyle.SetEffectPosition(obj, cardTransform.position, cardTransform);
-            yield return new WaitForSeconds(time);
-            pool.AddObjectToPool(obj);
+            if (move.GetTargetTile().GetCard() != null)
+            {
+                Transform cardTransform = move.GetCard().transform;
+                GameObject obj = pool.PullObjectFromPool();
+                attackStyle.SetEffectPosition(obj, cardTransform.position, cardTransform);
+                yield return new WaitForSeconds(time);
+                pool.AddObjectToPool(obj);
+            }
         }
     }
 }

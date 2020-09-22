@@ -101,10 +101,7 @@ namespace DungeonRush.Property
             if (isDamage)
             {
                 if (!statusAct.isAcid)
-                {
-                    int damage = CalculateBlockedDamageByArmor(amount);
-                    amount -= damage;
-                }
+                    amount = CalculateBlockedDamageByArmor(amount);
 
                 health -= amount;
                 health = Mathf.Max(0, health);

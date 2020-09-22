@@ -51,13 +51,18 @@ namespace DungeonRush.Property
         private void Damage(Move move)
         {
             Tile target = move.GetTargetTile();
+            int level = 0;
+
+            if(move.GetTargetTile().GetCard() != null)
+                level = move.GetTargetTile().GetCard().GetLevel();
+
             float time = attackStyle.GetAnimationTime();
 
             StartCoroutine(StartAttackAnimation(poolForAttackStyle, move, time));
             AttackAction(move);
 
             if(target.GetCard() == null || target.GetCard().GetHealth() <= 0)
-                CollectableManager.Instance.AddCoins(target.transform.position, target.GetCard().GetLevel());
+                CollectableManager.Instance.AddCoins(target.transform.position, level);
 
         }
 

@@ -30,7 +30,7 @@ namespace DungeonRush.Controller
         [SerializeField] TrapController trapControllerPrefab;
 
         public EnemyController enemyController;
-        private TrapController trapController;
+        public TrapController trapController;
 
         private void Awake()
         {

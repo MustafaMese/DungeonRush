@@ -101,11 +101,14 @@ namespace DungeonRush.Property
             Transform cardTransform = move.GetCard().transform;
             Transform target = move.GetTargetTile().transform;
 
-            GameObject obj = pool.PullObjectFromPool();
-            attackStyle.SetEffectPosition(obj, target.position, target);
-            yield return new WaitForSeconds(time);
-            attackStyle.SetEffectPosition(obj, target.position, cardTransform);
-            pool.AddObjectToPool(obj);
+            if (move.GetTargetTile().GetCard() != null)
+            {
+                GameObject obj = pool.PullObjectFromPool();
+                attackStyle.SetEffectPosition(obj, target.position, target);
+                yield return new WaitForSeconds(time);
+                attackStyle.SetEffectPosition(obj, target.position, cardTransform);
+                pool.AddObjectToPool(obj);
+            }
         }
 
         public bool GetAttackFinished()
@@ -166,6 +169,8 @@ namespace DungeonRush.Property
 
         protected bool IsMissed(Card card)
         {
+            if (card == null) return false;
+
             int dodgeChance = card.DodgeChance + statusAct.extraDodgeChance;
             dodgeChance *= 2;
 
@@ -186,13 +191,16 @@ namespace DungeonRush.Property
             statusAct.Reset();
             statusAct.ActControl(statusController.statusTypes);
 
-            bool isMissed = IsMissed(target.GetCard());
-            if (isMissed)
-                StartCoroutine(card.StartTextPopup(tPos, "MISS"));
-            else
+            if (move.GetTargetTile().GetCard() != null)
             {
-                bool isCritic = DoAttackAction(move);
-                StartCoroutine(card.StartTextPopup(tPos, power, isCritic));
+                bool isMissed = IsMissed(target.GetCard());
+                if (isMissed)
+                    StartCoroutine(card.StartTextPopup(tPos, "MISS"));
+                else
+                {
+                    bool isCritic = DoAttackAction(move);
+                    StartCoroutine(card.StartTextPopup(tPos, power, isCritic));
+                }
             }
         }
 
@@ -203,13 +211,16 @@ namespace DungeonRush.Property
                 Card tCard = targetCards[i];
                 Vector3 tPos = tCard.transform.position;
 
-                bool isMissed = IsMissed(tCard);
-                if (isMissed)
-                    StartCoroutine(tCard.StartTextPopup(tPos, "MISS"));
-                else
+                if (tCard != null)
                 {
-                    bool isCritic = DoAttackAction(move);
-                    StartCoroutine(tCard.StartTextPopup(tPos, power, isCritic));
+                    bool isMissed = IsMissed(tCard);
+                    if (isMissed)
+                        StartCoroutine(tCard.StartTextPopup(tPos, "MISS"));
+                    else
+                    {
+                        bool isCritic = DoAttackAction(move);
+                        StartCoroutine(tCard.StartTextPopup(tPos, power, isCritic));
+                    }
                 }
             }
         }

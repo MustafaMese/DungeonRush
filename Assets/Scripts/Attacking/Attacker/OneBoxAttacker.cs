@@ -9,7 +9,7 @@ namespace DungeonRush
 {
     namespace Property
     {
-        public class InfectedAttacker : Attacker
+        public class OneBoxAttacker : Attacker
         {
             [Header("Attacker Properties")]
             [SerializeField] float range = 0.8f;

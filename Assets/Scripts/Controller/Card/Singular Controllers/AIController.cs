@@ -10,7 +10,7 @@ using UnityEngine;
 
 namespace DungeonRush.Controller
 {
-    public abstract class AIController : MonoBehaviour, IMoveController
+    public class AIController : MonoBehaviour, IMoveController
     {
         public struct StatusActControl
         {
@@ -44,6 +44,7 @@ namespace DungeonRush.Controller
             }
         }
         protected StatusActControl statusAct;
+        public State state = State.NONE;
 
         protected bool isMoving = false;
         protected Swipe swipe;
@@ -62,11 +63,63 @@ namespace DungeonRush.Controller
 
         [SerializeField] GameObject model;
         [SerializeField] protected GameObject exclamation;
+        [SerializeField] ActionState actionState;
 
-        protected abstract void Notify();
-        protected abstract void ChooseController();
-        protected abstract Swipe SelectTileForSwipe(Card card);
-        protected abstract void ChangeState();
+        protected void Notify()
+        {
+            if (card.GetCardType() == CardType.ENEMY)
+            {
+                if (card.InstantMoveCount > 0)
+                {
+                    Run();
+                    card.InstantMoveCount--;
+                }
+                else
+                {
+                    card.InstantMoveCount = card.TotalMoveCount;
+                    MoveSchedular.Instance.enemyController.OnNotify();
+                }
+            }
+            else
+                MoveSchedular.Instance.trapController.OnNotify();
+        }
+        protected void ChooseController()
+        {
+            print(card.GetCardType());
+
+            if (card.GetCardType() == CardType.ENEMY)
+                EnemyController.subscribedEnemies.Add(this);
+            else
+                TrapController.subscribedTraps.Add(this);
+        }
+        protected Swipe SelectTileForSwipe(Card card)
+        {
+            if(state == State.NONE)
+            {
+                isMoving = true;
+                return Swipe.NONE;
+            }
+
+            if (state == State.WAIT) return Swipe.NONE;
+
+            if ((state == State.ATTACK || state == State.ATTACK2) && statusAct.canAttack)
+                return SelectTileToAttack(card);
+
+            if (statusAct.canMove)
+                return SelectTileToMove(card);
+
+            return Swipe.NONE;
+        }
+        private void ChangeState()
+        {
+            if (statusAct.anger)
+            {
+                state = State.ATTACK;
+                exclamation.SetActive(false);
+            }
+            else
+                state = actionState.ChangeState(state, exclamation);
+        }
 
         private void Start()
         {
@@ -96,7 +149,7 @@ namespace DungeonRush.Controller
 
         #region MOVE CONTROLLER METHODS
 
-        public virtual void MakeMove()
+        public void MakeMove()
         {
             if (preparingProcess.IsRunning())
             {
@@ -112,7 +165,7 @@ namespace DungeonRush.Controller
             }
         }
 
-        public virtual void PrepareMoveProcess()
+        public void PrepareMoveProcess()
         {
             var canMove = DoMove(swipe);
             if (canMove)
@@ -133,7 +186,7 @@ namespace DungeonRush.Controller
             }
         }
 
-        private bool DoMove(Swipe swipe)
+        protected virtual bool DoMove(Swipe swipe)
         {
             if (isMoving)
                 return card.GetShift().Define(card, swipe);
