@@ -65,9 +65,9 @@ namespace DungeonRush.Controller
         [SerializeField] protected GameObject exclamation;
         [SerializeField] ActionState actionState;
 
-        protected void Notify()
+        private void Notify()
         {
-            if (card.GetCardType() == CardType.ENEMY)
+            if (cardType == CardType.ENEMY)
             {
                 if (card.InstantMoveCount > 0)
                 {
@@ -83,16 +83,14 @@ namespace DungeonRush.Controller
             else
                 MoveSchedular.Instance.trapController.OnNotify();
         }
-        protected void ChooseController()
+        private void ChooseController()
         {
-            print(card.GetCardType());
-
-            if (card.GetCardType() == CardType.ENEMY)
+            if (cardType == CardType.ENEMY)
                 EnemyController.subscribedEnemies.Add(this);
             else
                 TrapController.subscribedTraps.Add(this);
         }
-        protected Swipe SelectTileForSwipe(Card card)
+        private Swipe SelectTileForSwipe(Card card)
         {
             if(state == State.NONE)
             {
@@ -124,7 +122,6 @@ namespace DungeonRush.Controller
         private void Start()
         {
             Initialize();
-
             InitProcessHandlers();
             ChooseController();
         }
@@ -136,15 +133,18 @@ namespace DungeonRush.Controller
             MakeMove();
         }
 
-        protected virtual void Initialize()
+        private void Initialize()
         {
             card = GetComponent<Card>();
             mover = card.GetComponent<Mover>();
             attacker = card.GetComponent<Attacker>();
-            customization = card.GetComponent<ICustomization>();
-            statusController = card.GetComponent<StatusController>();
-            statusAct = new StatusActControl();
             cardType = card.GetCardType();
+            if (cardType == CardType.ENEMY)
+            {
+                customization = card.GetComponent<ICustomization>();
+                statusController = card.GetComponent<StatusController>();
+                statusAct = new StatusActControl();
+            }
         }
 
         #region MOVE CONTROLLER METHODS
@@ -241,7 +241,7 @@ namespace DungeonRush.Controller
             }
         }
 
-        protected Swipe SelectTileToAttack(Card card)
+        private Swipe SelectTileToAttack(Card card)
         {
             List<Tile> list;
             Dictionary<Tile, Swipe> tiles;
@@ -261,7 +261,7 @@ namespace DungeonRush.Controller
             return Swipe.NONE;
         }
 
-        protected Swipe SelectTileToMove(Card card)
+        private Swipe SelectTileToMove(Card card)
         {
             List<Tile> list;
             Dictionary<Tile, Swipe> tiles;
@@ -304,12 +304,13 @@ namespace DungeonRush.Controller
             statusController.ActivateStatuses();
         }
 
-        protected virtual void Stop()
+        private void Stop()
         {
             isRunning = false;
             swipe = Swipe.NONE;
-            customization.Change(transform.position.y);
             card.GetMove().Reset();
+            if(cardType == CardType.ENEMY)
+                customization.Change(transform.position.y);
         }
         public void InitProcessHandlers()
         {
@@ -333,7 +334,7 @@ namespace DungeonRush.Controller
             preparingProcess.StartProcess();
         }
 
-        protected int GiveRandomEncounter(List<Tile> list, int count)
+        private int GiveRandomEncounter(List<Tile> list, int count)
         {
             int missCount = 0;
             int number = -1;
