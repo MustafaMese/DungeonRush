@@ -9,12 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bad40ebae261b8d47b46edc27f9a0fb5, type: 3}
-  m_Name: Player Stat
+  m_Script: {fileID: 11500000, guid: 4dbe43649d9b18a4382011415580e6a8, type: 3}
+  m_Name: CriticChance+
   m_EditorClassIdentifier: 
-  maximumHealth: 0
-  criticChance: 0
-  dodgeChance: 0
-  lifeCount: 0
-  moveCount: 1
-  lootChance: 0
+  cooldown: 0
+  isActive: 0
+  isAttacker: 0
+  effectTime: 0
+  effect: {fileID: 0}
+  textPopup: {fileID: 0}
+  power: 0
+  chanceFactor: 0
+  statType: 1

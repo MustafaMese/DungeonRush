@@ -30,13 +30,13 @@ namespace DungeonRush
             public Character characterType;
 
             #region CARD STATS
-            private int maximumHealth = 0;
-            private int criticChance = 0;
-            private int dodgeChance = 0;
-            private int lifeCount = 0;
-            private int totalMoveCount = 0;
-            private int instantMoveCount = 0;
-            private int lootChance = 0;
+            public int maximumHealth = 0;
+            public int criticChance = 0;
+            public int dodgeChance = 0;
+            public int lifeCount = 0;
+            public int totalMoveCount = 0;
+            public int instantMoveCount = 0;
+            public int lootChance = 0;
             public int MaximumHealth { get => maximumHealth; set => maximumHealth = value; }
             public int CriticChance { get => criticChance; set => criticChance = value; }
             public int DodgeChance { get => dodgeChance; set => dodgeChance = value; }
@@ -83,7 +83,7 @@ namespace DungeonRush
                     lifeCount = cardProperties.cardStats.lifeCount;
                     totalMoveCount = cardProperties.cardStats.moveCount;
                     lootChance = cardProperties.cardStats.lootChance;
-
+                    print("wow");
                     if (maximumHealth > 0)
                         SetMaxHealth(maximumHealth);
                 }

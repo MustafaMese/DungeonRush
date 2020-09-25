@@ -14,4 +14,14 @@ namespace DungeonRush.Data
         public int moveCount;
         public int lootChance;
     }
+
+    public enum StatType
+    {
+        MAXIMUM_HEALTH,
+        CRITIC_CHANCE,
+        DODGE_CHANCE,
+        LIFE_COUNT,
+        MOVE_COUNT,
+        LOOT_CHANCE
+    }
 }

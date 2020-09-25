@@ -21,7 +21,7 @@ namespace DungeonRush.Attacking
             if (card == null) return null;
 
             int rL = Board.RowLength;
-            Vector2 coordinate = card.transform.position;
+            Vector2 coordinate = card.GetTile().GetCoordinate();
             Dictionary<Tile, Swipe> avaibleTiles = new Dictionary<Tile, Swipe>();
 
             if (coordinate.y < rL - 1)

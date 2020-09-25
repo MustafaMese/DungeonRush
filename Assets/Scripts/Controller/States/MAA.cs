@@ -7,8 +7,6 @@ public class MAA : ActionState
 {
     public override State ChangeState(State state, GameObject exclamation)
     {
-        Debug.Log(state);
-
         switch (state)
         {
             case State.NONE:

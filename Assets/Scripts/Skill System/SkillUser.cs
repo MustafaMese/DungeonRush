@@ -43,12 +43,15 @@ namespace DungeonRush.Skills {
 
         private Card card;
 
-        public Skill SKILL;
+        public Skill[] SKILL;
 
         private void Start()
         {
             card = GetComponent<Card>();
-            //AddSkill(SKILL);
+            for (int i = 0; i < SKILL.Length; i++)
+            {
+                AddSkill(SKILL[i]);
+            }
         }
 
         public void AddSkill(Skill skill)
@@ -64,6 +67,8 @@ namespace DungeonRush.Skills {
                 SkillData skillData = skills[i];
                 if(skillData.skill.IsAttacker)
                     ExecuteSkill(skillData);
+                else
+                    DecreaseCooldown(skillData);
             }
         }
 
@@ -81,19 +86,29 @@ namespace DungeonRush.Skills {
 
         private void ExecuteSkill(SkillData skillData)
         {
-            if (CooldownControl(skillData))
+            if (!skillData.skill.IsActive && skillData.tempCooldown != -1)
             {
+                print(skillData.tempCooldown);
+
+                skillData.tempCooldown = -1;
                 skillData.skill.Execute(card.GetMove());
-
-                if(skillData.skill.Effect != null)
-                    StartCoroutine(Animate(skillData, card.GetMove()));
-                if(skillData.skill.TextPopup != null)
-                    StartCoroutine(TextPopup(skillData, card.GetMove()));
-
-                IncreaseCooldown(skillData);
             }
-            else
-                DecreaseCooldown(skillData);
+            else if(skillData.skill.IsActive)
+            {
+                if (CooldownControl(skillData))
+                {
+                    skillData.skill.Execute(card.GetMove());
+
+                    if (skillData.skill.Effect != null)
+                        StartCoroutine(Animate(skillData, card.GetMove()));
+                    if (skillData.skill.TextPopup != null)
+                        StartCoroutine(TextPopup(skillData, card.GetMove()));
+
+                    IncreaseCooldown(skillData);
+                }
+                else
+                    DecreaseCooldown(skillData);
+            }
         }
 
         private IEnumerator Animate(SkillData skillData, Move move)
@@ -148,24 +163,34 @@ namespace DungeonRush.Skills {
 
         public bool CooldownControl(SkillData skillData)
         {
-            if (skillData.tempCooldown != 0)
+            if (skillData.tempCooldown > 0)
                 return false;
             else
+            {
+                if (skillData.skill.ChanceFactor != 0)
+                    return CalculateChance(skillData);
                 return true;
+            }
+        }
+
+        private bool CalculateChance(SkillData skillData)
+        {
+            int number = UnityEngine.Random.Range(0, 101);
+            if (skillData.skill.ChanceFactor <= number)
+                return true;
+            return false;
         }
 
         private void DecreaseCooldown(SkillData skillData)
         {
-            if (skillData.tempCooldown > 0)
+            if (skillData.tempCooldown > 0 && skillData.skill.IsActive)
                 skillData.tempCooldown--;
         }
 
         private void IncreaseCooldown(SkillData skillData)
         {
-            if (skillData.skill.IsActive)
+            if(skillData.skill.IsActive)
                 skillData.tempCooldown = skillData.skill.Cooldown;
-            else
-                skillData.tempCooldown = -1;
         }
     }
 }

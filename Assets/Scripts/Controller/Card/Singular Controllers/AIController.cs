@@ -12,7 +12,7 @@ namespace DungeonRush.Controller
 {
     public class AIController : MonoBehaviour, IMoveController
     {
-        public struct StatusActControl
+        private struct StatusActControl
         {
             public bool canMove;
             public bool canAttack;
@@ -43,81 +43,28 @@ namespace DungeonRush.Controller
                 }
             }
         }
-        protected StatusActControl statusAct;
-        public State state = State.NONE;
+        private StatusActControl statusAct;
+        private State state = State.NONE;
 
-        protected bool isMoving = false;
-        protected Swipe swipe;
-        protected Card card;
-        protected bool isRunning = false;
-        protected CardType cardType;
-        
-        protected ProcessHandleChecker preparingProcess;
-        protected ProcessHandleChecker attackProcess;
-        protected ProcessHandleChecker moveProcess;
+        private bool isMoving = false;
+        private Swipe swipe;
+        private Swipe swipeForAim;
+        private Card card;
+        private bool isRunning = false;
+        private CardType cardType;
 
-        protected Mover mover;
-        protected Attacker attacker;
-        protected ICustomization customization;
-        protected StatusController statusController;
+        private ProcessHandleChecker preparingProcess;
+        private ProcessHandleChecker attackProcess;
+        private ProcessHandleChecker moveProcess;
+
+        private Mover mover;
+        private Attacker attacker;
+        private ICustomization customization;
+        private StatusController statusController;
 
         [SerializeField] GameObject model;
-        [SerializeField] protected GameObject exclamation;
+        [SerializeField] GameObject exclamation;
         [SerializeField] ActionState actionState;
-
-        private void Notify()
-        {
-            if (cardType == CardType.ENEMY)
-            {
-                if (card.InstantMoveCount > 0)
-                {
-                    Run();
-                    card.InstantMoveCount--;
-                }
-                else
-                {
-                    card.InstantMoveCount = card.TotalMoveCount;
-                    MoveSchedular.Instance.enemyController.OnNotify();
-                }
-            }
-            else
-                MoveSchedular.Instance.trapController.OnNotify();
-        }
-        private void ChooseController()
-        {
-            if (cardType == CardType.ENEMY)
-                EnemyController.subscribedEnemies.Add(this);
-            else
-                TrapController.subscribedTraps.Add(this);
-        }
-        private Swipe SelectTileForSwipe(Card card)
-        {
-            if(state == State.NONE)
-            {
-                isMoving = true;
-                return Swipe.NONE;
-            }
-
-            if (state == State.WAIT) return Swipe.NONE;
-
-            if ((state == State.ATTACK || state == State.ATTACK2) && statusAct.canAttack)
-                return SelectTileToAttack(card);
-
-            if (statusAct.canMove)
-                return SelectTileToMove(card);
-
-            return Swipe.NONE;
-        }
-        private void ChangeState()
-        {
-            if (statusAct.anger)
-            {
-                state = State.ATTACK;
-                exclamation.SetActive(false);
-            }
-            else
-                state = actionState.ChangeState(state, exclamation);
-        }
 
         private void Start()
         {
@@ -148,7 +95,6 @@ namespace DungeonRush.Controller
         }
 
         #region MOVE CONTROLLER METHODS
-
         public void MakeMove()
         {
             if (preparingProcess.IsRunning())
@@ -164,8 +110,7 @@ namespace DungeonRush.Controller
                 MoveProcess();
             }
         }
-
-        public void PrepareMoveProcess()
+        private void PrepareMoveProcess()
         {
             var canMove = DoMove(swipe);
             if (canMove)
@@ -185,16 +130,14 @@ namespace DungeonRush.Controller
                 Notify();
             }
         }
-
-        protected virtual bool DoMove(Swipe swipe)
+        private  bool DoMove(Swipe swipe)
         {
             if (isMoving)
                 return card.GetShift().Define(card, swipe);
             else
                 return card.GetAttackStyle().Define(card, swipe);
         }
-
-        public void AttackProcess()
+        private void AttackProcess()
         {
             if (attackProcess.start)
             {
@@ -216,8 +159,7 @@ namespace DungeonRush.Controller
                 Notify();
             }
         }
-
-        public void MoveProcess()
+        private void MoveProcess()
         {
             if (moveProcess.start)
             {
@@ -240,7 +182,6 @@ namespace DungeonRush.Controller
                 Notify();
             }
         }
-
         private Swipe SelectTileToAttack(Card card)
         {
             List<Tile> list;
@@ -260,7 +201,6 @@ namespace DungeonRush.Controller
 
             return Swipe.NONE;
         }
-
         private Swipe SelectTileToMove(Card card)
         {
             List<Tile> list;
@@ -280,6 +220,59 @@ namespace DungeonRush.Controller
                 return Swipe.NONE;
         }
 
+        private Swipe SelectTileForSwipe(Card card)
+        {
+            Swipe s = Swipe.NONE;
+            if (state == State.NONE)
+            {
+                isMoving = true;
+                return Swipe.NONE;
+            }
+
+            if (state == State.WAIT) return Swipe.NONE;
+
+            if (state == State.RANGE)
+            {
+                SelectSwipeForAim(card);
+                return Swipe.NONE;
+            }
+
+            if (state == State.RANGE_ATTACK)
+                return swipeForAim;
+
+            if ((state == State.ATTACK || state == State.ATTACK2) && statusAct.canAttack)
+            {
+                s = SelectTileToAttack(card);
+                if (s != Swipe.NONE)
+                    return s;
+            }
+
+            if (statusAct.canMove)
+                s = SelectTileToMove(card);
+
+            return s;
+        }
+
+        private void SelectSwipeForAim(Card card)
+        {
+            List<Tile> list;
+            Dictionary<Tile, Swipe> tiles;
+
+            tiles = card.GetAttackStyle().GetAvaibleTiles(card);
+            list = new List<Tile>(tiles.Keys);
+
+            isMoving = false;
+            int count = tiles.Count;
+            int number = GiveRandomEncounter(list, count);
+
+            if (list.Count > 0)
+            {
+                Tile t = list[number];
+                swipeForAim = tiles[t];
+            }
+            else
+                swipeForAim = Swipe.NONE;
+        }
         #endregion
 
         #region STATE METHODS
@@ -303,7 +296,23 @@ namespace DungeonRush.Controller
         {
             statusController.ActivateStatuses();
         }
-
+        private void ChangeState()
+        {
+            if (statusAct.anger)
+            {
+                state = State.ATTACK;
+                exclamation.SetActive(false);
+            }
+            else
+                state = actionState.ChangeState(state, exclamation);
+        }
+        private void ChooseController()
+        {
+            if (cardType == CardType.ENEMY)
+                EnemyController.subscribedEnemies.Add(this);
+            else
+                TrapController.subscribedTraps.Add(this);
+        }
         private void Stop()
         {
             isRunning = false;
@@ -318,12 +327,10 @@ namespace DungeonRush.Controller
             attackProcess.Init(false);
             moveProcess.Init(false);
         }
-
         public Card GetCard()
         {
             return card;
         }
-
         public void Run()
         {
             statusAct.Reset();
@@ -333,11 +340,14 @@ namespace DungeonRush.Controller
             isRunning = true;
             preparingProcess.StartProcess();
         }
-
         private int GiveRandomEncounter(List<Tile> list, int count)
         {
             int missCount = 0;
             int number = -1;
+
+            if (count == 1)
+                return 0;
+
             while (missCount < 3)
             {
                 number = UnityEngine.Random.Range(0, count);
@@ -366,7 +376,24 @@ namespace DungeonRush.Controller
 
             return -1;
         }
-
+        private void Notify()
+        {
+            if (cardType == CardType.ENEMY)
+            {
+                if (card.InstantMoveCount > 0)
+                {
+                    Run();
+                    card.InstantMoveCount--;
+                }
+                else
+                {
+                    card.InstantMoveCount = card.TotalMoveCount;
+                    MoveSchedular.Instance.enemyController.OnNotify();
+                }
+            }
+            else
+                MoveSchedular.Instance.trapController.OnNotify();
+        }
         #endregion
     }
 }

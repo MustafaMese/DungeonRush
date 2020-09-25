@@ -56,9 +56,6 @@ namespace DungeonRush.Property
             if(move.GetTargetTile().GetCard() != null)
                 level = move.GetTargetTile().GetCard().GetLevel();
 
-            float time = attackStyle.GetAnimationTime();
-
-            StartCoroutine(StartAttackAnimation(poolForAttackStyle, move, time));
             AttackAction(move);
 
             if(target.GetCard() == null || target.GetCard().GetHealth() <= 0)

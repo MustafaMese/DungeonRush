@@ -183,7 +183,7 @@ namespace DungeonRush.Property
             return false;
         }
 
-        protected void AttackAction(Move move)
+        public void AttackAction(Move move)
         {
             Card card = move.GetCard();
             Tile target = move.GetTargetTile();
@@ -202,6 +202,8 @@ namespace DungeonRush.Property
                     StartCoroutine(card.StartTextPopup(tPos, power, isCritic));
                 }
             }
+            float time = attackStyle.GetAnimationTime();
+            StartCoroutine(StartAttackAnimation(poolForAttackStyle, move, time));
         }
 
         protected void AttackAction(List<Card> targetCards, Move move)
@@ -223,6 +225,8 @@ namespace DungeonRush.Property
                     }
                 }
             }
+            float time = attackStyle.GetAnimationTime();
+            StartCoroutine(StartAttackAnimation(poolForAttackStyle, move, time));
         }
     }
 }

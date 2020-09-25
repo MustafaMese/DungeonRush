@@ -4,7 +4,8 @@ namespace DungeonRush
 {
     namespace Managers
     {
-        public enum Swipe { NONE, UP, DOWN, LEFT, RIGHT };
+        public enum Swipe { NONE, UP, DOWN, LEFT, RIGHT, 
+                                UP_RIGHT, UP_LEFT, DOWN_RIGHT, DOWN_LEFT };
 
         public class SwipeManager : MonoBehaviour
         {

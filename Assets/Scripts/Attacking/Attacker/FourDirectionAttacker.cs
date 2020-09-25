@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace DungeonRush.Attacking
 {
-    public class FourDirecitonAttacker : Attacker
+    public class FourDirectionAttacker : Attacker
     {
         [Header("Attacker Properties")]
         [SerializeField] float damageTime = 0.3f;
@@ -30,9 +30,6 @@ namespace DungeonRush.Attacking
 
         private void Damage(Move move)
         {
-            float time = attackStyle.GetAnimationTime();
-            StartCoroutine(StartAttackAnimation(poolForAttackStyle, move, time));
-
             List<Card> cards = attackStyle.GetAttackedCards(move);
             AttackAction(cards, move);
         }

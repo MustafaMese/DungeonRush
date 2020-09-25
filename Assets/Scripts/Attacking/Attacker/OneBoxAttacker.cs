@@ -35,9 +35,7 @@ namespace DungeonRush
 
             private void Damage(Move move)
             {
-                float time = attackStyle.GetAnimationTime();
                 AttackAction(move);
-                StartCoroutine(StartAttackAnimation(poolForAttackStyle, move, time));
             }
 
             private IEnumerator FinishAttack(Move move)
