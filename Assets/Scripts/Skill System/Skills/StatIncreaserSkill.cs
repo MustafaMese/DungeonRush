@@ -42,7 +42,6 @@ namespace DungeonRush.Skills
             }
         }
 
-
         public override void PositionEffect(GameObject effect, Move move)
         {
             return;

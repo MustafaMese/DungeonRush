@@ -38,6 +38,7 @@ namespace DungeonRush
             protected int totalMoveCount = 0;
             protected int instantMoveCount = 0;
             protected int lootChance = 0;
+            [SerializeField] protected bool canBlockTraps = false;
             public int MaximumHealth { get => maximumHealth; set => maximumHealth = value; }
             public int CriticChance { get => criticChance; set => criticChance = value; }
             public int DodgeChance { get => dodgeChance; set => dodgeChance = value; }
@@ -45,6 +46,7 @@ namespace DungeonRush
             public int TotalMoveCount { get => totalMoveCount; set => totalMoveCount = value; }
             public int InstantMoveCount { get => instantMoveCount; set => instantMoveCount = value; }
             public int LootChance { get => lootChance; set => lootChance = value; }
+            public bool CanBlockTraps { get => canBlockTraps; set => canBlockTraps = value; }
             #endregion
 
             public IMoveController Controller { get => controller; set => controller = value; }
