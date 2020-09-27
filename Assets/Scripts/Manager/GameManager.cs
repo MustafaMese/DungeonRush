@@ -28,6 +28,11 @@ namespace DungeonRush
             [SerializeField] CollectableManager collectableManagerPrefab;
             [SerializeField] SwipeManager swipeManagerPrefab;
 
+            [Header("Distance Control")]
+            [SerializeField] Vector3 t1 = Vector2.zero;
+            [SerializeField] Vector3 t2 = Vector2.zero;
+            [SerializeField] float t3 = 0;
+
             private void Awake()
             {
                 if (Instance != null)
@@ -39,6 +44,11 @@ namespace DungeonRush
                 }
 
                 Initialize();
+            }
+
+            private void Update()
+            {
+                t3 = (t1 - t2).sqrMagnitude;
             }
 
             private void OnLevelWasLoaded(int level)

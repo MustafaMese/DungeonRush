@@ -55,5 +55,10 @@ namespace DungeonRush.Data
                 Destroy(obj.gameObject);
             }
         }
+
+        public bool IsObjectNull()
+        {
+            return prefab == null;
+        }
     }
 }
