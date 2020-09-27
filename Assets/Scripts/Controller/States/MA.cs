@@ -2,24 +2,27 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "ScriptableObjects/ActionScheme/MA")]
-public class MA : ActionState
+namespace DungeonRush.States
 {
-    public override State ChangeState(State state, GameObject exclamation)
+    [CreateAssetMenu(menuName = "ScriptableObjects/ActionScheme/MA")]
+    public class MA : ActionState
     {
-        switch (state)
+        public override State ChangeState(State state, GameObject exclamation)
         {
-            case State.NONE:
-                exclamation.SetActive(true);
-                return State.ATTACK;
-            case State.ATTACK:
-                exclamation.SetActive(false);
-                return State.MOVE;
-            case State.MOVE:
-                exclamation.SetActive(true);
-                return State.ATTACK;
-            default:
-                return State.NONE;
+            switch (state)
+            {
+                case State.NONE:
+                    exclamation.SetActive(true);
+                    return State.ATTACK;
+                case State.ATTACK:
+                    exclamation.SetActive(false);
+                    return State.MOVE;
+                case State.MOVE:
+                    exclamation.SetActive(true);
+                    return State.ATTACK;
+                default:
+                    return State.NONE;
+            }
         }
     }
 }

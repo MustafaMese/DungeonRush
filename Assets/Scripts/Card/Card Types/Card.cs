@@ -4,6 +4,7 @@ using DungeonRush.Data;
 using DungeonRush.Field;
 using DungeonRush.Property;
 using DungeonRush.Shifting;
+using DungeonRush.Traits;
 using System.Collections;
 using UnityEngine;
 

@@ -1,31 +1,32 @@
 ﻿using DungeonRush.Cards;
 using DungeonRush.Data;
-using DungeonRush.Skills;
-using System.Collections;
-using System.Collections.Generic;
+using DungeonRush.Traits;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "ScriptableObjects/Skill/StatusCreator")]
-public class StatusCreatorSkill : Skill
+namespace DungeonRush.Skills
 {
-    [SerializeField] Status status;
-
-    public override void Execute(Move move)
+    [CreateAssetMenu(menuName = "ScriptableObjects/Skill/StatusCreator")]
+    public class StatusCreatorSkill : Skill
     {
-        Card target = move.GetTargetTile().GetCard();
+        [SerializeField] Status status;
 
-        if (target != null)
-            target.GetComponent<StatusController>().AddStatus(status);
+        public override void Execute(Move move)
+        {
+            Card target = move.GetTargetTile().GetCard();
 
-    }
+            if (target != null)
+                target.GetComponent<StatusController>().AddStatus(status);
 
-    public override void PositionEffect(GameObject effect, Move move)
-    {
-        return;
-    }
+        }
 
-    public override Vector3 PositionTextPopup(GameObject textPopup, Move move)
-    {
-        return Vector3.zero;
+        public override void PositionEffect(GameObject effect, Move move)
+        {
+            return;
+        }
+
+        public override Vector3 PositionTextPopup(GameObject textPopup, Move move)
+        {
+            return Vector3.zero;
+        }
     }
 }

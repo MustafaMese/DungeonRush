@@ -4,6 +4,7 @@ using DungeonRush.Cards;
 using DungeonRush.Data;
 using DungeonRush.Field;
 using DungeonRush.Items;
+using DungeonRush.Managers;
 using DungeonRush.Skills;
 using System.Collections;
 using UnityEngine;

@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using DG.Tweening;
-using DungeonRush.Cards;
 using DungeonRush.Data;
-using DungeonRush.Shifting;
+using DungeonRush.Events;
 using UnityEngine;
 
 namespace DungeonRush.Property
@@ -35,12 +33,12 @@ namespace DungeonRush.Property
             if (gameEvent == null)
                 Finalise();
 
-            if (gameEvent.GetEventType() == EventType.TREASURE)
+            if (gameEvent.GetEventType() == MoveEventType.TREASURE)
             {
                 StartCoroutine(StartEventAnimation(targetPos, particulTime));
                 move.GetCard().transform.DOMove(targetPos, movingTime).OnComplete(() => StartCoroutine(TreasureMove()));
             }
-            else if (gameEvent.GetEventType() == EventType.PORTAL)
+            else if (gameEvent.GetEventType() == MoveEventType.PORTAL)
                 move.GetCard().transform.DOMove(targetPos, movingTime).OnComplete(() => StartCoroutine(PortalMove()));
         }
 

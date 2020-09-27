@@ -4,6 +4,8 @@ using DungeonRush.Data;
 using DungeonRush.Field;
 using DungeonRush.Managers;
 using DungeonRush.Property;
+using DungeonRush.States;
+using DungeonRush.Traits;
 using System;
 using System.Collections.Generic;
 using UnityEngine;

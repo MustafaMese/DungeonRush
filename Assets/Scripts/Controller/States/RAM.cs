@@ -2,29 +2,32 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = ("ScriptableObjects/ActionScheme/RAM"))]
-public class RAM : ActionState
+namespace DungeonRush.States
 {
-    public override State ChangeState(State state, GameObject exclamation)
+    [CreateAssetMenu(menuName = ("ScriptableObjects/ActionScheme/RAM"))]
+    public class RAM : ActionState
     {
-        switch (state)
+        public override State ChangeState(State state, GameObject exclamation)
         {
-            case State.RANGE:
-                exclamation.SetActive(true);
-                Debug.Log("Nişan alıyorum amcık");
-                return State.RANGE_ATTACK;
-            case State.RANGE_ATTACK:
-                exclamation.SetActive(false);
-                Debug.Log("Vurdum gitti ammına");
-                return State.MOVE;
-            case State.MOVE:
-                exclamation.SetActive(false);
-                return State.RANGE;
-            case State.NONE:
-                exclamation.SetActive(false);
-                return State.RANGE;
-            default:
-                return State.NONE;
+            switch (state)
+            {
+                case State.RANGE:
+                    exclamation.SetActive(true);
+                    Debug.Log("Nişan alıyorum amcık");
+                    return State.RANGE_ATTACK;
+                case State.RANGE_ATTACK:
+                    exclamation.SetActive(false);
+                    Debug.Log("Vurdum gitti ammına");
+                    return State.MOVE;
+                case State.MOVE:
+                    exclamation.SetActive(false);
+                    return State.RANGE;
+                case State.NONE:
+                    exclamation.SetActive(false);
+                    return State.RANGE;
+                default:
+                    return State.NONE;
+            }
         }
     }
 }

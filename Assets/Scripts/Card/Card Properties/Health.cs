@@ -1,6 +1,7 @@
 ﻿using DungeonRush.Cards;
 using DungeonRush.Items;
 using DungeonRush.Managers;
+using DungeonRush.Traits;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;

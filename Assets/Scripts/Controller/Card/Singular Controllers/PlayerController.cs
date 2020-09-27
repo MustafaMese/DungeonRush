@@ -6,6 +6,7 @@ using DungeonRush.Items;
 using DungeonRush.Managers;
 using DungeonRush.Property;
 using DungeonRush.Saving;
+using DungeonRush.Traits;
 using System.Collections;
 using UnityEngine;
 

@@ -6,24 +6,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "ScriptableObjects/Skill/DoubleAttack")]
-public class DoubleAttack : Skill
+namespace DungeonRush.Skills
 {
-    public override void Execute(Move move)
+    [CreateAssetMenu(menuName = "ScriptableObjects/Skill/DoubleAttack")]
+    public class DoubleAttack : Skill
     {
-        Card card = move.GetCard();
+        public override void Execute(Move move)
+        {
+            Card card = move.GetCard();
 
-        if (card != null)
-            card.GetComponent<Attacker>().AttackAction(move);
-    }
+            if (card != null)
+                card.GetComponent<Attacker>().AttackAction(move);
+        }
 
-    public override void PositionEffect(GameObject effect, Move move)
-    {
-        return;
-    }
+        public override void PositionEffect(GameObject effect, Move move)
+        {
+            return;
+        }
 
-    public override Vector3 PositionTextPopup(GameObject textPopup, Move move)
-    {
-        return Vector3.zero;
+        public override Vector3 PositionTextPopup(GameObject textPopup, Move move)
+        {
+            return Vector3.zero;
+        }
     }
 }

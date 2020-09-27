@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace DungeonRush.Data
+namespace DungeonRush.Traits
 {
     [CreateAssetMenu(menuName = "ScriptableObjects/Card/Stat")]
     public class Stats : ScriptableObject

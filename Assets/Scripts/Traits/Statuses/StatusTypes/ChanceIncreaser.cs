@@ -1,13 +1,14 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using DungeonRush.Cards;
+﻿using DungeonRush.Cards;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "ScriptableObjects/Status/ChanceIncreaser")]
-public class ChanceIncreaser : Status
+namespace DungeonRush.Traits
 {
-    public override void Execute(Card card)
+    [CreateAssetMenu(menuName = "ScriptableObjects/Status/ChanceIncreaser")]
+    public class ChanceIncreaser : Status
     {
-        return;
+        public override void Execute(Card card)
+        {
+            return;
+        }
     }
 }

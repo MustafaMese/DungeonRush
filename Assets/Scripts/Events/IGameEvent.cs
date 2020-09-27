@@ -3,8 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IGameEvent
+namespace DungeonRush.Events
 {
-    void GetEvent(Card card);
-    EventType GetEventType();
+    public interface IGameEvent
+    {
+        void GetEvent(Card card);
+        MoveEventType GetEventType();
+    }
 }

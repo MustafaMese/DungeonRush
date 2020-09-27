@@ -1,13 +1,14 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using DungeonRush.Cards;
+﻿using DungeonRush.Cards;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "ScriptableObjects/Status/HealthDecreaser")]
-public class HealthDecreaserStatus : Status
+namespace DungeonRush.Traits
 {
-    public override void Execute(Card card)
+    [CreateAssetMenu(menuName = "ScriptableObjects/Status/HealthDecreaser")]
+    public class HealthDecreaserStatus : Status
     {
-        card.DecreaseHealth(Power);
+        public override void Execute(Card card)
+        {
+            card.DecreaseHealth(Power);
+        }
     }
 }

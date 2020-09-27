@@ -1,8 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public abstract class ActionState : ScriptableObject
+namespace DungeonRush.States
 {
-    public abstract State ChangeState(State state, GameObject exclamation);
+    public abstract class ActionState : ScriptableObject
+    {
+        public abstract State ChangeState(State state, GameObject exclamation);
+    }
 }

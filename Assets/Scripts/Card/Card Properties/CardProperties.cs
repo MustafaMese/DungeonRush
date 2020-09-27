@@ -1,4 +1,5 @@
 ﻿using DungeonRush.Data;
+using DungeonRush.Traits;
 using UnityEngine;
 
 namespace DungeonRush 
