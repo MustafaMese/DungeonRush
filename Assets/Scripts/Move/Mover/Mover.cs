@@ -28,7 +28,7 @@ namespace DungeonRush.Property
             card = GetComponent<Card>();
 
             walkParticulPool.SetObject(walkParticul);
-            walkParticulPool.FillPool(2);
+            walkParticulPool.FillPool(2, transform);
             Initialize();
         }
 
@@ -55,7 +55,7 @@ namespace DungeonRush.Property
 
         protected IEnumerator StartMoveAnimation(Vector3 pos, float time)
         {
-            GameObject obj = walkParticulPool.PullObjectFromPool();
+            GameObject obj = walkParticulPool.PullObjectFromPool(transform);
             obj.transform.position = pos;
             obj.transform.SetParent(null);
             yield return new WaitForSeconds(time);

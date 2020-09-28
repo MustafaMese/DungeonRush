@@ -32,7 +32,7 @@ namespace DungeonRush.Property
 
         private IEnumerator StartAttackAnimation(ObjectPool pool, Vector3 tPos, float time)
         {
-            GameObject obj = pool.PullObjectFromPool();
+            GameObject obj = pool.PullObjectFromPool(transform);
             attackStyle.SetEffectPosition(obj, tPos);
             yield return new WaitForSeconds(time);
             pool.AddObjectToPool(obj);

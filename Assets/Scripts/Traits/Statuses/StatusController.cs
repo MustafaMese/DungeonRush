@@ -8,6 +8,7 @@ namespace DungeonRush.Traits
 {
     public class StatusController : MonoBehaviour
     {
+
         [Serializable]
         public class StatusData
         {
@@ -17,7 +18,7 @@ namespace DungeonRush.Traits
 
             public int turnCount;
 
-            public StatusData(Status status, GameObject statusEffect, GameObject textPopup)
+            public StatusData(Status status, GameObject statusEffect, GameObject textPopup, Transform t)
             {
                 this.status = status;
 
@@ -27,13 +28,13 @@ namespace DungeonRush.Traits
                 if (statusEffect != null)
                 {
                     poolForStatusEffect.SetObject(statusEffect);
-                    poolForStatusEffect.FillPool(1);
+                    poolForStatusEffect.FillPool(1, t);
                 }
 
                 if (textPopup != null)
                 {
                     poolForTextPopup.SetObject(textPopup);
-                    poolForTextPopup.FillPool(1);
+                    poolForTextPopup.FillPool(1, t);
                 }
 
                 turnCount = status.TurnCount;
@@ -72,7 +73,7 @@ namespace DungeonRush.Traits
                 textPopup.gameObject.SetActive(false);
             }
 
-            StatusData sd = new StatusData(status, effect, textPopup);
+            StatusData sd = new StatusData(status, effect, textPopup, transform);
             activeStatuses.Add(sd);
             statusTypes.Add(status.StatusType);
         }
@@ -107,8 +108,7 @@ namespace DungeonRush.Traits
 
         private IEnumerator Animate(StatusData statusData)
         {
-            GameObject obj = statusData.poolForStatusEffect.PullObjectFromPool();
-            obj.transform.SetParent(transform);
+            GameObject obj = statusData.poolForStatusEffect.PullObjectFromPool(transform);
             obj.transform.position = transform.position;
             yield return new WaitForSeconds(statusData.status.EffectLifeTime);
             statusData.poolForStatusEffect.AddObjectToPool(obj);
@@ -117,8 +117,7 @@ namespace DungeonRush.Traits
 
         private IEnumerator TextPopup(StatusData statusData)
         {
-            GameObject obj = statusData.poolForTextPopup.PullObjectFromPool();
-            obj.transform.SetParent(transform);
+            GameObject obj = statusData.poolForTextPopup.PullObjectFromPool(transform);
             obj.transform.position = transform.position;
             TextPopup objTxt = obj.GetComponent<TextPopup>();
             string power = statusData.status.Power.ToString();

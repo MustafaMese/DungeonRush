@@ -23,7 +23,9 @@ namespace DungeonRush.UI
         [SerializeField] PickItemCanvas pickItemCanvasPrefab;
         [SerializeField] FadingCanvas fadingCanvasPrefab;
         [SerializeField] TurnCanvas turnCanvasPrefab;
-
+        [SerializeField] ActiveSkillCanvas activeSkillCanvasPrefab;
+        
+        private ActiveSkillCanvas _activeSkillCanvas;
         private PauseMenu _pauseMenu;
         private DefeatedPanel _defeatedPanel;
         private PickItemCanvas _pickItemCanvas;
@@ -48,6 +50,7 @@ namespace DungeonRush.UI
                 case GameState.PAUSE:
                     Pause();
                     _turnCanvas.PanelControl(false);
+                    _activeSkillCanvas.PanelControl(false);
 
                     if (uiState == UIState.PICKUP_ITEM)
                         _pauseMenu.PanelControl(false);
@@ -57,6 +60,7 @@ namespace DungeonRush.UI
                     Resume();
                     _turnCanvas.PanelControl(true);
                     _pauseMenu.PanelControl(true);
+                    _activeSkillCanvas.PanelControl(true);
                     break;
                 case GameState.LEVEL_TRANSITION:
                     _fadingCanvas.PanelControl(true);
@@ -76,6 +80,28 @@ namespace DungeonRush.UI
                     break;
             }
         }
+        
+        private void Pause()
+        {
+            Time.timeScale = 0f;
+        }
+
+        private void Resume()
+        {
+            Time.timeScale = 1f;
+        }
+
+        private void InitializeCanvases()
+        {
+            _fadingCanvas = Instantiate(fadingCanvasPrefab);
+            _pauseMenu = Instantiate(pauseMenuPrefab);
+            _defeatedPanel = Instantiate(defeatedPanelPrefab);
+            _pickItemCanvas = Instantiate(pickItemCanvasPrefab);
+            _turnCanvas = Instantiate(turnCanvasPrefab);
+            _activeSkillCanvas = Instantiate(activeSkillCanvasPrefab);
+        }
+
+        #region LEVEL CONTROL METHODS
 
         private IEnumerator BeginLevel()
         {
@@ -102,24 +128,7 @@ namespace DungeonRush.UI
             LoadManager.Instance.LoadStartScene();
         }
 
-        private void Pause()
-        {
-            Time.timeScale = 0f;
-        }
-
-        private void Resume()
-        {
-            Time.timeScale = 1f;
-        }
-
-        private void InitializeCanvases()
-        {
-            _fadingCanvas = Instantiate(fadingCanvasPrefab);
-            _pauseMenu = Instantiate(pauseMenuPrefab);
-            _defeatedPanel = Instantiate(defeatedPanelPrefab);
-            _pickItemCanvas = Instantiate(pickItemCanvasPrefab);
-            _turnCanvas = Instantiate(turnCanvasPrefab);
-        }
+        #endregion
 
         #region TURN CANVAS METHODS
 

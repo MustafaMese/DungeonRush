@@ -47,7 +47,13 @@ public class TextPopup : MonoBehaviour
     {
         float number = Random.Range(-xSpace * 2, xSpace * 2);
         Vector2 targetPos = new Vector2(target.x + number, target.y + ySpace);
-        transform.DOMove(targetPos, disapperTime);
+        transform.DOMove(targetPos, disapperTime).OnComplete(() => FinishMove());
+    }
+
+    private void FinishMove()
+    {
+        if(gameObject.activeSelf)
+            gameObject.SetActive(false);
     }
 
     public float GetDisapperTime()

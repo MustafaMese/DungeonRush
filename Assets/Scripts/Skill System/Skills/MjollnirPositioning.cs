@@ -20,19 +20,17 @@ namespace DungeonRush.Skills
 
             for (int i = 0; i < targetPositions.Count; i++)
                 lineRenderer.SetPosition(i, targetPositions[i]);
-            print("hey brah");
             objects.Clear();
 
             for (int i = 0; i < targetPositions.Count; i++)
             {
                 if (poolForEffect.IsObjectNull())
                 {
-                    print("yee");
                     poolForEffect.SetObject(lightiningPrefab);
-                    poolForEffect.FillPool(3);
+                    poolForEffect.FillPool(3, lineRenderer.transform);
                 }
 
-                GameObject obj = poolForEffect.PullObjectFromPool();
+                GameObject obj = poolForEffect.PullObjectFromPool(lineRenderer.transform);
                 objects.Add(obj);
 
                 obj.transform.position = targetPositions[i];

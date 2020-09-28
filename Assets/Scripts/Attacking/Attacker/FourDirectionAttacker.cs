@@ -39,7 +39,7 @@ namespace DungeonRush.Attacking
             if (move.GetTargetTile().GetCard() != null)
             {
                 Transform cardTransform = move.GetCard().transform;
-                GameObject obj = pool.PullObjectFromPool();
+                GameObject obj = pool.PullObjectFromPool(cardTransform);
                 attackStyle.SetEffectPosition(obj, cardTransform.position, cardTransform);
                 yield return new WaitForSeconds(time);
                 pool.AddObjectToPool(obj);

@@ -73,7 +73,7 @@ namespace DungeonRush
             protected void FillThePool(ObjectPool pool, GameObject effect, int objectCount)
             {
                 pool.SetObject(effect);
-                pool.FillPool(objectCount);
+                pool.FillPool(objectCount, transform);
             }
 
             protected void SetStats()
@@ -210,21 +210,19 @@ namespace DungeonRush
 
             public IEnumerator StartTextPopup(Vector3 tPos, string text)
             {
-                GameObject obj = poolForTextPopup.PullObjectFromPool();
+                GameObject obj = poolForTextPopup.PullObjectFromPool(transform);
                 obj.transform.position = tPos;
+                obj.transform.SetParent(this.transform);
                 TextPopup objTxt = obj.GetComponent<TextPopup>();
                 objTxt.Setup(text, tPos);
-
                 float t = objTxt.GetDisapperTime();
                 yield return new WaitForSeconds(t);
-
-                obj.transform.SetParent(this.transform);
                 poolForTextPopup.AddObjectToPool(obj);
             }
 
             public IEnumerator StartTextPopup(Vector3 tPos, int damage, bool isCritical = false)
             {
-                GameObject obj = poolForTextPopup.PullObjectFromPool();
+                GameObject obj = poolForTextPopup.PullObjectFromPool(transform);
                 obj.transform.position = tPos;
                 TextPopup objTxt = obj.GetComponent<TextPopup>();
                 objTxt.Setup(damage, tPos, isCritical);

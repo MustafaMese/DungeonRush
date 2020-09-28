@@ -43,14 +43,14 @@ namespace DungeonRush.Managers
             GameObject coin;
             coin = Instantiate(animatedCoinPrefab);
             objectPool.SetObject(coin);
-            objectPool.FillPool(15);
+            objectPool.FillPool(15, transform);
         }
 
         private void Animate(Vector3 collectedCoinPosition, int amount)
         {
             for (int i = 0; i < amount; i++)
             {
-                GameObject coin = objectPool.PullObjectFromPool();
+                GameObject coin = objectPool.PullObjectFromPool(transform);
                 coin.SetActive(true);
                 coin.transform.position = collectedCoinPosition + new Vector3(Random.Range(-spread, spread), Random.Range(-spread, spread), 0f);
 

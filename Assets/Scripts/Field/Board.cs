@@ -32,7 +32,7 @@ namespace DungeonRush
 
             private void Start()
             {
-                if(cardPlaces.Count <= 0)
+                if (cardPlaces.Count <= 0)
                 {
                     for (int i = 0; i < transform.childCount; i++)
                     {
@@ -42,6 +42,11 @@ namespace DungeonRush
                     }
                 }
 
+                Initizalize();
+            }
+
+            public void Initizalize()
+            {
                 CardManager.Instance.cards = new List<Card>(FindObjectsOfType<Card>());
                 bCreator.InitializeTiles(cardPlaces);
                 SetCardTiles(CardManager.Instance.cards);

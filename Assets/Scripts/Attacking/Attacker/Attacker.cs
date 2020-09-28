@@ -104,7 +104,7 @@ namespace DungeonRush.Property
 
             if (move.GetTargetTile().GetCard() != null)
             {
-                GameObject obj = pool.PullObjectFromPool();
+                GameObject obj = pool.PullObjectFromPool(cardTransform);
                 attackStyle.SetEffectPosition(obj, target.position, target);
                 yield return new WaitForSeconds(time);
                 attackStyle.SetEffectPosition(obj, target.position, cardTransform);
@@ -143,7 +143,7 @@ namespace DungeonRush.Property
         protected void FillThePool(ObjectPool pool, GameObject effect, int objectCount)
         {
             pool.SetObject(effect);
-            pool.FillPool(objectCount);
+            pool.FillPool(objectCount, transform);
         }
 
         public AttackStyle GetAttackStyle()

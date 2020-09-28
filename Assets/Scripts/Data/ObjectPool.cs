@@ -15,16 +15,16 @@ namespace DungeonRush.Data
             this.prefab = prefab;
         }
 
-        public void FillPool(int count)
+        public void FillPool(int count, Transform t)
         {
             for (int i = 0; i < count; i++)
             {
-                GameObject obj = Instantiate(prefab);
+                GameObject obj = Instantiate(prefab, t);
                 AddObjectToPool(obj);
             }
         }
 
-        public GameObject PullObjectFromPool()
+        public GameObject PullObjectFromPool(Transform t)
         {
             if (objectPool.Count > 0)
             {
@@ -34,13 +34,15 @@ namespace DungeonRush.Data
                 return obj;
             }
 
-            return Instantiate(prefab);
+            return Instantiate(prefab, t);
         }
 
         public void AddObjectToPool(GameObject obj)
         {
+            print("1");
             if (obj != null)
             {
+                print("2");
                 obj.gameObject.SetActive(false);
                 objectPool.Push(obj);
             }

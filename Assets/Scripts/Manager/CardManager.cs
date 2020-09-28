@@ -1,10 +1,12 @@
 ﻿using DungeonRush.Cards;
 using System;
 using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 using DungeonRush.Field;
 using DungeonRush.Property;
 using DungeonRush.Controller;
+using DG.Tweening;
 
 namespace DungeonRush
 {
@@ -26,11 +28,9 @@ namespace DungeonRush
 
             private void Awake()
             {
-                if (Instance != null)
-                    Destroy(Instance);
-                else
-                    Instance = this;
+                Instance = this;
             }
+
 
             public void ReshuffleCards() 
             {
@@ -82,17 +82,32 @@ namespace DungeonRush
             public static void RemoveCard(Tile tile)
             {
                 Card card = tile.GetCard();
-                if(card.GetCardType() == CardType.ENEMY)
+                if (card != null)
                 {
-                    EnemyController.UnsubscribeCard((AIController)card.Controller);
-                }
-                else if(card.GetCardType() == CardType.TRAP)
-                {
-                    TrapController.UnsubscribeCard((AIController)card.Controller);
-                }
+                    if (card.GetCardType() == CardType.ENEMY)
+                    {
+                        EnemyController.UnsubscribeCard((AIController)card.Controller);
+                    }
+                    else if (card.GetCardType() == CardType.TRAP)
+                    {
+                        TrapController.UnsubscribeCard((AIController)card.Controller);
+                    }
 
-                Destroy(card.transform.gameObject);
-                tile.SetCard(null);
+                    tile.SetCard(null);
+
+                    Instance.StartCoroutine(LateDestroy(card.gameObject));
+                }
+            }
+
+            private static IEnumerator LateDestroy(GameObject obj)
+            {
+                yield return new WaitForSeconds(0.6f);
+                if (obj != null)
+                {
+                    var c = obj.GetComponent<Card>().transform.DOKill();
+                    print("c: " + c);
+                    Destroy(obj);
+                }
             }
 
             public static void RemoveCardForAttacker(Vector2 coordinate)

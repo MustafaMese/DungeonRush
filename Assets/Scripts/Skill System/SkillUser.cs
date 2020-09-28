@@ -16,7 +16,7 @@ namespace DungeonRush.Skills {
             public ObjectPool poolForTextPopup;
             public int tempCooldown;
 
-            public SkillData(Skill skill)
+            public SkillData(Skill skill, Transform t)
             {
                 this.skill = skill;
 
@@ -24,14 +24,14 @@ namespace DungeonRush.Skills {
                 {
                     poolForEffect = new ObjectPool();
                     poolForEffect.SetObject(skill.Effect);
-                    poolForEffect.FillPool(1);
+                    poolForEffect.FillPool(1, t);
                 }
 
                 if(skill.TextPopup != null)
                 {
                     poolForTextPopup = new ObjectPool();
                     poolForTextPopup.SetObject(skill.TextPopup);
-                    poolForTextPopup.FillPool(1);
+                    poolForTextPopup.FillPool(1, t);
                 }
 
                 if (skill.IsActive)
@@ -56,7 +56,7 @@ namespace DungeonRush.Skills {
 
         public void AddSkill(Skill skill)
         {
-            SkillData s = new SkillData(skill);
+            SkillData s = new SkillData(skill, transform);
             skills.Add(s);
         }
 
@@ -119,7 +119,7 @@ namespace DungeonRush.Skills {
             int count = skillData.skill.GetGameobjectCount();
             for (int i = 0; i < count; i++)
             {
-                obj = skillData.poolForEffect.PullObjectFromPool();
+                obj = skillData.poolForEffect.PullObjectFromPool(transform);
                 skillData.skill.PositionEffect(obj, move);
                 objects.Add(obj);
             }
@@ -142,7 +142,7 @@ namespace DungeonRush.Skills {
             int count = skillData.skill.GetGameobjectCount(true);
             for (int i = 0; i < count; i++)
             {
-                obj = skillData.poolForTextPopup.PullObjectFromPool();
+                obj = skillData.poolForTextPopup.PullObjectFromPool(transform);
                 Vector3 pos = skillData.skill.PositionTextPopup(obj, move);
                 TextPopup objTxt = obj.GetComponent<TextPopup>();
                 string power = skillData.skill.Power.ToString();

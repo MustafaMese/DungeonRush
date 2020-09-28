@@ -45,7 +45,7 @@ namespace DungeonRush.Property
         #region EVENT METHODS
         private IEnumerator StartEventAnimation(Vector3 pos, float time)
         {
-            GameObject obj = walkParticulPool.PullObjectFromPool();
+            GameObject obj = walkParticulPool.PullObjectFromPool(transform);
             obj.transform.position = pos;
             yield return new WaitForSeconds(time);
             walkParticulPool.AddObjectToPool(obj);

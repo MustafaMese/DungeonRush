@@ -44,6 +44,7 @@ namespace DungeonRush.Skills
         private void FindTargets(Move move)
         {
             targets.Clear();
+            targetPositions.Clear();
             int rL = Board.RowLength;
             Vector2 currentCoordinate = move.GetCardTile().GetCoordinate();
             bool isFinished = false;
@@ -52,7 +53,6 @@ namespace DungeonRush.Skills
 
                 for (int i = 0; i < directions.Length; i++)
                 {
-                    Debug.Log("1");
                     Vector2 direction = directions[i];
 
                     Vector2 target = currentCoordinate + direction;
