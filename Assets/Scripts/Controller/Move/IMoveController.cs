@@ -7,7 +7,9 @@ namespace DungeonRush.Controller
 {
     public interface IMoveController
     {
+        bool IsRunning();
         void MakeMove();
         Card GetCard();
+        void Stop();
     }
 }

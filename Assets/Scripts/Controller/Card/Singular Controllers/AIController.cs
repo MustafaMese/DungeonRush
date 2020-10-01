@@ -315,13 +315,17 @@ namespace DungeonRush.Controller
             else
                 TrapController.subscribedTraps.Add(this);
         }
-        private void Stop()
+        public void Stop()
         {
             isRunning = false;
             swipe = Swipe.NONE;
             card.GetMove().Reset();
             if(cardType == CardType.ENEMY)
                 customization.Change(transform.position.y);
+        }
+        public bool IsRunning()
+        {
+            return isRunning;
         }
         public void InitProcessHandlers()
         {

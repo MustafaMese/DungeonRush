@@ -1,4 +1,5 @@
 ﻿using DungeonRush.Cards;
+using DungeonRush.Controller;
 using DungeonRush.Items;
 using DungeonRush.Managers;
 using DungeonRush.Traits;
@@ -69,6 +70,10 @@ namespace DungeonRush.Property
             }
             else
             {
+                AIController controller = GetComponent<AIController>();
+                controller.Stop();
+                CardManager.Unsubscribe(card);
+
                 yield return new WaitForSeconds(deathTime);
                 CardManager.RemoveCardForAttacker(card.GetTile().GetCoordinate());
             }

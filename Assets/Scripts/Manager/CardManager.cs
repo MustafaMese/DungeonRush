@@ -84,18 +84,20 @@ namespace DungeonRush
                 Card card = tile.GetCard();
                 if (card != null)
                 {
-                    if (card.GetCardType() == CardType.ENEMY)
-                    {
-                        EnemyController.UnsubscribeCard((AIController)card.Controller);
-                    }
-                    else if (card.GetCardType() == CardType.TRAP)
-                    {
-                        TrapController.UnsubscribeCard((AIController)card.Controller);
-                    }
-
                     tile.SetCard(null);
-
                     Instance.StartCoroutine(LateDestroy(card.gameObject));
+                }
+            }
+
+            public static void Unsubscribe(Card card)
+            {
+                if (card.GetCardType() == CardType.ENEMY)
+                {
+                    EnemyController.UnsubscribeCard((AIController)card.Controller);
+                }
+                else if (card.GetCardType() == CardType.TRAP)
+                {
+                    TrapController.UnsubscribeCard((AIController)card.Controller);
                 }
             }
 
@@ -105,7 +107,6 @@ namespace DungeonRush
                 if (obj != null)
                 {
                     var c = obj.GetComponent<Card>().transform.DOKill();
-                    print("c: " + c);
                     Destroy(obj);
                 }
             }

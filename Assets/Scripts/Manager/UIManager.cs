@@ -1,6 +1,7 @@
 ﻿using DungeonRush.Controller;
 using DungeonRush.Items;
 using DungeonRush.Managers;
+using DungeonRush.Skills;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -163,5 +164,18 @@ namespace DungeonRush.UI
 
         #endregion
 
+        #region ACTIVE SKİLL CANVAS METHODS
+
+        public void ButtonControl(SkillData skill, bool enable)
+        {
+            _activeSkillCanvas.EnableDisableButton(skill, enable);
+        }
+
+        public void AddSkillToButton(SkillData skill)
+        {
+            _activeSkillCanvas.AddSkill(skill);
+        }
+
+        #endregion
     }
 }

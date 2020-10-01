@@ -13,6 +13,12 @@ namespace DungeonRush
                 Reset();
             }
 
+            public Move(Card card)
+            {
+                this.card = card;
+                this.cardTile = card.GetTile();
+            }
+
             public Move(Tile targetTile, Card card, MoveType type, bool canMoveToPlace)
             {
                 this.targetTile = targetTile;
