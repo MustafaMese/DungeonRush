@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using DungeonRush.Skills;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace DungeonRush.Items
@@ -25,6 +26,10 @@ namespace DungeonRush.Items
         }
 
         public List<Item> allItems = new List<Item>();
+        public List<Item> levelItems = new List<Item>();
+        public List<Item> lootedItems = new List<Item>();
+
+        public List<Skill> allSkills = new List<Skill>();
 
         public Item GetItem(string id)
         {
@@ -36,6 +41,19 @@ namespace DungeonRush.Items
 
             return null;
         }
+
+        public Skill GetRandomSkill()
+        {
+            var number = allSkills.Count;
+            if (number > 0)
+            {
+                var s = Random.Range(0, number);
+                return allSkills[s];
+            }
+            else
+                return null;
+        }
+
 
         public Item GetRandomItemByType(ItemType type)
         {
