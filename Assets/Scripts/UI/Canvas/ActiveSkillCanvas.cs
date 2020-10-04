@@ -35,7 +35,8 @@ namespace DungeonRush.UI
         {
             card = FindObjectOfType<PlayerCard>();
             skillUser = card.GetComponent<SkillUser>();
-            InitilizeButtons();
+            if(skillButtons.Count <= 0)
+                InitilizeButtons();
         }
 
         public void PanelControl(bool activate)
@@ -43,18 +44,21 @@ namespace DungeonRush.UI
             panel.SetActive(activate);
         }
 
-        public void AddSkill(SkillData skill)
+        public void AddSkill(SkillData skillData)
         {
-            SkillButton sb = FindEmptyButton();
-            if (sb != null)
+            if (skillButtons.Count <= 0)
             {
-                sb.skillData = skill;
-                SetButton(sb);
+                print("1111");
+                InitilizeButtons();
             }
+            FindEmptyButton(skillButtons, skillData);
         }
 
         private void InitilizeButtons()
         {
+            print("tatata");
+            skillButtons.Clear();
+
             for (int i = 0; i < buttons.Count; i++)
             {
                 SkillButton skillButton = new SkillButton(null, buttons[i]);
@@ -66,6 +70,8 @@ namespace DungeonRush.UI
         private void SetButton(SkillButton skillButton)
         {
             Button button = skillButton.button;
+            print("1:" + button);
+            print("2:" + skillButton.skillData);
             Skill skill = null;
             if (skillButton.skillData != null)
                 skill = skillButton.skillData.skill;
@@ -90,21 +96,23 @@ namespace DungeonRush.UI
         {
             for (int i = 0; i < skillButtons.Count; i++)
             {
-                if (skillButtons[i].skillData.listnumber == skillData.listnumber)
+                if (skillButtons[i].skillData != null && skillButtons[i].skillData.listnumber == skillData.listnumber)
                     return skillButtons[i].button;
             }
             return null;
         }
 
-        private SkillButton FindEmptyButton()
+        private void FindEmptyButton(List<SkillButton> skillButtons, SkillData skillData)
         {
             foreach (var skillButton in skillButtons)
             {
-                if (skillButton.skillData == null)
-                    return skillButton;
+                if (skillButton.skillData == null || skillButton.skillData.skill == null)
+                {
+                    skillButton.skillData = skillData;
+                    SetButton(skillButton);
+                    return;
+                }
             }
-
-            return null;
         }
 
         public void Execute(Button button)

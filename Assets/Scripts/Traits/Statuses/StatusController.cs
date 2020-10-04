@@ -4,42 +4,51 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+
 namespace DungeonRush.Traits
 {
+    [Serializable]
+    public class StatusData
+    {
+        public Status status;
+        public ObjectPool poolForStatusEffect;
+        public ObjectPool poolForTextPopup;
+        public Image image;
+        public int turnCount;
+
+        public StatusData(Status status, GameObject statusEffect, GameObject textPopup, Transform t, Image image, int turnCount = -1)
+        {
+            this.status = status;
+
+            poolForStatusEffect = new ObjectPool();
+            poolForTextPopup = new ObjectPool();
+
+            if (statusEffect != null)
+            {
+                poolForStatusEffect.SetObject(statusEffect);
+                poolForStatusEffect.FillPool(1, t);
+            }
+
+            if (textPopup != null)
+            {
+                poolForTextPopup.SetObject(textPopup);
+                poolForTextPopup.FillPool(1, t);
+            }
+
+            if (turnCount == -1)
+                this.turnCount = status.TurnCount;
+            else
+                this.turnCount = turnCount;
+
+            this.image = image;
+        }
+    }
+
     public class StatusController : MonoBehaviour
     {
-
-        [Serializable]
-        public class StatusData
-        {
-            public Status status;
-            public ObjectPool poolForStatusEffect;
-            public ObjectPool poolForTextPopup;
-
-            public int turnCount;
-
-            public StatusData(Status status, GameObject statusEffect, GameObject textPopup, Transform t)
-            {
-                this.status = status;
-
-                poolForStatusEffect = new ObjectPool();
-                poolForTextPopup = new ObjectPool();
-
-                if (statusEffect != null)
-                {
-                    poolForStatusEffect.SetObject(statusEffect);
-                    poolForStatusEffect.FillPool(1, t);
-                }
-
-                if (textPopup != null)
-                {
-                    poolForTextPopup.SetObject(textPopup);
-                    poolForTextPopup.FillPool(1, t);
-                }
-
-                turnCount = status.TurnCount;
-            }
-        }
+        
+        [SerializeField] CharacterCanvas characterCanvas;
 
         public List<StatusType> statusTypes = new List<StatusType>();
         public List<StatusData> activeStatuses = new List<StatusData>();
@@ -63,19 +72,42 @@ namespace DungeonRush.Traits
             GameObject textPopup = null;
 
             if (status.Effect != null)
-            {
-                effect = Instantiate(status.Effect, transform);
-                effect.SetActive(false);
-            }
+                effect = InstatiateObject(status.Effect);
             if (status.TextPopUp != null)
-            {
-                textPopup = Instantiate(status.TextPopUp, transform);
-                textPopup.gameObject.SetActive(false);
-            }
+                textPopup = InstatiateObject(status.TextPopUp);
 
-            StatusData sd = new StatusData(status, effect, textPopup, transform);
+            Image img = characterCanvas.AddImageToPanel(status.Icon);
+
+            StatusData sd = new StatusData(status, effect, textPopup, transform, img);
             activeStatuses.Add(sd);
             statusTypes.Add(status.StatusType);
+        }
+
+        private GameObject InstatiateObject(GameObject obj)
+        {
+            GameObject effect = Instantiate(obj, transform);
+            effect.SetActive(false);
+            return effect;
+        }
+
+        public void AddStatus(StatusData statusData)
+        {
+            Status status = statusData.status;
+
+            GameObject effect = null;
+            GameObject textPopup = null;
+
+            if (status.Effect != null)
+                effect = InstatiateObject(status.Effect);
+            if (status.TextPopUp != null)
+                textPopup = InstatiateObject(status.TextPopUp);
+
+            Image img = characterCanvas.AddImageToPanel(status.Icon);
+
+            statusData = new StatusData(status, effect, textPopup, transform, img, statusData.turnCount);
+            activeStatuses.Add(statusData);
+            statusTypes.Add(status.StatusType);
+
         }
 
         public void ActivateStatuses()
@@ -86,14 +118,19 @@ namespace DungeonRush.Traits
             }
         }
 
-        private void StatusControl(StatusData statusData)
+        public void StatusControl()
         {
-            statusData.turnCount--;
-            if (statusData.turnCount <= 0)
+            for (int i = 0; i < activeStatuses.Count; i++)
             {
-                activeStatuses.Remove(statusData);
-                statusTypes.Remove(statusData.status.StatusType);
-                StartCoroutine(KillStatus(statusData));
+                StatusData statusData = activeStatuses[i];
+
+                statusData.turnCount--;
+                if (statusData.turnCount <= 0)
+                {
+                    activeStatuses.Remove(statusData);
+                    statusTypes.Remove(statusData.status.StatusType);
+                    StartCoroutine(KillStatus(statusData));
+                }
             }
         }
 
@@ -112,7 +149,6 @@ namespace DungeonRush.Traits
             obj.transform.position = transform.position;
             yield return new WaitForSeconds(statusData.status.EffectLifeTime);
             statusData.poolForStatusEffect.AddObjectToPool(obj);
-            StatusControl(statusData);
         }
 
         private IEnumerator TextPopup(StatusData statusData)
@@ -129,6 +165,8 @@ namespace DungeonRush.Traits
 
         private IEnumerator KillStatus(StatusData statusData)
         {
+            Destroy(statusData.image.gameObject);
+            statusData.image = null;
             yield return new WaitForSeconds(0.6f);
             statusData.poolForStatusEffect.DeleteObjectsInPool();
             statusData.poolForTextPopup.DeleteObjectsInPool();

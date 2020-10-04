@@ -42,6 +42,17 @@ namespace DungeonRush.Items
             return null;
         }
 
+        public Skill GetSkill(string id)
+        {
+            for (int i = 0; i < allSkills.Count; i++)
+            {
+                if (allSkills[i].SkillName == id)
+                    return allSkills[i];
+            }
+
+            return null;
+        }
+
         public Skill GetRandomSkill()
         {
             var number = allSkills.Count;

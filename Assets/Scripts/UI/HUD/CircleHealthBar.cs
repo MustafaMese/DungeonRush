@@ -12,12 +12,6 @@ public class CircleHealthBar : MonoBehaviour
     [SerializeField] Gradient gradient = null;
     [SerializeField] float maxHealth = 0f;
 
-    private void Start()
-    {
-        bar.gameObject.SetActive(false);
-        barBG.gameObject.SetActive(false);
-    }
-
     private void HealthChange(float healthValue)
     {
         float amount = (healthValue / maxHealth);
@@ -31,16 +25,11 @@ public class CircleHealthBar : MonoBehaviour
         bar.color = c;
     }
 
-    public IEnumerator ActiveChanges(float healthValue, float maxHealth)
+    public void ActiveChanges(float healthValue, float maxHealth)
     {
         SetMaxHealth(maxHealth);
-        bar.gameObject.SetActive(true);
-        barBG.gameObject.SetActive(true);
         HealthChange(healthValue);
         ColorChange(healthValue);
-        yield return new WaitForSeconds(appearanceTime);
-        bar.gameObject.SetActive(false);
-        barBG.gameObject.SetActive(false);
     }
 
     public void SetMaxHealth(float h)

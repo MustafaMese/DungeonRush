@@ -57,8 +57,19 @@ namespace DungeonRush.Skills {
             card = GetComponent<Card>();
             for (int i = 0; i < SKILL.Length; i++)
             {
-                AddSkill(SKILL[i]);
+                //AddSkill(SKILL[i]);
             }
+        }
+
+        public List<string> GetSkillIDs()
+        {
+            List<string> ids = new List<string>();
+            for (int i = 0; i < skills.Count; i++)
+            {
+                string id = skills[i].skill.SkillName;
+                ids.Add(id);
+            }
+            return ids;
         }
 
         public void AddSkill(Skill skill)
@@ -66,9 +77,17 @@ namespace DungeonRush.Skills {
             SkillData s = new SkillData(skill, transform, lastIndex);
             if (skill.IsActive)
                 UIManager.Instance.AddSkillToButton(s);
-
             skills.Add(s);
             lastIndex++;
+        }
+
+        public void AddSkill(SkillData skillData)
+        {
+            if (skillData.skill.IsActive)
+                UIManager.Instance.AddSkillToButton(skillData);
+
+            skills.Add(skillData);
+            lastIndex = skillData.listnumber + 1;
         }
 
         public void ExecuteActiveSkill(SkillData skillD)
@@ -88,7 +107,7 @@ namespace DungeonRush.Skills {
             for (int i = 0; i < skills.Count; i++)
             {
                 SkillData skillData = skills[i];
-                if(skillData.skill.IsAttacker)
+                if(skillData.skill.IsAttacker && !skillData.skill.IsActive)
                     ExecuteSkill(skillData);
                 else
                     DecreaseCooldown(skillData);
@@ -100,7 +119,7 @@ namespace DungeonRush.Skills {
             for (int i = 0; i < skills.Count; i++)
             {
                 SkillData skillData = skills[i];
-                if (!skillData.skill.IsAttacker)
+                if (!skillData.skill.IsAttacker && !skillData.skill.IsActive)
                     ExecuteSkill(skillData);
                 else
                     DecreaseCooldown(skillData);
@@ -249,5 +268,7 @@ namespace DungeonRush.Skills {
             if(skillData.skill.IsMultiUse)
                 skillData.tempCooldown = skillData.skill.Cooldown;
         }
+
+
     }
 }

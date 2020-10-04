@@ -130,7 +130,7 @@ namespace DungeonRush.Property
                 health = Mathf.Min(maxHealth, health);
             }
 
-            StartCoroutine(bar.ActiveChanges(health, maxHealth));
+            bar.ActiveChanges(health, maxHealth);
         }
 
         private int CalculateBlockedDamageByArmor(int amount)
@@ -158,14 +158,14 @@ namespace DungeonRush.Property
         {
             maxHealth += h;
             health += h;
-            StartCoroutine(bar.ActiveChanges(health, maxHealth));
+            bar.ActiveChanges(health, maxHealth);
         }
 
         public void DecreaseMaxHealth(int h)
         {
             maxHealth -= h;
             health = Mathf.Min(health, maxHealth);
-            StartCoroutine(bar.ActiveChanges(health, maxHealth));
+            bar.ActiveChanges(health, maxHealth);
         }
 
     }

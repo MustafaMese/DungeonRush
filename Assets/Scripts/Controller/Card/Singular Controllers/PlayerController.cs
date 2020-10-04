@@ -6,6 +6,7 @@ using DungeonRush.Items;
 using DungeonRush.Managers;
 using DungeonRush.Property;
 using DungeonRush.Saving;
+using DungeonRush.Skills;
 using DungeonRush.Traits;
 using System.Collections;
 using UnityEngine;
@@ -173,16 +174,23 @@ namespace DungeonRush.Controller
             statusController.ActivateStatuses();
         }
 
+        public void StatusControl()
+        {
+            statusController.StatusControl();
+        }
+
         private void Notify()
         {
             MoveSchedular.Instance.enemyController.ConfigureSurroundingCardsSkinStates();
             if (player.InstantMoveCount > 0)
             {
                 Begin();
+                ActivateStatuses();
                 player.InstantMoveCount--;
             }
             else
             {
+                StatusControl();
                 player.InstantMoveCount = player.TotalMoveCount;
                 MoveSchedular.Instance.OnNotify();
             }
@@ -205,11 +213,18 @@ namespace DungeonRush.Controller
             player.SetCurrentHealth(data.currentHealth);
             player.Coins = data.gold;
 
+            // Statları da kaydet buraya.
 
-            for (int i = 0; i < data.uniqueIDs.Length; i++)
+            for (int i = 0; i < data.uniqueItemIDs.Length; i++)
             {
-                Item item = ItemDB.Instance.GetItem(data.uniqueIDs[i]);
+                Item item = ItemDB.Instance.GetItem(data.uniqueItemIDs[i]);
                 player.GetComponent<ItemUser>().TakeItem(item);
+            }
+
+            for (int i = 0; i < data.uniqueSkillIDs.Length; i++)
+            {
+                Skill skill = ItemDB.Instance.GetSkill(data.uniqueSkillIDs[i]);
+                player.GetComponent<SkillUser>().AddSkill(skill);
             }
         }
 

@@ -13,6 +13,7 @@ namespace DungeonRush.Traits
         [SerializeField] private float effectLifeTime;
         [SerializeField] private GameObject effect;
         [SerializeField] private GameObject textPopUp;
+        [SerializeField] Sprite icon;
 
         public int Power { get => power; set => power = value; }
         public int TurnCount { get => turnCount; set => turnCount = value; }
@@ -20,6 +21,7 @@ namespace DungeonRush.Traits
         public GameObject Effect { get => effect; set => effect = value; }
         public GameObject TextPopUp { get => textPopUp; set => textPopUp = value; }
         public StatusType StatusType { get => statusType; set => statusType = value; }
+        public Sprite Icon { get => icon; set => icon = value; }
 
         public abstract void Execute(Card card);
     }

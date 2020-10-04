@@ -6,7 +6,19 @@ namespace DungeonRush.Skills
 {
     public abstract class Skill : ScriptableObject
     {
+        [Multiline(8)]
+        [Tooltip("A string using the MultiLine attribute")]
+        [SerializeField]
+        private string notes = "- General options and effect options will be using for every skills. \n" +
+            "- ChanceFactor using for status creator skills. \n" +
+            "- Multi-using is not important at stat increasers. \n" +
+            "- Icons will be using at Character Canvases. \n" +
+            "- isActive option is using for active skills. \n" +
+            "- iAttacker determines using at attacking or moving action.";
+
+
         [Header("General Options")]
+        [SerializeField] private string skillName;
         [SerializeField] private int cooldown;
         [SerializeField] private bool isActive;
         [SerializeField] private bool isMultiUse;
@@ -27,7 +39,7 @@ namespace DungeonRush.Skills
         [Space]
         [SerializeField] private int power;
         [SerializeField] private int chanceFactor;
-
+        
         public int Cooldown { get => cooldown; set => cooldown = value; }
         public float EffectTime { get => effectTime; set => effectTime = value; }
         public GameObject Effect { get => effect; set => effect = value; }
@@ -39,6 +51,7 @@ namespace DungeonRush.Skills
         public bool IsActive { get => isActive; set => isActive = value; }
         public Sprite IconSmall { get => iconSmall; }
         public Sprite IconBig { get => iconBig; }
+        public string SkillName { get => skillName; set => skillName = value; }
 
         public abstract void Execute(Move move);
         public abstract void PositionEffect(GameObject effect, Move move);

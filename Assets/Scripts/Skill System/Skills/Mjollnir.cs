@@ -31,7 +31,7 @@ namespace DungeonRush.Skills
         public override void PositionEffect(GameObject effect, Move move)
         {
             effect.transform.SetParent(null);
-
+            effect.transform.position = Vector3.zero;
             MjollnirPositioning mPos = effect.GetComponent<MjollnirPositioning>();
             mPos.Execute(targetPositions, EffectTime);
         }

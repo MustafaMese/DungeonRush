@@ -1,6 +1,7 @@
 ﻿using DungeonRush.Cards;
 using DungeonRush.Items;
 using DungeonRush.Property;
+using DungeonRush.Skills;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,7 +14,8 @@ public class PlayerData
     public int gold;
     public int xp;
 
-    public string[] uniqueIDs;
+    public string[] uniqueItemIDs;
+    public string[] uniqueSkillIDs;
 
     public PlayerData(PlayerCard player)
     {
@@ -22,6 +24,11 @@ public class PlayerData
         gold = player.Coins;
         xp = player.Experience;
 
-        uniqueIDs = player.GetComponent<ItemUser>().GetItemsIDs().ToArray();
+        uniqueItemIDs = player.GetComponent<ItemUser>().GetItemsIDs().ToArray();
+        uniqueSkillIDs = player.GetComponent<SkillUser>().GetSkillIDs().ToArray();
+        foreach (var item in uniqueSkillIDs)
+        {
+            Debug.Log(item);
+        }
     }
 }

@@ -28,11 +28,7 @@ namespace DungeonRush
             [SerializeField] CollectableManager collectableManagerPrefab;
             [SerializeField] SwipeManager swipeManagerPrefab;
 
-            [Header("Distance Control")]
-            [SerializeField] Vector3 t1 = Vector2.zero;
-            [SerializeField] Vector3 t2 = Vector2.zero;
-            [SerializeField] float t3 = 0;
-
+            private bool started = false;
             private void Awake()
             {
                 if (Instance != null)
@@ -46,18 +42,18 @@ namespace DungeonRush
                 Initialize();
             }
 
-            private void Update()
-            {
-                t3 = (t1 - t2).sqrMagnitude;
-            }
-
             private void OnLevelWasLoaded(int level)
             {
-                Initialize();
+                if (!started)
+                {
+                    started = true;
+                    Initialize();
+                }
             }
 
             protected void Initialize()
             {
+                print("Başlatıyorum");
                 Application.targetFrameRate = 60;
 
                 Instantiate(uiManagerPrefab);
@@ -79,6 +75,7 @@ namespace DungeonRush
             void OnDestroy()
             {
                 enabled = false;
+                started = false;
                 gameState = GameState.START;
             }
         }

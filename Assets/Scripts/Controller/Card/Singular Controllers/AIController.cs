@@ -298,6 +298,11 @@ namespace DungeonRush.Controller
         {
             statusController.ActivateStatuses();
         }
+        public void StatusControl()
+        {
+            statusController.StatusControl();
+        }
+
         private void ChangeState()
         {
             if (statusAct.anger)
@@ -389,10 +394,12 @@ namespace DungeonRush.Controller
                 if (card.InstantMoveCount > 0)
                 {
                     Run();
+                    ActivateStatuses();
                     card.InstantMoveCount--;
                 }
                 else
                 {
+                    StatusControl();
                     card.InstantMoveCount = card.TotalMoveCount;
                     MoveSchedular.Instance.enemyController.OnNotify();
                 }

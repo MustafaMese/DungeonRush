@@ -173,6 +173,7 @@ namespace DungeonRush.UI
 
         public void AddSkillToButton(SkillData skill)
         {
+            print("Burad");
             _activeSkillCanvas.AddSkill(skill);
         }
 
