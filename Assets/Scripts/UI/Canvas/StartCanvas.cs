@@ -8,27 +8,28 @@ using DungeonRush.Saving;
 
 namespace DungeonRush.UI
 {
-    public class ImageCloser : MonoBehaviour
+    public class StartCanvas : MonoBehaviour
     {
         [SerializeField] Image image = null;
-        [SerializeField] float endValue = 0f;
-        private float endTime = 0f;
 
+        [SerializeField] float endValue = 0f;
+        [SerializeField] float endTime = 0f;
         private bool touched = false;
 
-        private void Update()
+        public void ExecuteStartButton()
         {
-            if (!touched && Input.anyKey)
+            if (!touched)
             {
                 touched = true;
-                Scale();
+                StartCoroutine(Scale());
             }
         }
 
-        private void Scale()
+        private IEnumerator Scale()
         {
             image.transform.DOScale(endValue, endTime);
             SavingSystem.DeletePlayerInstantSaveFile();
+            yield return new WaitForSeconds(endTime);
             GameManager.Instance.SetGameState(GameState.LEVEL_TRANSITION);
         }
     }

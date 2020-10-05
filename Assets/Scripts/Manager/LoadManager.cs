@@ -48,6 +48,11 @@ public class LoadManager : MonoBehaviour
         SceneManager.LoadScene(scene.buildIndex);
     }
 
+    public static int GetSceneIndex()
+    {
+        return SceneManager.GetActiveScene().buildIndex;
+    }
+
     public IEnumerator LoadNewScene()
     {
         var scene = SceneManager.GetActiveScene();
@@ -68,6 +73,5 @@ public class LoadManager : MonoBehaviour
 
             yield return null;
         }
-        print("bum");
     }
 }

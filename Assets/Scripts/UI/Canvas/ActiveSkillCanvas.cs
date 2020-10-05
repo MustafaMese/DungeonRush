@@ -70,8 +70,8 @@ namespace DungeonRush.UI
         private void SetButton(SkillButton skillButton)
         {
             Button button = skillButton.button;
-            print("1:" + button);
-            print("2:" + skillButton.skillData);
+            if (button == null) return;
+
             Skill skill = null;
             if (skillButton.skillData != null)
                 skill = skillButton.skillData.skill;

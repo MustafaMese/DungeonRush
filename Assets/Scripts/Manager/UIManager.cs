@@ -35,7 +35,24 @@ namespace DungeonRush.UI
 
         private void Awake()
         {
-            Instance = this;
+            if (Instance != null)
+                Destroy(Instance);
+            else
+                Instance = this;
+
+            InitializeByBuildIndex();
+        }
+
+        private void InitializeByBuildIndex()
+        {
+            var number = LoadManager.GetSceneIndex();
+            if (number == 0)
+            {
+                InitializeCanvases(true);
+                StartCoroutine(_fadingCanvas.FadeIn());
+            }
+            else
+                InitializeCanvases(false);
         }
 
         public void UpdateCanvasState(GameState gameState, UIState uiState)
@@ -92,14 +109,28 @@ namespace DungeonRush.UI
             Time.timeScale = 1f;
         }
 
-        private void InitializeCanvases()
+        private void InitializeCanvases(bool isStartMenu)
         {
-            _fadingCanvas = Instantiate(fadingCanvasPrefab);
-            _pauseMenu = Instantiate(pauseMenuPrefab);
-            _defeatedPanel = Instantiate(defeatedPanelPrefab);
-            _pickItemCanvas = Instantiate(pickItemCanvasPrefab);
-            _turnCanvas = Instantiate(turnCanvasPrefab);
-            _activeSkillCanvas = Instantiate(activeSkillCanvasPrefab);
+            if (_fadingCanvas == null)
+                _fadingCanvas = Instantiate(fadingCanvasPrefab);
+
+            if (!isStartMenu)
+            {
+                if (_pauseMenu == null)
+                    _pauseMenu = Instantiate(pauseMenuPrefab);
+
+                if (_defeatedPanel == null)
+                    _defeatedPanel = Instantiate(defeatedPanelPrefab);
+
+                if (_pickItemCanvas == null)
+                    _pickItemCanvas = Instantiate(pickItemCanvasPrefab);
+
+                if (_turnCanvas == null)
+                    _turnCanvas = Instantiate(turnCanvasPrefab);
+
+                if (_activeSkillCanvas == null)
+                    _activeSkillCanvas = Instantiate(activeSkillCanvasPrefab);
+            }
         }
 
         #region LEVEL CONTROL METHODS
@@ -107,7 +138,10 @@ namespace DungeonRush.UI
         private IEnumerator BeginLevel()
         {
             if (_fadingCanvas == null)
-                InitializeCanvases();
+            {
+                print("fading");
+                InitializeByBuildIndex();
+            }
 
             yield return _fadingCanvas.FadeIn();
             _fadingCanvas.PanelControl(false);
@@ -173,7 +207,12 @@ namespace DungeonRush.UI
 
         public void AddSkillToButton(SkillData skill)
         {
-            print("Burad");
+            if (_activeSkillCanvas == null)
+            {
+                print("active");
+                InitializeByBuildIndex();
+            }
+
             _activeSkillCanvas.AddSkill(skill);
         }
 

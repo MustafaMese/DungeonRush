@@ -44,8 +44,10 @@ namespace DungeonRush
 
             private void OnLevelWasLoaded(int level)
             {
+                print("0");
                 if (!started)
                 {
+                    print("1");
                     started = true;
                     Initialize();
                 }
@@ -53,21 +55,28 @@ namespace DungeonRush
 
             protected void Initialize()
             {
-                print("Başlatıyorum");
                 Application.targetFrameRate = 60;
 
                 Instantiate(uiManagerPrefab);
                 Instantiate(loadManagerPrefab);
-                Instantiate(cardManagerPrefab);
-                Instantiate(moveSchedularPrefab);
-                Instantiate(collectableManagerPrefab);
                 Instantiate(swipeManagerPrefab);
 
-                SetGameState(GameState.BEGIN_LEVEL);
+                var number = LoadManager.GetSceneIndex();
+                if (number > 0)
+                {
+                    Instantiate(cardManagerPrefab);
+                    Instantiate(moveSchedularPrefab);
+                    Instantiate(collectableManagerPrefab);
+
+                    SetGameState(GameState.BEGIN_LEVEL);
+                }
             }
 
             public void SetGameState(GameState state, UIState uiState = UIState.NONE)
             {
+                if (state == GameState.LEVEL_TRANSITION)
+                    started = false;
+
                 gameState = state;
                 UIManager.Instance.UpdateCanvasState(gameState, uiState);
             }
@@ -75,7 +84,6 @@ namespace DungeonRush
             void OnDestroy()
             {
                 enabled = false;
-                started = false;
                 gameState = GameState.START;
             }
         }
