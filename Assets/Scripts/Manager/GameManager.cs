@@ -44,10 +44,8 @@ namespace DungeonRush
 
             private void OnLevelWasLoaded(int level)
             {
-                print("0");
                 if (!started)
                 {
-                    print("1");
                     started = true;
                     Initialize();
                 }
