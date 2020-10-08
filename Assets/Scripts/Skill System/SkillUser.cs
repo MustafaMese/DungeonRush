@@ -57,7 +57,7 @@ namespace DungeonRush.Skills {
             card = GetComponent<Card>();
             for (int i = 0; i < SKILL.Length; i++)
             {
-                //AddSkill(SKILL[i]);
+                AddSkill(SKILL[i]);
             }
         }
 
@@ -77,6 +77,9 @@ namespace DungeonRush.Skills {
             SkillData s = new SkillData(skill, transform, lastIndex);
             if (skill.IsActive)
                 UIManager.Instance.AddSkillToButton(s);
+
+            UIManager.Instance.AddSkillToSkillSet(skill.IconSmall);
+
             skills.Add(s);
             lastIndex++;
         }

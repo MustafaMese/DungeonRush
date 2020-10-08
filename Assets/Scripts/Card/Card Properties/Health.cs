@@ -35,7 +35,7 @@ namespace DungeonRush.Property
         [SerializeField] float deathTime = 0.2f;
         [SerializeField] int maxHealth = 0;
         [SerializeField] Animator animator = null;
-        [SerializeField] CircleHealthBar bar = null;
+        [SerializeField] HealthBar bar = null;
 
         [SerializeField] int health = 0;
         private Card card = null;

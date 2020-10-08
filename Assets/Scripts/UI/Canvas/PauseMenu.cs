@@ -13,10 +13,14 @@ namespace DungeonRush.UI
     {
         [SerializeField] GameObject pauseMenuUI;
         [SerializeField] Button pauseButton;
+        [SerializeField] Transform skillSetPanel;
 
         [Header("Character Stats")]
         [SerializeField] TextMeshProUGUI healthTxt = null;
         [SerializeField] TextMeshProUGUI damageTxt = null;
+        [SerializeField] TextMeshProUGUI criticChance = null;
+        [SerializeField] TextMeshProUGUI dodgeChance = null;
+
         [SerializeField] TextMeshProUGUI itemsTxt = null;
 
         private PlayerCard player;
@@ -33,6 +37,12 @@ namespace DungeonRush.UI
 
             int damage = player.GetDamage();
             SetText(damageTxt, damage);
+
+            int critic = player.CriticChance;
+            SetText(criticChance, critic);
+
+            int dodge = player.DodgeChance;
+            SetText(dodgeChance, dodge);
 
             List<string> names = player.GetItemNames();
             SetText(itemsTxt, names);
@@ -86,6 +96,13 @@ namespace DungeonRush.UI
         public void PanelControl(bool activate)
         {
             pauseButton.gameObject.SetActive(activate);
+        }
+
+        public Image AddImageToPanel(Sprite sprite)
+        {
+            var obj = new GameObject("Image").AddComponent<Image>();
+            obj.sprite = sprite;
+            return Instantiate(obj, skillSetPanel);
         }
     }
 }

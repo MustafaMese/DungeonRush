@@ -99,15 +99,7 @@ namespace DungeonRush.UI
             }
         }
         
-        private void Pause()
-        {
-            Time.timeScale = 0f;
-        }
-
-        private void Resume()
-        {
-            Time.timeScale = 1f;
-        }
+        
 
         private void InitializeCanvases(bool isStartMenu)
         {
@@ -214,6 +206,25 @@ namespace DungeonRush.UI
             }
 
             _activeSkillCanvas.AddSkill(skill);
+        }
+
+        #endregion
+
+        #region PAUSE CANVAS METHODS
+
+        public void AddSkillToSkillSet(Sprite sprite)
+        {
+            _pauseMenu.AddImageToPanel(sprite);
+        }
+
+        private void Pause()
+        {
+            Time.timeScale = 0f;
+        }
+
+        private void Resume()
+        {
+            Time.timeScale = 1f;
         }
 
         #endregion

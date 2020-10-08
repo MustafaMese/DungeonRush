@@ -28,7 +28,7 @@ public class PlayerData
         uniqueSkillIDs = player.GetComponent<SkillUser>().GetSkillIDs().ToArray();
         foreach (var item in uniqueSkillIDs)
         {
-            Debug.Log(item);
+            Debug.Log("hobb");
         }
     }
 }

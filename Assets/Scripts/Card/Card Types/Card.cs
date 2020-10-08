@@ -6,6 +6,7 @@ using DungeonRush.Property;
 using DungeonRush.Shifting;
 using DungeonRush.Traits;
 using System.Collections;
+using TMPro;
 using UnityEngine;
 
 namespace DungeonRush
@@ -23,12 +24,14 @@ namespace DungeonRush
             protected IMoveController controller;
             protected StatusController statusController;
 
-            [HideInInspector] public ObjectPool poolForTextPopup;
-            [SerializeField] protected TextPopup textPopup = null;
+            private ObjectPool poolForTextPopup = new ObjectPool();
+            
 
             [Header("General Properties")]
             public CardProperties cardProperties = null;
             public Character characterType;
+            [SerializeField] TextMeshProUGUI nameText = null;
+            [SerializeField] protected TextPopup textPopup = null;
 
             #region CARD STATS
             protected int maximumHealth = 0;
@@ -65,9 +68,12 @@ namespace DungeonRush
                 Controller = GetComponent<IMoveController>();
                 statusController = GetComponent<StatusController>();
                 SetStats();
-                poolForTextPopup = new ObjectPool();
+
                 FillThePool(poolForTextPopup, textPopup.gameObject, 3);
                 move = new Move();
+
+                if(GetCardType() != CardType.EVENT)
+                    nameText.text = cardName;
             }
 
             protected void FillThePool(ObjectPool pool, GameObject effect, int objectCount)

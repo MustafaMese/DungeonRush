@@ -4,11 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CircleHealthBar : MonoBehaviour
+public class HealthBar : MonoBehaviour
 {
     [SerializeField] Image bar = null;
-    [SerializeField] Image barBG = null;
-    [SerializeField] float appearanceTime = 0f;
     [SerializeField] Gradient gradient = null;
     [SerializeField] float maxHealth = 0f;
 
