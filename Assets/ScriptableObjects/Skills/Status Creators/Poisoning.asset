@@ -12,12 +12,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ed4fa015cb58b74fa7a881ac05fc651, type: 3}
   m_Name: Poisoning
   m_EditorClassIdentifier: 
+  notes: "- General options and effect options will be using for every skills. \n-
+    ChanceFactor using for status creator skills. \n- Multi-using is not important
+    at stat increasers. \n- Icons will be using at Character Canvases. \n- isActive
+    option is using for active skills. \n- iAttacker determines using at attacking
+    or moving action."
+  skillName: PoisonStatus
   cooldown: 1
-  isActive: 1
+  isActive: 0
+  isMultiUse: 1
   isAttacker: 1
   effectTime: 1
   effect: {fileID: 0}
   textPopup: {fileID: 0}
+  iconSmall: {fileID: 21300000, guid: 8d56276df799cf14e990897bfa8b7f16, type: 3}
+  iconBig: {fileID: 21300000, guid: 8d56276df799cf14e990897bfa8b7f16, type: 3}
   power: 0
-  chanceFactor: 0
+  chanceFactor: 20
   status: {fileID: 11400000, guid: 9f6a302cb789f5d4c960251b2b2b8817, type: 2}

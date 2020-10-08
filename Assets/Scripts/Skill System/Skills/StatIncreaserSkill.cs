@@ -20,7 +20,7 @@ namespace DungeonRush.Skills
             switch (statType)
             {
                 case StatType.MAXIMUM_HEALTH:
-                    card.MaximumHealth++;
+                    card.MaximumHealth += 10;
                     break;
                 case StatType.CRITIC_CHANCE:
                     card.CriticChance++;
@@ -44,7 +44,10 @@ namespace DungeonRush.Skills
 
         public override void PositionEffect(GameObject effect, Move move)
         {
-            return;
+            effect.SetActive(true);
+            Transform t = move.GetCard().transform;
+            effect.transform.SetParent(t);
+            effect.transform.position = t.position;
         }
 
         public override Vector3 PositionTextPopup(GameObject textPopup, Move move)

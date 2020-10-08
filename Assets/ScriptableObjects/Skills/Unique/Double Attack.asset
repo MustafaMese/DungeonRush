@@ -12,11 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99190737daf64f540ba4e35657013593, type: 3}
   m_Name: Double Attack
   m_EditorClassIdentifier: 
+  notes: "- General options and effect options will be using for every skills. \n-
+    ChanceFactor using for status creator skills. \n- Multi-using is not important
+    at stat increasers. \n- Icons will be using at Character Canvases. \n- isActive
+    option is using for active skills. \n- iAttacker determines using at attacking
+    or moving action."
+  skillName: DoubleAttack
   cooldown: 0
-  isActive: 1
+  isActive: 0
+  isMultiUse: 1
   isAttacker: 1
   effectTime: 1
   effect: {fileID: 0}
   textPopup: {fileID: 0}
+  iconSmall: {fileID: 21300000, guid: 9664f1a568f5f1947ae392f8eefc1a02, type: 3}
+  iconBig: {fileID: 0}
   power: 0
   chanceFactor: 0

@@ -12,12 +12,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a5016f5eaaecbe4d8d96458b961e601, type: 3}
   m_Name: Heavy Attack
   m_EditorClassIdentifier: 
+  notes: "- General options and effect options will be using for every skills. \n-
+    ChanceFactor using for status creator skills. \n- Multi-using is not important
+    at stat increasers. \n- Icons will be using at Character Canvases. \n- isActive
+    option is using for active skills. \n- iAttacker determines using at attacking
+    or moving action."
+  skillName: HeavyAttack
   cooldown: 2
   isActive: 1
+  isMultiUse: 1
   isAttacker: 1
   effectTime: 1
   effect: {fileID: 8084531181890196352, guid: e93796174c9ff5a49ba387c7cecc940b, type: 3}
   textPopup: {fileID: 3410524310625003301, guid: d284076925d56484c9541ce1f6da8de6,
     type: 3}
+  iconSmall: {fileID: 0}
+  iconBig: {fileID: 0}
   power: 3
   chanceFactor: 0

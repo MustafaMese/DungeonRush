@@ -135,6 +135,8 @@ namespace DungeonRush.Skills {
             {
                 skillData.tempCooldown = -1;
                 skillData.skill.Execute(card.GetMove());
+                PlayAnimation(skillData, card.GetMove());
+
             }
             else if(skillData.skill.IsMultiUse)
             {
@@ -169,6 +171,8 @@ namespace DungeonRush.Skills {
 
         private void PlayAnimation(SkillData skillData, Move move)
         {
+            print("1");
+
             if (skillData.skill.Effect != null)
                 StartCoroutine(Animate(skillData, move));
             if (skillData.skill.TextPopup != null)
@@ -179,10 +183,12 @@ namespace DungeonRush.Skills {
         {
             GameObject obj;
             List<GameObject> objects = new List<GameObject>();
-
+            print("2");
             int count = skillData.skill.GetGameobjectCount();
+            print("C: " + count);
             for (int i = 0; i < count; i++)
             {
+                print("3");
                 obj = skillData.poolForEffect.PullObjectFromPool(transform);
                 skillData.skill.PositionEffect(obj, move);
                 objects.Add(obj);

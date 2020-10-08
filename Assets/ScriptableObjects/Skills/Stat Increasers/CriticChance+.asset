@@ -12,12 +12,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4dbe43649d9b18a4382011415580e6a8, type: 3}
   m_Name: CriticChance+
   m_EditorClassIdentifier: 
+  notes: "- General options and effect options will be using for every skills. \n-
+    ChanceFactor using for status creator skills. \n- Multi-using is not important
+    at stat increasers. \n- Icons will be using at Character Canvases. \n- isActive
+    option is using for active skills. \n- iAttacker determines using at attacking
+    or moving action."
+  skillName: Critic+
   cooldown: 0
   isActive: 0
+  isMultiUse: 0
   isAttacker: 0
-  effectTime: 0
-  effect: {fileID: 0}
+  effectTime: 0.7
+  effect: {fileID: 2969847825774383602, guid: e3fd80c68e1e9ba4dbdca575c3704588, type: 3}
   textPopup: {fileID: 0}
+  iconSmall: {fileID: 21300000, guid: 365b88440d923e047b708ce7eae445b8, type: 3}
+  iconBig: {fileID: 0}
   power: 0
   chanceFactor: 0
   statType: 1
