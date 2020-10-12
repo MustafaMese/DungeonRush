@@ -17,7 +17,7 @@ namespace DungeonRush.Traits
         public Image image;
         public int turnCount;
 
-        public StatusData(Status status, GameObject statusEffect, GameObject textPopup, Transform t, Image image, int turnCount = -1)
+        public StatusData(Status status, GameObject statusEffect, GameObject textPopup, Transform t, Image image = null, int turnCount = -1)
         {
             this.status = status;
 
@@ -41,7 +41,8 @@ namespace DungeonRush.Traits
             else
                 this.turnCount = turnCount;
 
-            this.image = image;
+            if(image != null)
+                this.image = image;
         }
     }
 
@@ -76,11 +77,17 @@ namespace DungeonRush.Traits
             if (status.TextPopUp != null)
                 textPopup = InstatiateObject(status.TextPopUp);
 
-            Image img = characterCanvas.AddImageToPanel(status.Icon);
+            StatusData sd;
 
-            StatusData sd = new StatusData(status, effect, textPopup, transform, img);
+            if (status.StatusType != StatusType.INEFFECTIVE)
+            {
+                Image img = characterCanvas.AddImageToPanel(status.Icon);
+                sd = new StatusData(status, effect, textPopup, transform, img);
+            }
+            else
+                sd = new StatusData(status, effect, textPopup, transform);
+
             activeStatuses.Add(sd);
-            statusTypes.Add(status.StatusType);
         }
 
         private GameObject InstatiateObject(GameObject obj)
@@ -106,8 +113,6 @@ namespace DungeonRush.Traits
 
             statusData = new StatusData(status, effect, textPopup, transform, img, statusData.turnCount);
             activeStatuses.Add(statusData);
-            statusTypes.Add(status.StatusType);
-
         }
 
         public void ActivateStatuses()
@@ -128,7 +133,6 @@ namespace DungeonRush.Traits
                 if (statusData.turnCount <= 0)
                 {
                     activeStatuses.Remove(statusData);
-                    statusTypes.Remove(statusData.status.StatusType);
                     StartCoroutine(KillStatus(statusData));
                 }
             }
@@ -136,7 +140,11 @@ namespace DungeonRush.Traits
 
         private void ApplyStatus(StatusData statusData)
         {
-            statusData.status.Execute(card);
+            if (statusData.turnCount > 0)
+                statusData.status.Execute(card);
+            else
+                statusData.status.Execute(card, true);    
+
             if (statusData.status.TextPopUp != null)
                 StartCoroutine(TextPopup(statusData));
             if (statusData.status.Effect != null)
@@ -165,8 +173,12 @@ namespace DungeonRush.Traits
 
         private IEnumerator KillStatus(StatusData statusData)
         {
-            Destroy(statusData.image.gameObject);
-            statusData.image = null;
+            if (statusData.image != null)
+            {
+                Destroy(statusData.image.gameObject);
+                statusData.image = null;
+            }
+
             yield return new WaitForSeconds(0.6f);
             statusData.poolForStatusEffect.DeleteObjectsInPool();
             statusData.poolForTextPopup.DeleteObjectsInPool();

@@ -5,8 +5,8 @@ using UnityEngine;
 
 namespace DungeonRush.Skills
 {
-    [CreateAssetMenu(menuName = "ScriptableObjects/Skill/StatusCreator")]
-    public class StatusCreatorSkill : Skill
+    [CreateAssetMenu(menuName = "ScriptableObjects/Skill/StatusCreateOnTargetSkill")]
+    public class StatusCreateOnTargetSkill : Skill
     {
         [SerializeField] Status status;
 

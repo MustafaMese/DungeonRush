@@ -1336,7 +1336,13 @@ MonoBehaviour:
   nameText: {fileID: 1960995629}
   textPopup: {fileID: 9129021430530541807, guid: d284076925d56484c9541ce1f6da8de6,
     type: 3}
-  canBlockTraps: 0
+  maximumHealth: 0
+  criticChance: 0
+  dodgeChance: 0
+  lifeCount: 0
+  totalMoveCount: 0
+  instantMoveCount: 0
+  lootChance: 0
   eventMover: {fileID: 229678246}
   isFirstLevel: 0
   experience: 0
@@ -2479,7 +2485,13 @@ MonoBehaviour:
   characterType: {fileID: 11400000, guid: 0ecb647be29ef1e43b16f4da50ec54a9, type: 2}
   nameText: {fileID: 0}
   textPopup: {fileID: 0}
-  canBlockTraps: 0
+  maximumHealth: 0
+  criticChance: 0
+  dodgeChance: 0
+  lifeCount: 0
+  totalMoveCount: 0
+  instantMoveCount: 0
+  lootChance: 0
   eventType: 1
 --- !u!4 &452520357
 Transform:
@@ -2657,7 +2669,7 @@ PrefabInstance:
         type: 3}
       propertyPath: allSkills.Array.data[0]
       value: 
-      objectReference: {fileID: 11400000, guid: b2273128dc227f34fa139b24ad6a02b9,
+      objectReference: {fileID: 11400000, guid: adaa161976a6eb6459ad79c4c191a3f7,
         type: 2}
     - target: {fileID: 340590867104653353, guid: 340fa7f2e042858439e31d19cb9656fd,
         type: 3}
@@ -3166,7 +3178,13 @@ MonoBehaviour:
   nameText: {fileID: 1847460791}
   textPopup: {fileID: 9129021430530541807, guid: d284076925d56484c9541ce1f6da8de6,
     type: 3}
-  canBlockTraps: 0
+  maximumHealth: 0
+  criticChance: 0
+  dodgeChance: 0
+  lifeCount: 0
+  totalMoveCount: 0
+  instantMoveCount: 0
+  lootChance: 0
 --- !u!224 &600766019
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4301,7 +4319,13 @@ MonoBehaviour:
   nameText: {fileID: 79728350}
   textPopup: {fileID: 9129021430530541807, guid: d284076925d56484c9541ce1f6da8de6,
     type: 3}
-  canBlockTraps: 0
+  maximumHealth: 0
+  criticChance: 0
+  dodgeChance: 0
+  lifeCount: 0
+  totalMoveCount: 0
+  instantMoveCount: 0
+  lootChance: 0
 --- !u!224 &884334072
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6066,7 +6090,13 @@ MonoBehaviour:
   characterType: {fileID: 11400000, guid: 0ecb647be29ef1e43b16f4da50ec54a9, type: 2}
   nameText: {fileID: 0}
   textPopup: {fileID: 0}
-  canBlockTraps: 0
+  maximumHealth: 0
+  criticChance: 0
+  dodgeChance: 0
+  lifeCount: 0
+  totalMoveCount: 0
+  instantMoveCount: 0
+  lootChance: 0
   eventType: 0
   skill: {fileID: 0}
   disapperTime: 0.3
@@ -13137,7 +13167,13 @@ MonoBehaviour:
   characterType: {fileID: 11400000, guid: 0ecb647be29ef1e43b16f4da50ec54a9, type: 2}
   nameText: {fileID: 0}
   textPopup: {fileID: 0}
-  canBlockTraps: 0
+  maximumHealth: 0
+  criticChance: 0
+  dodgeChance: 0
+  lifeCount: 0
+  totalMoveCount: 0
+  instantMoveCount: 0
+  lootChance: 0
   eventType: 0
   iType: 0
   item: {fileID: 0}
@@ -14916,72 +14952,3 @@ Transform:
   m_Father: {fileID: 400409463}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 1.8620001}
---- !u!1001 &1868418136307883530
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 6661662057721881730, guid: e50aaedc19a87a34fa535409037f2335,
-        type: 3}
-      propertyPath: m_Name
-      value: Stun
-      objectReference: {fileID: 0}
-    - target: {fileID: 7334331528681678395, guid: e50aaedc19a87a34fa535409037f2335,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.00023726374
-      objectReference: {fileID: 0}
-    - target: {fileID: 7334331528681678395, guid: e50aaedc19a87a34fa535409037f2335,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.5565374
-      objectReference: {fileID: 0}
-    - target: {fileID: 7334331528681678395, guid: e50aaedc19a87a34fa535409037f2335,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -1.345965
-      objectReference: {fileID: 0}
-    - target: {fileID: 7334331528681678395, guid: e50aaedc19a87a34fa535409037f2335,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 7334331528681678395, guid: e50aaedc19a87a34fa535409037f2335,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7334331528681678395, guid: e50aaedc19a87a34fa535409037f2335,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7334331528681678395, guid: e50aaedc19a87a34fa535409037f2335,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 7334331528681678395, guid: e50aaedc19a87a34fa535409037f2335,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 13
-      objectReference: {fileID: 0}
-    - target: {fileID: 7334331528681678395, guid: e50aaedc19a87a34fa535409037f2335,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: -90
-      objectReference: {fileID: 0}
-    - target: {fileID: 7334331528681678395, guid: e50aaedc19a87a34fa535409037f2335,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7334331528681678395, guid: e50aaedc19a87a34fa535409037f2335,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: e50aaedc19a87a34fa535409037f2335, type: 3}

@@ -1,5 +1,6 @@
 ﻿using DungeonRush.Items;
 using DungeonRush.Managers;
+using DungeonRush.Skills;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -8,46 +9,54 @@ using UnityEngine.UI;
 
 namespace DungeonRush.UI
 {
-    public class PickItemCanvas : MonoBehaviour, ICanvasController
+    public class PickCanvas : MonoBehaviour, ICanvasController
     {
         [SerializeField] string text = "You took the ";
 
         [SerializeField] TextMeshProUGUI textMesh;
         [SerializeField] GameObject panel;
-        [SerializeField] Image itemSprite;
+        [SerializeField] Image sprite;
 
-        private string itemName = "";
+        private string pickedObjectName = "";
 
         public void EnablePanel(Item i)
         {
             panel.SetActive(true);
-            SetItemName(i.GetItemName());
-            SetItemSprite(i.GetBigSprite());
+            SetName(i.GetItemName());
+            SetSprite(i.GetBigSprite());
+            SetText();
+        }
+
+        public void EnablePanel(Skill s)
+        {
+            panel.SetActive(true);
+            SetName(s.SkillName);
+            SetSprite(s.IconBig);
             SetText();
         }
 
         private void SetText()
         {
-            string s = text + itemName;
+            string s = text + pickedObjectName;
             textMesh.text = s;
         }
 
         public void DisablePanel()
         {
-            itemName = "";
-            itemSprite.sprite = null;
+            pickedObjectName = "";
+            sprite.sprite = null;
             panel.SetActive(false);
             GameManager.Instance.SetGameState(GameState.PLAY);
         }
 
-        private void SetItemName(string n)
+        private void SetName(string n)
         {
-            itemName = n;
+            pickedObjectName = n;
         }
 
-        private void SetItemSprite(Sprite i)
+        private void SetSprite(Sprite i)
         {
-            itemSprite.sprite = i;
+            sprite.sprite = i;
         }
 
         public void PanelControl(bool activate)

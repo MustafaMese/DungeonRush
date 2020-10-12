@@ -20,11 +20,11 @@ namespace DungeonRush.Property
                 isAcid = false;
             }
 
-            public void ActControl(List<StatusType> list)
+            public void ActControl(List<StatusData> list)
             {
                 for (int i = 0; i < list.Count; i++)
                 {
-                    if (list[i] == StatusType.ACID)
+                    if (list[i].status.StatusType == StatusType.ACID)
                         isAcid = true;
                 }
             }
@@ -50,6 +50,7 @@ namespace DungeonRush.Property
 
             health = maxHealth;
             bar.SetMaxHealth(maxHealth);
+            bar.ActiveChanges(health, maxHealth);
         }
 
         private void Update()
@@ -102,7 +103,7 @@ namespace DungeonRush.Property
         public void ChangeHealth(bool isDamage, int amount)
         {
             statusAct.Reset();
-            statusAct.ActControl(statusController.statusTypes);
+            statusAct.ActControl(statusController.activeStatuses);
 
             if (isDamage)
             {

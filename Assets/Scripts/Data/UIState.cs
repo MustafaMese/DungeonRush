@@ -5,5 +5,5 @@
     PAUSE,
     DEFEAT,
     START_MENU,
-    PICKUP_ITEM,
+    PICKUP,
 }

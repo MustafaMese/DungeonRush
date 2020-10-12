@@ -27,20 +27,22 @@ namespace DungeonRush.Controller
                 anger = false;
             }
 
-            public void ActControl(List<StatusType> list)
+            public void ActControl(List<StatusData> list)
             {
                 for (int i = 0; i < list.Count; i++)
                 {
-                    if (list[i] == StatusType.DISARMED)
+                    Status s = list[i].status;
+
+                    if (s.StatusType == StatusType.DISARMED)
                         canAttack = false;
-                    else if (list[i] == StatusType.ENTANGLED)
+                    else if (s.StatusType == StatusType.ENTANGLED)
                         canMove = false;
-                    else if (list[i] == StatusType.STUNNED)
+                    else if (s.StatusType == StatusType.STUNNED)
                     {
                         canMove = false;
                         canAttack = false;
                     }
-                    else if (list[i] == StatusType.ANGER)
+                    else if (s.StatusType == StatusType.ANGER)
                         anger = true;
                 }
             }
@@ -345,7 +347,7 @@ namespace DungeonRush.Controller
         public void Run()
         {
             statusAct.Reset();
-            statusAct.ActControl(statusController.statusTypes);
+            statusAct.ActControl(statusController.activeStatuses);
             swipe = SelectTileForSwipe(GetCard());
             ChangeState();
             isRunning = true;

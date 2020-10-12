@@ -17,32 +17,39 @@ namespace DungeonRush.Property
             public int extraDodgeChance;
             public int extraCriticChance;
 
+            public bool canLifeSteal;
+
             public void Reset()
             {
                 extraCriticChance = 0;
-                extraCriticChance = 0;
+                extraDodgeChance = 0;
+                canLifeSteal = false;
             }
 
-            public void ActControl(List<StatusType> list)
+            public void ActControl(List<StatusData> list)
             {
                 for (int i = 0; i < list.Count; i++)
                 {
-                    if (list[i] == StatusType.SLOWED)
+                    Status s = list[i].status;
+                    if (s.StatusType == StatusType.SLOWED)
                     {
-                        extraDodgeChance--;
-                        extraCriticChance--;
+                        extraDodgeChance -= s.Power;
+                        extraCriticChance -= s.Power;
                     }
-                    else if (list[i] == StatusType.HASTE)
+                    else if (s.StatusType == StatusType.HASTE)
                     {
-                        extraCriticChance++;
-                        extraDodgeChance++;
+                        extraCriticChance += s.Power;
+                        extraDodgeChance += s.Power;
                     }
+                    else if (s.StatusType == StatusType.LIFE_STEAL)
+                        canLifeSteal = true;
                 }
             }
         }
         protected StatusActControl statusAct;
 
         [SerializeField] protected AttackStyle attackStyle = null;
+        private AttackStyle tempAttackStyle = null;
         [SerializeField] Animator animator = null;
 
         public int power = 0;
@@ -57,7 +64,7 @@ namespace DungeonRush.Property
         {
             DOTween.Init();
             card = GetComponent<Card>();
-            statusController = card.GetComponent<StatusController>();
+            statusController = card.GetComponent<StatusController>(); 
             effectObject = attackStyle.GetEffect();
             FillThePool(poolForAttackStyle, effectObject, 1);
             power = attackStyle.GetPower();
@@ -65,7 +72,10 @@ namespace DungeonRush.Property
             Initialize();
         }
 
-        protected virtual void Initialize() { }
+        protected virtual void Initialize() 
+        {
+            
+        }
 
         public abstract void Attack();
 
@@ -120,7 +130,26 @@ namespace DungeonRush.Property
         public void SetAttackFinished(bool b)
         {
             attackFinished = b;
+            if (!b)
+                ChangeAttackStyleOneTurn(true);
         }
+
+        public void ChangeAttackStyleOneTurn(bool isTempGonnaBeNull, AttackStyle s = null)
+        {
+            if (isTempGonnaBeNull)
+            {
+                if (tempAttackStyle == null) return;
+
+                SetAttackStyle(tempAttackStyle);
+                tempAttackStyle = null;
+            }
+            else
+            {
+                tempAttackStyle = attackStyle;
+                SetAttackStyle(s);
+            }
+        }
+
         public void SetAttackStyle(AttackStyle attackStyle)
         {
             poolForAttackStyle.DeleteObjectsInPool();
@@ -137,6 +166,15 @@ namespace DungeonRush.Property
                 attackStyle.Attack(move, power);
             else
                 attackStyle.Attack(move, power * 2);
+
+            if (statusAct.canLifeSteal)
+            {
+                if (!isCritic)
+                    card.IncreaseHealth(power);
+                else
+                    card.IncreaseHealth(power * 2);
+            }
+
             return isCritic;
         }
 
@@ -172,7 +210,10 @@ namespace DungeonRush.Property
         {
             if (card == null) return false;
 
-            int dodgeChance = card.DodgeChance + statusAct.extraDodgeChance;
+            Attacker tAttacker = card.GetComponent<Attacker>();
+            tAttacker.StatusActResetAndControl();
+
+            int dodgeChance = card.DodgeChance + tAttacker.statusAct.extraDodgeChance;
             dodgeChance *= 2;
 
             if (dodgeChance > 0)
@@ -184,13 +225,18 @@ namespace DungeonRush.Property
             return false;
         }
 
+        public void StatusActResetAndControl()
+        {
+            statusAct.Reset();
+            statusAct.ActControl(statusController.activeStatuses);
+        }
+
         public void AttackAction(Move move)
         {
             Card card = move.GetCard();
             Tile target = move.GetTargetTile();
             Vector3 tPos = target.transform.position;
-            statusAct.Reset();
-            statusAct.ActControl(statusController.statusTypes);
+            StatusActResetAndControl();
 
             if (move.GetTargetTile().GetCard() != null)
             {

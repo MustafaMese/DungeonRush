@@ -11,6 +11,7 @@ namespace DungeonRush.Property
     {
         [Header("Shifting Properties")]
         [SerializeField] protected Shift shifting = null;
+        private Shift tempShift = null;
         [SerializeField] protected float movingTime = 0.2f;
         [SerializeField] protected Animator animator = null;
         [SerializeField] protected GameObject walkParticul = null;
@@ -35,12 +36,36 @@ namespace DungeonRush.Property
         public abstract void Move();
         protected virtual void Initialize() { }
 
+        public void ChangeShiftOneTurn(bool isTempGonnaBeNull, Shift s = null)
+        {
+            if (isTempGonnaBeNull)
+            {
+                if (tempShift == null) return;
+
+                SetShifting(tempShift);
+                tempShift = null;
+            }
+            else
+            {
+                tempShift = shifting;
+                SetShifting(s);
+            }
+        }
+
+        public void SetShifting(Shift s)
+        {
+            shifting = s;
+        }
+
         public Shift GetShift()
         {
             return shifting;
         }
         public bool IsMoveFinished()
         {
+            if (isMoveFinished)
+                ChangeShiftOneTurn(true);
+
             return isMoveFinished;
         }
 

@@ -50,7 +50,6 @@ namespace DungeonRush.Skills
             bool isFinished = false;
             while (!isFinished)
             {
-
                 for (int i = 0; i < directions.Length; i++)
                 {
                     Vector2 direction = directions[i];

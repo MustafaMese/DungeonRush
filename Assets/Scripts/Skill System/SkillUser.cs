@@ -36,8 +36,7 @@ namespace DungeonRush.Skills {
                 poolForTextPopup.FillPool(1, t);
             }
 
-            if (skill.IsMultiUse)
-                tempCooldown = skill.Cooldown;
+            tempCooldown = 0;
 
             this.listnumber = listnumber;
         }
@@ -82,6 +81,8 @@ namespace DungeonRush.Skills {
 
             skills.Add(s);
             lastIndex++;
+
+            UIManager.Instance.EnableSkillCanvas(skill);
         }
 
         public void AddSkill(SkillData skillData)
@@ -131,6 +132,12 @@ namespace DungeonRush.Skills {
 
         private void ExecuteSkill(SkillData skillData, bool isActive = false)
         {
+            if(card.GetMove().GetCard() == null)
+            {
+                Move move = new Move(card);
+                card.SetMove(move);
+            }
+
             if (!skillData.skill.IsMultiUse && skillData.tempCooldown != -1)
             {
                 skillData.tempCooldown = -1;
@@ -171,7 +178,6 @@ namespace DungeonRush.Skills {
 
         private void PlayAnimation(SkillData skillData, Move move)
         {
-            print("1");
 
             if (skillData.skill.Effect != null)
                 StartCoroutine(Animate(skillData, move));
@@ -183,12 +189,9 @@ namespace DungeonRush.Skills {
         {
             GameObject obj;
             List<GameObject> objects = new List<GameObject>();
-            print("2");
             int count = skillData.skill.GetGameobjectCount();
-            print("C: " + count);
             for (int i = 0; i < count; i++)
             {
-                print("3");
                 obj = skillData.poolForEffect.PullObjectFromPool(transform);
                 skillData.skill.PositionEffect(obj, move);
                 objects.Add(obj);

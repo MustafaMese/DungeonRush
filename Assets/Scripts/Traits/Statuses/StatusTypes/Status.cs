@@ -23,7 +23,7 @@ namespace DungeonRush.Traits
         public StatusType StatusType { get => statusType; set => statusType = value; }
         public Sprite Icon { get => icon; set => icon = value; }
 
-        public abstract void Execute(Card card);
+        public abstract void Execute(Card card, bool lastTurn = false);
     }
 
     public enum StatusType
@@ -42,6 +42,8 @@ namespace DungeonRush.Traits
         HEALING,        // Her tur iyileşme alacak.
         HASTE,          // Kritik/Dodge şansını arttırır.
         LUCKY_CHARM,    // Loot şansı artar.
-        UNLUCKY_CHARM   // Loot şansı düşer.
+        UNLUCKY_CHARM,  // Loot şansı düşer.
+        LIFE_STEAL,     // Can çalmaya başlar.
+        INEFFECTIVE     // İşlem gerektirmeyen statuler.
     }
 }

@@ -8,7 +8,7 @@ namespace DungeonRush.Traits
     [CreateAssetMenu(menuName = "ScriptableObjects/Status/HealthIncreaser")]
     public class HealthIncreaserStatus : Status
     {
-        public override void Execute(Card card)
+        public override void Execute(Card card, bool lastTurn = false)
         {
             card.IncreaseHealth(Power);
         }

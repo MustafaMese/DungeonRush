@@ -21,7 +21,7 @@ namespace DungeonRush.UI
 
         [SerializeField] PauseMenu pauseMenuPrefab;
         [SerializeField] DefeatedPanel defeatedPanelPrefab;
-        [SerializeField] PickItemCanvas pickItemCanvasPrefab;
+        [SerializeField] PickCanvas pickItemCanvasPrefab;
         [SerializeField] FadingCanvas fadingCanvasPrefab;
         [SerializeField] TurnCanvas turnCanvasPrefab;
         [SerializeField] ActiveSkillCanvas activeSkillCanvasPrefab;
@@ -29,7 +29,7 @@ namespace DungeonRush.UI
         private ActiveSkillCanvas _activeSkillCanvas;
         private PauseMenu _pauseMenu;
         private DefeatedPanel _defeatedPanel;
-        private PickItemCanvas _pickItemCanvas;
+        private PickCanvas _pickCanvas;
         private FadingCanvas _fadingCanvas;
         private TurnCanvas _turnCanvas;
 
@@ -70,7 +70,7 @@ namespace DungeonRush.UI
                     _turnCanvas.PanelControl(false);
                     _activeSkillCanvas.PanelControl(false);
 
-                    if (uiState == UIState.PICKUP_ITEM)
+                    if (uiState == UIState.PICKUP)
                         _pauseMenu.PanelControl(false);
 
                     break;
@@ -114,8 +114,8 @@ namespace DungeonRush.UI
                 if (_defeatedPanel == null)
                     _defeatedPanel = Instantiate(defeatedPanelPrefab);
 
-                if (_pickItemCanvas == null)
-                    _pickItemCanvas = Instantiate(pickItemCanvasPrefab);
+                if (_pickCanvas == null)
+                    _pickCanvas = Instantiate(pickItemCanvasPrefab);
 
                 if (_turnCanvas == null)
                     _turnCanvas = Instantiate(turnCanvasPrefab);
@@ -180,12 +180,18 @@ namespace DungeonRush.UI
         }
         #endregion
 
-        #region PICK ITEM CANVAS
+        #region PICK CANVAS
 
         public void EnableItemCanvas(Item i)
         {
-            _pickItemCanvas.EnablePanel(i);
-            GameManager.Instance.SetGameState(GameState.PAUSE, UIState.PICKUP_ITEM);
+            _pickCanvas.EnablePanel(i);
+            GameManager.Instance.SetGameState(GameState.PAUSE, UIState.PICKUP);
+        }
+
+        public void EnableSkillCanvas(Skill s)
+        {
+            _pickCanvas.EnablePanel(s);
+            GameManager.Instance.SetGameState(GameState.PAUSE, UIState.PICKUP);
         }
 
         #endregion

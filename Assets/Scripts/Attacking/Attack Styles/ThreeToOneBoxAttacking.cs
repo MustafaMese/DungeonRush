@@ -14,6 +14,8 @@ namespace DungeonRush.Attacking
 
         public override void Attack(Move move, int damage)
         {
+            Debug.Log("Selam tatlım");
+
             Tile target = move.GetTargetTile();
             tempList = FindTargetTiles(move);
             tempList.Add(target.GetCard());
@@ -38,19 +40,20 @@ namespace DungeonRush.Attacking
             Vector2 coordinate = t.GetCoordinate();
 
             var dir = GetDirection(move);
-
             if(dir.y != 0)
             {
                 if (coordinate.x < rL - 1)
                 {
                     Tile upperT = Board.tilesByCoordinates[new Vector2(coordinate.x + 1, coordinate.y)];
-                    if (upperT.GetCard() != null && upperT.GetComponent<Health>())
+                    Card tCard = upperT.GetCard();
+                    if (tCard != null && tCard.GetComponent<Health>())
                         tempList.Add(upperT.GetCard());
                 }
                 if (coordinate.x > 0)
                 {
                     Tile lowerT = Board.tilesByCoordinates[new Vector2(coordinate.x - 1, coordinate.y)];
-                    if(lowerT.GetCard() != null && lowerT.GetComponent<Health>())
+                    Card tCard = lowerT.GetCard();
+                    if (tCard != null && tCard.GetComponent<Health>())
                         tempList.Add(lowerT.GetCard());
                 }
             }
