@@ -23,24 +23,24 @@ namespace DungeonRush
             protected Attacker attacker = null;
             protected IMoveController controller;
             protected StatusController statusController;
-
             private ObjectPool poolForTextPopup = new ObjectPool();
             
 
             [Header("General Properties")]
-            public CardProperties cardProperties = null;
-            public Character characterType;
-            [SerializeField] TextMeshProUGUI nameText = null;
+            [SerializeField] CardProperties cardProperties = null;
+            [SerializeField] Character characterType;
             [SerializeField] protected TextPopup textPopup = null;
+            [SerializeField] TextMeshProUGUI nameText = null;
+            [SerializeField] Animator animator;
 
             #region CARD STATS
-            public int maximumHealth = 0;
-            public int criticChance = 0;
-            public int dodgeChance = 0;
-            public int lifeCount = 0;
-            public int totalMoveCount = 0;
-            public int instantMoveCount = 0;
-            public int lootChance = 0;
+            protected int maximumHealth = 0;
+            protected int criticChance = 0;
+            protected int dodgeChance = 0;
+            protected int lifeCount = 0;
+            protected int totalMoveCount = 0;
+            protected int instantMoveCount = 0;
+            protected int lootChance = 0;
             protected bool canBlockTraps = false;
             public int MaximumHealth { get => maximumHealth; set => maximumHealth = value; }
             public int CriticChance { get => criticChance; set => criticChance = value; }
@@ -53,7 +53,7 @@ namespace DungeonRush
             #endregion
 
             public IMoveController Controller { get => controller; set => controller = value; }
-            
+            public Animator Animator { get => animator; }
 
             public void Start()
             {
@@ -73,7 +73,7 @@ namespace DungeonRush
                 FillThePool(poolForTextPopup, textPopup.gameObject, 3);
                 move = new Move();
 
-                if(GetCardType() != CardType.EVENT)
+                if(GetCardType() != CardType.EVENT && GetCardType() != CardType.TRAP)
                     nameText.text = cardName;
             }
 

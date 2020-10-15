@@ -60,7 +60,7 @@ namespace DungeonRush
                 Instantiate(swipeManagerPrefab);
 
                 var number = LoadManager.GetSceneIndex();
-                if (number > 0)
+                if (number > 1)
                 {
                     Instantiate(cardManagerPrefab);
                     Instantiate(moveSchedularPrefab);

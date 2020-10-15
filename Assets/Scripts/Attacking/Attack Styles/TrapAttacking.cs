@@ -7,8 +7,8 @@ using UnityEngine;
 
 namespace DungeonRush.Attacking
 {
-    [CreateAssetMenu(menuName = "ScriptableObjects/Attack/ThornTrapAttack")]
-    public class ThornTrapAttacking : AttackStyle
+    [CreateAssetMenu(menuName = "ScriptableObjects/Attack/TrapAttack")]
+    public class TrapAttacking : AttackStyle
     {
         public override void Attack(Move move, int damage)
         {
@@ -20,6 +20,13 @@ namespace DungeonRush.Attacking
         public override void SetEffectPosition(GameObject effect, Vector3 tPos, Transform card = null)
         {
             effect.transform.position = tPos;
+        }
+
+        public override bool Define(Card card, Swipe swipe)
+        {
+            Card tCard = card.GetTile().GetCard();
+            ConfigureCardMove(card, card.GetTile());
+            return tCard != null;
         }
     }
 }

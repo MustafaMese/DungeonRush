@@ -65,8 +65,8 @@ namespace DungeonRush.Controller
         private Attacker attacker;
         private ICustomization customization;
         private StatusController statusController;
+        private Animator animator;
 
-        [SerializeField] GameObject model;
         [SerializeField] GameObject exclamation;
         [SerializeField] ActionState actionState;
 
@@ -90,6 +90,7 @@ namespace DungeonRush.Controller
             mover = card.GetComponent<Mover>();
             attacker = card.GetComponent<Attacker>();
             cardType = card.GetCardType();
+            animator = card.Animator;
             if (cardType == CardType.ENEMY)
             {
                 customization = card.GetComponent<ICustomization>();
@@ -226,6 +227,9 @@ namespace DungeonRush.Controller
 
         private Swipe SelectTileForSwipe(Card card)
         {
+            if (card.GetCardType() == CardType.TRAP)
+                return Swipe.NONE;
+
             Swipe s = Swipe.NONE;
             if (state == State.NONE)
             {
@@ -282,7 +286,7 @@ namespace DungeonRush.Controller
         #region STATE METHODS
         public void ChangeAnimatorState(bool state)
         {
-            model.GetComponent<Animator>().enabled = state;
+            animator.enabled = state;
             customization.ChangeSkinState(state);
         }
 
@@ -296,10 +300,12 @@ namespace DungeonRush.Controller
         #endregion
 
         #region CARD CONTROL METHODS
+
         public void ActivateStatuses()
         {
             statusController.ActivateStatuses();
         }
+
         public void StatusControl()
         {
             statusController.StatusControl();
@@ -315,6 +321,7 @@ namespace DungeonRush.Controller
             else
                 state = actionState.ChangeState(state, exclamation);
         }
+
         private void ChooseController()
         {
             if (cardType == CardType.ENEMY)
@@ -322,6 +329,7 @@ namespace DungeonRush.Controller
             else
                 TrapController.subscribedTraps.Add(this);
         }
+
         public void Stop()
         {
             isRunning = false;
@@ -330,10 +338,12 @@ namespace DungeonRush.Controller
             if(cardType == CardType.ENEMY)
                 customization.Change(transform.position.y);
         }
+
         public bool IsRunning()
         {
             return isRunning;
         }
+
         public void InitProcessHandlers()
         {
             preparingProcess.Init(true);
@@ -344,15 +354,21 @@ namespace DungeonRush.Controller
         {
             return card;
         }
+
         public void Run()
         {
-            statusAct.Reset();
-            statusAct.ActControl(statusController.activeStatuses);
+            if (GetCard().GetCardType() != CardType.TRAP)
+            {
+                statusAct.Reset();
+                statusAct.ActControl(statusController.activeStatuses);
+            }
+            
             swipe = SelectTileForSwipe(GetCard());
             ChangeState();
             isRunning = true;
             preparingProcess.StartProcess();
         }
+
         private int GiveRandomEncounter(List<Tile> list, int count)
         {
             int missCount = 0;
@@ -389,6 +405,7 @@ namespace DungeonRush.Controller
 
             return -1;
         }
+
         private void Notify()
         {
             if (cardType == CardType.ENEMY)

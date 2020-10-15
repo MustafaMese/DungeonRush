@@ -50,7 +50,7 @@ namespace DungeonRush.Property
 
         [SerializeField] protected AttackStyle attackStyle = null;
         private AttackStyle tempAttackStyle = null;
-        [SerializeField] Animator animator = null;
+        private Animator animator = null;
 
         public int power = 0;
         protected bool attackFinished = false; 
@@ -64,17 +64,17 @@ namespace DungeonRush.Property
         {
             DOTween.Init();
             card = GetComponent<Card>();
-            statusController = card.GetComponent<StatusController>(); 
             effectObject = attackStyle.GetEffect();
             FillThePool(poolForAttackStyle, effectObject, 1);
             power = attackStyle.GetPower();
-            statusAct = new StatusActControl();
             Initialize();
         }
 
         protected virtual void Initialize() 
         {
-            
+            animator = card.Animator;
+            statusController = card.GetComponent<StatusController>();
+            statusAct = new StatusActControl();
         }
 
         public abstract void Attack();
@@ -235,8 +235,11 @@ namespace DungeonRush.Property
         {
             Card card = move.GetCard();
             Tile target = move.GetTargetTile();
+            Card tCard = move.GetTargetTile().GetCard();
             Vector3 tPos = target.transform.position;
-            StatusActResetAndControl();
+
+            if(card.GetCardType() != CardType.TRAP)
+                StatusActResetAndControl();
 
             if (move.GetTargetTile().GetCard() != null)
             {
@@ -246,6 +249,15 @@ namespace DungeonRush.Property
                 else
                 {
                     bool isCritic = DoAttackAction(move);
+
+                    List<Status> impacts = attackStyle.GetImpacts();
+
+                    if(impacts != null && impacts.Count > 0)
+                    {
+                        for (int i = 0; i < impacts.Count; i++)
+                            tCard.GetComponent<StatusController>().AddStatus(impacts[i]);
+                    }
+
                     StartCoroutine(card.StartTextPopup(tPos, power, isCritic));
                 }
             }

@@ -16,8 +16,8 @@ namespace DungeonRush
             [SerializeField] SpriteRenderer weaponBone = null;
             [SerializeField] SpriteRenderer armorBone = null;
 
-            public Item weapon = null;
-            public Item armor = null;
+            private Item weapon = null;
+            private Item armor = null;
             private Card card = null;
             private Attacker attacker;
 
@@ -68,6 +68,7 @@ namespace DungeonRush
                         TakePotion(i);
                         break;
                     case ItemType.POISON:
+                        TakePoison(i);
                         break;
                     case ItemType.ARMOR:
                         TakeArmor(i);
@@ -130,6 +131,11 @@ namespace DungeonRush
             private void TakePotion(Item item)
             {
                 card.IncreaseHealth(item.GetPower());
+            }
+
+            private void TakePoison(Item item)
+            {
+                card.DecreaseHealth(item.GetPower());
             }
 
             private void TakeMaxHealthIncreaser(Item item)

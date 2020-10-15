@@ -65,7 +65,7 @@ public class HUDFPS : MonoBehaviour
             style = new GUIStyle(GUI.skin.label);
             style.normal.textColor = Color.white;
             style.alignment = TextAnchor.MiddleCenter;
-            style.fontSize = 48;
+            style.fontSize = 12;
         }
 
         GUI.color = updateColor ? color : Color.white;

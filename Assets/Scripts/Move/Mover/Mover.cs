@@ -12,29 +12,39 @@ namespace DungeonRush.Property
         [Header("Shifting Properties")]
         [SerializeField] protected Shift shifting = null;
         private Shift tempShift = null;
+
         [SerializeField] protected float movingTime = 0.2f;
-        [SerializeField] protected Animator animator = null;
-        [SerializeField] protected GameObject walkParticul = null;
-        [SerializeField] protected float particulTime = 0;
         
+        [SerializeField] protected float particulTime = 0;
+
+        protected GameObject walkParticul = null;
         protected ObjectPool walkParticulPool = new ObjectPool();
         protected bool isMoveFinished = false;
         protected Move move;
         protected Card card;
+        protected Animator animator = null;
 
         private void Start()
         {
             DOTween.Init();
             move = new Move();
             card = GetComponent<Card>();
+            animator = card.Animator;
 
-            walkParticulPool.SetObject(walkParticul);
-            walkParticulPool.FillPool(2, transform);
+            walkParticul = shifting.GetEffect();
+            FillThePool(walkParticulPool, walkParticul, 2);
+
             Initialize();
         }
 
         public abstract void Move();
         protected virtual void Initialize() { }
+
+        private void FillThePool(ObjectPool pool, GameObject effect, int count)
+        {
+            pool.SetObject(effect);
+            pool.FillPool(count, transform);
+        }
 
         public void ChangeShiftOneTurn(bool isTempGonnaBeNull, Shift s = null)
         {
@@ -54,7 +64,10 @@ namespace DungeonRush.Property
 
         public void SetShifting(Shift s)
         {
+            walkParticulPool.DeleteObjectsInPool();
             shifting = s;
+            walkParticul = shifting.GetEffect();
+            FillThePool(walkParticulPool, walkParticul, 2);
         }
 
         public Shift GetShift()

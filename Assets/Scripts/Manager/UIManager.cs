@@ -45,8 +45,9 @@ namespace DungeonRush.UI
 
         private void InitializeByBuildIndex()
         {
+            print("1");
             var number = LoadManager.GetSceneIndex();
-            if (number == 0)
+            if (number < 2)
             {
                 InitializeCanvases(true);
                 StartCoroutine(_fadingCanvas.FadeIn());

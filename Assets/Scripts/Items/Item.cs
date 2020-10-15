@@ -21,7 +21,6 @@ namespace DungeonRush.Items
         [Header("For weapons")]
         [SerializeField] AttackStyle attackStyle;
 
-
         public string GetItemName()
         {
             return properties.cardName;

@@ -20,18 +20,26 @@ namespace DungeonRush.UI
             public GameObject obj;
             public int listnumber;
             public MenuPanelState state;
+            public Sprite image;
 
-            public Panel(GameObject panel, int listnumber, MenuPanelState state)
+            public Panel(GameObject panel, int listnumber, MenuPanelState state, Sprite image)
             {
                 this.obj = panel;
                 this.listnumber = listnumber;
                 this.state = state;
+                this.image = image;
             }
         }
 
         [SerializeField] GameObject startingPanel = null;
         [SerializeField] GameObject shoppingPanel = null;
         [SerializeField] GameObject characterPanel = null;
+
+        [SerializeField] Image marker = null;
+        [SerializeField] Sprite startImage = null;
+        [SerializeField] Sprite shopImage = null;
+        [SerializeField] Sprite characterImage = null;
+
         [SerializeField] List<Panel> panels = new List<Panel>();
 
         [SerializeField] float endValue = 0f;
@@ -43,13 +51,13 @@ namespace DungeonRush.UI
             DOTween.Init();
 
             Panel p;
-            p = new Panel(characterPanel, 0, MenuPanelState.CHARACTER);
+            p = new Panel(characterPanel, 0, MenuPanelState.CHARACTER, characterImage);
             panels.Add(p);
             
-            p = new Panel(startingPanel, 1, MenuPanelState.START);
+            p = new Panel(startingPanel, 1, MenuPanelState.START, startImage);
             panels.Add(p);
 
-            p = new Panel(shoppingPanel, 2, MenuPanelState.SHOPPING);
+            p = new Panel(shoppingPanel, 2, MenuPanelState.SHOPPING, shopImage);
             panels.Add(p);
         }
 
@@ -136,6 +144,7 @@ namespace DungeonRush.UI
                 Vector3 distance = Distance(v1, v2);
 
                 currentState = p.state;
+                marker.sprite = p.image;
 
                 return distance;
             }

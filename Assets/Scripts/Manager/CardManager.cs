@@ -67,14 +67,6 @@ namespace DungeonRush
                 return newPiece;
             }
 
-            /// <summary>
-            /// In this method, cards are just instantiated. Using for editor.
-            /// </summary>
-            public void AddCard(Card piece, Vector3 pos)
-            {
-                Instantiate(piece, pos, Quaternion.identity);
-            }
-
             #endregion
 
             #region REMOVE METHODS

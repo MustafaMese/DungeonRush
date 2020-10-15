@@ -3,6 +3,7 @@ using DungeonRush.Data;
 using DungeonRush.Field;
 using DungeonRush.Managers;
 using DungeonRush.Property;
+using DungeonRush.Traits;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,6 +14,8 @@ namespace DungeonRush.Attacking
         [SerializeField] protected GameObject effectObject;
         [SerializeField] protected float animationTime;
         [SerializeField] protected int power;
+
+        [SerializeField] protected List<Status> impacts = new List<Status>();
 
         public abstract void Attack(Move move, int damage);
         public abstract void SetEffectPosition(GameObject effect, Vector3 tPos, Transform card = null);
@@ -144,5 +147,6 @@ namespace DungeonRush.Attacking
             Move move = new Move(targetTile, card, MoveType.ATTACK, false);
             card.SetMove(move);
         }
+        public List<Status> GetImpacts() { return impacts; }
     }
 }

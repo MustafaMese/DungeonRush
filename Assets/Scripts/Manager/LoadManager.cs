@@ -1,6 +1,8 @@
 ﻿using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class LoadManager : MonoBehaviour 
 {
@@ -11,6 +13,8 @@ public class LoadManager : MonoBehaviour
         get { return instance; }
         set { instance = value; }
     }
+
+    public TextMeshProUGUI text;
 
     private void Awake()
     {
@@ -53,22 +57,34 @@ public class LoadManager : MonoBehaviour
         return SceneManager.GetActiveScene().buildIndex;
     }
 
-    public IEnumerator LoadNewScene()
+    public void BUTTONGOREVI()
     {
-        var scene = SceneManager.GetActiveScene();
-        AsyncOperation ao = SceneManager.LoadSceneAsync(scene.buildIndex + 1);
-        ao.allowSceneActivation = false;
+        StartCoroutine(LoadScene());
+    }
 
-        while (!ao.isDone)
+    public IEnumerator LoadScene()
+    {
+        yield return null;
+
+        //Begin to load the Scene you specify
+        AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(1);
+        //Don't let the Scene activate until you allow it to
+        asyncOperation.allowSceneActivation = false;
+        Debug.Log("Pro :" + asyncOperation.progress);
+        //When the load is still in progress, output the Text and progress bar
+        while (!asyncOperation.isDone)
         {
-            // [0, 0.9] > [0, 1]
-            float progress = Mathf.Clamp01(ao.progress / 0.9f);
-            Debug.Log("Loading progress: " + (progress * 100) + "%");
-
-            // Loading completed
-            if (ao.progress == 0.9f)
+            //Output the current progress
+            text.text = "Loading progress: " + (asyncOperation.progress * 100) + "%";
+            // Check if the load has finished
+            if (asyncOperation.progress >= 0.9f)
             {
-                ao.allowSceneActivation = true;
+                //Change the Text to show the Scene is ready
+                text.text = "Press the space bar to continue";
+                //Wait to you press the space key to activate the Scene
+                if (Input.GetKeyDown(KeyCode.Space))
+                    //Activate the Scene
+                    asyncOperation.allowSceneActivation = true;
             }
 
             yield return null;

@@ -11,7 +11,6 @@ namespace DungeonRush.Managers
     {
         private Vector2 defaultCoordinate = new Vector2(-1, -1);
 
-        [SerializeField] CardManager cardManager = null;
         [SerializeField] BoardCreator boardCreator = null;
 
         [TextArea(0, 5)]
@@ -45,9 +44,14 @@ namespace DungeonRush.Managers
             }
 
             if (coordinate.x >= 0 && coordinate.x < rL && coordinate.y >= 0 && coordinate.y < rL)
-                cardManager.AddCard(card, coordinate);
+                AddCard(card, coordinate);
 
             Reset();
+        }
+
+        private void AddCard(Card piece, Vector3 pos)
+        {
+            Instantiate(piece, pos, Quaternion.identity);
         }
 
         private void Reset()

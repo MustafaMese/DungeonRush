@@ -51,20 +51,11 @@ namespace DungeonRush.Traits
         
         [SerializeField] CharacterCanvas characterCanvas;
 
-        public List<StatusType> statusTypes = new List<StatusType>();
         public List<StatusData> activeStatuses = new List<StatusData>();
         private Card card;
-
-        public List<Status> STATUSES = new List<Status>();
-
         private void Start()
         {
             card = GetComponent<Card>();
-            for (int i = 0; i < STATUSES.Count; i++)
-            {
-                if (STATUSES[i] != null)
-                    AddStatus(STATUSES[i]);
-            }
         }
 
         public void AddStatus(Status status)

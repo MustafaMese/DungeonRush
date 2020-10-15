@@ -9,6 +9,11 @@ namespace DungeonRush.Property
 {
     public class StaticAttacker :  Attacker
     {
+        protected override void Initialize()
+        {
+            return;
+        }
+
         public override void Attack()
         {
             attackFinished = false;
@@ -18,29 +23,19 @@ namespace DungeonRush.Property
 
         private void Damage(Move move)
         {
-            Vector3 cardPos = move.GetCardTile().GetCoordinate();
             float time = attackStyle.GetAnimationTime();
             Card tCard = move.GetTargetTile().GetCard();
 
             if (!tCard.CanBlockTraps)
             {
-                attackStyle.Attack(move, power);
-                StartCoroutine(StartAttackAnimation(poolForAttackStyle, cardPos, time));
-                StartCoroutine(card.StartTextPopup(cardPos, power));
+                AttackAction(move);
+                StartCoroutine(FinaliseAttack(time));
             }
         }
 
-        private IEnumerator StartAttackAnimation(ObjectPool pool, Vector3 tPos, float time)
+        private IEnumerator FinaliseAttack(float time)
         {
-            GameObject obj = pool.PullObjectFromPool(transform);
-            attackStyle.SetEffectPosition(obj, tPos);
             yield return new WaitForSeconds(time);
-            pool.AddObjectToPool(obj);
-            FinaliseAttack();
-        }
-
-        private void FinaliseAttack()
-        {
             attackFinished = true;
         }
     }

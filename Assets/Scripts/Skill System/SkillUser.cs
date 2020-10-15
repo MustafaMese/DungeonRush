@@ -46,7 +46,6 @@ namespace DungeonRush.Skills {
     {
         public List<SkillData> skills = new List<SkillData>();
         private Card card;
-        public Skill[] SKILL;
 
         private int lastIndex;
 
@@ -54,10 +53,6 @@ namespace DungeonRush.Skills {
         {
             lastIndex = 0;
             card = GetComponent<Card>();
-            for (int i = 0; i < SKILL.Length; i++)
-            {
-                AddSkill(SKILL[i]);
-            }
         }
 
         public List<string> GetSkillIDs()

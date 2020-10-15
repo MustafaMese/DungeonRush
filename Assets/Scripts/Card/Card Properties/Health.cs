@@ -34,16 +34,18 @@ namespace DungeonRush.Property
         [SerializeField] bool isPlayer = false;
         [SerializeField] float deathTime = 0.2f;
         [SerializeField] int maxHealth = 0;
-        [SerializeField] Animator animator = null;
         [SerializeField] HealthBar bar = null;
 
         [SerializeField] int health = 0;
         private Card card = null;
         private ItemUser itemUser = null;
         private StatusController statusController = null;
+        private Animator animator = null;
+
         private void Start()
         {
             card = GetComponent<Card>();
+            animator = card.Animator;
             statusController = card.GetComponent<StatusController>();
             if(GetComponent<ItemUser>())
                 itemUser = GetComponent<ItemUser>();
