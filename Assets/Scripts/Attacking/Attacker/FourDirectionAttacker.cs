@@ -38,6 +38,8 @@ namespace DungeonRush.Attacking
         {
             if (move.GetTargetTile().GetCard() != null)
             {
+                // TODO Ses noktası
+
                 Transform cardTransform = move.GetCard().transform;
                 GameObject obj = pool.PullObjectFromPool(cardTransform);
                 attackStyle.SetEffectPosition(obj, cardTransform.position, cardTransform);

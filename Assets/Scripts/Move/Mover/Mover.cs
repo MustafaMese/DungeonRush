@@ -93,6 +93,8 @@ namespace DungeonRush.Property
 
         protected IEnumerator StartMoveAnimation(Vector3 pos, float time)
         {
+            // TODO Ses noktası
+
             GameObject obj = walkParticulPool.PullObjectFromPool(transform);
             obj.transform.position = pos;
             obj.transform.SetParent(null);

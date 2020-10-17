@@ -192,6 +192,7 @@ namespace DungeonRush.Controller
             {
                 StatusControl();
                 player.InstantMoveCount = player.TotalMoveCount;
+                PlayerCamera.Instance.MoveCamera(transform.position);
                 MoveSchedular.Instance.OnNotify();
             }
         }

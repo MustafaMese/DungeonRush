@@ -38,6 +38,10 @@ namespace DungeonRush
                 base.Initialize();
                 playerAttacker = GetComponent<PlayerAttacker>();
                 itemUser = GetComponent<ItemUser>();
+
+                float z = PlayerCamera.Instance.transform.position.z;
+                PlayerCamera.Instance.transform.position = new Vector3(transform.position.x, transform.position.y + 1, z);
+              
                 InstantMoveCount = TotalMoveCount;
                 if (!isFirstLevel)
                     GetComponent<PlayerController>().LoadPlayer();

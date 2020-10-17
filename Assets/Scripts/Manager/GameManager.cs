@@ -27,6 +27,7 @@ namespace DungeonRush
             [SerializeField] MoveSchedular moveSchedularPrefab;
             [SerializeField] CollectableManager collectableManagerPrefab;
             [SerializeField] SwipeManager swipeManagerPrefab;
+            [SerializeField] PlayerCamera playerCamera;
 
             private bool started = false;
             private void Awake()
@@ -65,6 +66,7 @@ namespace DungeonRush
                     Instantiate(cardManagerPrefab);
                     Instantiate(moveSchedularPrefab);
                     Instantiate(collectableManagerPrefab);
+                    Instantiate(playerCamera);
 
                     SetGameState(GameState.BEGIN_LEVEL);
                 }
@@ -72,7 +74,7 @@ namespace DungeonRush
 
             public void SetGameState(GameState state, UIState uiState = UIState.NONE)
             {
-                if (state == GameState.LEVEL_TRANSITION)
+                if (state == GameState.LEVEL_TRANSITION || state == GameState.END)
                     started = false;
 
                 gameState = state;

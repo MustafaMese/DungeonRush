@@ -115,6 +115,8 @@ namespace DungeonRush.Property
             if (move.GetTargetTile().GetCard() != null)
             {
                 GameObject obj = pool.PullObjectFromPool(cardTransform);
+
+                // TODO Ses noktası.
                 attackStyle.SetEffectPosition(obj, target.position, target);
                 yield return new WaitForSeconds(time);
                 attackStyle.SetEffectPosition(obj, target.position, cardTransform);

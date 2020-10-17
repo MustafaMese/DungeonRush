@@ -11,6 +11,7 @@ namespace DungeonRush.Attacking
 {
     public abstract class AttackStyle : ScriptableObject
     {
+        [SerializeField] protected AudioClip clip;
         [SerializeField] protected GameObject effectObject;
         [SerializeField] protected float animationTime;
         [SerializeField] protected int power;

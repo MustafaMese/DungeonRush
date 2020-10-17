@@ -183,6 +183,9 @@ namespace DungeonRush.Controller
         {
             for (int i = 0; i < subscribedEnemies.Count; i++)
             {
+
+                if (subscribedEnemies[i] == null) continue;
+
                 var distance = GetDistance(subscribedEnemies[i].transform.position);
                 if (distance <= attackerDistance)
                     SetAttackerSkinState(subscribedEnemies[i], false);

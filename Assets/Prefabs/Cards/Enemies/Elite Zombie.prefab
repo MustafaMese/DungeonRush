@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8dc75e4d3851a245a6f5b1e6a78db18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  model: {fileID: 39374068469523637}
   exclamation: {fileID: 4455909532091716345}
   actionState: {fileID: 11400000, guid: de86f84efb7d55b4b8db7061a8a21263, type: 2}
 --- !u!114 &3530630205795141482
@@ -61,9 +60,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shifting: {fileID: 11400000, guid: b63af612c90819841857890a9a82e19c, type: 2}
   movingTime: 0.2
-  animator: {fileID: 5196756401643570574}
-  walkParticul: {fileID: 6786193914759864789, guid: 0ca4dde660901ac4d97cd523481d4872,
-    type: 3}
   particulTime: 1
 --- !u!114 &8745856659551121230
 MonoBehaviour:
@@ -78,7 +74,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackStyle: {fileID: 11400000, guid: c8a6fa5523a172448a9d2b2665e7e3ac, type: 2}
-  animator: {fileID: 5196756401643570574}
   power: 0
   range: 0.8
   closingToEnemyTime: 0.1
@@ -251,12 +246,12 @@ PrefabInstance:
     - target: {fileID: 1946168084508970589, guid: 33279eb6869a3624fb7bfc05b05f0d50,
         type: 3}
       propertyPath: m_Bounds.m_Center.y
-      value: -0.06859791
+      value: -0.06865895
       objectReference: {fileID: 0}
     - target: {fileID: 1946168084508970589, guid: 33279eb6869a3624fb7bfc05b05f0d50,
         type: 3}
       propertyPath: m_Bounds.m_Extent.x
-      value: 0.052777696
+      value: 0.052762438
       objectReference: {fileID: 0}
     - target: {fileID: 1946168084508970589, guid: 33279eb6869a3624fb7bfc05b05f0d50,
         type: 3}
@@ -369,12 +364,12 @@ PrefabInstance:
     - target: {fileID: 2705205265268377284, guid: 33279eb6869a3624fb7bfc05b05f0d50,
         type: 3}
       propertyPath: m_Bounds.m_Center.x
-      value: -0.0060635805
+      value: -0.006033063
       objectReference: {fileID: 0}
     - target: {fileID: 2705205265268377284, guid: 33279eb6869a3624fb7bfc05b05f0d50,
         type: 3}
       propertyPath: m_Bounds.m_Center.y
-      value: 0.26676875
+      value: 0.26679927
       objectReference: {fileID: 0}
     - target: {fileID: 2705205265268377284, guid: 33279eb6869a3624fb7bfc05b05f0d50,
         type: 3}
@@ -429,7 +424,7 @@ PrefabInstance:
     - target: {fileID: 3788408946582043992, guid: 33279eb6869a3624fb7bfc05b05f0d50,
         type: 3}
       propertyPath: m_Bounds.m_Center.y
-      value: 0.05754134
+      value: 0.057602376
       objectReference: {fileID: 0}
     - target: {fileID: 3788408946582043992, guid: 33279eb6869a3624fb7bfc05b05f0d50,
         type: 3}
@@ -444,12 +439,12 @@ PrefabInstance:
     - target: {fileID: 3890986263862535228, guid: 33279eb6869a3624fb7bfc05b05f0d50,
         type: 3}
       propertyPath: m_Bounds.m_Center.x
-      value: -0.0017576814
+      value: -0.001788199
       objectReference: {fileID: 0}
     - target: {fileID: 3890986263862535228, guid: 33279eb6869a3624fb7bfc05b05f0d50,
         type: 3}
       propertyPath: m_Bounds.m_Center.y
-      value: 0.17236678
+      value: 0.1723973
       objectReference: {fileID: 0}
     - target: {fileID: 3890986263862535228, guid: 33279eb6869a3624fb7bfc05b05f0d50,
         type: 3}
@@ -484,7 +479,7 @@ PrefabInstance:
     - target: {fileID: 4096501396334891059, guid: 33279eb6869a3624fb7bfc05b05f0d50,
         type: 3}
       propertyPath: m_Bounds.m_Center.x
-      value: 0.018405367
+      value: 0.018428255
       objectReference: {fileID: 0}
     - target: {fileID: 4096501396334891059, guid: 33279eb6869a3624fb7bfc05b05f0d50,
         type: 3}
@@ -494,12 +489,12 @@ PrefabInstance:
     - target: {fileID: 4096501396334891059, guid: 33279eb6869a3624fb7bfc05b05f0d50,
         type: 3}
       propertyPath: m_Bounds.m_Extent.x
-      value: 0.04562105
+      value: 0.045628678
       objectReference: {fileID: 0}
     - target: {fileID: 4096501396334891059, guid: 33279eb6869a3624fb7bfc05b05f0d50,
         type: 3}
       propertyPath: m_Bounds.m_Extent.y
-      value: 0.21733102
+      value: 0.21736154
       objectReference: {fileID: 0}
     - target: {fileID: 4136993799541629535, guid: 33279eb6869a3624fb7bfc05b05f0d50,
         type: 3}
@@ -775,7 +770,7 @@ PrefabInstance:
     - target: {fileID: 6814769661915935121, guid: 33279eb6869a3624fb7bfc05b05f0d50,
         type: 3}
       propertyPath: m_Bounds.m_Center.x
-      value: 0.18718319
+      value: 0.18719082
       objectReference: {fileID: 0}
     - target: {fileID: 6814769661915935121, guid: 33279eb6869a3624fb7bfc05b05f0d50,
         type: 3}
@@ -785,12 +780,12 @@ PrefabInstance:
     - target: {fileID: 6814769661915935121, guid: 33279eb6869a3624fb7bfc05b05f0d50,
         type: 3}
       propertyPath: m_Bounds.m_Extent.x
-      value: 0.18560222
+      value: 0.18559459
       objectReference: {fileID: 0}
     - target: {fileID: 6814769661915935121, guid: 33279eb6869a3624fb7bfc05b05f0d50,
         type: 3}
       propertyPath: m_Bounds.m_Extent.y
-      value: 0.2809496
+      value: 0.28091908
       objectReference: {fileID: 0}
     - target: {fileID: 6828768125316689243, guid: 33279eb6869a3624fb7bfc05b05f0d50,
         type: 3}
@@ -940,12 +935,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 33279eb6869a3624fb7bfc05b05f0d50, type: 3}
---- !u!1 &39374068469523637 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5145707293078206443, guid: 33279eb6869a3624fb7bfc05b05f0d50,
-    type: 3}
-  m_PrefabInstance: {fileID: 5179943334582211422}
-  m_PrefabAsset: {fileID: 0}
 --- !u!95 &5196756401643570574 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 1151880736427415248, guid: 33279eb6869a3624fb7bfc05b05f0d50,
@@ -1144,6 +1133,11 @@ PrefabInstance:
       propertyPath: nameText
       value: 
       objectReference: {fileID: 4455909532039727898}
+    - target: {fileID: 385931742185610795, guid: 733517a4bf866b94aa4cded94ec54d29,
+        type: 3}
+      propertyPath: animator
+      value: 
+      objectReference: {fileID: 5196756401643570574}
     - target: {fileID: 1003901059469522988, guid: 733517a4bf866b94aa4cded94ec54d29,
         type: 3}
       propertyPath: m_Name

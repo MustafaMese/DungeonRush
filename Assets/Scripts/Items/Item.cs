@@ -13,6 +13,7 @@ namespace DungeonRush.Items
     public class Item : ScriptableObject
     {
         [SerializeField] CardProperties properties = null;
+        [SerializeField] string ID = Guid.NewGuid().ToString("N");
         [SerializeField] ItemType type;
         [SerializeField] int power = 0;
         [SerializeField] Sprite itemSmallSprite = null;

@@ -7,6 +7,13 @@ namespace DungeonRush.Traits
 {
     public abstract class Status : ScriptableObject
     {
+        [Multiline(2)]
+        [Tooltip("A string using the MultiLine attribute")]
+        [SerializeField]
+        private string notes = "- Dash like skills have to exist more than 1 turn.\n" +
+            "Or it can not be used.";
+
+
         [SerializeField] StatusType statusType;
         [SerializeField] private int power;
         [SerializeField] private int turnCount;

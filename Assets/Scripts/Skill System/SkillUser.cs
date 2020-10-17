@@ -48,11 +48,19 @@ namespace DungeonRush.Skills {
         private Card card;
 
         private int lastIndex;
-
+        public List<Skill> SKILLS = new List<Skill>();
         private void Start()
         {
             lastIndex = 0;
             card = GetComponent<Card>();
+
+            if(SKILLS != null && SKILLS.Count > 0)
+            {
+                for (int i = 0; i < SKILLS.Count; i++)
+                {
+                    AddSkill(SKILLS[i]);
+                }
+            }
         }
 
         public List<string> GetSkillIDs()
@@ -182,6 +190,8 @@ namespace DungeonRush.Skills {
 
         private IEnumerator Animate(SkillData skillData, Move move)
         {
+            // TODO Ses noktası
+
             GameObject obj;
             List<GameObject> objects = new List<GameObject>();
             int count = skillData.skill.GetGameobjectCount();
