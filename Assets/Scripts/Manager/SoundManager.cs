@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SoundManager : MonoBehaviour
 {
@@ -29,15 +30,15 @@ public class SoundManager : MonoBehaviour
             DontDestroyOnLoad(this);
         }
 
-        
+        musicSource.Play();
     }
 
-    private void Start()
+    private void OnLevelWasLoaded(int level)
     {
-        for (int i = 0; i < 5; i++)
-        {
-            AddAudioSource();
-        }
+        print("ses l:" + level);
+
+        if (level > 1)
+            musicSource.Stop();
     }
 
     public void SelectAudioSource(AudioClip clip)
