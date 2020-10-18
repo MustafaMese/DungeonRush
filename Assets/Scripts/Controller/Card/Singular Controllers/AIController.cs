@@ -124,6 +124,10 @@ namespace DungeonRush.Controller
                 preparingProcess.Finish();
                 var move = card.GetMove().GetCanMove();
 
+                float y = card.GetMove().GetTargetTile().GetCoordinate().y;
+                if (y < card.transform.position.y)
+                    customization.Change(y);
+
                 if (move)
                     moveProcess.StartProcess();
                 else

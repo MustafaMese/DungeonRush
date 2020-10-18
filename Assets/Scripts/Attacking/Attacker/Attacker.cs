@@ -213,9 +213,14 @@ namespace DungeonRush.Property
             if (card == null) return false;
 
             Attacker tAttacker = card.GetComponent<Attacker>();
-            tAttacker.StatusActResetAndControl();
-
-            int dodgeChance = card.DodgeChance + tAttacker.statusAct.extraDodgeChance;
+            int dodgeChance;
+            if (tAttacker != null)
+            {
+                tAttacker.StatusActResetAndControl();
+                dodgeChance = card.DodgeChance + tAttacker.statusAct.extraDodgeChance;
+            }
+            else
+                dodgeChance = card.DodgeChance;
             dodgeChance *= 2;
 
             if (dodgeChance > 0)

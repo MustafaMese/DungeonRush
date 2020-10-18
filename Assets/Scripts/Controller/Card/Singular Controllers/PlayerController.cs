@@ -67,9 +67,14 @@ namespace DungeonRush.Controller
                 if (canMove)
                 {
                     preparingProcess.Finish();
+                    
                     Board.touched = true;
 
                     var move = player.GetMove().GetCanMove();
+
+                    float y = player.GetMove().GetTargetTile().GetCoordinate().y;
+                    if(y < player.transform.position.y)
+                        customization.Change(y);
 
                     if (move)
                         moveProcess.StartProcess();

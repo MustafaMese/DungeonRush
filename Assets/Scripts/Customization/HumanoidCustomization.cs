@@ -35,11 +35,13 @@ namespace DungeonRush.Customization
         {
             int layer = (int)Math.Truncate(posY);
 
+            for (int i = 0; i < sprites.Count; i++)
+                ChangeLayer(sprites[i], layer);
+
             if (characterCanvas != null)
                 ChangeLayer(characterCanvas, layer);
 
-            for (int i = 0; i < sprites.Count; i++)
-                ChangeLayer(sprites[i], layer);
+            
         }
 
         public void OverShadow()
