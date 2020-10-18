@@ -28,7 +28,7 @@ namespace DungeonRush
                 card = GetComponent<Card>();
                 attacker = GetComponent<Attacker>();
 
-                isBeginning = false;
+                isBeginning = true;
             }
 
             public List<string> GetItemsIDs()
@@ -59,10 +59,6 @@ namespace DungeonRush
                 {
                     case ItemType.WEAPON:
                         TakeWeapon(i);
-                        if (!isBeginning)
-                            SetPickupCanvas(i);
-                        else
-                            isBeginning = false;
                         break;
                     case ItemType.POTION:
                         TakePotion(i);
@@ -72,10 +68,6 @@ namespace DungeonRush
                         break;
                     case ItemType.ARMOR:
                         TakeArmor(i);
-                        if (!isBeginning)
-                            SetPickupCanvas(i);
-                        else
-                            isBeginning = false;
                         break;
                     case ItemType.MAX_HEALTH_INCREASER:
                         TakeMaxHealthIncreaser(i);
@@ -87,11 +79,6 @@ namespace DungeonRush
                     default:
                         break;
                 }
-            }
-
-            private void SetPickupCanvas(Item i)
-            {
-                UIManager.Instance.EnableItemCanvas(i);
             }
 
             #region WEAPON

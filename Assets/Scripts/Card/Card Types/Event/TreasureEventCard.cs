@@ -4,6 +4,7 @@ using DungeonRush.Property;
 using UnityEngine;
 using DungeonRush.Managers;
 using DungeonRush.Items;
+using DungeonRush.UI;
 
 namespace DungeonRush.Cards
 {
@@ -32,6 +33,7 @@ namespace DungeonRush.Cards
         {
             if (i == null) return;
 
+            UIManager.Instance.EnableItemCanvas(i);
             card.GetComponent<ItemUser>().TakeItem(i);
 
         }

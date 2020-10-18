@@ -182,6 +182,7 @@ namespace DungeonRush.Controller
         private void Notify()
         {
             MoveSchedular.Instance.enemyController.ConfigureSurroundingCardsSkinStates();
+            PlayerCamera.Instance.MoveCamera(transform.position);
             if (player.InstantMoveCount > 0)
             {
                 Begin();
@@ -192,7 +193,6 @@ namespace DungeonRush.Controller
             {
                 StatusControl();
                 player.InstantMoveCount = player.TotalMoveCount;
-                PlayerCamera.Instance.MoveCamera(transform.position);
                 MoveSchedular.Instance.OnNotify();
             }
         }

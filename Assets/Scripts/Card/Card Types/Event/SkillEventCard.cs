@@ -2,6 +2,7 @@
 using DungeonRush.Items;
 using DungeonRush.Managers;
 using DungeonRush.Skills;
+using DungeonRush.UI;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -29,6 +30,7 @@ namespace DungeonRush.Cards
         {
             if (s == null) return;
 
+            UIManager.Instance.EnableSkillCanvas(skill);
             card.GetComponent<SkillUser>().AddSkill(s);
         }
 

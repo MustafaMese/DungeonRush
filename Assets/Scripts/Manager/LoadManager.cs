@@ -14,8 +14,6 @@ public class LoadManager : MonoBehaviour
         set { instance = value; }
     }
 
-    public TextMeshProUGUI text;
-
     private void Awake()
     {
         Instance = this;
@@ -57,11 +55,6 @@ public class LoadManager : MonoBehaviour
         return SceneManager.GetActiveScene().buildIndex;
     }
 
-    public void BUTTONGOREVI()
-    {
-        StartCoroutine(LoadScene());
-    }
-
     public IEnumerator LoadScene()
     {
         yield return null;
@@ -75,12 +68,12 @@ public class LoadManager : MonoBehaviour
         while (!asyncOperation.isDone)
         {
             //Output the current progress
-            text.text = "Loading progress: " + (asyncOperation.progress * 100) + "%";
+            //text.text = "Loading progress: " + (asyncOperation.progress * 100) + "%";
             // Check if the load has finished
             if (asyncOperation.progress >= 0.9f)
             {
                 //Change the Text to show the Scene is ready
-                text.text = "Press the space bar to continue";
+                //text.text = "Press the space bar to continue";
                 //Wait to you press the space key to activate the Scene
                 if (Input.GetKeyDown(KeyCode.Space))
                     //Activate the Scene

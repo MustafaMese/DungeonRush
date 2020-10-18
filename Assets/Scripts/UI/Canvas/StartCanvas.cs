@@ -164,13 +164,12 @@ namespace DungeonRush.UI
             if (!touched)
             {
                 touched = true;
-                StartCoroutine(Scale());
+                StartCoroutine(Next());
             }
         }
 
-        private IEnumerator Scale()
+        private IEnumerator Next()
         {
-            startingPanel.transform.DOScale(endValue, endTime);
             SavingSystem.DeletePlayerInstantSaveFile();
             yield return new WaitForSeconds(endTime);
             GameManager.Instance.SetGameState(GameState.LEVEL_TRANSITION);

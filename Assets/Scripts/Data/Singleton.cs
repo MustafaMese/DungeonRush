@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
 public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
 {
     private static T _instance = null;
@@ -25,12 +24,10 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
 
     private void Awake()
     {
-        print("a");
         if (_instance != null && _instance != this)
         {
             Destroy(this.gameObject);
         }
-        print("b");
         _instance = (T)FindObjectOfType(typeof(T));
        
         enabled = true;

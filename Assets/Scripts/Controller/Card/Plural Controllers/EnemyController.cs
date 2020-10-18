@@ -102,6 +102,8 @@ namespace DungeonRush.Controller
 
         private float GetDistance(Vector3 i)
         {
+            if (playerController == null) return 0;
+
             return (i - playerController.transform.position).sqrMagnitude;
         }
 

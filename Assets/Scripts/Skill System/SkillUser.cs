@@ -46,7 +46,7 @@ namespace DungeonRush.Skills {
     {
         public List<SkillData> skills = new List<SkillData>();
         private Card card;
-
+        private bool isBeginning;
         private int lastIndex;
         public List<Skill> SKILLS = new List<Skill>();
         private void Start()
@@ -61,6 +61,7 @@ namespace DungeonRush.Skills {
                     AddSkill(SKILLS[i]);
                 }
             }
+
         }
 
         public List<string> GetSkillIDs()
@@ -84,8 +85,6 @@ namespace DungeonRush.Skills {
 
             skills.Add(s);
             lastIndex++;
-
-            UIManager.Instance.EnableSkillCanvas(skill);
         }
 
         public void AddSkill(SkillData skillData)
