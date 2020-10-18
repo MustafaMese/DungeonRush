@@ -31,6 +31,7 @@ namespace DungeonRush.Controller
             attacker = player.GetComponent<Attacker>();
             customization = player.GetComponent<ICustomization>();
             statusController = player.GetComponent<StatusController>();
+            customization.Change(transform.position.y);
             MoveSchedular.Instance.playerController = this;
         }
 

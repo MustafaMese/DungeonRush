@@ -94,6 +94,7 @@ namespace DungeonRush.Controller
             if (cardType == CardType.ENEMY)
             {
                 customization = card.GetComponent<ICustomization>();
+                customization.Change(transform.position.y);
                 statusController = card.GetComponent<StatusController>();
                 statusAct = new StatusActControl();
             }
