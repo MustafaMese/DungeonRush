@@ -70,7 +70,9 @@ namespace DungeonRush
                 statusController = GetComponent<StatusController>();
                 SetStats();
 
-                FillThePool(poolForTextPopup, textPopup.gameObject, 3);
+                if(GetCardType() != CardType.EVENT)
+                    FillThePool(poolForTextPopup, textPopup.gameObject, 3);
+                
                 move = new Move();
 
                 if(GetCardType() != CardType.EVENT && GetCardType() != CardType.TRAP)
