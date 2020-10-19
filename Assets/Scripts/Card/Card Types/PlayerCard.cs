@@ -45,6 +45,8 @@ namespace DungeonRush
                 InstantMoveCount = TotalMoveCount;
                 if (!isFirstLevel)
                     GetComponent<PlayerController>().LoadPlayer();
+                else
+                    SetCurrentHealth(GetMaxHealth());
             }
 
             public override void ExecuteMove()

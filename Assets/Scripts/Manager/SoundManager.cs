@@ -40,6 +40,11 @@ public class SoundManager : MonoBehaviour
 
         if (level > 1)
             musicSource.Stop();
+        else
+        {
+            if (!musicSource.isPlaying)
+                musicSource.Play();
+        }
     }
 
     public void SelectAudioSource(AudioClip clip)

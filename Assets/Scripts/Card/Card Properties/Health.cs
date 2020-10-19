@@ -55,10 +55,17 @@ namespace DungeonRush.Property
             audioSource.clip = SoundManager.Instance.hurt;
 
             statusController = card.GetComponent<StatusController>();
-            if(GetComponent<ItemUser>())
+            if (GetComponent<ItemUser>())
                 itemUser = GetComponent<ItemUser>();
 
-            health = maxHealth;
+            if (card.GetCardType() != CardType.PLAYER || health > maxHealth)
+                health = maxHealth;
+
+            InitializeBar();
+        }
+
+        public void InitializeBar()
+        {
             bar.SetMaxHealth(maxHealth);
             bar.ActiveChanges(health, maxHealth);
         }
