@@ -43,6 +43,8 @@ namespace DungeonRush.Property
         private Animator animator = null;
         private AudioSource audioSource = null;
 
+        private bool dead = false;
+
         private void Start()
         {
             card = GetComponent<Card>();
@@ -63,8 +65,9 @@ namespace DungeonRush.Property
 
         private void Update()
         {
-            if (health <= 0)
+            if (health <= 0 && !dead)
             {
+                dead = true;
                 StartCoroutine(Death());
             }
         }
@@ -79,6 +82,7 @@ namespace DungeonRush.Property
             }
             else
             {
+                print("ben burdayım");
                 AIController controller = GetComponent<AIController>();
                 controller.Stop();
                 CardManager.Unsubscribe(card);

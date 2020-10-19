@@ -71,6 +71,8 @@ namespace DungeonRush.Controller
             List<AIController> l = new List<AIController>();
             for (int i = 0; i < subscribedEnemies.Count; i++)
             {
+                if (subscribedEnemies[i] == null) continue;
+
                 subscribedEnemies[i].ActivateStatuses();
 
                 var distance = GetDistance(subscribedEnemies[i].transform.position);
