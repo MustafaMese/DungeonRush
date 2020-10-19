@@ -82,6 +82,7 @@ namespace DungeonRush.Property
                 AIController controller = GetComponent<AIController>();
                 controller.Stop();
                 CardManager.Unsubscribe(card);
+                controller.GetCard().GetTile().SetCard(null);
 
                 yield return new WaitForSeconds(deathTime);
                 CardManager.RemoveCardForAttacker(card.GetTile().GetCoordinate());
