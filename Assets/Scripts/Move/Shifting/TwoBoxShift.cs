@@ -24,7 +24,7 @@ namespace DungeonRush.Shifting
                     {
                         Vector2 targetPos = new Vector2(coordinate.x, coordinate.y + 2);
                         Tile targetTile = Board.tilesByCoordinates[targetPos];
-                        if (targetTile.GetCard() == null)
+                        if (targetTile.GetCard() == null || targetTile.GetCard().GetCardType() == CardType.EVENT)
                         {
                             ConfigureCardMove(card, targetTile);
                             return true;
@@ -35,7 +35,7 @@ namespace DungeonRush.Shifting
                     {
                         Vector2 targetPos = new Vector2(coordinate.x, coordinate.y + 1);
                         Tile targetTile = Board.tilesByCoordinates[targetPos];
-                        if (targetTile.GetCard() == null)
+                        if (targetTile.GetCard() == null || targetTile.GetCard().GetCardType() == CardType.EVENT)
                         {
                             ConfigureCardMove(card, targetTile);
                             return true;
@@ -47,7 +47,7 @@ namespace DungeonRush.Shifting
                     {
                         Vector2 targetPos = new Vector2(coordinate.x, coordinate.y - 2);
                         Tile targetTile = Board.tilesByCoordinates[targetPos];
-                        if (targetTile.GetCard() == null)
+                        if (targetTile.GetCard() == null || targetTile.GetCard().GetCardType() == CardType.EVENT)
                         {
                             ConfigureCardMove(card, targetTile);
                             return true;
@@ -58,7 +58,7 @@ namespace DungeonRush.Shifting
                     {
                         Vector2 targetPos = new Vector2(coordinate.x, coordinate.y - 1);
                         Tile targetTile = Board.tilesByCoordinates[targetPos];
-                        if (targetTile.GetCard() == null)
+                        if (targetTile.GetCard() == null || targetTile.GetCard().GetCardType() == CardType.EVENT)
                         {
                             ConfigureCardMove(card, targetTile);
                             return true;
@@ -70,7 +70,7 @@ namespace DungeonRush.Shifting
                     {
                         Vector2 targetPos = new Vector2(coordinate.x - 2, coordinate.y);
                         Tile targetTile = Board.tilesByCoordinates[targetPos];
-                        if (targetTile.GetCard() == null)
+                        if (targetTile.GetCard() == null || targetTile.GetCard().GetCardType() == CardType.EVENT)
                         {
                             ConfigureCardMove(card, targetTile);
                             return true;
@@ -81,7 +81,7 @@ namespace DungeonRush.Shifting
                     {
                         Vector2 targetPos = new Vector2(coordinate.x - 1, coordinate.y);
                         Tile targetTile = Board.tilesByCoordinates[targetPos];
-                        if (targetTile.GetCard() == null)
+                        if (targetTile.GetCard() == null || targetTile.GetCard().GetCardType() == CardType.EVENT)
                         {
                             ConfigureCardMove(card, targetTile);
                             return true;
@@ -93,7 +93,7 @@ namespace DungeonRush.Shifting
                     {
                         Vector2 targetPos = new Vector2(coordinate.x + 2, coordinate.y);
                         Tile targetTile = Board.tilesByCoordinates[targetPos];
-                        if (targetTile.GetCard() == null)
+                        if (targetTile.GetCard() == null || targetTile.GetCard().GetCardType() == CardType.EVENT)
                         {
                             ConfigureCardMove(card, targetTile);
                             return true;
@@ -104,7 +104,7 @@ namespace DungeonRush.Shifting
                     {
                         Vector2 targetPos = new Vector2(coordinate.x + 1, coordinate.y);
                         Tile targetTile = Board.tilesByCoordinates[targetPos];
-                        if (targetTile.GetCard() == null)
+                        if (targetTile.GetCard() == null || targetTile.GetCard().GetCardType() == CardType.EVENT)
                         {
                             ConfigureCardMove(card, targetTile);
                             return true;

@@ -27,7 +27,7 @@ public class LoadManager : MonoBehaviour
         if(n != SceneManager.sceneCountInBuildSettings)
             SceneManager.LoadScene(scene.buildIndex + 1);
         else
-            SceneManager.LoadScene(0);
+            SceneManager.LoadScene(1);
     }
 
     public void LoadStartScene()
