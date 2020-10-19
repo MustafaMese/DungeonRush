@@ -16,6 +16,7 @@ public class SoundManager : MonoBehaviour
     private List<AudioSource> effectsSources = new List<AudioSource>();
 
     [SerializeField] AudioSource musicSource;
+    public AudioClip hurt;
 
     [SerializeField] float lowPitchRange = 0.95f;
     [SerializeField] float highPitchRange = 1.05f;

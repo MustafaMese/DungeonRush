@@ -66,7 +66,7 @@ namespace DungeonRush.Property
             yield return new WaitForSeconds(achievingTime);
             UpdateAnimation(false, false);
             gameEvent.GetEvent(card);
-            Finalise();
+            //Finalise();
         }
         #endregion
 

@@ -41,11 +41,17 @@ namespace DungeonRush.Property
         private ItemUser itemUser = null;
         private StatusController statusController = null;
         private Animator animator = null;
+        private AudioSource audioSource = null;
 
         private void Start()
         {
             card = GetComponent<Card>();
             animator = card.Animator;
+
+            audioSource = gameObject.AddComponent(typeof(AudioSource)) as AudioSource;
+            audioSource.volume = 0.2f;
+            audioSource.clip = SoundManager.Instance.hurt;
+
             statusController = card.GetComponent<StatusController>();
             if(GetComponent<ItemUser>())
                 itemUser = GetComponent<ItemUser>();
@@ -66,7 +72,7 @@ namespace DungeonRush.Property
         private IEnumerator Death()
         {
             UpdateAnimation(true);
-            if (isPlayer)
+            if (isPlayer && card.GetCardType() == CardType.PLAYER)
             {
                 this.enabled = false;
                 GameManager.Instance.SetGameState(GameState.DEFEAT);
@@ -115,7 +121,9 @@ namespace DungeonRush.Property
                 health -= amount;
                 health = Mathf.Max(0, health);
 
-                if (health > 0)
+                audioSource.Play();
+
+                if (health > 0) 
                     UpdateAnimation(false);
                 else
                 {

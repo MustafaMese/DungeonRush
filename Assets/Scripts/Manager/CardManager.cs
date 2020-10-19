@@ -71,11 +71,16 @@ namespace DungeonRush
 
             #region REMOVE METHODS
 
+            // TODO Karakter rasgele yok oluyo
             public static void RemoveCard(Tile tile)
             {
                 Card card = tile.GetCard();
+
+
                 if (card != null)
                 {
+                    if (card.GetCardType() == CardType.PLAYER && card.GetComponent<Health>().GetCurrentHealth() > 0) return;
+
                     tile.SetCard(null);
                     Instance.StartCoroutine(LateDestroy(card.gameObject));
                 }

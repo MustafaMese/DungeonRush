@@ -36,15 +36,16 @@ namespace DungeonRush.Cards
 
         private IEnumerator Disapper()
         {
-            Color c;
-            while (sprite.color.a > 0)
-            {
-                c = sprite.color;
-                c.a -= Time.deltaTime / disapperTime;
-                sprite.color = c;
-                yield return null;
-            }
+            //Color c;
+            //while (sprite.color.a > 0)
+            //{
+            //    c = sprite.color;
+            //    c.a -= Time.deltaTime / disapperTime;
+            //    sprite.color = c;
+            //    yield return null;
+            //}
             CardManager.RemoveCardForAttacker(GetTile().GetCoordinate());
+            yield return null;
         }
     }
 }
