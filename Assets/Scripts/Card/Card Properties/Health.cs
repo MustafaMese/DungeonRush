@@ -81,6 +81,8 @@ namespace DungeonRush.Property
 
         private IEnumerator Death()
         {
+            dead = true;
+
             UpdateAnimation(true);
             if (isPlayer && card.GetCardType() == CardType.PLAYER)
             {
@@ -140,10 +142,11 @@ namespace DungeonRush.Property
                 {
                     if (card.LifeCount > 0)
                     {
-                        print("Tekrar dirildi.");
                         health = (int)(maxHealth * 30 / 100);
                         card.LifeCount--;
                     }
+                    else
+                        StartCoroutine(Death());
                 }
             }
             else
