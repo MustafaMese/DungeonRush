@@ -33,8 +33,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 8695446391189289684}
-  - {fileID: 4533813716869024514}
+  - {fileID: 6460208720301174192}
+  - {fileID: 2736422568008857994}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -57,8 +57,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardProperties: {fileID: 11400000, guid: 2aa2c4759a80c5840b4ebcfe71edef6d, type: 2}
   characterType: {fileID: 11400000, guid: d49b1aa2a0de99549bc35edcd96869ba, type: 2}
+  textPopup: {fileID: 0}
+  nameText: {fileID: 0}
+  animator: {fileID: 0}
   eventMover: {fileID: 0}
-  isEventMove: 0
+  isFirstLevel: 0
+  experience: 0
+  coins: 0
 --- !u!114 &1591864951829196857
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -71,12 +76,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8fa7938d024e9f448b58f360dc68e6e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isSkillUser: 1
   shifting: {fileID: 11400000, guid: b63af612c90819841857890a9a82e19c, type: 2}
   movingTime: 0.2
-  animator: {fileID: 4755967413534033559}
-  walkParticul: {fileID: 0}
   particulTime: 0
+  isSkillUser: 1
 --- !u!114 &4091481314613496153
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -93,8 +96,6 @@ MonoBehaviour:
   isArmorUser: 0
   weaponBone: {fileID: 0}
   armorBone: {fileID: 0}
-  weapon: {fileID: 0}
-  armor: {fileID: 0}
 --- !u!114 &-280077000644605062
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -119,9 +120,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6d09c71aee6114479da1d4877ea958c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 0
-  animator: {fileID: 4755967413534033559}
+  isPlayer: 0
+  deathTime: 0.2
+  maxHealth: 0
   bar: {fileID: 0}
+  health: 0
 --- !u!114 &5641049783462244617
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -134,29 +137,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: baedc7a4b2667b04fae84a5bc25157c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moverSkillList:
-  - {fileID: 11400000, guid: e5127d728048b0447918b6aeac209c21, type: 2}
-  attackerSkillList:
-  - {fileID: 11400000, guid: 9b5e0e25270546d44955fad521e035a0, type: 2}
---- !u!95 &4755967413534033559
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6166890805513179462}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 6c1aca9c57d48264d8e43b09bcb4df30, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  skills: []
+  SKILLS: []
 --- !u!1001 &5061307001571316864
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -621,15 +603,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d637decc78123d041909212bb53a809d, type: 3}
---- !u!1 &6166890805513179462 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1416502365261350342, guid: d637decc78123d041909212bb53a809d,
-    type: 3}
-  m_PrefabInstance: {fileID: 5061307001571316864}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &8695446391189289684 stripped
+--- !u!4 &6460208720301174192 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 4508439174936866388, guid: d637decc78123d041909212bb53a809d,
+  m_CorrespondingSourceObject: {fileID: 2277161684079851824, guid: d637decc78123d041909212bb53a809d,
     type: 3}
   m_PrefabInstance: {fileID: 5061307001571316864}
   m_PrefabAsset: {fileID: 0}
@@ -750,11 +726,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: CharacterCanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 6558603818855782522, guid: cb90c1c1b5036484fb66b953cdc99304,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cb90c1c1b5036484fb66b953cdc99304, type: 3}
---- !u!224 &4533813716869024514 stripped
+--- !u!224 &2736422568008857994 stripped
 RectTransform:
-  m_CorrespondingSourceObject: {fileID: 4617941357697788658, guid: cb90c1c1b5036484fb66b953cdc99304,
+  m_CorrespondingSourceObject: {fileID: 6558603818855782522, guid: cb90c1c1b5036484fb66b953cdc99304,
     type: 3}
   m_PrefabInstance: {fileID: 9150591785795117552}
   m_PrefabAsset: {fileID: 0}

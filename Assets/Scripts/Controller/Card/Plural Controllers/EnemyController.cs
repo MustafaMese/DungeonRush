@@ -92,12 +92,12 @@ namespace DungeonRush.Controller
         {
             if (shadowed)
             {
-                ai.ChangeShadowState(true);
+               // ai.ChangeShadowState(true);
                 ai.ChangeAnimatorState(false);
             }
             else
             {
-                ai.ChangeShadowState(false);
+               // ai.ChangeShadowState(false);
                 ai.ChangeAnimatorState(true);
             }
         }
