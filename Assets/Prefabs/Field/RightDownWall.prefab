@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 661292311658026948}
   - component: {fileID: 8195664118501199930}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Tile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -97,7 +97,7 @@ GameObject:
   - component: {fileID: 7522659921048867632}
   - component: {fileID: 7522659921048867635}
   - component: {fileID: 7522659921048867634}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: RightDownWall
   m_TagString: Untagged
   m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
@@ -136,11 +136,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2ed06ce5278682428402c46101c282c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  darkness: {fileID: 0}
-  coordinate: {x: 0, y: 0}
-  card: {fileID: 0}
-  listNumber: 0
-  trapCard: {fileID: 0}
+  image: {fileID: 8195664118501199930}
 --- !u!61 &7522659921048867634
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -148,13 +144,13 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7522659921048867633}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: 0.13622594}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -165,5 +161,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1, y: 1.2724519}
   m_EdgeRadius: 0

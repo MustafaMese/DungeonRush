@@ -23,7 +23,7 @@ namespace DungeonRush.Controller
         private Attacker attacker;
         private ICustomization customization;
         private StatusController statusController;
-
+        [SerializeField] FieldOfView fieldOfView;
         private void Start()
         {
             InitProcessHandlers();
@@ -33,12 +33,13 @@ namespace DungeonRush.Controller
             statusController = player.GetComponent<StatusController>();
             customization.Change(transform.position.y);
             MoveSchedular.Instance.playerController = this;
+            fieldOfView = Instantiate(fieldOfView);
         }
 
         private void Update()
         {
             if (!isRunning) return;
-
+            fieldOfView.SetOrigin(transform.position);
             MakeMove();
         }
 

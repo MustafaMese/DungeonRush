@@ -2,6 +2,7 @@
 using DungeonRush.Managers;
 using DungeonRush.Data;
 using UnityEngine;
+using System;
 
 namespace DungeonRush
 {
@@ -9,15 +10,22 @@ namespace DungeonRush
     {
         public class Tile : MonoBehaviour
         {
-            [SerializeField] SpriteRenderer darkness = null;
-            public Vector2 coordinate = Vector2.zero;
-            public Card card = null;
-            public int listNumber = 0;
-            public Card trapCard = null;
-            
-            public void SetDarkness(Sprite sprite)
+            private Vector2 coordinate = Vector2.zero;
+            private Card card = null;
+            private Card trapCard = null;
+
+            [SerializeField] SpriteRenderer image;
+
+            public void SetSortingLayer(Vector2 position)
             {
-                darkness.sprite = sprite;
+                float posY = position.y;
+                float posX = position.x;
+
+                int layer = (int)Math.Truncate(posY);
+                string sth = String.Concat("Row ", layer);
+                image.sortingLayerName = sth;
+
+                image.sortingOrder = (int)posX;
             }
 
             public Card GetTrapCard()
@@ -55,16 +63,6 @@ namespace DungeonRush
                 if (this.card != null)
                     return true;
                 return false;
-            }
-
-            public int GetListNumber()
-            {
-                return listNumber;
-            }
-
-            public void SetListNumber(int listNumber)
-            {
-                this.listNumber = listNumber;
             }
 
             public static void ChangeTile(Move move, bool isEmpty, bool isPlayer)

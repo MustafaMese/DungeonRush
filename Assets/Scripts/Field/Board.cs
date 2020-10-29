@@ -51,7 +51,6 @@ namespace DungeonRush
                 bCreator.InitializeTiles(cardPlaces);
                 SetCardTiles(CardManager.Instance.cards);
                 DeterminePlayerTile();
-                SetTileDarkness();
             }
 
             private void SetCardTiles(List<Card> cards)
@@ -95,11 +94,6 @@ namespace DungeonRush
             #endregion
 
             #region TILES AND CARD PLACES
-            public void SetTileDarkness()
-            {
-                for (int i = 0; i < cardPlaces.Count; i++)
-                    cardPlaces[i].SetDarkness(null);
-            }
 
             public void SetCardPlaces(List<Tile> cardPlaces)
             {

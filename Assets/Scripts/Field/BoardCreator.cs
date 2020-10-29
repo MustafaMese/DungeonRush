@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 namespace DungeonRush.Field
@@ -15,7 +16,6 @@ namespace DungeonRush.Field
         [SerializeField] float emptySpace = 0;
         [SerializeField] float xSpace = 0;
         [SerializeField] float ySpace = 0;
-        [SerializeField] Transform wallPrefabsParent = null;
 
         [Header("Tile Prefabs")]
         [SerializeField] Tile tilePrefab1 = null;
@@ -41,7 +41,6 @@ namespace DungeonRush.Field
         public bool display;
 
         private Board board;
-        public List<Tile> outerWall = new List<Tile>();
 
         private void Awake()
         {
@@ -67,20 +66,20 @@ namespace DungeonRush.Field
 
         private void Delete()
         {
+            List<Transform> siblings = new List<Transform>();
+            for (int i = 0; i < transform.childCount; i++)
+            {
+                siblings.Add(transform.GetChild(i));
+            }
+
             if (board.cardPlaces != null)
             {
-                for (int i = 0; i < board.cardPlaces.Count; i++)
+                for (int i = 0; i < siblings.Count; i++)
                 {
-                    DestroyImmediate(board.cardPlaces[i].gameObject);
-                }
-
-                for (int i = 0; i < outerWall.Count; i++)
-                {
-                    DestroyImmediate(outerWall[i].gameObject);
+                    DestroyImmediate(siblings[i].gameObject);
                 }
 
                 Board.tilesByCoordinates.Clear();
-                outerWall.Clear();
                 board.cardPlaces = null;
             }
         }
@@ -94,7 +93,6 @@ namespace DungeonRush.Field
                 CreateTiles(list, currentPos);
                 CreateWall();
                 InitializeTiles(list);
-                wallPrefabsParent.transform.SetAsLastSibling();
                 Board.RowLength = rowLength;
             }
         }
@@ -114,27 +112,34 @@ namespace DungeonRush.Field
         private void RightDownWall()
         {
             Vector2 pos = new Vector2(rowLength, -1);
-            Tile t = Instantiate(rightDown, pos, Quaternion.identity, wallPrefabsParent);
-            outerWall.Add(t);
+            var tile = PrefabUtility.InstantiatePrefab(rightDown) as Tile;
+            tile.transform.position = pos;
+            tile.transform.SetParent(transform);
+            tile.SetSortingLayer(pos);
         }
         private void RightTopWall()
         {
             Vector2 pos = new Vector2(rowLength, rowLength);
-            Tile t =Instantiate(rightTop, pos, Quaternion.identity, wallPrefabsParent);
-            outerWall.Add(t);
+            var tile = PrefabUtility.InstantiatePrefab(rightTop) as Tile;
+            tile.transform.position = pos;
+            tile.transform.SetParent(transform);
+            tile.SetSortingLayer(pos);
         }
         private void LeftDownWall()
         {
             Vector2 pos = new Vector2(-1, -1);
-            Tile t = Instantiate(leftDown, pos, Quaternion.identity, wallPrefabsParent);
-            outerWall.Add(t);
+            var tile = PrefabUtility.InstantiatePrefab(leftDown) as Tile;
+            tile.transform.position = pos;
+            tile.transform.SetParent(transform);
+            tile.SetSortingLayer(pos);
         }
         private void LeftTopWall()
         {
-            Vector2 pos;
-            pos = new Vector2(-1, rowLength);
-            Tile t = Instantiate(leftTop, pos, Quaternion.identity, wallPrefabsParent);
-            outerWall.Add(t);
+            Vector2 pos = new Vector2(-1, rowLength);
+            var tile = PrefabUtility.InstantiatePrefab(leftTop) as Tile;
+            tile.transform.position = pos;
+            tile.transform.SetParent(transform);
+            tile.SetSortingLayer(pos);
         }
         private void DownWalls()
         {
@@ -142,8 +147,10 @@ namespace DungeonRush.Field
             for (int i = 0; i < rowLength; i++)
             {
                 pos = new Vector2(i, -1);
-                Tile t = Instantiate(down, pos, Quaternion.identity, wallPrefabsParent);
-                outerWall.Add(t);
+                var tile = PrefabUtility.InstantiatePrefab(down) as Tile;
+                tile.transform.position = pos;
+                tile.transform.SetParent(transform);
+                tile.SetSortingLayer(pos);
             }
         }
         private void TopWalls()
@@ -152,8 +159,10 @@ namespace DungeonRush.Field
             for (int i = 0; i < rowLength; i++)
             {
                 pos = new Vector2(i, rowLength);
-                Tile t = Instantiate(top, pos, Quaternion.identity, wallPrefabsParent);
-                outerWall.Add(t);
+                var tile = PrefabUtility.InstantiatePrefab(top) as Tile;
+                tile.transform.position = pos;
+                tile.transform.SetParent(transform);
+                tile.SetSortingLayer(pos);
             }
         }
         private void RightWalls()
@@ -162,8 +171,10 @@ namespace DungeonRush.Field
             for (int i = 0; i < rowLength; i++)
             {
                 pos = new Vector2(rowLength, i);
-                Tile t = Instantiate(right, pos, Quaternion.identity, wallPrefabsParent);
-                outerWall.Add(t);
+                var tile = PrefabUtility.InstantiatePrefab(right) as Tile;
+                tile.transform.position = pos;
+                tile.transform.SetParent(transform);
+                tile.SetSortingLayer(pos);
             }
         }
         private void LeftWalls()
@@ -172,8 +183,12 @@ namespace DungeonRush.Field
             for (int i = 0; i < rowLength; i++)
             {
                 pos = new Vector2(-1, i);
-                Tile t = Instantiate(left, pos, Quaternion.identity, wallPrefabsParent);
-                outerWall.Add(t);
+                var tile = PrefabUtility.InstantiatePrefab(left) as Tile;
+                tile.transform.position = pos;
+                tile.transform.SetParent(transform);
+
+                pos.x = pos.x + 2;
+                tile.SetSortingLayer(pos);
             }
         }
         #endregion
@@ -187,12 +202,18 @@ namespace DungeonRush.Field
                 {
                     if ((i + j) % 2 == 0)
                     {
-                        var tile = Instantiate(tilePrefab1, currentPos, Quaternion.identity, board.transform);
+                        var tile = PrefabUtility.InstantiatePrefab(tilePrefab1) as Tile;
+                        tile.transform.position = currentPos;
+                        tile.transform.SetParent(board.transform);
+                        tile.SetSortingLayer(currentPos);
                         list.Add(tile);
                     }
                     else
                     {
-                        var tile = Instantiate(tilePrefab2, currentPos, Quaternion.identity, board.transform);
+                        var tile = PrefabUtility.InstantiatePrefab(tilePrefab2) as Tile;
+                        tile.transform.position = currentPos;
+                        tile.transform.SetParent(board.transform);
+                        tile.SetSortingLayer(currentPos);
                         list.Add(tile);
                     }
                     currentPos.x += xSpace + emptySpace;
@@ -208,7 +229,6 @@ namespace DungeonRush.Field
                 Tile pos = cardPlaces[i];
                 pos.SetCoordinate(pos.transform.position);
                 pos.SetCard(null);
-                pos.SetListNumber(i);
                 Board.tilesByCoordinates.Add(pos.transform.position, pos);
             }
             board.SetCardPlaces(cardPlaces);
