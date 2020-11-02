@@ -14,8 +14,6 @@ namespace DungeonRush.Field
         public int rowLength;
         [SerializeField] Vector2 startPos = Vector2.zero;
         [SerializeField] float emptySpace = 0;
-        [SerializeField] float xSpace = 0;
-        [SerializeField] float ySpace = 0;
 
         [Header("Tile Prefabs")]
         [SerializeField] Tile tilePrefab1 = null;
@@ -31,8 +29,8 @@ namespace DungeonRush.Field
         [SerializeField] Tile rightTop = null;
         [SerializeField] Tile rightDown = null;
 
-        public static float _XSpace = 0;
-        public static float _YSpace = 0;
+        public static float _XSpace = 1;
+        public static float _YSpace = 1;
         public static float _EmptySpace = 0;
 
         [Header("Commands")]
@@ -115,7 +113,7 @@ namespace DungeonRush.Field
             var tile = PrefabUtility.InstantiatePrefab(rightDown) as Tile;
             tile.transform.position = pos;
             tile.transform.SetParent(transform);
-            tile.SetSortingLayer(pos);
+            tile.SetSortingLayer(pos, true);
         }
         private void RightTopWall()
         {
@@ -123,7 +121,7 @@ namespace DungeonRush.Field
             var tile = PrefabUtility.InstantiatePrefab(rightTop) as Tile;
             tile.transform.position = pos;
             tile.transform.SetParent(transform);
-            tile.SetSortingLayer(pos);
+            tile.SetSortingLayer(pos, true);
         }
         private void LeftDownWall()
         {
@@ -131,7 +129,7 @@ namespace DungeonRush.Field
             var tile = PrefabUtility.InstantiatePrefab(leftDown) as Tile;
             tile.transform.position = pos;
             tile.transform.SetParent(transform);
-            tile.SetSortingLayer(pos);
+            tile.SetSortingLayer(pos, true);
         }
         private void LeftTopWall()
         {
@@ -139,7 +137,7 @@ namespace DungeonRush.Field
             var tile = PrefabUtility.InstantiatePrefab(leftTop) as Tile;
             tile.transform.position = pos;
             tile.transform.SetParent(transform);
-            tile.SetSortingLayer(pos);
+            tile.SetSortingLayer(pos, true);
         }
         private void DownWalls()
         {
@@ -150,7 +148,7 @@ namespace DungeonRush.Field
                 var tile = PrefabUtility.InstantiatePrefab(down) as Tile;
                 tile.transform.position = pos;
                 tile.transform.SetParent(transform);
-                tile.SetSortingLayer(pos);
+                tile.SetSortingLayer(pos, true);
             }
         }
         private void TopWalls()
@@ -162,7 +160,7 @@ namespace DungeonRush.Field
                 var tile = PrefabUtility.InstantiatePrefab(top) as Tile;
                 tile.transform.position = pos;
                 tile.transform.SetParent(transform);
-                tile.SetSortingLayer(pos);
+                tile.SetSortingLayer(pos, true);
             }
         }
         private void RightWalls()
@@ -174,7 +172,7 @@ namespace DungeonRush.Field
                 var tile = PrefabUtility.InstantiatePrefab(right) as Tile;
                 tile.transform.position = pos;
                 tile.transform.SetParent(transform);
-                tile.SetSortingLayer(pos);
+                tile.SetSortingLayer(pos, true);
             }
         }
         private void LeftWalls()
@@ -188,7 +186,7 @@ namespace DungeonRush.Field
                 tile.transform.SetParent(transform);
 
                 pos.x = pos.x + 2;
-                tile.SetSortingLayer(pos);
+                tile.SetSortingLayer(pos, true);
             }
         }
         #endregion
@@ -216,10 +214,10 @@ namespace DungeonRush.Field
                         tile.SetSortingLayer(currentPos);
                         list.Add(tile);
                     }
-                    currentPos.x += xSpace + emptySpace;
+                    currentPos.x += _XSpace + emptySpace;
                 }
                 currentPos.x = startPos.x;
-                currentPos.y += ySpace + emptySpace;
+                currentPos.y += _YSpace + emptySpace;
             }
         }
         public void InitializeTiles(List<Tile> cardPlaces)
@@ -237,8 +235,6 @@ namespace DungeonRush.Field
 
         public void SetValues() 
         {
-            _XSpace = xSpace;
-            _YSpace = ySpace;
             _EmptySpace = emptySpace;
         }
     }

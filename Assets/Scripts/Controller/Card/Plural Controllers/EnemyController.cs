@@ -78,6 +78,7 @@ namespace DungeonRush.Controller
                 var distance = GetDistance(subscribedEnemies[i].transform.position);
                 if (distance <= attackerDistance)
                 {
+                    print("2");
                     SetAttackerSkinState(subscribedEnemies[i], false);
                     l.Add(subscribedEnemies[i]);
                 }
@@ -92,12 +93,12 @@ namespace DungeonRush.Controller
         {
             if (shadowed)
             {
-               // ai.ChangeShadowState(true);
+                ai.ChangeShadowState(true);
                 ai.ChangeAnimatorState(false);
             }
             else
             {
-               // ai.ChangeShadowState(false);
+                ai.ChangeShadowState(false);
                 ai.ChangeAnimatorState(true);
             }
         }

@@ -34,6 +34,7 @@ namespace DungeonRush.Controller
             customization.Change(transform.position.y);
             MoveSchedular.Instance.playerController = this;
             fieldOfView = Instantiate(fieldOfView);
+            fieldOfView.SetOrigin(transform.position);
         }
 
         private void Update()

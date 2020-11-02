@@ -2,6 +2,7 @@
 using DungeonRush.Field;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 namespace DungeonRush.Managers
@@ -51,7 +52,8 @@ namespace DungeonRush.Managers
 
         private void AddCard(Card piece, Vector3 pos)
         {
-            Instantiate(piece, pos, Quaternion.identity);
+            Card c = PrefabUtility.InstantiatePrefab(piece) as Card;
+            c.transform.position = pos;
         }
 
         private void Reset()

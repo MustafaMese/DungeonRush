@@ -5,6 +5,7 @@ using UnityEngine;
 public class FieldOfView : MonoBehaviour
 {
     private Mesh mesh;
+
     [SerializeField] LayerMask layerMask;
 
     [SerializeField] float fov = 90f;
@@ -15,10 +16,14 @@ public class FieldOfView : MonoBehaviour
     {
         mesh = new Mesh();
         GetComponent<MeshFilter>().mesh = mesh;
-
     }
 
     private void LateUpdate()
+    {
+        UseMesh();
+    }
+
+    private void UseMesh()
     {
         float angle = 0f;
         float angleIncrease = fov / rayCount;
@@ -75,6 +80,7 @@ public class FieldOfView : MonoBehaviour
 
     public void SetOrigin(Vector3 origin)
     {
+        print("Bum");
         this.origin = origin;
     }
 }

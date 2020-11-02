@@ -16,7 +16,7 @@ namespace DungeonRush
 
             [SerializeField] SpriteRenderer image;
 
-            public void SetSortingLayer(Vector2 position)
+            public void SetSortingLayer(Vector2 position, bool useOrder = false)
             {
                 float posY = position.y;
                 float posX = position.x;
@@ -25,7 +25,8 @@ namespace DungeonRush
                 string sth = String.Concat("Row ", layer);
                 image.sortingLayerName = sth;
 
-                image.sortingOrder = (int)posX;
+                if(useOrder)
+                    image.sortingOrder = (int)posX;
             }
 
             public Card GetTrapCard()
