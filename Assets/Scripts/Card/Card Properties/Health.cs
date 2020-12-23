@@ -39,7 +39,7 @@ namespace DungeonRush.Property
         [SerializeField] int health = 0;
         private Card card = null;
         private ItemUser itemUser = null;
-        private StatusController statusController = null;
+        public StatusController statusController = null;
         private Animator animator = null;
         private AudioSource audioSource = null;
 
@@ -91,7 +91,6 @@ namespace DungeonRush.Property
             }
             else
             {
-                print("ben burdayım");
                 AIController controller = GetComponent<AIController>();
                 controller.Stop();
                 CardManager.Unsubscribe(card);

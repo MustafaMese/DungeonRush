@@ -56,7 +56,6 @@ namespace DungeonRush.UI
 
         private void InitilizeButtons()
         {
-            print("tatata");
             skillButtons.Clear();
 
             for (int i = 0; i < buttons.Count; i++)

@@ -64,6 +64,11 @@ namespace DungeonRush.Skills {
 
         }
 
+        public static void Oz()
+        {
+
+        }
+
         public List<string> GetSkillIDs()
         {
             List<string> ids = new List<string>();

@@ -80,7 +80,6 @@ public class FieldOfView : MonoBehaviour
 
     public void SetOrigin(Vector3 origin)
     {
-        print("Bum");
         this.origin = origin;
     }
 }

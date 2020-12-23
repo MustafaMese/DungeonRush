@@ -45,7 +45,6 @@ namespace DungeonRush.UI
 
         private void InitializeByBuildIndex()
         {
-            print("1");
             var number = LoadManager.GetSceneIndex();
             if (number < 2)
             {

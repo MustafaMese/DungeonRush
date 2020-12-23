@@ -297,7 +297,6 @@ namespace DungeonRush.Controller
 
         public void ChangeShadowState(bool shadow)
         {
-            print("Bruh");
 
             if (shadow)
                 customization.OverShadow();
@@ -327,6 +326,7 @@ namespace DungeonRush.Controller
             }
             else
                 state = actionState.ChangeState(state, exclamation);
+
         }
 
         private void ChooseController()
