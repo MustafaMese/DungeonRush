@@ -92,16 +92,9 @@ namespace DungeonRush.Property
             animator.SetBool("walk", b);
         }
 
-        protected IEnumerator StartMoveAnimation(Vector3 pos, float time)
+        protected void StartMoveAnimation(Vector3 pos, float time)
         {
-            // TODO Ses noktası
-
-            GameObject obj = walkParticulPool.PullObjectFromPool(transform);
-            obj.transform.position = pos;
-            obj.transform.SetParent(null);
-            yield return new WaitForSeconds(time);
-            obj.transform.SetParent(transform);
-            walkParticulPool.AddObjectToPool(obj);
+            EffectOperator.Instance.Operate(walkParticulPool, pos, time);
         }
     }
 }

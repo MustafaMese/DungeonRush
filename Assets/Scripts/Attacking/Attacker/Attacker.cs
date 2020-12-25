@@ -107,23 +107,15 @@ namespace DungeonRush.Property
             return false;
         }
 
-        protected virtual IEnumerator StartAttackAnimation(ObjectPool<GameObject> pool, Move move, float time)
+        protected virtual void AttackEffect(ObjectPool<GameObject> pool, Move move, float time)
         {
             Transform cardTransform = move.GetCard().transform;
             Transform target = move.GetTargetTile().transform;
 
             if (move.GetTargetTile().GetCard() != null)
-            {
-                GameObject obj = pool.PullObjectFromPool(cardTransform);
-                obj.SetActive(true);
-                // TODO Ses noktası.
-                attackStyle.SetEffectPosition(obj, target.position, target);
-                yield return new WaitForSeconds(time);
-                obj.SetActive(false);
-                attackStyle.SetEffectPosition(obj, target.position, cardTransform);
-                pool.AddObjectToPool(obj);
-            }
+                EffectOperator.Instance.Operate(pool, cardTransform, target, time, attackStyle);
         }
+
 
         public bool GetAttackFinished()
         {
@@ -254,7 +246,6 @@ namespace DungeonRush.Property
             {
                 bool isMissed = IsMissed(target.GetCard());
                 if (isMissed)
-                    //StartCoroutine(card.StartTextPopup(tPos, "MISS"));
                     TextPopupManager.Instance.TextPopup(tPos, "MISS");
                 else
                 {
@@ -268,12 +259,11 @@ namespace DungeonRush.Property
                             tCard.GetComponent<StatusController>().AddStatus(impacts[i]);
                     }
 
-                    //StartCoroutine(card.StartTextPopup(tPos, power, isCritic));
                     TextPopupManager.Instance.TextPopup(tPos, power, isCritic);
                 }
             }
             float time = attackStyle.GetAnimationTime();
-            StartCoroutine(StartAttackAnimation(poolForAttackStyle, move, time));
+            AttackEffect(poolForAttackStyle, move, time);
         }
 
         protected void AttackAction(List<Card> targetCards, Move move)
@@ -296,7 +286,7 @@ namespace DungeonRush.Property
                 }
             }
             float time = attackStyle.GetAnimationTime();
-            StartCoroutine(StartAttackAnimation(poolForAttackStyle, move, time));
+            AttackEffect(poolForAttackStyle, move, time);
         }
     }
 }

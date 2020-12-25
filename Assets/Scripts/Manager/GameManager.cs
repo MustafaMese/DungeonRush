@@ -30,6 +30,7 @@ namespace DungeonRush
             [SerializeField] PlayerCamera playerCameraPrefab;
             [SerializeField] SoundManager soundManagerPrefab;
             [SerializeField] TextPopupManager textPopupManager;
+            [SerializeField] EffectOperator effectOperator;
 
             private bool started = false;
             private void Awake()
@@ -71,6 +72,7 @@ namespace DungeonRush
                     Instantiate(collectableManagerPrefab);
                     Instantiate(playerCameraPrefab);
                     Instantiate(textPopupManager);
+                    Instantiate(effectOperator);
 
                     SetGameState(GameState.BEGIN_LEVEL);
                 }

@@ -34,17 +34,12 @@ namespace DungeonRush.Attacking
             AttackAction(cards, move);
         }
 
-        protected override IEnumerator StartAttackAnimation(ObjectPool<GameObject> pool, Move move, float time)
+        protected override void AttackEffect(ObjectPool<GameObject> pool, Move move, float time)
         {
             if (move.GetTargetTile().GetCard() != null)
             {
-                // TODO Ses noktası
-
                 Transform cardTransform = move.GetCard().transform;
-                GameObject obj = pool.PullObjectFromPool(cardTransform);
-                attackStyle.SetEffectPosition(obj, cardTransform.position, cardTransform);
-                yield return new WaitForSeconds(time);
-                pool.AddObjectToPool(obj);
+                EffectOperator.Instance.Operate(pool, cardTransform, cardTransform, time, attackStyle);
             }
         }
     }

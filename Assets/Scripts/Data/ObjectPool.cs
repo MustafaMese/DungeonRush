@@ -23,7 +23,7 @@ namespace DungeonRush.Data
         {
             for (int i = 0; i < count; i++)
             {
-                T obj = Object.Instantiate(prefab as Object, new Vector3(-999, -999, -999), Quaternion.identity,t) as T;
+                T obj = Object.Instantiate(prefab as Object, new Vector3(-999, -999, -999), Quaternion.identity, t) as T;
                 
                 AddObjectToPool(obj);
             }

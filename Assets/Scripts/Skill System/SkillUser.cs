@@ -56,11 +56,6 @@ namespace DungeonRush.Skills {
 
         }
 
-        public static void Oz()
-        {
-
-        }
-
         public List<string> GetSkillIDs()
         {
             List<string> ids = new List<string>();
@@ -179,33 +174,14 @@ namespace DungeonRush.Skills {
         {
 
             if (skillData.skill.Effect != null)
-                StartCoroutine(Animate(skillData, move));
+                Animate(skillData, move);
             if (skillData.skill.TextPopup != null)
                 TextPopup(skillData, move);
         }
 
-        private IEnumerator Animate(SkillData skillData, Move move)
+        private void Animate(SkillData skillData, Move move)
         {
-            // TODO Ses noktası
-
-            GameObject obj;
-            List<GameObject> objects = new List<GameObject>();
-            int count = skillData.skill.GetGameobjectCount();
-            for (int i = 0; i < count; i++)
-            {
-                obj = skillData.poolForEffect.PullObjectFromPool(transform);
-                skillData.skill.PositionEffect(obj, move);
-                objects.Add(obj);
-            }
-            
-            yield return new WaitForSeconds(skillData.skill.EffectTime);
-
-            for (int i = 0; i < count; i++)
-            {
-                obj = objects[i];
-                obj.transform.SetParent(transform);
-                skillData.poolForEffect.AddObjectToPool(obj);
-            }
+            EffectOperator.Instance.Operate(skillData, move);
         }
 
         private void TextPopup(SkillData skillData, Move move)
@@ -251,7 +227,6 @@ namespace DungeonRush.Skills {
 
         }
 
-        //  bu static olabilir
         private void SkillButtonControl(SkillData skillData)
         {
             if (skillData.skill.IsActive)
