@@ -12,30 +12,21 @@ namespace DungeonRush.Traits
     public class StatusData
     {
         public Status status;
-        public ObjectPool poolForStatusEffect;
-        public ObjectPool poolForTextPopup;
-        public Image image;
+        public ObjectPool<GameObject> poolForStatusEffect;
+        public GameObject image;
         public int turnCount;
 
-        public StatusData(Status status, GameObject statusEffect, GameObject textPopup, Transform t, Image image = null, int turnCount = -1)
+        public StatusData(Status status, GameObject statusEffect, Transform t, GameObject image = null, int turnCount = -1)
         {
             this.status = status;
 
-            poolForStatusEffect = new ObjectPool();
-            poolForTextPopup = new ObjectPool();
+            poolForStatusEffect = new ObjectPool<GameObject>();
 
             if (statusEffect != null)
             {
                 poolForStatusEffect.SetObject(statusEffect);
                 poolForStatusEffect.FillPool(1, t);
             }
-
-            if (textPopup != null)
-            {
-                poolForTextPopup.SetObject(textPopup);
-                poolForTextPopup.FillPool(1, t);
-            }
-
             if (turnCount == -1)
                 this.turnCount = status.TurnCount;
             else
@@ -52,10 +43,16 @@ namespace DungeonRush.Traits
         [SerializeField] CharacterCanvas characterCanvas;
 
         public List<StatusData> activeStatuses = new List<StatusData>();
+        public List<Status> STATUS = new List<Status>();
+
         private Card card;
         private void Start()
         {
             card = GetComponent<Card>();
+            for (int i = 0; i < STATUS.Count; i++)
+            {
+                AddStatus(STATUS[i]);
+            }
         }
 
         public void AddStatus(Status status)
@@ -72,11 +69,12 @@ namespace DungeonRush.Traits
 
             if (status.StatusType != StatusType.INEFFECTIVE)
             {
-                Image img = characterCanvas.AddImageToPanel(status.Icon);
-                sd = new StatusData(status, effect, textPopup, transform, img);
+                GameObject img = characterCanvas.AddImageToPanel(status.Icon).gameObject;
+                sd = new StatusData(status, effect, transform, img);
+                print("1");
             }
             else
-                sd = new StatusData(status, effect, textPopup, transform);
+                sd = new StatusData(status, effect, transform);
 
             activeStatuses.Add(sd);
         }
@@ -100,9 +98,9 @@ namespace DungeonRush.Traits
             if (status.TextPopUp != null)
                 textPopup = InstatiateObject(status.TextPopUp);
 
-            Image img = characterCanvas.AddImageToPanel(status.Icon);
+            GameObject img = characterCanvas.AddImageToPanel(status.Icon).gameObject;
 
-            statusData = new StatusData(status, effect, textPopup, transform, img, statusData.turnCount);
+            statusData = new StatusData(status, effect, transform, img, statusData.turnCount);
             activeStatuses.Add(statusData);
         }
 
@@ -137,7 +135,7 @@ namespace DungeonRush.Traits
                 statusData.status.Execute(card, true);    
 
             if (statusData.status.TextPopUp != null)
-                StartCoroutine(TextPopup(statusData));
+                TextPopup(statusData);
             if (statusData.status.Effect != null)
                 StartCoroutine(Animate(statusData));
         }
@@ -150,16 +148,11 @@ namespace DungeonRush.Traits
             statusData.poolForStatusEffect.AddObjectToPool(obj);
         }
 
-        private IEnumerator TextPopup(StatusData statusData)
+        private void TextPopup(StatusData statusData)
         {
-            GameObject obj = statusData.poolForTextPopup.PullObjectFromPool(transform);
-            obj.transform.position = transform.position;
-            TextPopup objTxt = obj.GetComponent<TextPopup>();
             string power = statusData.status.Power.ToString();
             Vector3 pos = transform.position;
-            objTxt.Setup(power, pos);
-            yield return new WaitForSeconds(statusData.status.EffectLifeTime);
-            statusData.poolForTextPopup.AddObjectToPool(obj);
+            TextPopupManager.Instance.TextPopup(pos, power);
         }
 
         private IEnumerator KillStatus(StatusData statusData)
@@ -171,8 +164,7 @@ namespace DungeonRush.Traits
             }
 
             yield return new WaitForSeconds(0.6f);
-            statusData.poolForStatusEffect.DeleteObjectsInPool();
-            statusData.poolForTextPopup.DeleteObjectsInPool();
+            TextPopupManager.Instance.DeleteObjectsInPool(statusData.poolForStatusEffect);
         }
     }
 }

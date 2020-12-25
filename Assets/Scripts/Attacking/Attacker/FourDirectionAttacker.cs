@@ -34,7 +34,7 @@ namespace DungeonRush.Attacking
             AttackAction(cards, move);
         }
 
-        protected override IEnumerator StartAttackAnimation(ObjectPool pool, Move move, float time)
+        protected override IEnumerator StartAttackAnimation(ObjectPool<GameObject> pool, Move move, float time)
         {
             if (move.GetTargetTile().GetCard() != null)
             {

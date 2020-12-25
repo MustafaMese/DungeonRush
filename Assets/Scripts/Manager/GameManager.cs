@@ -29,6 +29,7 @@ namespace DungeonRush
             [SerializeField] SwipeManager swipeManagerPrefab;
             [SerializeField] PlayerCamera playerCameraPrefab;
             [SerializeField] SoundManager soundManagerPrefab;
+            [SerializeField] TextPopupManager textPopupManager;
 
             private bool started = false;
             private void Awake()
@@ -69,6 +70,7 @@ namespace DungeonRush
                     Instantiate(moveSchedularPrefab);
                     Instantiate(collectableManagerPrefab);
                     Instantiate(playerCameraPrefab);
+                    Instantiate(textPopupManager);
 
                     SetGameState(GameState.BEGIN_LEVEL);
                 }

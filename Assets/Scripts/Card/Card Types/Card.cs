@@ -23,13 +23,10 @@ namespace DungeonRush
             protected Attacker attacker = null;
             protected IMoveController controller;
             protected StatusController statusController;
-            private ObjectPool poolForTextPopup = new ObjectPool();
-            
 
             [Header("General Properties")]
             [SerializeField] CardProperties cardProperties = null;
             [SerializeField] Character characterType;
-            [SerializeField] protected TextPopup textPopup = null;
             [SerializeField] TextMeshProUGUI nameText = null;
             [SerializeField] Animator animator;
 
@@ -69,20 +66,11 @@ namespace DungeonRush
                 Controller = GetComponent<IMoveController>();
                 statusController = GetComponent<StatusController>();
                 SetStats();
-
-                if(GetCardType() != CardType.EVENT && GetCardType() != CardType.WALL)
-                    FillThePool(poolForTextPopup, textPopup.gameObject, 3);
                 
                 move = new Move();
 
                 if(GetCardType() != CardType.EVENT && GetCardType() != CardType.TRAP)
                     nameText.text = cardName;
-            }
-
-            protected void FillThePool(ObjectPool pool, GameObject effect, int objectCount)
-            {
-                pool.SetObject(effect);
-                pool.FillPool(objectCount, transform);
             }
 
             protected void SetStats()
@@ -215,30 +203,6 @@ namespace DungeonRush
             public virtual void SetIsMoveFinished(bool b)
             {
                 mover.SetIsMoveFinished(b);
-            }
-
-            public IEnumerator StartTextPopup(Vector3 tPos, string text)
-            {
-                GameObject obj = poolForTextPopup.PullObjectFromPool(transform);
-                obj.transform.position = tPos;
-                obj.transform.SetParent(this.transform);
-                TextPopup objTxt = obj.GetComponent<TextPopup>();
-                objTxt.Setup(text, tPos);
-                float t = objTxt.GetDisapperTime();
-                yield return new WaitForSeconds(t);
-                poolForTextPopup.AddObjectToPool(obj);
-            }
-
-            public IEnumerator StartTextPopup(Vector3 tPos, int damage, bool isCritical = false)
-            {
-                GameObject obj = poolForTextPopup.PullObjectFromPool(transform);
-                obj.transform.position = tPos;
-                TextPopup objTxt = obj.GetComponent<TextPopup>();
-                objTxt.Setup(damage, tPos, isCritical);
-                obj.transform.SetParent(transform);
-                float t = objTxt.GetDisapperTime();
-                yield return new WaitForSeconds(t);
-                poolForTextPopup.AddObjectToPool(obj);
             }
         }
     }

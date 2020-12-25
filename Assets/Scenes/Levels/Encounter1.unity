@@ -579,10 +579,57 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 637386731959099440, guid: 766310c9722a2f44a8e47b1f299865c7,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+    - target: {fileID: 1255625535811127291, guid: 766310c9722a2f44a8e47b1f299865c7,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.021261947
+      objectReference: {fileID: 0}
+    - target: {fileID: 1255625535811127291, guid: 766310c9722a2f44a8e47b1f299865c7,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.999774
+      objectReference: {fileID: 0}
+    - target: {fileID: 3038155782039874792, guid: 766310c9722a2f44a8e47b1f299865c7,
+        type: 3}
+      propertyPath: STATUS.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3038155782039874792, guid: 766310c9722a2f44a8e47b1f299865c7,
+        type: 3}
+      propertyPath: STATUS.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: ae72ad3616661be4182a6692a9797afe,
+        type: 2}
+    - target: {fileID: 3038155782039874792, guid: 766310c9722a2f44a8e47b1f299865c7,
+        type: 3}
+      propertyPath: STATUS.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 3816818830bc93943ba6a6bea88ac0e3,
+        type: 2}
     - target: {fileID: 5216697358243946653, guid: 766310c9722a2f44a8e47b1f299865c7,
         type: 3}
       propertyPath: m_Name
       value: Feridun
+      objectReference: {fileID: 0}
+    - target: {fileID: 5289774116233011972, guid: 766310c9722a2f44a8e47b1f299865c7,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.008694576
+      objectReference: {fileID: 0}
+    - target: {fileID: 5289774116233011972, guid: 766310c9722a2f44a8e47b1f299865c7,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.9999623
+      objectReference: {fileID: 0}
+    - target: {fileID: 5289774116233011972, guid: 766310c9722a2f44a8e47b1f299865c7,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -360.996
       objectReference: {fileID: 0}
     - target: {fileID: 5638885508662427140, guid: 766310c9722a2f44a8e47b1f299865c7,
         type: 3}
@@ -623,6 +670,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_textInfo.pageCount
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7127682818124395341, guid: 766310c9722a2f44a8e47b1f299865c7,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.67944795
+      objectReference: {fileID: 0}
+    - target: {fileID: 7127682818124395341, guid: 766310c9722a2f44a8e47b1f299865c7,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7337237
       objectReference: {fileID: 0}
     - target: {fileID: 8065194646106485757, guid: 766310c9722a2f44a8e47b1f299865c7,
         type: 3}
@@ -729,6 +786,16 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 8588515430371655131, guid: 766310c9722a2f44a8e47b1f299865c7,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.017179564
+      objectReference: {fileID: 0}
+    - target: {fileID: 8588515430371655131, guid: 766310c9722a2f44a8e47b1f299865c7,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.07589662
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 766310c9722a2f44a8e47b1f299865c7, type: 3}
 --- !u!1 &1298912810
@@ -764,6 +831,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterCanvas: {fileID: 422773534}
   activeStatuses: []
+  STATUS: []
 --- !u!114 &1298912812
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -796,8 +864,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardProperties: {fileID: 11400000, guid: 49ef978d1934a7547b4bb1e198388f84, type: 2}
   characterType: {fileID: 11400000, guid: 8777ac922c4294e4880d0adf7d9361cb, type: 2}
-  textPopup: {fileID: 9129021430530541807, guid: d284076925d56484c9541ce1f6da8de6,
-    type: 3}
   nameText: {fileID: 1370321584}
   animator: {fileID: 574626564}
 --- !u!224 &1298912814
@@ -1126,7 +1192,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardProperties: {fileID: 11400000, guid: 0240603d3ea6ad14a8035bd17fc40344, type: 2}
   characterType: {fileID: 11400000, guid: 0ecb647be29ef1e43b16f4da50ec54a9, type: 2}
-  textPopup: {fileID: 0}
   nameText: {fileID: 0}
   animator: {fileID: 0}
   eventType: 1
@@ -1236,15 +1301,16 @@ SpriteRenderer:
   m_SortingLayerID: 1411553579
   m_SortingLayer: 11
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: f8adcfb83b00b7b46a616fac6d2c4ee3, type: 3}
+  m_Sprite: {fileID: -2572842601457448701, guid: c524ac93fd4074e4b856e88841f7e47f,
+    type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.93, y: 2.02}
+  m_Size: {x: 0.665, y: 1.2116653}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1001 &1587143779

@@ -55,7 +55,7 @@ namespace DungeonRush.Property
         public int power = 0;
         protected bool attackFinished = false; 
         
-        protected ObjectPool poolForAttackStyle = new ObjectPool();
+        protected ObjectPool<GameObject> poolForAttackStyle = new ObjectPool<GameObject>();
         protected GameObject effectObject = null;
         protected Card card = null;
         protected StatusController statusController = null;
@@ -107,7 +107,7 @@ namespace DungeonRush.Property
             return false;
         }
 
-        protected virtual IEnumerator StartAttackAnimation(ObjectPool pool, Move move, float time)
+        protected virtual IEnumerator StartAttackAnimation(ObjectPool<GameObject> pool, Move move, float time)
         {
             Transform cardTransform = move.GetCard().transform;
             Transform target = move.GetTargetTile().transform;
@@ -115,10 +115,11 @@ namespace DungeonRush.Property
             if (move.GetTargetTile().GetCard() != null)
             {
                 GameObject obj = pool.PullObjectFromPool(cardTransform);
-
+                obj.SetActive(true);
                 // TODO Ses noktası.
                 attackStyle.SetEffectPosition(obj, target.position, target);
                 yield return new WaitForSeconds(time);
+                obj.SetActive(false);
                 attackStyle.SetEffectPosition(obj, target.position, cardTransform);
                 pool.AddObjectToPool(obj);
             }
@@ -154,7 +155,8 @@ namespace DungeonRush.Property
 
         public void SetAttackStyle(AttackStyle attackStyle)
         {
-            poolForAttackStyle.DeleteObjectsInPool();
+            TextPopupManager.Instance.DeleteObjectsInPool(poolForAttackStyle);
+
             this.attackStyle = attackStyle;
             effectObject = attackStyle.GetEffect();
             FillThePool(poolForAttackStyle, effectObject, 2);
@@ -180,7 +182,7 @@ namespace DungeonRush.Property
             return isCritic;
         }
 
-        protected void FillThePool(ObjectPool pool, GameObject effect, int objectCount)
+        protected void FillThePool(ObjectPool<GameObject> pool, GameObject effect, int objectCount)
         {
             pool.SetObject(effect);
             pool.FillPool(objectCount, transform);
@@ -252,7 +254,8 @@ namespace DungeonRush.Property
             {
                 bool isMissed = IsMissed(target.GetCard());
                 if (isMissed)
-                    StartCoroutine(card.StartTextPopup(tPos, "MISS"));
+                    //StartCoroutine(card.StartTextPopup(tPos, "MISS"));
+                    TextPopupManager.Instance.TextPopup(tPos, "MISS");
                 else
                 {
                     bool isCritic = DoAttackAction(move);
@@ -265,7 +268,8 @@ namespace DungeonRush.Property
                             tCard.GetComponent<StatusController>().AddStatus(impacts[i]);
                     }
 
-                    StartCoroutine(card.StartTextPopup(tPos, power, isCritic));
+                    //StartCoroutine(card.StartTextPopup(tPos, power, isCritic));
+                    TextPopupManager.Instance.TextPopup(tPos, power, isCritic);
                 }
             }
             float time = attackStyle.GetAnimationTime();
@@ -283,11 +287,11 @@ namespace DungeonRush.Property
                 {
                     bool isMissed = IsMissed(tCard);
                     if (isMissed)
-                        StartCoroutine(tCard.StartTextPopup(tPos, "MISS"));
+                        TextPopupManager.Instance.TextPopup(tPos, "MISS");
                     else
                     {
                         bool isCritic = DoAttackAction(move);
-                        StartCoroutine(tCard.StartTextPopup(tPos, power, isCritic));
+                        TextPopupManager.Instance.TextPopup(tPos, power, isCritic);
                     }
                 }
             }

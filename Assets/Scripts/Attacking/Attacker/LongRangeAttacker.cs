@@ -30,7 +30,7 @@ namespace DungeonRush.Attacking
             AttackAction(move);
         }
 
-        protected override IEnumerator StartAttackAnimation(ObjectPool pool, Move move, float time)
+        protected override IEnumerator StartAttackAnimation(ObjectPool<GameObject> pool, Move move, float time)
         {
             Vector2 pos = move.GetTargetTile().GetCoordinate();
             Transform cardTransform = move.GetCardTile().transform;
@@ -46,7 +46,7 @@ namespace DungeonRush.Attacking
             yield return null;
         }
 
-        private void FinishAnimation(GameObject obj, ObjectPool pool, Move move)
+        private void FinishAnimation(GameObject obj, ObjectPool<GameObject> pool, Move move)
         {
             Transform cardTransform = move.GetCardTile().transform;
 

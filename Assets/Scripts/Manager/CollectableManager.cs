@@ -30,7 +30,7 @@ namespace DungeonRush.Managers
         [SerializeField, Range(0.9f, 2f)] float maxAnimDuration;
         [SerializeField] float spread;
 
-        private ObjectPool objectPool = new ObjectPool();
+        private ObjectPool<GameObject> objectPool = new ObjectPool<GameObject>();
         private PlayerCard player;
 
         private void Start()

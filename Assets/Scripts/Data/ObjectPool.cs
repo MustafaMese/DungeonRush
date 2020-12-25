@@ -1,59 +1,60 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace DungeonRush.Data
 {
-    public class ObjectPool : MonoBehaviour
+    public class ObjectPool<T> where T : class
     {
-        private GameObject prefab;
-        private Stack<GameObject> objectPool = new Stack<GameObject>();
+        private T prefab;
+        private Stack<T> objectPool = new Stack<T>();
 
-        public void SetObject(GameObject prefab)
+        public void SetObject(T prefab)
         {
             this.prefab = prefab;
+        }
+
+        public int GetStackLength()
+        {
+            return objectPool.Count;
         }
 
         public void FillPool(int count, Transform t)
         {
             for (int i = 0; i < count; i++)
             {
-                GameObject obj = Instantiate(prefab, t);
+                T obj = Object.Instantiate(prefab as Object, new Vector3(-999, -999, -999), Quaternion.identity,t) as T;
+                
                 AddObjectToPool(obj);
             }
         }
 
-        public GameObject PullObjectFromPool(Transform t)
+        public T PullObjectFromPool(Transform t)
         {
             if (objectPool.Count > 0)
             {
-                GameObject obj = objectPool.Pop();
-                obj.gameObject.SetActive(true);
+                T obj = objectPool.Pop();
 
                 return obj;
             }
 
-            return Instantiate(prefab, t);
+            return Object.Instantiate(prefab as Object, t) as T;
         }
 
-        public void AddObjectToPool(GameObject obj)
+        public T PullForDestroy()
         {
+            if (objectPool.Count > 0)
+                return objectPool.Pop();
+            return null;
+        }
+
+        public void AddObjectToPool(T obj)
+        {
+            if (obj == null)
+                Debug.Log("sa");
+
             if (obj != null)
-            {
-                obj.gameObject.SetActive(false);
                 objectPool.Push(obj);
-            }
-        }
-
-        public void DeleteObjectsInPool()
-        {
-            int count = objectPool.Count;
-            for(int i = 0; i < count; i++)
-            {
-                GameObject obj = objectPool.Pop();
-                Destroy(obj.gameObject);
-            }
         }
 
         public bool IsObjectNull()

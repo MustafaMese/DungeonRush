@@ -18,7 +18,7 @@ namespace DungeonRush.Property
         [SerializeField] protected float particulTime = 0;
 
         protected GameObject walkParticul = null;
-        protected ObjectPool walkParticulPool = new ObjectPool();
+        protected ObjectPool<GameObject> walkParticulPool = new ObjectPool<GameObject>();
         protected bool isMoveFinished = false;
         protected Move move;
         protected Card card;
@@ -40,7 +40,7 @@ namespace DungeonRush.Property
         public abstract void Move();
         protected virtual void Initialize() { }
 
-        private void FillThePool(ObjectPool pool, GameObject effect, int count)
+        private void FillThePool(ObjectPool<GameObject> pool, GameObject effect, int count)
         {
             pool.SetObject(effect);
             pool.FillPool(count, transform);
@@ -64,7 +64,8 @@ namespace DungeonRush.Property
 
         public void SetShifting(Shift s)
         {
-            walkParticulPool.DeleteObjectsInPool();
+            TextPopupManager.Instance.DeleteObjectsInPool(walkParticulPool);
+
             shifting = s;
             walkParticul = shifting.GetEffect();
             FillThePool(walkParticulPool, walkParticul, 2);

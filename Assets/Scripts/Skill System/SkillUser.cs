@@ -12,8 +12,7 @@ namespace DungeonRush.Skills {
     public class SkillData
     {
         public Skill skill;
-        public ObjectPool poolForEffect;
-        public ObjectPool poolForTextPopup;
+        public ObjectPool<GameObject> poolForEffect;
         public int tempCooldown;
 
         public int listnumber;
@@ -24,16 +23,9 @@ namespace DungeonRush.Skills {
 
             if (skill.Effect != null)
             {
-                poolForEffect = new ObjectPool();
+                poolForEffect = new ObjectPool<GameObject>();
                 poolForEffect.SetObject(skill.Effect);
                 poolForEffect.FillPool(1, t);
-            }
-
-            if (skill.TextPopup != null)
-            {
-                poolForTextPopup = new ObjectPool();
-                poolForTextPopup.SetObject(skill.TextPopup);
-                poolForTextPopup.FillPool(1, t);
             }
 
             tempCooldown = 0;
@@ -189,7 +181,7 @@ namespace DungeonRush.Skills {
             if (skillData.skill.Effect != null)
                 StartCoroutine(Animate(skillData, move));
             if (skillData.skill.TextPopup != null)
-                StartCoroutine(TextPopup(skillData, move));
+                TextPopup(skillData, move);
         }
 
         private IEnumerator Animate(SkillData skillData, Move move)
@@ -216,29 +208,16 @@ namespace DungeonRush.Skills {
             }
         }
 
-        private IEnumerator TextPopup(SkillData skillData, Move move)
+        private void TextPopup(SkillData skillData, Move move)
         {
             GameObject obj;
-            List<GameObject> objects = new List<GameObject>();
-
             int count = skillData.skill.GetGameobjectCount(true);
             for (int i = 0; i < count; i++)
             {
-                obj = skillData.poolForTextPopup.PullObjectFromPool(transform);
-                Vector3 pos = skillData.skill.PositionTextPopup(obj, move);
-                TextPopup objTxt = obj.GetComponent<TextPopup>();
+                obj = skillData.skill.Effect;
                 string power = skillData.skill.Power.ToString();
-                objTxt.Setup(power, pos);
-                objects.Add(obj);
-            }
 
-            yield return new WaitForSeconds(skillData.skill.EffectTime);
-
-            for (int i = 0; i < count; i++)
-            {
-                obj = objects[i];
-                obj.transform.SetParent(transform);
-                skillData.poolForTextPopup.AddObjectToPool(obj);
+                TextPopupManager.Instance.TextPopup(obj.transform.position, power);
             }
             
         }
