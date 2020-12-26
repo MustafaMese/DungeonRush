@@ -11,25 +11,7 @@ namespace DungeonRush.Property
 {
     public class Health : MonoBehaviour
     {
-        public struct StatusActControl
-        {
-            public bool isAcid;
-
-            public void Reset()
-            {
-                isAcid = false;
-            }
-
-            public void ActControl(List<StatusData> list)
-            {
-                for (int i = 0; i < list.Count; i++)
-                {
-                    if (list[i].status.StatusType == StatusType.ACID)
-                        isAcid = true;
-                }
-            }
-        }
-        private StatusActControl statusAct;
+        private HealthAct statusAct;
 
         [SerializeField] bool isPlayer = false;
         [SerializeField] float deathTime = 0.2f;
@@ -55,6 +37,8 @@ namespace DungeonRush.Property
             audioSource.clip = SoundManager.Instance.hurt;
 
             statusController = card.GetComponent<StatusController>();
+            statusAct = new HealthAct();
+
             if (GetComponent<ItemUser>())
                 itemUser = GetComponent<ItemUser>();
 

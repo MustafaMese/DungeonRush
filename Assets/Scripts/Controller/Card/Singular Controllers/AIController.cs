@@ -14,40 +14,8 @@ namespace DungeonRush.Controller
 {
     public class AIController : MonoBehaviour, IMoveController
     {
-        private struct StatusActControl
-        {
-            public bool canMove;
-            public bool canAttack;
-            public bool anger;
+        private ControllerAct statusAct;
 
-            public void Reset()
-            {
-                canMove = true;
-                canAttack = true;
-                anger = false;
-            }
-
-            public void ActControl(List<StatusData> list)
-            {
-                for (int i = 0; i < list.Count; i++)
-                {
-                    Status s = list[i].status;
-
-                    if (s.StatusType == StatusType.DISARMED)
-                        canAttack = false;
-                    else if (s.StatusType == StatusType.ENTANGLED)
-                        canMove = false;
-                    else if (s.StatusType == StatusType.STUNNED)
-                    {
-                        canMove = false;
-                        canAttack = false;
-                    }
-                    else if (s.StatusType == StatusType.ANGER)
-                        anger = true;
-                }
-            }
-        }
-        private StatusActControl statusAct;
         private State state = State.NONE;
 
         private bool isMoving = false;
@@ -96,7 +64,7 @@ namespace DungeonRush.Controller
                 customization = card.GetComponent<ICustomization>();
                 customization.Change(transform.position.y);
                 statusController = card.GetComponent<StatusController>();
-                statusAct = new StatusActControl();
+                statusAct = new ControllerAct();
             }
         }
 
@@ -253,14 +221,14 @@ namespace DungeonRush.Controller
             if (state == State.RANGE_ATTACK)
                 return swipeForAim;
 
-            if ((state == State.ATTACK || state == State.ATTACK2) && statusAct.canAttack)
+            if ((state == State.ATTACK || state == State.ATTACK2) && statusAct.CanAttack)
             {
                 s = SelectTileToAttack(card);
                 if (s != Swipe.NONE)
                     return s;
             }
 
-            if (statusAct.canMove)
+            if (statusAct.CanMove)
                 s = SelectTileToMove(card);
 
             return s;
@@ -319,7 +287,7 @@ namespace DungeonRush.Controller
 
         private void ChangeState()
         {
-            if (statusAct.anger)
+            if (statusAct.Anger)
             {
                 state = State.ATTACK;
                 exclamation.SetActive(false);

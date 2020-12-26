@@ -39,7 +39,6 @@ namespace DungeonRush.Traits
 
     public class StatusController : MonoBehaviour
     {
-        
         [SerializeField] CharacterCanvas characterCanvas;
 
         public List<StatusData> activeStatuses = new List<StatusData>();

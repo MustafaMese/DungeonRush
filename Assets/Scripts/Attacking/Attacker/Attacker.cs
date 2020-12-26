@@ -12,41 +12,7 @@ namespace DungeonRush.Property
 {
     public abstract class Attacker : MonoBehaviour
     {
-        public struct StatusActControl
-        {
-            public int extraDodgeChance;
-            public int extraCriticChance;
-
-            public bool canLifeSteal;
-
-            public void Reset()
-            {
-                extraCriticChance = 0;
-                extraDodgeChance = 0;
-                canLifeSteal = false;
-            }
-
-            public void ActControl(List<StatusData> list)
-            {
-                for (int i = 0; i < list.Count; i++)
-                {
-                    Status s = list[i].status;
-                    if (s.StatusType == StatusType.SLOWED)
-                    {
-                        extraDodgeChance -= s.Power;
-                        extraCriticChance -= s.Power;
-                    }
-                    else if (s.StatusType == StatusType.HASTE)
-                    {
-                        extraCriticChance += s.Power;
-                        extraDodgeChance += s.Power;
-                    }
-                    else if (s.StatusType == StatusType.LIFE_STEAL)
-                        canLifeSteal = true;
-                }
-            }
-        }
-        protected StatusActControl statusAct;
+        protected AttackerAct statusAct;
 
         [SerializeField] protected AttackStyle attackStyle = null;
         private AttackStyle tempAttackStyle = null;
@@ -74,7 +40,7 @@ namespace DungeonRush.Property
         {
             animator = card.Animator;
             statusController = card.GetComponent<StatusController>();
-            statusAct = new StatusActControl();
+            statusAct = new AttackerAct();
         }
 
         public abstract void Attack();
@@ -95,7 +61,7 @@ namespace DungeonRush.Property
 
         protected bool IsCriticAttack()
         {
-            int criticChance = card.CriticChance + statusAct.extraCriticChance;
+            int criticChance = card.CriticChance + statusAct.ExtraCriticChance;
             criticChance *= 2;
 
             if (criticChance > 0)
@@ -163,7 +129,7 @@ namespace DungeonRush.Property
             else
                 attackStyle.Attack(move, power * 2);
 
-            if (statusAct.canLifeSteal)
+            if (statusAct.CanLifeSteal)
             {
                 if (!isCritic)
                     card.IncreaseHealth(power);
@@ -211,7 +177,7 @@ namespace DungeonRush.Property
             if (tAttacker != null)
             {
                 tAttacker.StatusActResetAndControl();
-                dodgeChance = card.DodgeChance + tAttacker.statusAct.extraDodgeChance;
+                dodgeChance = card.DodgeChance + tAttacker.statusAct.ExtraDodgeChance;
             }
             else
                 dodgeChance = card.DodgeChance;
