@@ -10,7 +10,7 @@ Material:
   m_Name: Darkness
   m_Shader: {fileID: -6465566751694194690, guid: 774812711f1fd984f885c277ee89b89f,
     type: 3}
-  m_ShaderKeywords: 
+  m_ShaderKeywords: ETC1_EXTERNAL_ALPHA
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -21,12 +21,31 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - Texture2D_B738D4E1:
+        m_Texture: {fileID: 2800000, guid: 0a108e565f8bf8348ab78288609e2e4f, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 2800000, guid: 0a108e565f8bf8348ab78288609e2e4f, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_9D0D020F_Texture_1:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
+    - Vector1_3D5BD2: 0.7
     - Vector1_5A577E9B: 100
+    - Vector1_6C026F75: 0.3
+    - Vector1_831915C3: 0.1
+    - Vector1_8D01E163: 0.5
     - Vector1_D7AD42B: 0
+    - Vector1_D9FA02D0: 0.27
+    - Vector1_E0C3BFC2: 0.5
     m_Colors:
+    - Color_594164B1: {r: 0.9811321, g: 0.80310994, b: 0.21751513, a: 1}
     - Color_BCC6C8F4: {r: 1, g: 1, b: 1, a: 1}
-    - Vector2_637D8EBC: {r: 0, g: 0, b: 0, a: 0}
+    - Color_DF694450: {r: 0.08018869, g: 1, b: 0.6501111, a: 1}
+    - Vector2_4DD39F5E: {r: 0, g: 0.1, b: 0, a: 0}
+    - Vector2_637D8EBC: {r: -0.05, g: 0, b: 0, a: 0}
+    - Vector2_861AB9E6: {r: -0.01, g: 0, b: 0, a: 0}
+    - Vector2_FA055CC8: {r: 0, g: 0.3, b: 0, a: 0}
