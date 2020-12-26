@@ -19,7 +19,7 @@ namespace DungeonRush.Property
 
             Vector3 pos = move.GetCardTile().GetCoordinate();
             UpdateAnimation(true);
-            StartCoroutine(StartMoveAnimation(pos, particulTime));
+            StartMoveAnimation(pos, particulTime);
             move.GetCard().transform.DOMove(move.GetTargetTile().GetCoordinate(), movingTime).OnComplete(() => TerminateMove());
         }
 

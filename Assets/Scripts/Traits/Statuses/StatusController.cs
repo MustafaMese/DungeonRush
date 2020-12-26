@@ -58,12 +58,9 @@ namespace DungeonRush.Traits
         public void AddStatus(Status status)
         {
             GameObject effect = null;
-            GameObject textPopup = null;
 
             if (status.Effect != null)
                 effect = InstatiateObject(status.Effect);
-            if (status.TextPopUp != null)
-                textPopup = InstatiateObject(status.TextPopUp);
 
             StatusData sd;
 
@@ -71,7 +68,7 @@ namespace DungeonRush.Traits
             {
                 GameObject img = characterCanvas.AddImageToPanel(status.Icon).gameObject;
                 sd = new StatusData(status, effect, transform, img);
-                print("1");
+
             }
             else
                 sd = new StatusData(status, effect, transform);
@@ -91,12 +88,9 @@ namespace DungeonRush.Traits
             Status status = statusData.status;
 
             GameObject effect = null;
-            GameObject textPopup = null;
 
             if (status.Effect != null)
                 effect = InstatiateObject(status.Effect);
-            if (status.TextPopUp != null)
-                textPopup = InstatiateObject(status.TextPopUp);
 
             GameObject img = characterCanvas.AddImageToPanel(status.Icon).gameObject;
 
@@ -134,18 +128,15 @@ namespace DungeonRush.Traits
             else
                 statusData.status.Execute(card, true);    
 
-            if (statusData.status.TextPopUp != null)
-                TextPopup(statusData);
             if (statusData.status.Effect != null)
-                StartCoroutine(Animate(statusData));
+                Animate(statusData);
+
+            TextPopup(statusData);
         }
 
-        private IEnumerator Animate(StatusData statusData)
+        private void Animate(StatusData statusData)
         {
-            GameObject obj = statusData.poolForStatusEffect.PullObjectFromPool(transform);
-            obj.transform.position = transform.position;
-            yield return new WaitForSeconds(statusData.status.EffectLifeTime);
-            statusData.poolForStatusEffect.AddObjectToPool(obj);
+            EffectOperator.Instance.Operate(statusData.poolForStatusEffect, transform.position, statusData.status.EffectLifeTime);
         }
 
         private void TextPopup(StatusData statusData)
