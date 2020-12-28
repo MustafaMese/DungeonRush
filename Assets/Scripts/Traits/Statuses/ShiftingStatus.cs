@@ -7,12 +7,11 @@ using UnityEngine;
 
 namespace DungeonRush.Traits
 {
-    [CreateAssetMenu(menuName = "ScriptableObjects/Status/ShiftingStatus")]
     public class ShiftingStatus : Status
     {
         [SerializeField] Shift shifting;
 
-        public override void Execute(Card card, bool lastTurn = false)
+        public override void Execute(Card card)
         {
             if (card != null)
                 card.GetComponent<Mover>().ChangeShiftOneTurn(false, shifting);

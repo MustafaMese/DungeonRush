@@ -46,7 +46,7 @@ public class TextPopupManager : MonoBehaviour
 
     private IEnumerator StartTextPopup(Vector3 tPos, string text)
     {
-        TextPopup obj = poolForTextPopup.PullObjectFromPool(transform);
+        TextPopup obj = poolForTextPopup.Pull(transform);
         obj.gameObject.SetActive(true);
         obj.transform.position = tPos;
         obj.Setup(text, tPos);
@@ -58,7 +58,7 @@ public class TextPopupManager : MonoBehaviour
 
     private IEnumerator StartTextPopup(Vector3 tPos, int damage, bool isCritical = false)
     {
-        TextPopup obj = poolForTextPopup.PullObjectFromPool(transform);
+        TextPopup obj = poolForTextPopup.Pull(transform);
         obj.gameObject.SetActive(true);
         obj.transform.position = tPos;
         obj.Setup(damage, tPos, isCritical);

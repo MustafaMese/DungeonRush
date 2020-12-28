@@ -182,11 +182,6 @@ namespace DungeonRush.Controller
             statusController.ActivateStatuses();
         }
 
-        public void StatusControl()
-        {
-            statusController.StatusControl();
-        }
-
         private void Notify()
         {
             MoveSchedular.Instance.enemyController.ConfigureSurroundingCardsSkinStates();
@@ -199,7 +194,6 @@ namespace DungeonRush.Controller
             }
             else
             {
-                StatusControl();
                 player.InstantMoveCount = player.TotalMoveCount;
                 MoveSchedular.Instance.OnNotify();
             }

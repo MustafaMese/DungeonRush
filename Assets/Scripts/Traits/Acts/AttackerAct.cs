@@ -23,12 +23,12 @@ public class AttackerAct : IAct
         canLifeSteal = false;
     }
 
-    public void ActControl(List<StatusData> list)
+    public void ActControl(List<Status> list)
     {
         Status s;
         for (int i = 0; i < list.Count; i++)
         {
-            s = list[i].status;
+            s = list[i];
             if (s.StatusType == StatusType.SLOWED)
             {
                 extraDodgeChance -= s.Power;
@@ -39,6 +39,7 @@ public class AttackerAct : IAct
                 extraCriticChance += s.Power;
                 extraDodgeChance += s.Power;
             }
+            // TODO Life steal kısmına bir değişken eklenmeli.
             else if (s.StatusType == StatusType.LIFE_STEAL)
                 canLifeSteal = true;
         }

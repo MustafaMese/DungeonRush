@@ -16,11 +16,11 @@ public class HealthAct : IAct
         isAcid = false;
     }
 
-    public void ActControl(List<StatusData> list)
+    public void ActControl(List<Status> list)
     {
         for (int i = 0; i < list.Count; i++)
         {
-            if (list[i].status.StatusType == StatusType.ACID)
+            if (list[i].StatusType == StatusType.ACID)
                 isAcid = true;
         }
     }

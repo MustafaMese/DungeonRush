@@ -280,11 +280,6 @@ namespace DungeonRush.Controller
             statusController.ActivateStatuses();
         }
 
-        public void StatusControl()
-        {
-            statusController.StatusControl();
-        }
-
         private void ChangeState()
         {
             if (statusAct.Anger)
@@ -393,7 +388,6 @@ namespace DungeonRush.Controller
                 }
                 else
                 {
-                    StatusControl();
                     card.InstantMoveCount = card.TotalMoveCount;
                     MoveSchedular.Instance.enemyController.OnNotify();
                 }

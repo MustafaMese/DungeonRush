@@ -37,7 +37,7 @@ namespace DungeonRush.Attacking
 
             if (move.GetTargetTile().GetCard() != null)
             {
-                GameObject obj = pool.PullObjectFromPool(cardTransform);
+                GameObject obj = pool.Pull(cardTransform);
                 attackStyle.SetEffectPosition(obj, cardTransform.position, cardTransform);
                 obj.transform.DOMove(pos, time).OnComplete(() => FinishAnimation(obj, pool, move));
             }

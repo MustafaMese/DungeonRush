@@ -8,7 +8,7 @@ namespace DungeonRush.Skills
     [CreateAssetMenu(menuName = "ScriptableObjects/Skill/StatusCreateOnTargetSkill")]
     public class StatusCreateOnTargetSkill : Skill
     {
-        [SerializeField] Status status;
+        [SerializeField] StatusObject status;
 
         public override void Execute(Move move)
         {

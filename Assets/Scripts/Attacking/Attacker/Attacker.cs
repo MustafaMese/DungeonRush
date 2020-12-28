@@ -217,7 +217,7 @@ namespace DungeonRush.Property
                 {
                     bool isCritic = DoAttackAction(move);
 
-                    List<Status> impacts = attackStyle.GetImpacts();
+                    List<StatusObject> impacts = attackStyle.GetImpacts();
 
                     if(impacts != null && impacts.Count > 0)
                     {

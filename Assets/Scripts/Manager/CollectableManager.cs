@@ -50,7 +50,7 @@ namespace DungeonRush.Managers
         {
             for (int i = 0; i < amount; i++)
             {
-                GameObject coin = objectPool.PullObjectFromPool(transform);
+                GameObject coin = objectPool.Pull(transform);
                 coin.SetActive(true);
                 coin.transform.position = collectedCoinPosition + new Vector3(Random.Range(-spread, spread), Random.Range(-spread, spread), 0f);
 

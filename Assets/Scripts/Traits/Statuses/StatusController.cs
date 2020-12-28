@@ -8,71 +8,28 @@ using UnityEngine.UI;
 
 namespace DungeonRush.Traits
 {
-    [Serializable]
-    public class StatusData
-    {
-        public Status status;
-        public ObjectPool<GameObject> poolForStatusEffect;
-        public GameObject image;
-        public int turnCount;
-
-        public StatusData(Status status, GameObject statusEffect, Transform t, GameObject image = null, int turnCount = -1)
-        {
-            this.status = status;
-
-            poolForStatusEffect = new ObjectPool<GameObject>();
-
-            if (statusEffect != null)
-            {
-                poolForStatusEffect.SetObject(statusEffect);
-                poolForStatusEffect.FillPool(1, t);
-            }
-            if (turnCount == -1)
-                this.turnCount = status.TurnCount;
-            else
-                this.turnCount = turnCount;
-
-            if(image != null)
-                this.image = image;
-        }
-    }
-
     public class StatusController : MonoBehaviour
     {
         [SerializeField] CharacterCanvas characterCanvas;
 
-        public List<StatusData> activeStatuses = new List<StatusData>();
-        public List<Status> STATUS = new List<Status>();
+        public List<Status> activeStatuses = new List<Status>();
+        public List<StatusObject> STATUS = new List<StatusObject>();
 
         private Card card;
         private void Start()
         {
             card = GetComponent<Card>();
-            for (int i = 0; i < STATUS.Count; i++)
+            for(int i = 0; i < STATUS.Count; i++)
             {
                 AddStatus(STATUS[i]);
             }
         }
 
-        public void AddStatus(Status status)
+        public void AddStatus(StatusObject statusObject)
         {
-            GameObject effect = null;
-
-            if (status.Effect != null)
-                effect = InstatiateObject(status.Effect);
-
-            StatusData sd;
-
-            if (status.StatusType != StatusType.INEFFECTIVE)
-            {
-                GameObject img = characterCanvas.AddImageToPanel(status.Icon).gameObject;
-                sd = new StatusData(status, effect, transform, img);
-
-            }
-            else
-                sd = new StatusData(status, effect, transform);
-
-            activeStatuses.Add(sd);
+            Status status = statusObject.Create(transform);
+            status.Initialize(characterCanvas, this);
+            activeStatuses.Add(status);
         }
 
         private GameObject InstatiateObject(GameObject obj)
@@ -80,21 +37,6 @@ namespace DungeonRush.Traits
             GameObject effect = Instantiate(obj, transform);
             effect.SetActive(false);
             return effect;
-        }
-
-        public void AddStatus(StatusData statusData)
-        {
-            Status status = statusData.status;
-
-            GameObject effect = null;
-
-            if (status.Effect != null)
-                effect = InstatiateObject(status.Effect);
-
-            GameObject img = characterCanvas.AddImageToPanel(status.Icon).gameObject;
-
-            statusData = new StatusData(status, effect, transform, img, statusData.turnCount);
-            activeStatuses.Add(statusData);
         }
 
         public void ActivateStatuses()
@@ -105,56 +47,15 @@ namespace DungeonRush.Traits
             }
         }
 
-        public void StatusControl()
+        private void ApplyStatus(Status status)
         {
-            for (int i = 0; i < activeStatuses.Count; i++)
-            {
-                StatusData statusData = activeStatuses[i];
-
-                statusData.turnCount--;
-                if (statusData.turnCount <= 0)
-                {
-                    activeStatuses.Remove(statusData);
-                    StartCoroutine(KillStatus(statusData));
-                }
-            }
+            status.Execute(card);
+            status.Adjust();
         }
 
-        private void ApplyStatus(StatusData statusData)
+        public void Notify(Status status)
         {
-            if (statusData.turnCount > 0)
-                statusData.status.Execute(card);
-            else
-                statusData.status.Execute(card, true);    
-
-            if (statusData.status.Effect != null)
-                Animate(statusData);
-
-            TextPopup(statusData);
-        }
-
-        private void Animate(StatusData statusData)
-        {
-            EffectOperator.Instance.Operate(statusData.poolForStatusEffect, transform.position, statusData.status.EffectLifeTime);
-        }
-
-        private void TextPopup(StatusData statusData)
-        {
-            string power = statusData.status.Power.ToString();
-            Vector3 pos = transform.position;
-            TextPopupManager.Instance.TextPopup(pos, power);
-        }
-
-        private IEnumerator KillStatus(StatusData statusData)
-        {
-            if (statusData.image != null)
-            {
-                Destroy(statusData.image.gameObject);
-                statusData.image = null;
-            }
-
-            yield return new WaitForSeconds(0.6f);
-            TextPopupManager.Instance.DeleteObjectsInPool(statusData.poolForStatusEffect);
+            activeStatuses.Remove(status);
         }
     }
 }

@@ -30,7 +30,7 @@ namespace DungeonRush.Skills
                     poolForEffect.FillPool(3, lineRenderer.transform);
                 }
 
-                GameObject obj = poolForEffect.PullObjectFromPool(lineRenderer.transform);
+                GameObject obj = poolForEffect.Pull(lineRenderer.transform);
                 objects.Add(obj);
 
                 obj.transform.position = targetPositions[i];

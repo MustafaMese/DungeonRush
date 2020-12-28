@@ -23,12 +23,12 @@ public class ControllerAct : IAct
         anger = false;
     }
 
-    public void ActControl(List<StatusData> list)
+    public void ActControl(List<Status> list)
     {
         Status s;
         for (int i = 0; i < list.Count; i++)
         {
-            s = list[i].status;
+            s = list[i];
 
             if (s.StatusType == StatusType.DISARMED)
                 canAttack = false;

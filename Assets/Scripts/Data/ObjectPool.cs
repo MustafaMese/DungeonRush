@@ -29,7 +29,7 @@ namespace DungeonRush.Data
             }
         }
 
-        public T PullObjectFromPool(Transform t)
+        public T Pull(Transform t)
         {
             if (objectPool.Count > 0)
             {
