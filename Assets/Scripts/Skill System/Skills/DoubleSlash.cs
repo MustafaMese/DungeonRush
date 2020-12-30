@@ -5,11 +5,12 @@ using UnityEngine;
 
 namespace DungeonRush.Skills
 {
-    [CreateAssetMenu(menuName = "ScriptableObjects/Skill/DoubleSlash")]
-    public class DoubleSlash : Skill
+    public class DoubleSlash : PassiveSkill
     {
         public override void Execute(Move move)
         {
+            if(!canExecute) return;
+
             Tile targetTile = move.GetTargetTile();
             Card targetCard = targetTile.GetCard();
             
@@ -22,16 +23,6 @@ namespace DungeonRush.Skills
             Transform t = move.GetTargetTile().transform;
             effect.transform.SetParent(t);
             effect.transform.position = t.position;
-        }
-
-        public override Vector3 PositionTextPopup(GameObject textPopup, Move move)
-        {
-            Transform t = move.GetTargetTile().transform;
-            textPopup.transform.SetParent(t);
-            textPopup.transform.position = t.position;
-
-            Vector3 targetPosition = t.position;
-            return targetPosition;
         }
     }
 }

@@ -8,25 +8,24 @@ using UnityEngine;
 
 namespace DungeonRush.Skills
 {
-    [CreateAssetMenu(menuName = "ScriptableObjects/Skill/DoubleAttack")]
-    public class DoubleAttack : Skill
+    public class DoubleAttack : PassiveSkill
     {
+        private Attacker attacker;
+
+        public override void Initialize(Card card)
+        {
+            base.Initialize(card);
+            attacker = card.GetComponent<Attacker>();
+        }
+
         public override void Execute(Move move)
         {
+            if(!canExecute) return;
+
             Card card = move.GetCard();
 
             if (card != null)
-                card.GetComponent<Attacker>().AttackAction(move);
-        }
-
-        public override void PositionEffect(GameObject effect, Move move)
-        {
-            return;
-        }
-
-        public override Vector3 PositionTextPopup(GameObject textPopup, Move move)
-        {
-            return Vector3.zero;
+                attacker.AttackAction(move);
         }
     }
 }

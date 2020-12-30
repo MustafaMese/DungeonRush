@@ -12,12 +12,12 @@ namespace DungeonRush.UI
         [System.Serializable]
         public class SkillButton
         {
-            public SkillData skillData;
+            public Skill skill;
             public Button button;
 
-            public SkillButton(SkillData s, Button b)
+            public SkillButton(Skill s, Button b)
             {
-                skillData = s;
+                skill = s;
                 button = b;
             }
         }
@@ -44,7 +44,7 @@ namespace DungeonRush.UI
             panel.SetActive(activate);
         }
 
-        public void AddSkill(SkillData skillData)
+        public void AddSkill(Skill skillData)
         {
             if (skillButtons.Count <= 0)
             {
@@ -72,8 +72,8 @@ namespace DungeonRush.UI
             if (button == null) return;
 
             Skill skill = null;
-            if (skillButton.skillData != null)
-                skill = skillButton.skillData.skill;
+            if (skillButton.skill != null)
+                skill = skillButton.skill;
 
             if (skill != null)
                 button.image.sprite = skill.IconBig;
@@ -91,23 +91,23 @@ namespace DungeonRush.UI
             return null;
         }
 
-        public Button FindButton(SkillData skillData)
+        public Button FindButton(Skill skill)
         {
             for (int i = 0; i < skillButtons.Count; i++)
             {
-                if (skillButtons[i].skillData != null && skillButtons[i].skillData.listnumber == skillData.listnumber)
+                if (skillButtons[i].skill != null && skillButtons[i].skill == skill)
                     return skillButtons[i].button;
             }
             return null;
         }
 
-        private void FindEmptyButton(List<SkillButton> skillButtons, SkillData skillData)
+        private void FindEmptyButton(List<SkillButton> skillButtons, Skill skill)
         {
             foreach (var skillButton in skillButtons)
             {
-                if (skillButton.skillData == null || skillButton.skillData.skill == null)
+                if (skillButton.skill == null)
                 {
-                    skillButton.skillData = skillData;
+                    skillButton.skill = skill;
                     SetButton(skillButton);
                     return;
                 }
@@ -118,12 +118,11 @@ namespace DungeonRush.UI
         {
             if (!card.Controller.IsRunning()) return;
 
-
             SkillButton skillButton = FindSkill(button);
-            skillUser.ExecuteActiveSkill(skillButton.skillData);
+            skillUser.ExecuteActiveSkill(skillButton.skill);
         }
 
-        public void EnableDisableButton(SkillData skillData, bool enable)
+        public void EnableDisableButton(Skill skillData, bool enable)
         {
             Button b = FindButton(skillData);
 

@@ -6,27 +6,25 @@ using System.Collections.Generic;
 using UnityEngine;
 namespace DungeonRush.Skills
 {
-    [CreateAssetMenu(menuName = "ScriptableObjects/Skill/StatusCreateOnSelfSkill")]
-    public class StatusCreateOnSelfSkill : Skill
+    public class StatusCreateOnSelfSkill : PassiveSkill
     {
         [SerializeField] StatusObject status;
 
+        private StatusController statusController;
+
+        public override void Initialize(Card card)
+        {
+            base.Initialize(card);
+            statusController = card.GetComponent<StatusController>();
+        }
+
         public override void Execute(Move move)
         {
+            if(!canExecute) return;
+
             Card card = move.GetCard();
             if (card != null)
-                card.GetComponent<StatusController>().AddStatus(status);
-        }
-
-        public override void PositionEffect(GameObject effect, Move move)
-        {
-            effect.transform.position = move.GetCard().transform.position;
-            effect.transform.SetParent(move.GetCard().transform);
-        }
-
-        public override Vector3 PositionTextPopup(GameObject textPopup, Move move)
-        {
-            return Vector3.zero;
+                statusController.AddStatus(status);
         }
     }
 }

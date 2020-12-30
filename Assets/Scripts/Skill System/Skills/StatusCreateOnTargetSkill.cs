@@ -5,8 +5,7 @@ using UnityEngine;
 
 namespace DungeonRush.Skills
 {
-    [CreateAssetMenu(menuName = "ScriptableObjects/Skill/StatusCreateOnTargetSkill")]
-    public class StatusCreateOnTargetSkill : Skill
+    public class StatusCreateOnTargetSkill : PassiveSkill
     {
         [SerializeField] StatusObject status;
 
@@ -15,18 +14,8 @@ namespace DungeonRush.Skills
             Card target = move.GetTargetTile().GetCard();
 
             if (target != null)
-                target.GetComponent<StatusController>().AddStatus(status);
+                target.StatusController.AddStatus(status);
 
-        }
-
-        public override void PositionEffect(GameObject effect, Move move)
-        {
-            return;
-        }
-
-        public override Vector3 PositionTextPopup(GameObject textPopup, Move move)
-        {
-            return Vector3.zero;
         }
     }
 }

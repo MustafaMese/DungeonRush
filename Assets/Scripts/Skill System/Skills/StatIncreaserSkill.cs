@@ -8,8 +8,7 @@ using UnityEngine;
 
 namespace DungeonRush.Skills
 {
-    [CreateAssetMenu(menuName = "ScriptableObjects/Skill/StatIncreaser")]
-    public class StatIncreaserSkill : Skill
+    public class StatIncreaserSkill : OneShotSkill
     {
         [SerializeField] StatType statType;
 
@@ -40,19 +39,6 @@ namespace DungeonRush.Skills
                 default:
                     break;
             }
-        }
-
-        public override void PositionEffect(GameObject effect, Move move)
-        {
-            effect.SetActive(true);
-            Transform t = move.GetCard().transform;
-            effect.transform.SetParent(t);
-            effect.transform.position = t.position;
-        }
-
-        public override Vector3 PositionTextPopup(GameObject textPopup, Move move)
-        {
-            return Vector3.zero;
         }
     }
 }

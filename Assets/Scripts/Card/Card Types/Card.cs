@@ -51,6 +51,7 @@ namespace DungeonRush
 
             public IMoveController Controller { get => controller; set => controller = value; }
             public Animator Animator { get => animator; }
+            public StatusController StatusController { get => statusController; }
 
             public void Start()
             {

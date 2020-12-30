@@ -31,7 +31,7 @@ namespace DungeonRush.Cards
             if (s == null) return;
 
             UIManager.Instance.EnableSkillCanvas(skill);
-            card.GetComponent<SkillUser>().AddSkill(s);
+            //card.GetComponent<SkillUser>().AddSkill(s);
         }
 
         private IEnumerator Disapper()

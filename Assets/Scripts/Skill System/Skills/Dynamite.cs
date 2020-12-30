@@ -8,8 +8,7 @@ using UnityEngine;
 
 namespace DungeonRush.Skills
 {
-    [CreateAssetMenu(menuName = "ScriptableObjects/Skill/Dynamite")]
-    public class Dynamite : Skill
+    public class Dynamite : ActiveSkill
     {
         private Vector2[] directions = {new Vector2(0, 1), new Vector2(0, 2), new Vector2(1, 0), new Vector2(2, 0),
                                             new Vector2(-1, 0), new Vector2(-2, 0), new Vector2(0, -1), new Vector2(0, -2)};
@@ -22,6 +21,8 @@ namespace DungeonRush.Skills
 
         public override void Execute(Move move)
         {
+            if(!canExecute) return;
+
             FindTargets(move);
 
             for (int i = 0; i < targets.Count; i++)
@@ -30,6 +31,8 @@ namespace DungeonRush.Skills
                 if (tCard != null)
                     tCard.DecreaseHealth(Power);
             }
+
+            SkillButtonControl();
         }
 
         public override void PositionEffect(GameObject effect, Move move)
@@ -47,12 +50,7 @@ namespace DungeonRush.Skills
 
             effect.transform.rotation = Quaternion.Euler(new Vector3(0, 0, rot));
         }
-
-        public override Vector3 PositionTextPopup(GameObject textPopup, Move move)
-        {
-            throw new System.NotImplementedException();
-        }
-
+        
         private float RotateAngle(float z, int d)
         {
             return Mathf.MoveTowardsAngle(z, d, circleAngle);

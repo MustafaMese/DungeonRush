@@ -6,41 +6,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace DungeonRush.Skills {
-
-    [Serializable]
-    public class SkillData
-    {
-        public Skill skill;
-        public ObjectPool<GameObject> poolForEffect;
-        public int tempCooldown;
-
-        public int listnumber;
-
-        public SkillData(Skill skill, Transform t, int listnumber)
-        {
-            this.skill = skill;
-
-            if (skill.Effect != null)
-            {
-                poolForEffect = new ObjectPool<GameObject>();
-                poolForEffect.SetObject(skill.Effect);
-                poolForEffect.FillPool(1, t);
-            }
-
-            tempCooldown = 0;
-
-            this.listnumber = listnumber;
-        }
-    }
-
+namespace DungeonRush.Skills 
+{
     public class SkillUser : MonoBehaviour
     {
-        public List<SkillData> skills = new List<SkillData>();
+        public List<Skill> skills = new List<Skill>();
         private Card card;
         private bool isBeginning;
         private int lastIndex;
-        public List<Skill> SKILLS = new List<Skill>();
+        public List<SkillObject> SKILLS = new List<SkillObject>();
         private void Start()
         {
             lastIndex = 0;
@@ -53,7 +27,6 @@ namespace DungeonRush.Skills {
                     AddSkill(SKILLS[i]);
                 }
             }
-
         }
 
         public List<string> GetSkillIDs()
@@ -61,42 +34,35 @@ namespace DungeonRush.Skills {
             List<string> ids = new List<string>();
             for (int i = 0; i < skills.Count; i++)
             {
-                string id = skills[i].skill.SkillName;
+                string id = skills[i].SkillName;
                 ids.Add(id);
             }
             return ids;
         }
 
-        public void AddSkill(Skill skill)
+        public void AddSkill(SkillObject skillObject)
         {
-            SkillData s = new SkillData(skill, transform, lastIndex);
-            if (skill.IsActive)
-                UIManager.Instance.AddSkillToButton(s);
+            Skill skill = skillObject.Create(transform);
+            skill.Initialize(card);
+
+            if (skill.skillType == SkillType.ACTIVE)
+                UIManager.Instance.AddSkillToButton(skill);
 
             UIManager.Instance.AddSkillToSkillSet(skill.IconSmall);
 
-            skills.Add(s);
-            lastIndex++;
+            skills.Add(skill);
         }
 
-        public void AddSkill(SkillData skillData)
-        {
-            if (skillData.skill.IsActive)
-                UIManager.Instance.AddSkillToButton(skillData);
-
-            skills.Add(skillData);
-            lastIndex = skillData.listnumber + 1;
-        }
-
-        public void ExecuteActiveSkill(SkillData skillD)
+        public void ExecuteActiveSkill(Skill skill)
         {
             for (int i = 0; i < skills.Count; i++)
             {
-                SkillData skillData = skills[i];
-                if (skillData.skill.IsActive && skillData.listnumber == skillD.listnumber)
-                    ExecuteSkill(skillData, true);
+                Skill s = skills[i];
+
+                if (skill.skillType == SkillType.ACTIVE && s == skill)
+                    ExecuteSkill(skill, true);
                 else
-                    DecreaseCooldown(skillData);
+                    s.DecreaseCooldown();
             }
         }
 
@@ -104,11 +70,12 @@ namespace DungeonRush.Skills {
         {
             for (int i = 0; i < skills.Count; i++)
             {
-                SkillData skillData = skills[i];
-                if(skillData.skill.IsAttacker && !skillData.skill.IsActive)
-                    ExecuteSkill(skillData);
+                Skill skill = skills[i];
+
+                if(skill.skillType != SkillType.ACTIVE && skill.IsAttacker)
+                    ExecuteSkill(skill);
                 else
-                    DecreaseCooldown(skillData);
+                    skill.DecreaseCooldown();
             }
         }
 
@@ -116,15 +83,16 @@ namespace DungeonRush.Skills {
         {
             for (int i = 0; i < skills.Count; i++)
             {
-                SkillData skillData = skills[i];
-                if (!skillData.skill.IsAttacker && !skillData.skill.IsActive)
-                    ExecuteSkill(skillData);
+                Skill skill = skills[i];
+
+                if (skill.skillType != SkillType.ACTIVE && !skill.IsAttacker)
+                    ExecuteSkill(skill);
                 else
-                    DecreaseCooldown(skillData);
+                    skill.DecreaseCooldown();
             }
         }
 
-        private void ExecuteSkill(SkillData skillData, bool isActive = false)
+        private void ExecuteSkill(Skill skill, bool isActive = false)
         {
             if(card.GetMove().GetCard() == null)
             {
@@ -132,118 +100,8 @@ namespace DungeonRush.Skills {
                 card.SetMove(move);
             }
 
-            if (!skillData.skill.IsMultiUse && skillData.tempCooldown != -1)
-            {
-                skillData.tempCooldown = -1;
-                skillData.skill.Execute(card.GetMove());
-                PlayAnimation(skillData, card.GetMove());
-
-            }
-            else if(skillData.skill.IsMultiUse)
-            {
-                if (CooldownControl(skillData))
-                {
-                    if (!skillData.skill.IsActive)
-                    {
-                        skillData.skill.Execute(card.GetMove());
-                        PlayAnimation(skillData, card.GetMove());
-                        IncreaseCooldown(skillData);
-
-                    }
-                    else
-                    {
-                        if (isActive)
-                        {
-                            Move move = new Move(card);
-                            skillData.skill.Execute(move);
-                            PlayAnimation(skillData, move);
-                            IncreaseCooldown(skillData);
-                            card.Controller.Stop();
-                        }
-                        else return;
-                    }
-                }
-                else
-                    DecreaseCooldown(skillData);
-            }
-
-            SkillButtonControl(skillData);
+            skill.Adjust(card.GetMove());
+            skill.Execute(card.GetMove());
         }
-
-        private void PlayAnimation(SkillData skillData, Move move)
-        {
-
-            if (skillData.skill.Effect != null)
-                Animate(skillData, move);
-            if (skillData.skill.TextPopup != null)
-                TextPopup(skillData, move);
-        }
-
-        private void Animate(SkillData skillData, Move move)
-        {
-            EffectOperator.Instance.Operate(skillData, move);
-        }
-
-        private void TextPopup(SkillData skillData, Move move)
-        {
-            GameObject obj;
-            int count = skillData.skill.GetGameobjectCount(true);
-            for (int i = 0; i < count; i++)
-            {
-                obj = skillData.skill.Effect;
-                string power = skillData.skill.Power.ToString();
-
-                TextPopupManager.Instance.TextPopup(obj.transform.position, power);
-            }
-            
-        }
-
-        public bool CooldownControl(SkillData skillData)
-        {
-            if (skillData.tempCooldown > 0)
-                return false;
-            else
-            {
-                if (skillData.skill.ChanceFactor != 0)
-                    return CalculateChance(skillData);
-                return true;
-            }
-        }
-
-        private bool CalculateChance(SkillData skillData)
-        {
-            int number = UnityEngine.Random.Range(0, 101);
-            if (skillData.skill.ChanceFactor <= number)
-                return true;
-            return false;
-        }
-
-        private void DecreaseCooldown(SkillData skillData)
-        {
-            if (skillData.tempCooldown > 0 && skillData.skill.IsMultiUse)
-                skillData.tempCooldown--;
-
-            SkillButtonControl(skillData);
-
-        }
-
-        private void SkillButtonControl(SkillData skillData)
-        {
-            if (skillData.skill.IsActive)
-            {
-                if (skillData.tempCooldown <= 0)
-                    UIManager.Instance.ButtonControl(skillData, true);
-                else
-                    UIManager.Instance.ButtonControl(skillData, false);
-            }
-        }
-
-        private void IncreaseCooldown(SkillData skillData)
-        {
-            if(skillData.skill.IsMultiUse)
-                skillData.tempCooldown = skillData.skill.Cooldown;
-        }
-
-
     }
 }

@@ -9,8 +9,7 @@ using UnityEngine;
 
 namespace DungeonRush.Skills
 {
-    [CreateAssetMenu(menuName = "ScriptableObjects/Skill/Bomb")]
-    public class Bomb : Skill
+    public class Bomb : ActiveSkill
     {
         private Vector2[] directions = {new Vector2(0, 1), new Vector2(0, -1), new Vector2(1, 0), new Vector2(-1, 0),
                                         new Vector2(-1, 1), new Vector2(1, 1), new Vector2(-1, -1), new Vector2(1, -1)};
@@ -19,6 +18,8 @@ namespace DungeonRush.Skills
 
         public override void Execute(Move move)
         {
+            if(!canExecute) return;
+
             FindTargets(move);
 
             for (int i = 0; i < targets.Count; i++)
@@ -27,6 +28,8 @@ namespace DungeonRush.Skills
                 if (tCard != null)
                     tCard.DecreaseHealth(Power);
             }
+
+            SkillButtonControl();
         }
 
         private void FindTargets(Move move)
@@ -57,11 +60,6 @@ namespace DungeonRush.Skills
             Transform t = move.GetCard().transform;
             effect.transform.SetParent(t);
             effect.transform.position = t.position;
-        }
-
-        public override Vector3 PositionTextPopup(GameObject textPopup, Move move)
-        {
-            return Vector3.zero;
         }
     }
 }

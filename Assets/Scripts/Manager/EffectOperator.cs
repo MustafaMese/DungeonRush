@@ -29,12 +29,7 @@ public class EffectOperator : MonoBehaviour
     {
         StartCoroutine(OperateEffect(pool, pos, time));
     }
-
-    public void Operate(SkillData skillData, Move move)
-    {
-        StartCoroutine(OperateEffect(skillData, move));
-    }
-
+    
     private IEnumerator OperateEffect(ObjectPool<GameObject> pool, Transform cardTransform, Transform target, float time, AttackStyle attackStyle)
     {
         GameObject obj = pool.Pull(cardTransform);
@@ -56,31 +51,6 @@ public class EffectOperator : MonoBehaviour
         obj.SetActive(false);
         obj.transform.SetParent(transform);
         pool.AddObjectToPool(obj);
-    }
-
-    private IEnumerator OperateEffect(SkillData skillData, Move move)
-    {
-        GameObject obj;
-        List<GameObject> objects = new List<GameObject>();
-        int count = skillData.skill.GetGameobjectCount();
-        for (int i = 0; i < count; i++)
-        {
-            obj = skillData.poolForEffect.Pull(transform);
-            obj.SetActive(true);
-
-            skillData.skill.PositionEffect(obj, move);
-            objects.Add(obj);
-        }
-
-        yield return new WaitForSeconds(skillData.skill.EffectTime);
-
-        for (int i = 0; i < count; i++)
-        {
-            obj = objects[i];
-            obj.transform.SetParent(transform);
-            obj.SetActive(false);
-            skillData.poolForEffect.AddObjectToPool(obj);
-        }
     }
 
     public void Delete(ObjectPool<GameObject> pool)

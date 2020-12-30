@@ -5,11 +5,12 @@ using DungeonRush.Data;
 using UnityEngine;
 namespace DungeonRush.Skills
 {
-    [CreateAssetMenu(menuName = "ScriptableObjects/Skill/InstantKill")]
-    public class InstantKill : Skill
+    public class InstantKill : PassiveSkill
     {
         public override void Execute(Move move)
         {
+            if(!canExecute) return;
+
             Card card = move.GetTargetTile().GetCard();
             if (card != null)
                 card.DecreaseHealth(10000);
@@ -20,11 +21,6 @@ namespace DungeonRush.Skills
             Transform t = move.GetCard().transform;
             effect.transform.SetParent(t);
             effect.transform.position = t.position;
-        }
-
-        public override Vector3 PositionTextPopup(GameObject textPopup, Move move)
-        {
-            throw new System.NotImplementedException();
         }
     }
 }

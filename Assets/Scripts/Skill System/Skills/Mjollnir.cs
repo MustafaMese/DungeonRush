@@ -7,8 +7,7 @@ using UnityEngine;
 
 namespace DungeonRush.Skills
 {
-    [CreateAssetMenu(menuName = "ScriptableObjects/Skill/Mjollnir")]
-    public class Mjollnir : Skill
+    public class Mjollnir : PassiveSkill
     {
         private Vector2[] directions = { new Vector2(0, 1), new Vector2(0, -1), new Vector2(1, 0), new Vector2(-1, 0),
                                         new Vector2(-1, 1), new Vector2(1, 1), new Vector2(-1, -1), new Vector2(1, -1),
@@ -19,6 +18,8 @@ namespace DungeonRush.Skills
 
         public override void Execute(Move move)
         {
+            if(!canExecute) return;
+
             FindTargets(move);
             for (int i = 0; i < targets.Count; i++)
             {
@@ -32,13 +33,9 @@ namespace DungeonRush.Skills
         {
             effect.transform.SetParent(null);
             effect.transform.position = Vector3.zero;
+            // TODO BU KISMA BİR AYAR LAZIM.
             MjollnirPositioning mPos = effect.GetComponent<MjollnirPositioning>();
             mPos.Execute(targetPositions, EffectTime);
-        }
-
-        public override Vector3 PositionTextPopup(GameObject textPopup, Move move)
-        {
-            throw new System.NotImplementedException();
         }
 
         private void FindTargets(Move move)

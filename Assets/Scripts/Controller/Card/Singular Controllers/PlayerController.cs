@@ -228,7 +228,7 @@ namespace DungeonRush.Controller
             for (int i = 0; i < data.uniqueSkillIDs.Length; i++)
             {
                 Skill skill = ItemDB.Instance.GetSkill(data.uniqueSkillIDs[i]);
-                player.GetComponent<SkillUser>().AddSkill(skill);
+                //player.GetComponent<SkillUser>().AddSkill(skill);
             }
         }
 

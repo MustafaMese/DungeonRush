@@ -198,12 +198,12 @@ namespace DungeonRush.UI
 
         #region ACTIVE SKİLL CANVAS METHODS
 
-        public void ButtonControl(SkillData skill, bool enable)
+        public void ButtonControl(Skill skill, bool enable)
         {
             _activeSkillCanvas.EnableDisableButton(skill, enable);
         }
 
-        public void AddSkillToButton(SkillData skill)
+        public void AddSkillToButton(Skill skill)
         {
             if (_activeSkillCanvas == null)
             {
