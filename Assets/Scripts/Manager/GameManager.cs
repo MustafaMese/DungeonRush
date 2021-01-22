@@ -1,6 +1,7 @@
 ﻿using DungeonRush.Controller;
 using UnityEngine;
 using DungeonRush.UI;
+using DungeonRush.Camera;
 
 namespace DungeonRush
 {

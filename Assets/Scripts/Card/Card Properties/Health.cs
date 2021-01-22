@@ -3,8 +3,8 @@ using DungeonRush.Controller;
 using DungeonRush.Items;
 using DungeonRush.Managers;
 using DungeonRush.Traits;
+using DungeonRush.UI.HUD;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace DungeonRush.Property
@@ -144,8 +144,8 @@ namespace DungeonRush.Property
         private int CalculateBlockedDamageByArmor(int amount)
         {
             int armor = 0;
-            if (itemUser && itemUser.GetArmor() != null)
-                armor = itemUser.GetArmor().GetPower();
+            if (itemUser)
+                armor = itemUser.GetArmor();
             amount -= armor;
             amount = Mathf.Max(0, amount);
             return amount;

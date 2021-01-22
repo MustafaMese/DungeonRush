@@ -1,27 +1,29 @@
 using System.Collections.Generic;
-using DungeonRush.Traits;
 
-public class HealthAct : IAct
+namespace DungeonRush.Traits
 {
-    public bool isAcid;
-    public bool IsAcid { get => isAcid; }
-
-    public HealthAct()
+    public class HealthAct : IAct
     {
-        Reset();
-    }
+        public bool isAcid;
+        public bool IsAcid { get => isAcid; }
 
-    public void Reset()
-    {
-        isAcid = false;
-    }
-
-    public void ActControl(List<Status> list)
-    {
-        for (int i = 0; i < list.Count; i++)
+        public HealthAct()
         {
-            if (list[i].StatusType == StatusType.ACID)
-                isAcid = true;
+            Reset();
+        }
+
+        public void Reset()
+        {
+            isAcid = false;
+        }
+
+        public void ActControl(List<Status> list)
+        {
+            for (int i = 0; i < list.Count; i++)
+            {
+                if (list[i].StatusType == StatusType.ACID)
+                    isAcid = true;
+            }
         }
     }
 }

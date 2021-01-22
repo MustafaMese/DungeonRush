@@ -1,9 +1,6 @@
 ﻿using DungeonRush.Cards;
 using DungeonRush.Items;
-using DungeonRush.Property;
 using DungeonRush.Skills;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
@@ -13,6 +10,12 @@ public class PlayerData
     public int currentHealth;
     public int gold;
     public int xp;
+
+    public int criticChance;
+    public int dodgeChance;
+    public int lifeCount;
+    public int moveCount;
+    public int lootChance;
 
     public string[] uniqueItemIDs;
     public string[] uniqueSkillIDs;
@@ -24,11 +27,17 @@ public class PlayerData
         gold = player.Coins;
         xp = player.Experience;
 
+        criticChance = player.CriticChance;
+        dodgeChance = player.DodgeChance;
+        lifeCount = player.LifeCount;
+        moveCount = player.TotalMoveCount;
+        lootChance = player.LootChance;
+
+        Debug.Log("1");
+
         uniqueItemIDs = player.GetComponent<ItemUser>().GetItemsIDs().ToArray();
         uniqueSkillIDs = player.GetComponent<SkillUser>().GetSkillIDs().ToArray();
-        foreach (var item in uniqueSkillIDs)
-        {
-            Debug.Log("hobb");
-        }
+
+        Debug.Log("2");
     }
 }

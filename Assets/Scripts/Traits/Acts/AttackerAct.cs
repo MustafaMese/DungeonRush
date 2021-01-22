@@ -1,47 +1,49 @@
 using System.Collections.Generic;
-using DungeonRush.Traits;
 
-public class AttackerAct : IAct
+namespace DungeonRush.Traits
 {
-    private int extraDodgeChance;
-    private int extraCriticChance;
-    private bool canLifeSteal;
-
-    public int ExtraDodgeChance { get => extraDodgeChance; }
-    public int ExtraCriticChance { get => extraCriticChance; }
-    public bool CanLifeSteal { get => canLifeSteal; }
-
-    public AttackerAct()
+    public class AttackerAct : IAct
     {
-        Reset();
-    }
+        private int extraDodgeChance;
+        private int extraCriticChance;
+        private bool canLifeSteal;
 
-    public void Reset()
-    {
-        extraCriticChance = 0;
-        extraDodgeChance = 0;
-        canLifeSteal = false;
-    }
+        public int ExtraDodgeChance { get => extraDodgeChance; }
+        public int ExtraCriticChance { get => extraCriticChance; }
+        public bool CanLifeSteal { get => canLifeSteal; }
 
-    public void ActControl(List<Status> list)
-    {
-        Status s;
-        for (int i = 0; i < list.Count; i++)
+        public AttackerAct()
         {
-            s = list[i];
-            if (s.StatusType == StatusType.SLOWED)
+            Reset();
+        }
+
+        public void Reset()
+        {
+            extraCriticChance = 0;
+            extraDodgeChance = 0;
+            canLifeSteal = false;
+        }
+
+        public void ActControl(List<Status> list)
+        {
+            Status s;
+            for (int i = 0; i < list.Count; i++)
             {
-                extraDodgeChance -= s.Power;
-                extraCriticChance -= s.Power;
+                s = list[i];
+                if (s.StatusType == StatusType.SLOWED)
+                {
+                    extraDodgeChance -= s.Power;
+                    extraCriticChance -= s.Power;
+                }
+                else if (s.StatusType == StatusType.HASTE)
+                {
+                    extraCriticChance += s.Power;
+                    extraDodgeChance += s.Power;
+                }
+                // TODO Life steal kısmına bir değişken eklenmeli.
+                else if (s.StatusType == StatusType.LIFE_STEAL)
+                    canLifeSteal = true;
             }
-            else if (s.StatusType == StatusType.HASTE)
-            {
-                extraCriticChance += s.Power;
-                extraDodgeChance += s.Power;
-            }
-            // TODO Life steal kısmına bir değişken eklenmeli.
-            else if (s.StatusType == StatusType.LIFE_STEAL)
-                canLifeSteal = true;
         }
     }
 }

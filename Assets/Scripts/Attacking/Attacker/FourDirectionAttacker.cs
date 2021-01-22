@@ -1,6 +1,7 @@
 ﻿using DG.Tweening;
 using DungeonRush.Cards;
 using DungeonRush.Data;
+using DungeonRush.Managers;
 using DungeonRush.Property;
 using System.Collections;
 using System.Collections.Generic;

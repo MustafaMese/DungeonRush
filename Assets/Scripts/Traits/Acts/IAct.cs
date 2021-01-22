@@ -1,9 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using DungeonRush.Traits;
 
-public interface IAct
+namespace DungeonRush.Traits
 {
-    void Reset();
-    void ActControl(List<Status> list);
+    public interface IAct
+    {
+        void Reset();
+        void ActControl(List<Status> list);
+    }
 }

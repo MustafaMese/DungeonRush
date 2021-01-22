@@ -11,7 +11,7 @@ namespace DungeonRush.Cards
 {
     public class SkillEventCard : EventCard
     {
-        [SerializeField] Skill skill = null;
+        [SerializeField] SkillObject skill = null;
         [SerializeField] float disapperTime = 0;
         [SerializeField] SpriteRenderer sprite;
 
@@ -26,12 +26,11 @@ namespace DungeonRush.Cards
             skill = ItemDB.Instance.GetRandomSkill();
         }
 
-        private void SkillMove(Card card, Skill s)
+        private void SkillMove(Card card, SkillObject s)
         {
             if (s == null) return;
 
-            UIManager.Instance.EnableSkillCanvas(skill);
-            //card.GetComponent<SkillUser>().AddSkill(s);
+            card.GetComponent<SkillUser>().AddSkill(s);
         }
 
         private IEnumerator Disapper()

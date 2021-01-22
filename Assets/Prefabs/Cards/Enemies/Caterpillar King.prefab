@@ -91,33 +91,6 @@ MonoBehaviour:
   closingToEnemyTime: 0.1
   damageTime: 0.1
   getBackTime: 0.1
---- !u!114 &5346788060561267885
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6995606953326741444}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b98a7688d82ce344f8c1a507ec17da64, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  characterCanvas: {fileID: 812895328676786356}
-  sprites:
-  - {fileID: 8504048360668887362}
-  - {fileID: 5922704919872513236}
-  - {fileID: 9165715623567517626}
-  - {fileID: 5172135382831326091}
-  - {fileID: 1499995606399360595}
-  skins:
-  - {fileID: 539808770435174611}
-  - {fileID: 7725206626880990632}
-  - {fileID: 7995657616821386765}
-  - {fileID: 6735761907841836188}
-  - {fileID: 4104106068819352583}
-  shadow: {fileID: 2100000, guid: 943b33980a870a54c9163867b510bb42, type: 2}
-  lighted: {fileID: 2100000, guid: 84f4f57980c3b454680a7e68c6f089d9, type: 2}
 --- !u!114 &5395896747411651903
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -147,6 +120,34 @@ MonoBehaviour:
   shifting: {fileID: 11400000, guid: b63af612c90819841857890a9a82e19c, type: 2}
   movingTime: 0.2
   particulTime: 1
+--- !u!114 &2960432483557052508
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6995606953326741444}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c85bcd2b66124fc48819646c22ce26e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shadow: {fileID: 2100000, guid: 943b33980a870a54c9163867b510bb42, type: 2}
+  lighted: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  characterCanvas: {fileID: 812895328676786356}
+  sprites:
+  - {fileID: 8504048360668887362}
+  - {fileID: 5922704919872513236}
+  - {fileID: 9165715623567517626}
+  - {fileID: 5172135382831326091}
+  - {fileID: 1499995606399360595}
+  - {fileID: 4583394283895719469}
+  skins:
+  - {fileID: 539808770435174611}
+  - {fileID: 7725206626880990632}
+  - {fileID: 7995657616821386765}
+  - {fileID: 6735761907841836188}
+  - {fileID: 4104106068819352583}
 --- !u!1001 &1288639490317769279
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -807,6 +808,12 @@ Transform:
 --- !u!4 &5377626327986448973 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6576100356315803762, guid: 4876717b19b8b1345b79456f468c7689,
+    type: 3}
+  m_PrefabInstance: {fileID: 1288639490317769279}
+  m_PrefabAsset: {fileID: 0}
+--- !u!212 &4583394283895719469 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 3348802462407941138, guid: 4876717b19b8b1345b79456f468c7689,
     type: 3}
   m_PrefabInstance: {fileID: 1288639490317769279}
   m_PrefabAsset: {fileID: 0}

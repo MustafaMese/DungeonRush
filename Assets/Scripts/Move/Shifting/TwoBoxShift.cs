@@ -13,16 +13,17 @@ namespace DungeonRush.Shifting
     {
         public override bool Define(Card card, Swipe swipe)
         {
-            int rL = Board.RowLength;
             Vector2 coordinate = card.GetTile().transform.position;
+            Vector2 targetPos = Vector2.zero;
+
             switch (swipe)
             {
                 case Swipe.NONE:
                     break;
                 case Swipe.UP:
-                    if (coordinate.y < rL - 2)
+                    targetPos = new Vector2(coordinate.x, coordinate.y + 2);
+                    if (Board.tilesByCoordinates.ContainsKey(targetPos))
                     {
-                        Vector2 targetPos = new Vector2(coordinate.x, coordinate.y + 2);
                         Tile targetTile = Board.tilesByCoordinates[targetPos];
                         if (targetTile.GetCard() == null || targetTile.GetCard().GetCardType() == CardType.EVENT)
                         {
@@ -31,9 +32,9 @@ namespace DungeonRush.Shifting
                         }
                     }
 
-                    if (coordinate.y < rL - 1)
+                    targetPos = new Vector2(coordinate.x, coordinate.y + 1);
+                    if (Board.tilesByCoordinates.ContainsKey(targetPos))
                     {
-                        Vector2 targetPos = new Vector2(coordinate.x, coordinate.y + 1);
                         Tile targetTile = Board.tilesByCoordinates[targetPos];
                         if (targetTile.GetCard() == null || targetTile.GetCard().GetCardType() == CardType.EVENT)
                         {
@@ -43,9 +44,9 @@ namespace DungeonRush.Shifting
                     }
                     break;
                 case Swipe.DOWN:
-                    if (coordinate.y > 1)
+                    targetPos = new Vector2(coordinate.x, coordinate.y - 2);
+                    if (Board.tilesByCoordinates.ContainsKey(targetPos))
                     {
-                        Vector2 targetPos = new Vector2(coordinate.x, coordinate.y - 2);
                         Tile targetTile = Board.tilesByCoordinates[targetPos];
                         if (targetTile.GetCard() == null || targetTile.GetCard().GetCardType() == CardType.EVENT)
                         {
@@ -54,9 +55,9 @@ namespace DungeonRush.Shifting
                         }
                     }
 
-                    if (coordinate.y > 0)
+                    targetPos = new Vector2(coordinate.x, coordinate.y - 1);
+                    if (Board.tilesByCoordinates.ContainsKey(targetPos))
                     {
-                        Vector2 targetPos = new Vector2(coordinate.x, coordinate.y - 1);
                         Tile targetTile = Board.tilesByCoordinates[targetPos];
                         if (targetTile.GetCard() == null || targetTile.GetCard().GetCardType() == CardType.EVENT)
                         {
@@ -66,9 +67,9 @@ namespace DungeonRush.Shifting
                     }
                     break;
                 case Swipe.LEFT:
-                    if (coordinate.x > 1)
+                    targetPos = new Vector2(coordinate.x - 2, coordinate.y);
+                    if (Board.tilesByCoordinates.ContainsKey(targetPos))
                     {
-                        Vector2 targetPos = new Vector2(coordinate.x - 2, coordinate.y);
                         Tile targetTile = Board.tilesByCoordinates[targetPos];
                         if (targetTile.GetCard() == null || targetTile.GetCard().GetCardType() == CardType.EVENT)
                         {
@@ -77,9 +78,9 @@ namespace DungeonRush.Shifting
                         }
                     }
 
-                    if (coordinate.x > 0)
+                    targetPos = new Vector2(coordinate.x - 1, coordinate.y);
+                    if (Board.tilesByCoordinates.ContainsKey(targetPos))
                     {
-                        Vector2 targetPos = new Vector2(coordinate.x - 1, coordinate.y);
                         Tile targetTile = Board.tilesByCoordinates[targetPos];
                         if (targetTile.GetCard() == null || targetTile.GetCard().GetCardType() == CardType.EVENT)
                         {
@@ -89,9 +90,9 @@ namespace DungeonRush.Shifting
                     }
                     break;
                 case Swipe.RIGHT:
-                    if (coordinate.x < rL - 2)
+                    targetPos = new Vector2(coordinate.x + 2, coordinate.y);
+                    if (Board.tilesByCoordinates.ContainsKey(targetPos))
                     {
-                        Vector2 targetPos = new Vector2(coordinate.x + 2, coordinate.y);
                         Tile targetTile = Board.tilesByCoordinates[targetPos];
                         if (targetTile.GetCard() == null || targetTile.GetCard().GetCardType() == CardType.EVENT)
                         {
@@ -100,9 +101,9 @@ namespace DungeonRush.Shifting
                         }
                     }
 
-                    if (coordinate.x < rL - 1)
+                    targetPos = new Vector2(coordinate.x + 1, coordinate.y);
+                    if (Board.tilesByCoordinates.ContainsKey(targetPos))
                     {
-                        Vector2 targetPos = new Vector2(coordinate.x + 1, coordinate.y);
                         Tile targetTile = Board.tilesByCoordinates[targetPos];
                         if (targetTile.GetCard() == null || targetTile.GetCard().GetCardType() == CardType.EVENT)
                         {
@@ -156,7 +157,7 @@ namespace DungeonRush.Shifting
             if (card == null) return null;
 
             Vector2 coordinate = card.GetTile().transform.position;
-            int rL = Board.RowLength;
+            Vector2 targetCoordinate = Vector2.zero;
             Dictionary<Tile, Swipe> avaibleTiles = new Dictionary<Tile, Swipe>();
 
             bool upper = false;
@@ -164,79 +165,67 @@ namespace DungeonRush.Shifting
             bool left = false;
             bool right = false;
 
-            if(coordinate.y < rL - 2) 
+            targetCoordinate = new Vector2(coordinate.x, coordinate.y + 2);
+            if(Board.tilesByCoordinates.ContainsKey(targetCoordinate)) 
             {
                 upper = true;
-                var targetCoordinate = new Vector2(coordinate.x, coordinate.y + 2);
                 var upperTile = Board.tilesByCoordinates[targetCoordinate];
                 if(upperTile.GetCard() == null || card.GetCharacterType().IsEnemy(upperTile.GetCard().GetCharacterType()))
-                {
                     avaibleTiles.Add(upperTile, Swipe.UP);
-                }
             }
-            if(!upper & coordinate.y < rL - 1) 
+            targetCoordinate = new Vector2(coordinate.x, coordinate.y + 1);
+            if(!upper & Board.tilesByCoordinates.ContainsKey(targetCoordinate)) 
             {
-                var targetCoordinate = new Vector2(coordinate.x, coordinate.y + 1);
                 var upperTile = Board.tilesByCoordinates[targetCoordinate];
                 if (upperTile.GetCard() == null || card.GetCharacterType().IsEnemy(upperTile.GetCard().GetCharacterType()))
-                {
                     avaibleTiles.Add(upperTile, Swipe.UP);
-                }
             }
 
-            if(coordinate.y > 1)
+            targetCoordinate = new Vector2(coordinate.x, coordinate.y - 2);
+            if(Board.tilesByCoordinates.ContainsKey(targetCoordinate))
             {
                 lower = true;
-                var targetCoordinate = new Vector2(coordinate.x, coordinate.y - 2);
                 var lowerTile = Board.tilesByCoordinates[targetCoordinate];
                 if (lowerTile.GetCard() == null || card.GetCharacterType().IsEnemy(lowerTile.GetCard().GetCharacterType()))
-                {
                     avaibleTiles.Add(lowerTile, Swipe.DOWN);
-                }
             }
-            if(!lower && coordinate.y > 0)
+            targetCoordinate = new Vector2(coordinate.x, coordinate.y - 1);
+            if(!lower && Board.tilesByCoordinates.ContainsKey(targetCoordinate))
             {
-                var targetCoordinate = new Vector2(coordinate.x, coordinate.y - 1);
                 var lowerTile = Board.tilesByCoordinates[targetCoordinate];
                 if (lowerTile.GetCard() == null || card.GetCharacterType().IsEnemy(lowerTile.GetCard().GetCharacterType()))
-                {
                     avaibleTiles.Add(lowerTile, Swipe.DOWN);
-                }
             }
 
-            if(coordinate.x > 1)
+            targetCoordinate = new Vector2(coordinate.x - 2, coordinate.y);
+            if(Board.tilesByCoordinates.ContainsKey(targetCoordinate))
             {
                 left = true;
-                var targetCoordinate = new Vector2(coordinate.x - 2, coordinate.y);
                 var leftTile = Board.tilesByCoordinates[targetCoordinate];
                 if (leftTile.GetCard() == null || card.GetCharacterType().IsEnemy(leftTile.GetCard().GetCharacterType()))
-                {
                     avaibleTiles.Add(leftTile, Swipe.LEFT);
-                }
             }
-            if(!left && coordinate.x > 0)
+            targetCoordinate = new Vector2(coordinate.x - 1, coordinate.y);
+            if(!left && Board.tilesByCoordinates.ContainsKey(targetCoordinate))
             {
-                var targetCoordinate = new Vector2(coordinate.x - 1, coordinate.y);
                 var leftTile = Board.tilesByCoordinates[targetCoordinate];
                 if (leftTile.GetCard() == null || card.GetCharacterType().IsEnemy(leftTile.GetCard().GetCharacterType()))
-                {
                     avaibleTiles.Add(leftTile, Swipe.LEFT);
-                }
             }
 
-            if(coordinate.x < rL - 2)
+            targetCoordinate = new Vector2(coordinate.x + 2, coordinate.y);
+            if(Board.tilesByCoordinates.ContainsKey(targetCoordinate))
             {
                 right = true;
-                var targetCoordinate = new Vector2(coordinate.x + 2, coordinate.y);
                 var rightTile = Board.tilesByCoordinates[targetCoordinate];
                 if (rightTile.GetCard() == null || card.GetCharacterType().IsEnemy(rightTile.GetCard().GetCharacterType()))
                 {
                     avaibleTiles.Add(rightTile, Swipe.RIGHT);
                 }
             }
-            if(!right && coordinate.x < rL - 1)
+            targetCoordinate = new Vector2(coordinate.x + 1, coordinate.y);
+            if(!right && Board.tilesByCoordinates.ContainsKey(targetCoordinate))
             {
-                var targetCoordinate = new Vector2(coordinate.x + 1, coordinate.y);
                 var rightTile = Board.tilesByCoordinates[targetCoordinate];
                 if (rightTile.GetCard() == null || card.GetCharacterType().IsEnemy(rightTile.GetCard().GetCharacterType()))
                 {

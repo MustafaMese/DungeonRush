@@ -25,6 +25,7 @@ namespace DungeonRush.UI
         [SerializeField] FadingCanvas fadingCanvasPrefab;
         [SerializeField] TurnCanvas turnCanvasPrefab;
         [SerializeField] ActiveSkillCanvas activeSkillCanvasPrefab;
+        [SerializeField] ChoiceCanvas choiceCanvasPrefab;
         
         private ActiveSkillCanvas _activeSkillCanvas;
         private PauseMenu _pauseMenu;
@@ -32,6 +33,7 @@ namespace DungeonRush.UI
         private PickCanvas _pickCanvas;
         private FadingCanvas _fadingCanvas;
         private TurnCanvas _turnCanvas;
+        private ChoiceCanvas _choiceCanvas;
 
         private void Awake()
         {
@@ -122,7 +124,15 @@ namespace DungeonRush.UI
 
                 if (_activeSkillCanvas == null)
                     _activeSkillCanvas = Instantiate(activeSkillCanvasPrefab);
+
+                if(_choiceCanvas == null)
+                    _choiceCanvas = Instantiate(choiceCanvasPrefab);
             }
+        }
+
+        public void EnableChoiceCanvas(Item item ,Item loot, ItemUser itemUser)
+        {
+            _choiceCanvas.EnablePanel(item, loot, itemUser);
         }
 
         #region LEVEL CONTROL METHODS
@@ -180,7 +190,7 @@ namespace DungeonRush.UI
         }
         #endregion
 
-        #region PICK CANVAS
+        #region PICK CANVASES
 
         public void EnableItemCanvas(Item i)
         {

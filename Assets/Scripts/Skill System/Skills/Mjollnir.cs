@@ -42,7 +42,6 @@ namespace DungeonRush.Skills
         {
             targets.Clear();
             targetPositions.Clear();
-            int rL = Board.RowLength;
             Vector2 currentCoordinate = move.GetCardTile().GetCoordinate();
             bool isFinished = false;
             while (!isFinished)
@@ -52,7 +51,7 @@ namespace DungeonRush.Skills
                     Vector2 direction = directions[i];
 
                     Vector2 target = currentCoordinate + direction;
-                    if (target.y < rL && target.y >= 0 && target.x < rL && target.x >= 0)
+                    if (Board.tilesByCoordinates.ContainsKey(target))
                     {
                         Tile targetTile = Board.tilesByCoordinates[target];
                         Card targetCard = targetTile.GetCard();

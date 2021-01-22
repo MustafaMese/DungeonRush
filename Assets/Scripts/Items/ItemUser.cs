@@ -1,5 +1,5 @@
 ﻿using DungeonRush.Cards;
-using DungeonRush.Property;
+using DungeonRush.Customization;
 using DungeonRush.UI;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,124 +12,97 @@ namespace DungeonRush
         {
             public bool isWeaponUser = false;
             public bool isArmorUser = false;
+            public Item weapon = null;
+            public Item armor = null;
+            public SpriteRenderer weaponBone = null;
+            public SpriteRenderer armorBone = null;
 
-            [SerializeField] SpriteRenderer weaponBone = null;
-            [SerializeField] SpriteRenderer armorBone = null;
-
-            private Item weapon = null;
-            private Item armor = null;
             private Card card = null;
-            private Attacker attacker;
+            private PlayerCustomization customization;
 
             private bool isBeginning;
 
+            private Dictionary<BoneType, Item> items = new Dictionary<BoneType, Item>(); 
+            public int armorP;
+
+            public List<Item> i = new List<Item>();
+
             private void Start()
             {
-                card = GetComponent<Card>();
-                attacker = GetComponent<Attacker>();
+                armorP = 0;
 
+                card = GetComponent<Card>();
+                customization = GetComponent<PlayerCustomization>();
                 isBeginning = true;
+
+                items.Add(BoneType.HEAD, null);
+                items.Add(BoneType.HELMET, null);
+                items.Add(BoneType.BODY, null);
+                items.Add(BoneType.BODY_ARMOR, null);
+                items.Add(BoneType.ARM, null);
+                items.Add(BoneType.LEG, null);
+                items.Add(BoneType.WEAPON_LEFT, null);
+                items.Add(BoneType.WEAPON_RIGHT, null);
+                items.Add(BoneType.WEAPON_DUAL, null);
             }
 
             public List<string> GetItemsIDs()
             {
                 List<string> ids = new List<string>();
-                if (weapon != null)
-                    ids.Add(weapon.GetId());
-                if (armor != null)
-                    ids.Add(armor.GetId());
-
+                foreach (var item in items.Values)
+                {
+                    if(item != null)
+                        ids.Add(item.GetID());
+                }
                 return ids;
             }
 
             public List<string> GetItemsNames()
             {
                 List<string> names = new List<string>();
-                if (weapon != null)
-                    names.Add(weapon.GetItemName());
-                if (armor != null)
-                    names.Add(armor.GetItemName());
+                foreach (var item in items.Values)
+                    names.Add(item.GetName());
 
                 return names;
             }
 
-            public void TakeItem(Item i)
+            public void TakeItem(Item loot, bool openPanel = true)
             {
-                switch (i.GetItemType())
+                BoneType lootBone = loot.GetBoneType();
+
+                if(loot.GetItemType() != ItemType.WEAPON && loot.GetItemType() != ItemType.ARMOR)
+                    loot.Execute(card);
+                else
                 {
-                    case ItemType.WEAPON:
-                        TakeWeapon(i);
-                        break;
-                    case ItemType.POTION:
-                        TakePotion(i);
-                        break;
-                    case ItemType.POISON:
-                        TakePoison(i);
-                        break;
-                    case ItemType.ARMOR:
-                        TakeArmor(i);
-                        break;
-                    case ItemType.MAX_HEALTH_INCREASER:
-                        TakeMaxHealthIncreaser(i);
-                        break;
-                    case ItemType.COIN:
-                        break;
-                    case ItemType.NONE:
-                        break;
-                    default:
-                        break;
+                    if (items[lootBone] != null)
+                        UIManager.Instance.EnableChoiceCanvas(items[loot.GetBoneType()], loot, this);
+                    else
+                    {
+                        if(openPanel)
+                            UIManager.Instance.EnableItemCanvas(loot);
+                        i.Add(loot);
+                        ExecuteItem(loot, lootBone);
+                    }
                 }
             }
 
-            #region WEAPON
-            private void TakeWeapon(Item item)
+            public void ExecuteItem(Item loot, BoneType lootBone)
             {
-                SetWeapon(item);
-                attacker.SetAttackStyle(item.GetAttackStyle());
-            }
-            private void SetWeapon(Item item)
-            {
-                this.weapon = item;
-                weaponBone.sprite = item.GetSmallSprite();
-            }
-            public Item GetWeapon()
-            {
-                return weapon;
-            }
-            #endregion
+                items[lootBone] = loot;
 
-            #region ARMOR
-            private void TakeArmor(Item item)
-            {
-                SetArmor(item);
-            }
-            private void SetArmor(Item item)
-            {
-                this.armor = item;
-                armorBone.sprite = item.GetSmallSprite();
-            }
-            public Item GetArmor()
-            {
-                return armor;
-            }
-            #endregion
+                if (loot.GetItemType() == ItemType.ARMOR)
+                    armorP += loot.GetPower();
 
-            #region HEALTH
-            private void TakePotion(Item item)
-            {
-                card.IncreaseHealth(item.GetPower());
+                if (lootBone == BoneType.ARM || lootBone == BoneType.LEG || lootBone == BoneType.WEAPON_DUAL)
+                    customization.ChangeBoneSprite(lootBone, loot.GetPrimarySprite(), loot.GetSecondarySprite());
+                else
+                    customization.ChangeBoneSprite(lootBone, loot.GetPrimarySprite());
             }
 
-            private void TakePoison(Item item)
+            public int GetArmor()
             {
-                card.DecreaseHealth(item.GetPower());
+                return armorP;
             }
-
-            private void TakeMaxHealthIncreaser(Item item)
-            {
-                card.IncreaseMaxHealth(item.GetPower());
-            }
-            #endregion
         }
     }
 }

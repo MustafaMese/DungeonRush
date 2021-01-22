@@ -1,30 +1,20 @@
-﻿using DungeonRush.Cards;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.U2D.Animation;
-using UnityEngine.UI;
 
 namespace DungeonRush.Customization
 {
-    public class FlyingCreatureCustomization : MonoBehaviour, ICustomization
+    public class EnemyCustomization : MonoBehaviour, ICustomization
     {
-        [SerializeField] Canvas characterCanvas = null;
-
-        [SerializeField] List<SpriteRenderer> sprites = new List<SpriteRenderer>();
-        [SerializeField] List<SpriteSkin> skins = new List<SpriteSkin>();
-
+        private const string r = "Row ";
         [SerializeField] Material shadow = null;
         [SerializeField] Material lighted = null;
-
-        private string r = "Row ";
-
-        private void ChangeLayer(Canvas c, int layer)
-        {
-            string sth = String.Concat(r, layer);
-            c.sortingLayerName = sth;
-        }
+        [SerializeField] Canvas characterCanvas = null;
+        
+        [SerializeField] List<SpriteRenderer> sprites = new List<SpriteRenderer>();
+        [SerializeField] List<SpriteSkin> skins = new List<SpriteSkin>();
 
         private void ChangeLayer(SpriteRenderer sR, int layer)
         {
@@ -32,7 +22,13 @@ namespace DungeonRush.Customization
             sR.sortingLayerName = sth;
         }
 
-        public void Change(float posY)
+        private void ChangeLayer(Canvas c, int layer)
+        {
+            string sth = String.Concat(r, layer);
+            c.sortingLayerName = sth;
+        }
+
+        public void ChangeLayer(float posY)
         {
             int layer = (int)Math.Truncate(posY);
 
@@ -46,7 +42,7 @@ namespace DungeonRush.Customization
         public void OverShadow()
         {
             for (int i = 0; i < sprites.Count; i++)
-                sprites[i].material = shadow;
+            sprites[i].material = shadow;
 
             characterCanvas.gameObject.SetActive(false);
         }
@@ -54,7 +50,7 @@ namespace DungeonRush.Customization
         public void RemoveShadow()
         {
             for (int i = 0; i < sprites.Count; i++)
-                sprites[i].material = lighted;
+            sprites[i].material = lighted;
 
             characterCanvas.gameObject.SetActive(true);
         }

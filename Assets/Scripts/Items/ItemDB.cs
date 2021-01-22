@@ -29,31 +29,31 @@ namespace DungeonRush.Items
         public List<Item> levelItems = new List<Item>();
         public List<Item> lootedItems = new List<Item>();
 
-        public List<Skill> allSkills = new List<Skill>();
+        public List<SkillObject> allSkills = new List<SkillObject>();
 
         public Item GetItem(string id)
         {
             for (int i = 0; i < allItems.Count; i++)
             {
-                if (allItems[i].GetId() == id)
+                if (allItems[i].GetID() == id)
                     return allItems[i];
             }
 
             return null;
         }
 
-        public Skill GetSkill(string id)
+        public SkillObject GetSkill(string id)
         {
             for (int i = 0; i < allSkills.Count; i++)
             {
-                if (allSkills[i].SkillName == id)
+                if (allSkills[i].GetID() == id)
                     return allSkills[i];
             }
 
             return null;
         }
 
-        public Skill GetRandomSkill()
+        public SkillObject GetRandomSkill()
         {
             var number = allSkills.Count;
             if (number > 0)
@@ -64,7 +64,6 @@ namespace DungeonRush.Items
             else
                 return null;
         }
-
 
         public Item GetRandomItemByType(ItemType type)
         {

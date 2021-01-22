@@ -1,4 +1,5 @@
-﻿using DungeonRush.Cards;
+using DungeonRush.Camera;
+using DungeonRush.Cards;
 using DungeonRush.Customization;
 using DungeonRush.Data;
 using DungeonRush.Field;
@@ -31,7 +32,7 @@ namespace DungeonRush.Controller
             attacker = player.GetComponent<Attacker>();
             customization = player.GetComponent<ICustomization>();
             statusController = player.GetComponent<StatusController>();
-            customization.Change(transform.position.y);
+            customization.ChangeLayer(transform.position.y);
             MoveSchedular.Instance.playerController = this;
             fieldOfView = Instantiate(fieldOfView);
             fieldOfView.SetOrigin(transform.position);
@@ -76,7 +77,7 @@ namespace DungeonRush.Controller
 
                     float y = player.GetMove().GetTargetTile().GetCoordinate().y;
                     if(y < player.transform.position.y)
-                        customization.Change(y);
+                        customization.ChangeLayer(y);
 
                     if (move)
                         moveProcess.StartProcess();
@@ -168,7 +169,7 @@ namespace DungeonRush.Controller
             preparingProcess.Finish();
             attackProcess.Finish();
             moveProcess.Finish();
-            customization.Change(transform.position.y);
+            customization.ChangeLayer(transform.position.y);
             Notify();
         }
         public void Begin() 
@@ -216,19 +217,24 @@ namespace DungeonRush.Controller
             player.SetCurrentHealth(data.currentHealth);
             player.GetComponent<Health>().InitializeBar();
             player.Coins = data.gold;
+            player.Experience = data.xp;
 
-            // Statları da kaydet buraya.
+            player.CriticChance = data.criticChance;
+            player.DodgeChance = data.dodgeChance;
+            player.LifeCount = data.lifeCount;
+            player.TotalMoveCount = data.moveCount;
+            player.LootChance = data.lootChance;
 
             for (int i = 0; i < data.uniqueItemIDs.Length; i++)
             {
                 Item item = ItemDB.Instance.GetItem(data.uniqueItemIDs[i]);
-                player.GetComponent<ItemUser>().TakeItem(item);
+                player.GetComponent<ItemUser>().TakeItem(item, false);
             }
 
             for (int i = 0; i < data.uniqueSkillIDs.Length; i++)
             {
-                Skill skill = ItemDB.Instance.GetSkill(data.uniqueSkillIDs[i]);
-                //player.GetComponent<SkillUser>().AddSkill(skill);
+                SkillObject skillObject = ItemDB.Instance.GetSkill(data.uniqueSkillIDs[i]);
+                player.GetComponent<SkillUser>().AddSkill(skillObject, false);
             }
         }
 

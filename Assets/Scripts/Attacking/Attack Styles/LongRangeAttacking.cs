@@ -66,13 +66,12 @@ namespace DungeonRush.Attacking
                     break;
             }
 
-            int rL = Board.RowLength;
             Vector2 coordinate = card.GetTile().GetCoordinate();
             Vector2 targetCoordinate;
             for (int i = 0; i < range; i++)
             {
                 targetCoordinate = coordinate + direction * (i + 1);
-                if (targetCoordinate.y < rL && targetCoordinate.y >= 0 && targetCoordinate.x < rL && targetCoordinate.x >= 0)
+                if (Board.tilesByCoordinates.ContainsKey(targetCoordinate))
                 {
                     Tile targetTile = Board.tilesByCoordinates[targetCoordinate];
                     if (targetTile.GetCard() != null)
@@ -93,7 +92,6 @@ namespace DungeonRush.Attacking
         {
             if (card == null) return null;
 
-            int rL = Board.RowLength;
             Vector2 coordinate = card.GetTile().GetCoordinate();
             Dictionary<Tile, Swipe> availableTiles = new Dictionary<Tile, Swipe>();
 
@@ -103,8 +101,7 @@ namespace DungeonRush.Attacking
                 for (int i = 0; i < range; i++)
                 {
                     targetCoordinate = coordinate + direction * (i + 1);
-
-                    if (targetCoordinate.y < rL && targetCoordinate.y >= 0 && targetCoordinate.x < rL && targetCoordinate.x >= 0)
+                    if (Board.tilesByCoordinates.ContainsKey(targetCoordinate))
                     {
                         var tile = Board.tilesByCoordinates[targetCoordinate];
                         if (tile != null && tile.GetCard() != null &&

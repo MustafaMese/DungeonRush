@@ -44,7 +44,6 @@ namespace DungeonRush.Attacking
         private List<Card> FindTargetTiles(Move move)
         {
             tempList.Clear();
-            int rL = Board.RowLength;
             Tile t = move.GetCardTile();
             Vector2 coordinate = t.GetCoordinate();
 
@@ -52,7 +51,7 @@ namespace DungeonRush.Attacking
             {
                 Vector2 direction = directions[i];
                 Vector2 targetCoordinate = coordinate + direction;
-                if (targetCoordinate.x < rL && targetCoordinate.x >= 0 && targetCoordinate.y < rL && targetCoordinate.y >= 0)
+                if (Board.tilesByCoordinates.ContainsKey(targetCoordinate))
                 {
                     Card card = Board.tilesByCoordinates[targetCoordinate].GetCard();
                     if(card != null && (card.GetCardType() == CardType.ENEMY || card.GetCardType() == CardType.PLAYER))

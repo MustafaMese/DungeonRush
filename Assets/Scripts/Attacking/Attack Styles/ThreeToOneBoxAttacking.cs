@@ -35,23 +35,24 @@ namespace DungeonRush.Attacking
         private List<Card> FindTargetTiles(Move move)
         {
             tempList.Clear();
-            int rL = Board.RowLength;
             Tile t = move.GetTargetTile();
             Vector2 coordinate = t.GetCoordinate();
 
             var dir = GetDirection(move);
             if(dir.y != 0)
             {
-                if (coordinate.x < rL - 1)
+                Vector2 upper = new Vector2(coordinate.x + 1, coordinate.y);
+                if (Board.tilesByCoordinates.ContainsKey(upper))
                 {
-                    Tile upperT = Board.tilesByCoordinates[new Vector2(coordinate.x + 1, coordinate.y)];
+                    Tile upperT = Board.tilesByCoordinates[upper];
                     Card tCard = upperT.GetCard();
                     if (tCard != null && tCard.GetComponent<Health>())
                         tempList.Add(upperT.GetCard());
                 }
-                if (coordinate.x > 0)
+                Vector2 lower = new Vector2(coordinate.x - 1, coordinate.y);
+                if (Board.tilesByCoordinates.ContainsKey(lower))
                 {
-                    Tile lowerT = Board.tilesByCoordinates[new Vector2(coordinate.x - 1, coordinate.y)];
+                    Tile lowerT = Board.tilesByCoordinates[lower];
                     Card tCard = lowerT.GetCard();
                     if (tCard != null && tCard.GetComponent<Health>())
                         tempList.Add(lowerT.GetCard());
@@ -59,15 +60,17 @@ namespace DungeonRush.Attacking
             }
             else if(dir.x != 0)
             {
-                if (coordinate.y < rL - 1)
+                Vector2 upper = new Vector2(coordinate.x, coordinate.y + 1);
+                if (Board.tilesByCoordinates.ContainsKey(upper))
                 {
-                    Tile upperT = Board.tilesByCoordinates[new Vector2(coordinate.x, coordinate.y + 1)];
+                    Tile upperT = Board.tilesByCoordinates[upper];
                     if (upperT.GetCard() != null && upperT.GetComponent<Health>())
                         tempList.Add(upperT.GetCard());
                 }
-                if (coordinate.y > 0)
+                Vector2 lower = new Vector2(coordinate.x, coordinate.y - 1);
+                if (Board.tilesByCoordinates.ContainsKey(lower))
                 {
-                    Tile lowerT = Board.tilesByCoordinates[new Vector2(coordinate.x, coordinate.y - 1)];
+                    Tile lowerT = Board.tilesByCoordinates[lower];
                     if (lowerT.GetCard() != null && lowerT.GetComponent<Health>())
                         tempList.Add(lowerT.GetCard());
                 }

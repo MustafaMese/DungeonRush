@@ -3,14 +3,17 @@ using System.Collections.Generic;
 using DungeonRush.Traits;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "ScriptableObjects/Status Object")]
-public class StatusObject : ScriptableObject
+namespace DungeonRush.Traits
 {
-    [SerializeField] Status statusPrefab;
-
-    public Status Create(Transform t)
+    [CreateAssetMenu(menuName = "ScriptableObjects/Status Object")]
+    public class StatusObject : ScriptableObject
     {
-        Status s = Instantiate(statusPrefab, t);
-        return s;
+        [SerializeField] Status statusPrefab;
+
+        public Status Create(Transform t)
+        {
+            Status s = Instantiate(statusPrefab, t);
+            return s;
+        }
     }
 }

@@ -5,6 +5,7 @@ using UnityEngine;
 using DungeonRush.Controller;
 using System.Collections.Generic;
 using DungeonRush.Items;
+using DungeonRush.Camera;
 
 namespace DungeonRush
 {

@@ -19,11 +19,12 @@ namespace DungeonRush.UI
 
         private string pickedObjectName = "";
 
-        public void EnablePanel(Item i)
+        // TODO Burda bir mallık var.
+       public void EnablePanel(Item i)
         {
             panel.SetActive(true);
-            SetName(i.GetItemName());
-            SetSprite(i.GetBigSprite());
+            SetName(i.GetName());
+            SetSprite(i.GetUISprite());
             SetText();
         }
 

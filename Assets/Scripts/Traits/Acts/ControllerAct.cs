@@ -1,47 +1,48 @@
 using System.Collections.Generic;
-using DungeonRush.Traits;
 
-public class ControllerAct : IAct
+namespace DungeonRush.Traits
 {
-    private bool canMove;
-    private bool canAttack;
-    private bool anger;
-
-    public bool CanMove { get => canMove; }
-    public bool CanAttack { get => canAttack; }
-    public bool Anger { get => anger; }
-
-    public ControllerAct()
+    public class ControllerAct : IAct
     {
-        Reset();
-    }
+        private bool canMove;
+        private bool canAttack;
+        private bool anger;
 
-    public void Reset()
-    {
-        canMove = true;
-        canAttack = true;
-        anger = false;
-    }
+        public bool CanMove { get => canMove; }
+        public bool CanAttack { get => canAttack; }
+        public bool Anger { get => anger; }
 
-    public void ActControl(List<Status> list)
-    {
-        Status s;
-        for (int i = 0; i < list.Count; i++)
+        public ControllerAct()
         {
-            s = list[i];
+            Reset();
+        }
 
-            if (s.StatusType == StatusType.DISARMED)
-                canAttack = false;
-            else if (s.StatusType == StatusType.ENTANGLED)
-                canMove = false;
-            else if (s.StatusType == StatusType.STUNNED)
+        public void Reset()
+        {
+            canMove = true;
+            canAttack = true;
+            anger = false;
+        }
+
+        public void ActControl(List<Status> list)
+        {
+            Status s;
+            for (int i = 0; i < list.Count; i++)
             {
-                canMove = false;
-                canAttack = false;
+                s = list[i];
+
+                if (s.StatusType == StatusType.DISARMED)
+                    canAttack = false;
+                else if (s.StatusType == StatusType.ENTANGLED)
+                    canMove = false;
+                else if (s.StatusType == StatusType.STUNNED)
+                {
+                    canMove = false;
+                    canAttack = false;
+                }
+                else if (s.StatusType == StatusType.ANGER)
+                    anger = true;
             }
-            else if (s.StatusType == StatusType.ANGER)
-                anger = true;
         }
     }
-
 }

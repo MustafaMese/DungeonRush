@@ -3,6 +3,7 @@ using DungeonRush.Attacking;
 using DungeonRush.Cards;
 using DungeonRush.Data;
 using DungeonRush.Field;
+using DungeonRush.Managers;
 using DungeonRush.Traits;
 using System.Collections;
 using System.Collections.Generic;

@@ -37,14 +37,13 @@ namespace DungeonRush.Skills
             targets.Clear();
 
             Vector2 coordinate = move.GetCardTile().GetCoordinate();
-            int rL = Board.RowLength;
 
             for (int i = 0; i < directions.Length; i++)
             {
                 Vector2 direction = directions[i];
                 Vector2 targetCoordinate = coordinate + direction;
 
-                if(targetCoordinate.x < rL && targetCoordinate.x >= 0 && targetCoordinate.y < rL && targetCoordinate.y >= 0)
+                if(Board.tilesByCoordinates.ContainsKey(targetCoordinate))
                 {
                     Tile targetTile = Board.tilesByCoordinates[targetCoordinate];
                     Card tCard = targetTile.GetCard();

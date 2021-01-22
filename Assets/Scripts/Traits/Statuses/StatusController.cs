@@ -1,10 +1,7 @@
 ﻿using DungeonRush.Cards;
-using DungeonRush.Data;
-using System;
-using System.Collections;
+using DungeonRush.UI.HUD;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace DungeonRush.Traits
 {

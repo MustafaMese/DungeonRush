@@ -1,71 +1,52 @@
-﻿using DungeonRush.Attacking;
-using DungeonRush.Cards;
-using DungeonRush.Property;
+﻿using DungeonRush.Cards;
+using DungeonRush.Traits;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Text;
 using UnityEngine;
 
 namespace DungeonRush.Items
 {
-    [CreateAssetMenu(menuName = "ScriptableObjects/Item")]
-    public class Item : ScriptableObject
+    public abstract class Item : ScriptableObject, IItem
     {
-        [SerializeField] CardProperties properties = null;
-        [SerializeField] string ID = Guid.NewGuid().ToString("N");
+        [SerializeField] string itemName;
+        
         [SerializeField] ItemType type;
-        [SerializeField] int power = 0;
-        [SerializeField] Sprite itemSmallSprite = null;
-        [SerializeField] Sprite itemBigSprite = null;
+        [SerializeField] Sprite UISprite = null;
+        [SerializeField] Sprite primarySprite = null;
+        [SerializeField] List<StatusObject> impacts = new List<StatusObject>();
 
-        [Header("For weapons")]
-        [SerializeField] AttackStyle attackStyle;
+        string ID = Guid.NewGuid().ToString("N");
 
-        public string GetItemName()
-        {
-            return properties.cardName;
-        }
-
-        public AttackStyle GetAttackStyle()
-        {
-            return attackStyle;
-        }
-
-        public Sprite GetSmallSprite()
-        {
-            return itemSmallSprite;
-        }
-
-        public Sprite GetBigSprite()
-        {
-            return itemBigSprite;
-        }
-
-        public string GetId()
-        {
-            return properties.cardName;
-        }
+        public abstract int GetPower();
+        public abstract void Execute(Card card);
 
         public ItemType GetItemType()
         {
             return type;
         }
 
-        public int GetPower()
+        public string GetName()
         {
-            return power;
+            return itemName;
         }
+
+        public Sprite GetPrimarySprite()
+        {
+            return primarySprite;
+        }
+
+        public Sprite GetUISprite()
+        {
+            return UISprite;
+        }
+
+        public string GetID()
+        {
+            return ID;
+        }
+
+        public virtual BoneType GetBoneType() { return BoneType.NONE; }
+        public virtual Sprite GetSecondarySprite() { return null; }
     }
 }
 
-public enum ItemType
-{
-    WEAPON,
-    POTION,
-    POISON,
-    ARMOR,
-    MAX_HEALTH_INCREASER,
-    COIN,
-    NONE = -1
-}

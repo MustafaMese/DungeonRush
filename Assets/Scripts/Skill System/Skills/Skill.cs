@@ -1,7 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using DungeonRush.Cards;
 using DungeonRush.Data;
+using DungeonRush.Managers;
 using UnityEngine;
 
 namespace DungeonRush.Skills
@@ -19,7 +21,7 @@ namespace DungeonRush.Skills
         [SerializeField] private int cooldown;
         [SerializeField] private bool isAttacker;
         [SerializeField] protected bool isUsingTextPopup;
-
+        
         [Header("Effect Options")]
         [Space]
         [SerializeField] private float effectTime;
