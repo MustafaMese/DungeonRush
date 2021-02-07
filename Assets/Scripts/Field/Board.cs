@@ -19,15 +19,11 @@ namespace DungeonRush
             public List<Tile> cardPlaces = new List<Tile>();
             public static Dictionary<Vector2, Tile> tilesByCoordinates = new Dictionary<Vector2, Tile>();
             public static bool touched;
-            public BoardCreator bCreator;
             public int playerStartTile = 0;
 
             private void Awake()
             {
                 instance = this;
-
-                bCreator = FindObjectOfType<BoardCreator>();
-                RowLength = bCreator.rowLength;
             }
 
             private void Start()
@@ -48,9 +44,21 @@ namespace DungeonRush
             public void Initizalize()
             {
                 CardManager.Instance.cards = new List<Card>(FindObjectsOfType<Card>());
-                bCreator.InitializeTiles(cardPlaces);
+                InitializeTiles(new List<Tile>(FindObjectsOfType<Tile>()));
                 SetCardTiles(CardManager.Instance.cards);
                 DeterminePlayerTile();
+            }
+
+            private void InitializeTiles(List<Tile> cardPlaces)
+            {
+                for (int i = 0; i < cardPlaces.Count; i++)
+                {
+                    Tile pos = cardPlaces[i];
+                    pos.SetCoordinate(pos.transform.position);
+                    pos.SetCard(null);
+                    tilesByCoordinates.Add(pos.transform.position, pos);
+                }
+                SetCardPlaces(cardPlaces);
             }
 
             private void SetCardTiles(List<Card> cards)
@@ -74,7 +82,7 @@ namespace DungeonRush
             }
 
             #region CARDS
-            public void DeterminePlayerTile()
+            private void DeterminePlayerTile()
             {
                 int count = CardManager.Instance.cards.Count;
                 List<Card> cmCards = new List<Card>(CardManager.Instance.cards);

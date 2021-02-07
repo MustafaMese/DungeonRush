@@ -10,6 +10,8 @@ namespace DungeonRush
     {
         public class Tile : MonoBehaviour
         {
+            public TileType tileType;
+
             private Vector2 coordinate = Vector2.zero;
             private Card card = null;
             private Card trapCard = null;
@@ -78,4 +80,17 @@ namespace DungeonRush
             }
         }
     }
+}
+
+public enum TileType
+{
+    TILE,
+    TOP_WALL,
+    DOWN_WALL,
+    RIGHT_WALL,
+    LEFT_WALL,
+    TOPLEFT_WALL,
+    TOPRIGHT_WALL,
+    DOWNLEFT_WALL,
+    DOWNRIGHT_WALL,
 }

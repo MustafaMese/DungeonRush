@@ -229,7 +229,7 @@ namespace DungeonRush.Field
                 pos.SetCard(null);
                 Board.tilesByCoordinates.Add(pos.transform.position, pos);
             }
-            board.SetCardPlaces(cardPlaces);
+            //board.SetCardPlaces(cardPlaces);
         }
         #endregion
 
