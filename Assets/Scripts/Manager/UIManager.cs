@@ -101,8 +101,6 @@ namespace DungeonRush.UI
             }
         }
         
-        
-
         private void InitializeCanvases(bool isStartMenu)
         {
             if (_fadingCanvas == null)
@@ -233,12 +231,12 @@ namespace DungeonRush.UI
             _pauseMenu.AddImageToPanel(sprite);
         }
 
-        private void Pause()
+        public void Pause()
         {
             Time.timeScale = 0f;
         }
 
-        private void Resume()
+        public void Resume()
         {
             Time.timeScale = 1f;
         }

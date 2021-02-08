@@ -16,10 +16,8 @@ namespace DungeonRush
             public static Board instance;
 
             public static int RowLength;
-            public List<Tile> cardPlaces = new List<Tile>();
             public static Dictionary<Vector2, Tile> tilesByCoordinates = new Dictionary<Vector2, Tile>();
             public static bool touched;
-            public int playerStartTile = 0;
 
             private void Awake()
             {
@@ -28,15 +26,6 @@ namespace DungeonRush
 
             private void Start()
             {
-                if (cardPlaces.Count <= 0)
-                {
-                    for (int i = 0; i < transform.childCount; i++)
-                    {
-                        Tile t = transform.GetChild(i).GetComponent<Tile>();
-                        if (t != null)
-                            cardPlaces.Add(transform.GetChild(i).GetComponent<Tile>());
-                    }
-                }
 
                 Initizalize();
             }
@@ -54,11 +43,13 @@ namespace DungeonRush
                 for (int i = 0; i < cardPlaces.Count; i++)
                 {
                     Tile pos = cardPlaces[i];
+                    if(pos.tileType != TileType.TILE) continue;
+                    
                     pos.SetCoordinate(pos.transform.position);
                     pos.SetCard(null);
+                    //pos.transform.SetParent(null);
                     tilesByCoordinates.Add(pos.transform.position, pos);
                 }
-                SetCardPlaces(cardPlaces);
             }
 
             private void SetCardTiles(List<Card> cards)
@@ -73,8 +64,9 @@ namespace DungeonRush
                     else
                         t.SetCard(c);
 
-                    if (c.GetCardType() != CardType.PLAYER)
-                        c.transform.SetParent(transform);
+                    c.transform.SetParent(null);
+                    // if (c.GetCardType() != CardType.PLAYER)
+                    //     c.transform.SetParent(transform);
 
                     c.SetTile(t);
 
@@ -98,18 +90,6 @@ namespace DungeonRush
             {
                 int length = card.Length;
                 return card[UnityEngine.Random.Range(0, length)];
-            }
-            #endregion
-
-            #region TILES AND CARD PLACES
-
-            public void SetCardPlaces(List<Tile> cardPlaces)
-            {
-                this.cardPlaces = cardPlaces;
-            }
-            public List<Tile> GetCardPlaces()
-            {
-                return this.cardPlaces;
             }
             #endregion
 

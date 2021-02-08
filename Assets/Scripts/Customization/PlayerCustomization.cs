@@ -83,28 +83,33 @@ namespace DungeonRush.Customization
             }
         }
 
-
-        private void ChangeLayer(SpriteRenderer sR, int layer)
+        private void ChangeLayer(SpriteRenderer sR, bool top, int multiplier = 1)
         {
-            string sth = String.Concat(r, layer);
-            sR.sortingLayerName = sth;
+            // string sth = String.Concat(r, layer);
+            // sR.sortingLayerName = sth;
+            if(top)
+                sR.sortingOrder += 6 * multiplier;
+            else
+                sR.sortingOrder -= 6 * multiplier;
         }
 
-        private void ChangeLayer(Canvas c, int layer)
+        private void ChangeLayer(Canvas c, bool top, int multiplier = 1)
         {
-            string sth = String.Concat(r, layer);
-            c.sortingLayerName = sth;
+            if (top)
+                c.sortingOrder += 6 * multiplier;
+            else
+                c.sortingOrder -= 6 * multiplier;
         }
 
-        public void ChangeLayer(float posY)
+        public void ChangeLayer(bool top, int multiplier = 1)
         {
-            int layer = (int)Math.Truncate(posY);
+            //int layer = (int)Math.Truncate(posY);
 
             for (int i = 0; i < sprites.Count; i++)
-                ChangeLayer(sprites[i], layer);
+                ChangeLayer(sprites[i], top, multiplier);
 
             if (characterCanvas != null)
-                ChangeLayer(characterCanvas, layer);
+                ChangeLayer(characterCanvas, top, multiplier);
         }
 
         public void OverShadow()

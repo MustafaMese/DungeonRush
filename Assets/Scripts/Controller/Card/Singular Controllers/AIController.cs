@@ -62,7 +62,10 @@ namespace DungeonRush.Controller
             if (cardType == CardType.ENEMY)
             {
                 customization = card.GetComponent<ICustomization>();
-                customization.ChangeLayer(transform.position.y);
+                if (transform.position.y < 0)
+                    customization.ChangeLayer(false, (int)transform.position.y);
+                else if (transform.position.y > 0)
+                    customization.ChangeLayer(true, (int)transform.position.y);
                 statusController = card.GetComponent<StatusController>();
                 statusAct = new ControllerAct();
             }
@@ -94,7 +97,9 @@ namespace DungeonRush.Controller
 
                 float y = card.GetMove().GetTargetTile().GetCoordinate().y;
                 if (y < card.transform.position.y)
-                    customization.ChangeLayer(y);
+                    customization.ChangeLayer(false);
+                else if(y > card.transform.position.y)
+                    customization.ChangeLayer(true);
 
                 if (move)
                     moveProcess.StartProcess();
@@ -305,8 +310,8 @@ namespace DungeonRush.Controller
             isRunning = false;
             swipe = Swipe.NONE;
             card.GetMove().Reset();
-            if(cardType == CardType.ENEMY)
-                customization.ChangeLayer(transform.position.y);
+            // if(cardType == CardType.ENEMY)
+            //     customization.ChangeLayer(transform.position.y);
         }
 
         public bool IsRunning()

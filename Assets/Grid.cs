@@ -39,8 +39,8 @@ public class Grid : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Ray r = Camera.current.ScreenPointToRay(new Vector3(Input.mousePosition.x, -Input.mousePosition.y + Camera.current.pixelHeight));
-        Vector3 mousePos = r.origin;
+        // Ray r = Camera.current.ScreenPointToRay(new Vector3(Input.mousePosition.x, -Input.mousePosition.y + Camera.current.pixelHeight));
+        // Vector3 mousePos = r.origin;
     }
 
     private void OnDrawGizmos() 

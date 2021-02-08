@@ -32,7 +32,12 @@ namespace DungeonRush.Controller
             attacker = player.GetComponent<Attacker>();
             customization = player.GetComponent<ICustomization>();
             statusController = player.GetComponent<StatusController>();
-            customization.ChangeLayer(transform.position.y);
+
+            if(transform.position.y < 0)
+                customization.ChangeLayer(false, (int)transform.position.y);
+            else if (transform.position.y > 0)
+                customization.ChangeLayer(true, (int)transform.position.y);
+           
             MoveSchedular.Instance.playerController = this;
             fieldOfView = Instantiate(fieldOfView);
             fieldOfView.SetOrigin(transform.position);
@@ -77,7 +82,9 @@ namespace DungeonRush.Controller
 
                     float y = player.GetMove().GetTargetTile().GetCoordinate().y;
                     if(y < player.transform.position.y)
-                        customization.ChangeLayer(y);
+                        customization.ChangeLayer(true);
+                    else if(y > player.transform.position.y)
+                        customization.ChangeLayer(false);
 
                     if (move)
                         moveProcess.StartProcess();
@@ -169,7 +176,7 @@ namespace DungeonRush.Controller
             preparingProcess.Finish();
             attackProcess.Finish();
             moveProcess.Finish();
-            customization.ChangeLayer(transform.position.y);
+            //customization.ChangeLayer(transform.position.y);
             Notify();
         }
         public void Begin() 

@@ -9,7 +9,7 @@ namespace DungeonRush.Customization
         void ChangeSkinState(bool state);
         void RemoveShadow();
         void OverShadow();
-        void ChangeLayer(float posY);
+        void ChangeLayer(bool moveToTop, int multiplier = 1);
     }
 }
 
