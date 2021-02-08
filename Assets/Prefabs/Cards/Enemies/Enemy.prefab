@@ -30,7 +30,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 8984369428170948054}
+  - {fileID: 7474860730034949982}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -51,10 +51,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5d5d9987896153439120356b5e4697c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  poolForTextPopup: {fileID: 0}
-  textPopup: {fileID: 0}
   cardProperties: {fileID: 0}
   characterType: {fileID: 0}
+  nameText: {fileID: 0}
+  animator: {fileID: 0}
 --- !u!114 &-474957396755857396
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -70,9 +70,9 @@ MonoBehaviour:
   isPlayer: 0
   deathTime: 0.2
   maxHealth: 0
-  animator: {fileID: 0}
-  bar: {fileID: 555421382672415127}
+  bar: {fileID: 0}
   health: 0
+  statusController: {fileID: 0}
 --- !u!114 &6082274096854280184
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -85,9 +85,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a2dd96b210bed74e89c32a466eb8e5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  STATUS: {fileID: 0}
+  characterCanvas: {fileID: 0}
   activeStatuses: []
-  statusEffectTransform: {fileID: 0}
+  STATUS:
+  - {fileID: 0}
 --- !u!1001 &4375490401074370340
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -207,21 +208,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cb90c1c1b5036484fb66b953cdc99304, type: 3}
---- !u!224 &8984369428170948054 stripped
+--- !u!224 &7474860730034949982 stripped
 RectTransform:
-  m_CorrespondingSourceObject: {fileID: 4617941357697788658, guid: cb90c1c1b5036484fb66b953cdc99304,
+  m_CorrespondingSourceObject: {fileID: 6558603818855782522, guid: cb90c1c1b5036484fb66b953cdc99304,
     type: 3}
   m_PrefabInstance: {fileID: 4375490401074370340}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &555421382672415127 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4255230500789235379, guid: cb90c1c1b5036484fb66b953cdc99304,
-    type: 3}
-  m_PrefabInstance: {fileID: 4375490401074370340}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f02c6dafc1a7fb419c0a2f7ea067cf8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
