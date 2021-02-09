@@ -168,7 +168,7 @@ namespace DungeonRush.UI
 
         #region TURN CANVAS METHODS
 
-        public void InitalizeEnemyTurn(List<AIController> enemies)
+        public void InitalizeEnemyTurn(List<EnemyAIController> enemies)
         {
             _turnCanvas.ChangeText(false);
             _turnCanvas.SetCardIcons(enemies);

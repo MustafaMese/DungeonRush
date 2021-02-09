@@ -75,7 +75,7 @@ namespace DungeonRush.Property
             }
             else
             {
-                AIController controller = GetComponent<AIController>();
+                EnemyAIController controller = GetComponent<EnemyAIController>();
                 controller.Stop();
                 CardManager.Unsubscribe(card);
 

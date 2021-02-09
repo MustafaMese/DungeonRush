@@ -90,11 +90,11 @@ namespace DungeonRush
             {
                 if (card.GetCardType() == CardType.ENEMY)
                 {
-                    EnemyController.UnsubscribeCard((AIController)card.Controller);
+                    EnemyManager.UnsubscribeCard((EnemyAIController)card.Controller);
                 }
                 else if (card.GetCardType() == CardType.TRAP)
                 {
-                    TrapController.UnsubscribeCard((AIController)card.Controller);
+                    TrapManager.UnsubscribeCard((TrapAIController)card.Controller);
                 }
             }
 

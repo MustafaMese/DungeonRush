@@ -27,7 +27,6 @@ namespace DungeonRush
             [Header("General Properties")]
             [SerializeField] CardProperties cardProperties = null;
             [SerializeField] Character characterType;
-            [SerializeField] TextMeshPro nameText = null;
             [SerializeField] Animator animator;
 
             #region CARD STATS
@@ -60,18 +59,7 @@ namespace DungeonRush
 
             protected virtual void Initialize()
             {
-                health = GetComponent<Health>();
                 cardName = cardProperties.cardName;
-                mover = GetComponent<Mover>();
-                attacker = GetComponent<Attacker>();
-                Controller = GetComponent<IMoveController>();
-                statusController = GetComponent<StatusController>();
-                SetStats();
-                
-                move = new Move();
-
-                if(GetCardType() != CardType.EVENT && GetCardType() != CardType.TRAP)
-                    nameText.text = cardName;
             }
 
             protected void SetStats()

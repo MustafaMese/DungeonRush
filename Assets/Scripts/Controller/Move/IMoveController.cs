@@ -11,5 +11,7 @@ namespace DungeonRush.Controller
         void MakeMove();
         Card GetCard();
         void Stop();
+        void Notify();
+        void Run();
     }
 }

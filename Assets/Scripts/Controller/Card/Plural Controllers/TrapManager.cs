@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace DungeonRush.Controller
 {
-    public class TrapController : MonoBehaviour, ICardController
+    public class TrapManager : MonoBehaviour, ICardController
     {
         [SerializeField] int activeTrapDistance = 4;
 
@@ -18,8 +18,8 @@ namespace DungeonRush.Controller
         private bool isRunning = false;
         private int trapIndex;
 
-        public static List<AIController> subscribedTraps = new List<AIController>();
-        public List<AIController> trapCards;
+        public static List<TrapAIController> subscribedTraps = new List<TrapAIController>();
+        public List<TrapAIController> trapCards;
 
         private void Start()
         {
@@ -60,9 +60,9 @@ namespace DungeonRush.Controller
                 Stop();
             }
         }
-        private List<AIController> GetActiveTraps()
+        private List<TrapAIController> GetActiveTraps()
         {
-            List<AIController> l = new List<AIController>();
+            List<TrapAIController> l = new List<TrapAIController>();
 
             for (int i = 0; i < subscribedTraps.Count; i++)
             {
@@ -144,7 +144,7 @@ namespace DungeonRush.Controller
 
         #endregion
 
-        public static void UnsubscribeCard(AIController controller)
+        public static void UnsubscribeCard(TrapAIController controller)
         {
             subscribedTraps.Remove(controller);
         }

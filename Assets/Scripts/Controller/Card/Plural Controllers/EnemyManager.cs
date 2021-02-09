@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace DungeonRush.Controller
 {
-    public class EnemyController : MonoBehaviour, ICardController
+    public class EnemyManager : MonoBehaviour, ICardController
     {
         [SerializeField] int attackerDistance = 5;
 
@@ -20,8 +20,8 @@ namespace DungeonRush.Controller
         private bool isRunning = false;
         private int attackerIndex;
 
-        public static List<AIController> subscribedEnemies = new List<AIController>();
-        public List<AIController> attackerCards;
+        public static List<EnemyAIController> subscribedEnemies = new List<EnemyAIController>();
+        public List<EnemyAIController> attackerCards;
 
         private void Start()
         {
@@ -66,9 +66,9 @@ namespace DungeonRush.Controller
                 Stop();
             }
         }
-        private List<AIController> GetAttackers()
+        private List<EnemyAIController> GetAttackers()
         {
-            List<AIController> l = new List<AIController>();
+            List<EnemyAIController> l = new List<EnemyAIController>();
             for (int i = 0; i < subscribedEnemies.Count; i++)
             {
                 if (subscribedEnemies[i] == null) continue;
@@ -88,7 +88,7 @@ namespace DungeonRush.Controller
             return l;
         }
 
-        public void SetAttackerSkinState(AIController ai, bool shadowed)
+        public void SetAttackerSkinState(EnemyAIController ai, bool shadowed)
         {
             if (shadowed)
                 ai.ChangeSkinState(false);
@@ -194,7 +194,7 @@ namespace DungeonRush.Controller
 
         #endregion
 
-        public static void UnsubscribeCard(AIController controller)
+        public static void UnsubscribeCard(EnemyAIController controller)
         {
             subscribedEnemies.Remove(controller);
         }

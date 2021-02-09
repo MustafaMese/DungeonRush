@@ -6,6 +6,8 @@ using DungeonRush.Controller;
 using System.Collections.Generic;
 using DungeonRush.Items;
 using DungeonRush.Camera;
+using DungeonRush.Traits;
+using TMPro;
 
 namespace DungeonRush
 {
@@ -13,12 +15,9 @@ namespace DungeonRush
     {
         public class PlayerCard : Card
         {
+            [SerializeField] TextMeshPro nameText = null;
             [SerializeField] EventMover eventMover = null;
-            private bool isEventMove = false;
             [SerializeField] bool isFirstLevel = false;
-
-            PlayerAttacker playerAttacker;
-            ItemUser itemUser;
 
             [SerializeField] private int experience = 0;
             public int Experience
@@ -34,10 +33,21 @@ namespace DungeonRush
                 set { coins = value; }
             }
 
+            private bool isEventMove = false;
+            private PlayerAttacker playerAttacker;
+            private ItemUser itemUser;
+
             protected override void Initialize()
             {
                 base.Initialize();
+                health = GetComponent<Health>();
+                mover = GetComponent<Mover>();
+                attacker = GetComponent<Attacker>();
+                Controller = GetComponent<IMoveController>();
                 playerAttacker = GetComponent<PlayerAttacker>();
+                statusController = GetComponent<StatusController>();
+                SetStats();
+                move = new Move();
                 itemUser = GetComponent<ItemUser>();
 
                 float z = PlayerCamera.Instance.transform.position.z;
@@ -48,6 +58,8 @@ namespace DungeonRush
                     GetComponent<PlayerController>().LoadPlayer();
                 else
                     SetCurrentHealth(GetMaxHealth());
+
+                nameText.text = cardName;
             }
 
             public override void ExecuteMove()

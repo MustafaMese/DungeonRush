@@ -26,11 +26,11 @@ namespace DungeonRush.Controller
 
         public PlayerController playerController;
 
-        [SerializeField] EnemyController enemyControllerPrefab;
-        [SerializeField] TrapController trapControllerPrefab;
+        [SerializeField] EnemyManager enemyControllerPrefab;
+        [SerializeField] TrapManager trapControllerPrefab;
 
-        public EnemyController enemyController;
-        public TrapController trapController;
+        public EnemyManager enemyController;
+        public TrapManager trapController;
 
         private void Awake()
         {

@@ -190,7 +190,7 @@ namespace DungeonRush.Controller
             statusController.ActivateStatuses();
         }
 
-        private void Notify()
+        public void Notify()
         {
             MoveSchedular.Instance.enemyController.ConfigureSurroundingCardsSkinStates();
             PlayerCamera.Instance.MoveCamera(transform.position);

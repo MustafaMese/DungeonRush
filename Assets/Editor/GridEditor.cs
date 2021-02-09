@@ -105,10 +105,10 @@ public class GridEditor : Editor
         CreateTile(aligned, new Vector3(1, 0, 0), grid.tileList, grid.rightWallPrefab, new List<TileType>() { TileType.TOPRIGHT_WALL, TileType.DOWNRIGHT_WALL});
         CreateTile(aligned, new Vector3(-1, 0, 0), grid.tileList, grid.leftWallPrefab, new List<TileType>() { TileType.TOPLEFT_WALL, TileType.DOWNLEFT_WALL});
 
-        CreateTile(aligned, new Vector3(-1, 1, 0), grid.tileList, grid.topLeftWallPrefab, grid.downRightWallPrefab);
-        CreateTile(aligned, new Vector3(1, 1, 0), grid.tileList, grid.topRightWallPrefab, grid.downLeftWallPrefab);
-        CreateTile(aligned, new Vector3(1, -1, 0), grid.tileList, grid.downRightWallPrefab, grid.topLeftWallPrefab);
-        CreateTile(aligned, new Vector3(-1, -1, 0), grid.tileList, grid.downLeftWallPrefab, grid.topRightWallPrefab);
+        CreateTile(aligned, new Vector3(-1, 1, 0), grid.tileList, grid.topLeftWallPrefab, grid.downRightOppositeWallPrefab);
+        CreateTile(aligned, new Vector3(1, 1, 0), grid.tileList, grid.topRightWallPrefab, grid.downLeftOppositeWallPrefab);
+        CreateTile(aligned, new Vector3(1, -1, 0), grid.tileList, grid.downRightWallPrefab, grid.topLeftOppositeWallPrefab);
+        CreateTile(aligned, new Vector3(-1, -1, 0), grid.tileList, grid.downLeftWallPrefab, grid.topRightOppositeWallPrefab);
     }
 
     private void CreateTile(Vector3 aligned, Vector3 direction, List<GridStructure<Tile>> list, GameObject cornerPrefab, GameObject cornerPrefabOppositeVersion)
@@ -266,6 +266,10 @@ public class GridEditor : Editor
             EditorGUILayout.PropertyField(serializedObject.FindProperty("topRightWallPrefab"), new GUIContent(" Top Right Wall Prefab "));
             EditorGUILayout.PropertyField(serializedObject.FindProperty("downLeftWallPrefab"), new GUIContent(" Down Left Wall Prefab "));
             EditorGUILayout.PropertyField(serializedObject.FindProperty("downRightWallPrefab"), new GUIContent(" Down Right Wall Prefab "));
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("topRightOppositeWallPrefab"), new GUIContent(" Top Right Opposite Wall Prefab "));
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("downRightOppositeWallPrefab"), new GUIContent(" Down Right Opposite Wall Prefab "));
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("topLeftOppositeWallPrefab"), new GUIContent(" Top Left Opposite Wall Prefab "));
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("downLeftOppositeWallPrefab"), new GUIContent(" Down Left Opposite Wall Prefab "));
             serializedObject.ApplyModifiedProperties();
 
             EditorGUILayout.Space();

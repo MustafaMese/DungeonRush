@@ -12,7 +12,7 @@ using UnityEngine;
 
 namespace DungeonRush.Controller
 {
-    public class AIController : MonoBehaviour, IMoveController
+    public class EnemyAIController : MonoBehaviour, IMoveController
     {
         private ControllerAct statusAct;
 
@@ -23,7 +23,6 @@ namespace DungeonRush.Controller
         private Swipe swipeForAim;
         private Card card;
         private bool isRunning = false;
-        private CardType cardType;
 
         private ProcessHandleChecker preparingProcess;
         private ProcessHandleChecker attackProcess;
@@ -41,7 +40,8 @@ namespace DungeonRush.Controller
         {
             Initialize();
             InitProcessHandlers();
-            ChooseController();
+            
+            EnemyManager.subscribedEnemies.Add(this);
         }
 
         private void Update()
@@ -56,17 +56,15 @@ namespace DungeonRush.Controller
             card = GetComponent<Card>();
             mover = card.GetComponent<Mover>();
             attacker = card.GetComponent<Attacker>();
-            cardType = card.GetCardType();
-            if (cardType == CardType.ENEMY)
-            {
-                customization = card.GetComponent<ICustomization>();
-                if (transform.position.y < 0)
-                    customization.ChangeLayer(false, (int)transform.position.y);
-                else if (transform.position.y > 0)
-                    customization.ChangeLayer(true, (int)transform.position.y);
-                statusController = card.GetComponent<StatusController>();
-                statusAct = new ControllerAct();
-            }
+
+            customization = card.GetComponent<ICustomization>();
+            if (transform.position.y < 0)
+                customization.ChangeLayer(false, (int)transform.position.y);
+            else if (transform.position.y > 0)
+                customization.ChangeLayer(true, (int)transform.position.y);
+
+            statusController = card.GetComponent<StatusController>();
+            statusAct = new ControllerAct();
         }
 
         #region MOVE CONTROLLER METHODS
@@ -203,9 +201,6 @@ namespace DungeonRush.Controller
 
         private Swipe SelectTileForSwipe(Card card)
         {
-            if (card.GetCardType() == CardType.TRAP)
-                return Swipe.NONE;
-
             Swipe s = Swipe.NONE;
             if (state == State.NONE)
             {
@@ -294,14 +289,6 @@ namespace DungeonRush.Controller
 
         }
 
-        private void ChooseController()
-        {
-            if (cardType == CardType.ENEMY)
-                EnemyController.subscribedEnemies.Add(this);
-            else
-                TrapController.subscribedTraps.Add(this);
-        }
-
         public void Stop()
         {
             isRunning = false;
@@ -316,7 +303,7 @@ namespace DungeonRush.Controller
             return isRunning;
         }
 
-        public void InitProcessHandlers()
+        private void InitProcessHandlers()
         {
             preparingProcess.Init(true);
             attackProcess.Init(false);
@@ -329,11 +316,8 @@ namespace DungeonRush.Controller
 
         public void Run()
         {
-            if (GetCard().GetCardType() != CardType.TRAP)
-            {
-                statusAct.Reset();
-                statusAct.ActControl(statusController.activeStatuses);
-            }
+            statusAct.Reset();
+            statusAct.ActControl(statusController.activeStatuses);
             
             swipe = SelectTileForSwipe(GetCard());
             ChangeState();
@@ -378,24 +362,19 @@ namespace DungeonRush.Controller
             return -1;
         }
 
-        private void Notify()
+        public void Notify()
         {
-            if (cardType == CardType.ENEMY)
+            if (card.InstantMoveCount > 0)
             {
-                if (card.InstantMoveCount > 0)
-                {
-                    Run();
-                    ActivateStatuses();
-                    card.InstantMoveCount--;
-                }
-                else
-                {
-                    card.InstantMoveCount = card.TotalMoveCount;
-                    MoveSchedular.Instance.enemyController.OnNotify();
-                }
+                Run();
+                ActivateStatuses();
+                card.InstantMoveCount--;
             }
             else
-                MoveSchedular.Instance.trapController.OnNotify();
+            {
+                card.InstantMoveCount = card.TotalMoveCount;
+                MoveSchedular.Instance.enemyController.OnNotify();
+            }
         }
         #endregion
     }

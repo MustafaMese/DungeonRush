@@ -23,6 +23,10 @@ public class Grid : MonoBehaviour
     public GameObject topRightWallPrefab;
     public GameObject downLeftWallPrefab;
     public GameObject downRightWallPrefab;
+    public GameObject downRightOppositeWallPrefab;
+    public GameObject downLeftOppositeWallPrefab;
+    public GameObject topRightOppositeWallPrefab;
+    public GameObject topLeftOppositeWallPrefab;
 
     public Color color = Color.white;
 

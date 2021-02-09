@@ -47,7 +47,7 @@ namespace DungeonRush.UI
                 textMesh.text = enemyTurnText;
         }
 
-        public void SetCardIcons(List<AIController> aIs)
+        public void SetCardIcons(List<EnemyAIController> aIs)
         {
             bool lastOne = false;
             activeIndex = 0;
