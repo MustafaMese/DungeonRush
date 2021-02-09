@@ -16,12 +16,12 @@ namespace DungeonRush.Property
         [SerializeField] bool isPlayer = false;
         [SerializeField] float deathTime = 0.2f;
         [SerializeField] int maxHealth = 0;
-        [SerializeField] HealthBar bar = null;
+        [SerializeField] CharacterHUD bar = null;
 
         [SerializeField] int health = 0;
         private Card card = null;
         private ItemUser itemUser = null;
-        public StatusController statusController = null;
+        private StatusController statusController = null;
         private Animator animator = null;
         private AudioSource audioSource = null;
 

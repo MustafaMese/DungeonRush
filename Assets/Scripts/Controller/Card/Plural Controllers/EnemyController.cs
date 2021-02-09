@@ -91,15 +91,9 @@ namespace DungeonRush.Controller
         public void SetAttackerSkinState(AIController ai, bool shadowed)
         {
             if (shadowed)
-            {
-                ai.ChangeShadowState(true);
-                ai.ChangeAnimatorState(false);
-            }
+                ai.ChangeSkinState(false);
             else
-            {
-                ai.ChangeShadowState(false);
-                ai.ChangeAnimatorState(true);
-            }
+                ai.ChangeSkinState(true);
         }
 
         private float GetDistance(Vector3 i)

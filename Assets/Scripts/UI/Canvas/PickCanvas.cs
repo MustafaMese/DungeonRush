@@ -22,6 +22,8 @@ namespace DungeonRush.UI
         // TODO Burda bir mallık var.
        public void EnablePanel(Item i)
         {
+            UIManager.Instance.Pause();
+
             panel.SetActive(true);
             SetName(i.GetName());
             SetSprite(i.GetUISprite());
@@ -30,6 +32,8 @@ namespace DungeonRush.UI
 
         public void EnablePanel(Skill s)
         {
+            UIManager.Instance.Pause();
+
             panel.SetActive(true);
             SetName(s.SkillName);
             SetSprite(s.IconBig);
@@ -47,6 +51,8 @@ namespace DungeonRush.UI
             pickedObjectName = "";
             sprite.sprite = null;
             panel.SetActive(false);
+
+            UIManager.Instance.Resume();
             GameManager.Instance.SetGameState(GameState.PLAY);
         }
 

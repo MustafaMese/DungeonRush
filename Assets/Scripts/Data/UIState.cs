@@ -6,4 +6,5 @@
     DEFEAT,
     START_MENU,
     PICKUP,
+    CHOICE
 }

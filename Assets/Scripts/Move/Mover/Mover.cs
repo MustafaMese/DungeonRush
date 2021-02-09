@@ -95,7 +95,7 @@ namespace DungeonRush.Property
 
         protected void StartMoveAnimation(Vector3 pos, float time)
         {
-            EffectOperator.Instance.Operate(walkParticulPool, pos, time);
+            EffectOperator.Instance.Operate(walkParticulPool, transform, pos, time);
         }
     }
 }

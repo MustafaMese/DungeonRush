@@ -18,11 +18,13 @@ namespace DungeonRush.Traits
         [SerializeField] GameObject effect;
         [SerializeField] Sprite icon;
         [SerializeField] bool isUsingTextPopup;
+        [SerializeField] bool dontKillEffect;
 
-        private Image canvasImage;
+        private GameObject HUDImage;
         private int tempTurnCount;
         private ObjectPool<GameObject> effectPool;
         private StatusController statusController;
+        private bool effectUsed; // Use this on dontKillEffects situtations.
 
         public int Power { get => power; }
         public StatusType StatusType { get => statusType; }
@@ -41,13 +43,14 @@ namespace DungeonRush.Traits
                 StartCoroutine(KillStatus());
         }
 
-        public virtual void Initialize(CharacterCanvas canvas, StatusController statusController)
+        public virtual void Initialize(CharacterHUD canvas, StatusController statusController)
         {
             this.statusController = statusController;
             tempTurnCount = turnCount;
             effectPool = new ObjectPool<GameObject>();
             FillPool(effectPool, effect, 2);
-            canvasImage = canvas.AddImageToPanel(icon);
+            effectUsed = false;
+            HUDImage = canvas.AddImageToPanel(icon);
         }
 
         private void FillPool(ObjectPool<GameObject> pool, GameObject effect, int objectCount)
@@ -58,14 +61,23 @@ namespace DungeonRush.Traits
 
         protected void Animate()
         {
-            EffectOperator.Instance.Operate(effectPool, transform.position, effectTime);
+            if(!dontKillEffect)
+                EffectOperator.Instance.Operate(effectPool, transform, transform.position, effectTime);
+            else
+            {
+                if(!effectUsed)
+                {
+                    effectUsed = true;
+                    EffectOperator.Instance.Operate(effectPool, transform, transform.position);
+                }
+            }
         }
 
         protected IEnumerator KillStatus()
         {
             statusController.Notify(this);
             yield return new WaitForSeconds(effectTime);
-            Destroy(canvasImage.gameObject);
+            Destroy(HUDImage.gameObject);
             Destroy(this.gameObject);
         }
     }

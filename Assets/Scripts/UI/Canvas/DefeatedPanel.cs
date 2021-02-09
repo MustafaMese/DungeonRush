@@ -40,11 +40,15 @@ namespace DungeonRush.UI
 
         public void Defeat()
         {
+            UIManager.Instance.Pause();
+
             SetDefeat();
         }
 
         public void MainMenu()
         {
+            UIManager.Instance.Resume();
+            
             GameManager.Instance.SetGameState(GameState.END);
         }
 

@@ -5,7 +5,7 @@ namespace DungeonRush.Traits
 {
     public interface IStatus
     {
-        void Initialize(CharacterCanvas canvas, StatusController statusController);
+        void Initialize(CharacterHUD canvas, StatusController statusController);
         void Execute(Card card);
         void Adjust();
     }

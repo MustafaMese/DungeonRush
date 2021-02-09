@@ -33,7 +33,6 @@ namespace DungeonRush.Controller
         private Attacker attacker;
         private ICustomization customization;
         private StatusController statusController;
-        private Animator animator;
 
         [SerializeField] GameObject exclamation;
         [SerializeField] ActionState actionState;
@@ -58,7 +57,6 @@ namespace DungeonRush.Controller
             mover = card.GetComponent<Mover>();
             attacker = card.GetComponent<Attacker>();
             cardType = card.GetCardType();
-            animator = card.Animator;
             if (cardType == CardType.ENEMY)
             {
                 customization = card.GetComponent<ICustomization>();
@@ -262,9 +260,8 @@ namespace DungeonRush.Controller
         #endregion
 
         #region STATE METHODS
-        public void ChangeAnimatorState(bool state)
+        public void ChangeSkinState(bool state)
         {
-            animator.enabled = state;
             customization.ChangeSkinState(state);
         }
 

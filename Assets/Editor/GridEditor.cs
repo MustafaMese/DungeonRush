@@ -178,11 +178,11 @@ public class GridEditor : Editor
             {
                 isContain = GridStructure<Card>.Contains(objectList, aligned);
                 if (!isContain)
-                    CreatePrefab(aligned, prefab, objectList);
+                    CreatePrefab(aligned, prefab, objectList, false);
                 else
                 {
                     DeleteObject(aligned, objectList);
-                    CreatePrefab(aligned, prefab, objectList);
+                    CreatePrefab(aligned, prefab, objectList, false);
                 }
             }
         }
@@ -211,13 +211,14 @@ public class GridEditor : Editor
         }
     }
 
-    private void CreatePrefab<T>(Vector3 pos, GameObject prefab, List<GridStructure<T>> list) where T : MonoBehaviour
+    private void CreatePrefab<T>(Vector3 pos, GameObject prefab, List<GridStructure<T>> list, bool hasParent = true) where T : MonoBehaviour
     {
         Undo.IncrementCurrentGroup();
         GameObject obj = (GameObject)PrefabUtility.InstantiatePrefab(prefab);
         list.Add(new GridStructure<T>(obj.GetComponent<T>(), pos));
         obj.transform.position = pos;
-        obj.transform.SetParent(boardTransform);
+        if(hasParent)
+            obj.transform.SetParent(boardTransform);
         Undo.RegisterCreatedObjectUndo(obj, "Create " + obj.name);
     }
 

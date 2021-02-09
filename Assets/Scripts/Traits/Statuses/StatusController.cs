@@ -7,7 +7,7 @@ namespace DungeonRush.Traits
 {
     public class StatusController : MonoBehaviour
     {
-        [SerializeField] CharacterCanvas characterCanvas;
+        [SerializeField] CharacterHUD characterHUD;
 
         public List<Status> activeStatuses = new List<Status>();
         public List<StatusObject> STATUS = new List<StatusObject>();
@@ -25,7 +25,7 @@ namespace DungeonRush.Traits
         public void AddStatus(StatusObject statusObject)
         {
             Status status = statusObject.Create(transform);
-            status.Initialize(characterCanvas, this);
+            status.Initialize(characterHUD, this);
             activeStatuses.Add(status);
         }
 

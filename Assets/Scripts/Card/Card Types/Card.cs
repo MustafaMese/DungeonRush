@@ -27,7 +27,7 @@ namespace DungeonRush
             [Header("General Properties")]
             [SerializeField] CardProperties cardProperties = null;
             [SerializeField] Character characterType;
-            [SerializeField] TextMeshProUGUI nameText = null;
+            [SerializeField] TextMeshPro nameText = null;
             [SerializeField] Animator animator;
 
             #region CARD STATS

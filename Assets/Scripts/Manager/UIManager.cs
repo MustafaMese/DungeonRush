@@ -72,7 +72,7 @@ namespace DungeonRush.UI
                     _turnCanvas.PanelControl(false);
                     _activeSkillCanvas.PanelControl(false);
 
-                    if (uiState == UIState.PICKUP)
+                    if (uiState == UIState.PICKUP || uiState == UIState.CHOICE)
                         _pauseMenu.PanelControl(false);
 
                     break;
@@ -131,6 +131,7 @@ namespace DungeonRush.UI
         public void EnableChoiceCanvas(Item item ,Item loot, ItemUser itemUser)
         {
             _choiceCanvas.EnablePanel(item, loot, itemUser);
+            GameManager.Instance.SetGameState(GameState.PAUSE, UIState.CHOICE);
         }
 
         #region LEVEL CONTROL METHODS
@@ -231,6 +232,8 @@ namespace DungeonRush.UI
             _pauseMenu.AddImageToPanel(sprite);
         }
 
+        #endregion
+
         public void Pause()
         {
             Time.timeScale = 0f;
@@ -241,6 +244,12 @@ namespace DungeonRush.UI
             Time.timeScale = 1f;
         }
 
-        #endregion
+        public void ChangeFrameRate(bool reduce)
+        {
+            if(reduce)
+                Application.targetFrameRate = 15;
+            else
+                Application.targetFrameRate = GameManager.Instance.targetFrameRate;
+        }
     }
 }

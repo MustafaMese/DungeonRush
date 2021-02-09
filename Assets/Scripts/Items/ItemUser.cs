@@ -61,8 +61,10 @@ namespace DungeonRush
             {
                 List<string> names = new List<string>();
                 foreach (var item in items.Values)
-                    names.Add(item.GetName());
-
+                {
+                    if(item != null)
+                        names.Add(item.GetName());
+                }
                 return names;
             }
 

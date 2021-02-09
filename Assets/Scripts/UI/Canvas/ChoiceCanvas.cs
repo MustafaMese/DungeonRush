@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using DungeonRush.Items;
+using DungeonRush.Managers;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -103,6 +104,7 @@ namespace DungeonRush.UI
             enableButtons = false;
 
             UIManager.Instance.Resume();
+            GameManager.Instance.SetGameState(GameState.PLAY);
         }
 
         public void ChooseItem()
@@ -112,6 +114,7 @@ namespace DungeonRush.UI
             enableButtons = false;
 
             UIManager.Instance.Resume();
+            GameManager.Instance.SetGameState(GameState.PLAY);
         }
     }
 }

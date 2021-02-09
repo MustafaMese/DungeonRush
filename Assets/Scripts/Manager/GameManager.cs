@@ -33,6 +33,8 @@ namespace DungeonRush
             [SerializeField] TextPopupManager textPopupManager;
             [SerializeField] EffectOperator effectOperator;
 
+            public int targetFrameRate = 60;
+
             private bool started = false;
             private void Awake()
             {
@@ -58,7 +60,7 @@ namespace DungeonRush
 
             protected void Initialize()
             {
-                Application.targetFrameRate = 60;
+                Application.targetFrameRate = targetFrameRate;
 
                 Instantiate(uiManagerPrefab);
                 Instantiate(loadManagerPrefab);
