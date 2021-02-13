@@ -25,7 +25,7 @@ namespace DungeonRush.Skills
             {
                 Card card = targets[i];
                 if (card != null)
-                    card.DecreaseHealth(Power);
+                    card.GetDamagable().DecreaseHealth(Power);
             }
         }
 

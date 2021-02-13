@@ -10,6 +10,10 @@ namespace DungeonRush.Controller
 {
     public class MoveSchedular : MonoBehaviour
     {
+        private enum Tour {PLAYER, ENEMY, TRAP}
+        private Tour tour;
+        private bool isPlayerTurn;
+
         private static MoveSchedular instance = null;
         // Game Instance Singleton
         public static MoveSchedular Instance
@@ -17,20 +21,13 @@ namespace DungeonRush.Controller
             get { return instance; }
             set { instance = value; }
         }
-        /// <summary>
-        /// -1 for Nothing, 0 for Player, 1 for NonPlayers, 2 for Traps
-        /// </summary>
-        [SerializeField] int turnNumber;
-        [SerializeField] int oldTurnNumber;
-        [SerializeField] int tourCount;
-
-        public PlayerController playerController;
 
         [SerializeField] EnemyManager enemyControllerPrefab;
-        [SerializeField] TrapManager trapControllerPrefab;
+        [SerializeField] EnvironmentManager environmentControllerPrefab;
 
-        public EnemyManager enemyController;
-        public TrapManager trapController;
+        [HideInInspector] public EnemyManager enemyController;
+        [HideInInspector] public EnvironmentManager environmentController;
+        [HideInInspector] public PlayerController playerController;
 
         private void Awake()
         {
@@ -39,12 +36,11 @@ namespace DungeonRush.Controller
 
         protected void Initialize()
         {
-            tourCount = 0;
-            turnNumber = 0;
-            oldTurnNumber = -1;
+            tour = Tour.PLAYER;
+            isPlayerTurn = false;
 
             enemyController = Instantiate(enemyControllerPrefab);
-            trapController = Instantiate(trapControllerPrefab);
+            environmentController = Instantiate(environmentControllerPrefab);
         }
 
         public void StartGame()
@@ -54,54 +50,36 @@ namespace DungeonRush.Controller
             GameManager.Instance.SetGameState(GameState.PLAY);
         }
 
-        public void IncreaseTour() 
-        {
-            tourCount++;
-        }
-
         public void OnNotify() 
         {
             if (GameManager.Instance.gameState == GameState.DEFEAT || GameManager.Instance.gameState == GameState.PAUSE) return;
-
-            if(turnNumber != 2)
-            {
-                oldTurnNumber = turnNumber;
-                turnNumber = 2;
-
-                if (oldTurnNumber == 0)
-                    IncreaseTour();
-            }
-            else
-            {
-                if (oldTurnNumber == 0)
-                {
-                    turnNumber = 1;
-                    //board.SetTileDarkness();
-                }
-                else
-                    turnNumber = 0;
-
-                oldTurnNumber = -1;
-            }
-
             CardManager.Instance.ReshuffleCards();
-            if (turnNumber == -1) 
+            switch (tour)
             {
-                // Nothing
-            }
-            else if (turnNumber == 0)
-            {
-                UIManager.Instance.InitializePlayerTurn();
-                playerController.Begin();
-                playerController.ActivateStatuses();
-            }
-            else if (turnNumber == 1)
-            {
-                enemyController.Begin();
-            }
-            else if (turnNumber == 2)
-            {
-                trapController.Begin();
+                case Tour.PLAYER:
+                    environmentController.Begin();
+                    isPlayerTurn = false;
+                    tour = Tour.TRAP;
+                    break;
+                case Tour.ENEMY:
+                    environmentController.Begin();
+                    isPlayerTurn = true;
+                    tour = Tour.TRAP;
+                    break;
+                case Tour.TRAP:
+                    if(isPlayerTurn)
+                    {
+                        UIManager.Instance.InitializePlayerTurn();
+                        playerController.Begin();
+                        playerController.ActivateStatuses();
+                        tour = Tour.PLAYER;
+                    }
+                    else
+                    {
+                        enemyController.Begin();
+                        tour = Tour.ENEMY;
+                    }
+                    break;
             }
         }
     }

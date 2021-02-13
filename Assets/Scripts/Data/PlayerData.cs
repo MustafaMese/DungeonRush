@@ -27,11 +27,11 @@ public class PlayerData
         gold = player.Coins;
         xp = player.Experience;
 
-        criticChance = player.CriticChance;
-        dodgeChance = player.DodgeChance;
-        lifeCount = player.LifeCount;
-        moveCount = player.TotalMoveCount;
-        lootChance = player.LootChance;
+        criticChance = player.GetStats().CriticChance;
+        dodgeChance = player.GetStats().DodgeChance;
+        lifeCount = player.GetStats().LifeCount;
+        moveCount = player.GetStats().TotalMoveCount;
+        lootChance = player.GetStats().LootChance;
 
         Debug.Log("1");
 

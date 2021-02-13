@@ -1,4 +1,5 @@
 ﻿using DungeonRush.Cards;
+using DungeonRush.Field;
 using DungeonRush.UI.HUD;
 
 namespace DungeonRush.Traits
@@ -6,7 +7,7 @@ namespace DungeonRush.Traits
     public interface IStatus
     {
         void Initialize(CharacterHUD canvas, StatusController statusController);
-        void Execute(Card card);
+        void Execute(Card card, Tile tile = null);
         void Adjust();
     }
 

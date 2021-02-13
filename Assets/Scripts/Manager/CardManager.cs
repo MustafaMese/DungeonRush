@@ -48,40 +48,68 @@ namespace DungeonRush
 
             #region ADDING METHODS
 
-            /// <summary>
-            /// This method using for runtime.
-            /// </summary>
-            public Card AddCard(Card piece, Tile tile, Board board, bool isTrapCard)
+            public EnemyCard AddCard(EnemyCard prefab, Tile tile)
             {
-                Card newPiece = Instantiate(piece, tile.transform.position, Quaternion.identity);
-                if(newPiece.GetCardType() != CardType.PLAYER)
-                    newPiece.transform.SetParent(board.transform);
+                EnemyCard enemy = Instantiate(prefab, tile.transform.position, Quaternion.identity);
+                tile.SetCard(enemy);
+                enemy.SetTile(tile);
+                cards.Add(enemy);
+                return enemy;
+            }
 
-                if (isTrapCard)
-                    tile.SetTrapCard(newPiece);
-                else
-                    tile.SetCard(newPiece);
-
-                newPiece.SetTile(tile);
-                cards.Add(newPiece);
-                return newPiece;
+            public EnvironmentCard AddCard(EnvironmentCard prefab, Tile tile)
+            {
+                EnvironmentCard trap = Instantiate(prefab, tile.transform.position, Quaternion.identity);
+                tile.SetEnvironmentCard(trap);
+                trap.SetTile(tile);
+                cards.Add(trap);
+                return trap;
             }
 
             #endregion
 
             #region REMOVE METHODS
 
-            // TODO Karakter rasgele yok oluyo
-            public static void RemoveCard(Tile tile)
+            public static void RemoveCard(Vector2 coordinate, bool isTrap = false)
             {
-                Card card = tile.GetCard();
+                Tile tile = Board.tilesByCoordinates[coordinate];
 
-
-                if (card != null)
+                if(!isTrap)
                 {
-                    if (card.GetCardType() == CardType.PLAYER && card.GetComponent<Health>().GetCurrentHealth() > 0) return;
+                    Card card = tile.GetCard();
+                    if (card != null)
+                    {
+                        if (card.GetCardType() == CardType.PLAYER && card.GetComponent<Health>().GetCurrentHealth() > 0) return;
 
-                    tile.SetCard(null);
+                        tile.SetCard(null);
+                        Instance.StartCoroutine(LateDestroy(card.gameObject));
+                    }
+                }
+                else
+                {
+                    EnvironmentCard card = tile.GetEnvironmentCard();
+                    tile.SetEnvironmentCard(null);
+                    Instance.StartCoroutine(LateDestroy(card.gameObject));
+                }
+            }
+
+            public static void RemoveCard(Tile tile, bool isTrap = false)
+            {
+                if(!isTrap)
+                {
+                    Card card = tile.GetCard();
+                    if (card != null)
+                    {
+                        if (card.GetCardType() == CardType.PLAYER && card.GetComponent<Health>().GetCurrentHealth() > 0) return;
+
+                        tile.SetCard(null);
+                        Instance.StartCoroutine(LateDestroy(card.gameObject));
+                    }
+                }
+                else
+                {
+                    EnvironmentCard card = tile.GetEnvironmentCard();
+                    tile.SetEnvironmentCard(null);
                     Instance.StartCoroutine(LateDestroy(card.gameObject));
                 }
             }
@@ -90,11 +118,11 @@ namespace DungeonRush
             {
                 if (card.GetCardType() == CardType.ENEMY)
                 {
-                    EnemyManager.UnsubscribeCard((EnemyAIController)card.Controller);
+                    EnemyManager.UnsubscribeCard((EnemyAIController)card.GetController());
                 }
                 else if (card.GetCardType() == CardType.TRAP)
                 {
-                    TrapManager.UnsubscribeCard((TrapAIController)card.Controller);
+                    EnvironmentManager.UnsubscribeCard((EnvironmentAIController)card.GetController());
                 }
             }
 
@@ -107,11 +135,7 @@ namespace DungeonRush
                     Destroy(obj);
                 }
             }
-
-            public static void RemoveCardForAttacker(Vector2 coordinate)
-            {
-                RemoveCard(Board.tilesByCoordinates[coordinate]);
-            }
+            
             #endregion 
         }
     }

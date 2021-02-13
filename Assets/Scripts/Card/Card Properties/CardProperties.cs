@@ -13,7 +13,7 @@ namespace DungeonRush
             public CardType cardType;
             public Character character;
             public Sprite characterIcon;
-            public Stats cardStats;
+            public StatData cardStats;
 
             [Header("Enemy only")]
             public int level;

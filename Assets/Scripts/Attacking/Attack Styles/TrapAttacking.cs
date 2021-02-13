@@ -3,6 +3,7 @@ using DungeonRush.Cards;
 using DungeonRush.Data;
 using DungeonRush.Field;
 using DungeonRush.Managers;
+using DungeonRush.Traits;
 using UnityEngine;
 
 namespace DungeonRush.Attacking
@@ -14,7 +15,7 @@ namespace DungeonRush.Attacking
         {
             Card targetCard = move.GetCardTile().GetCard();
             if (targetCard != null)
-                targetCard.DecreaseHealth(damage);
+                targetCard.GetDamagable().DecreaseHealth(damage);
         }
 
         public override void SetEffectPosition(GameObject effect, Vector3 tPos, Transform card = null)
@@ -24,9 +25,8 @@ namespace DungeonRush.Attacking
 
         public override bool Define(Card card, Swipe swipe)
         {
-            Card tCard = card.GetTile().GetCard();
             ConfigureCardMove(card, card.GetTile());
-            return tCard != null;
+            return card.GetTile().GetCard() != null;
         }
     }
 }

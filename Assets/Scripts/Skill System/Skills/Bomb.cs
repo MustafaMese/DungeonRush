@@ -26,7 +26,7 @@ namespace DungeonRush.Skills
             {
                 Card tCard = targets[i];
                 if (tCard != null)
-                    tCard.DecreaseHealth(Power);
+                    tCard.GetDamagable().DecreaseHealth(Power);
             }
 
             SkillButtonControl();

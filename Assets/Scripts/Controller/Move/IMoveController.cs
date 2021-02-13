@@ -9,7 +9,7 @@ namespace DungeonRush.Controller
     {
         bool IsRunning();
         void MakeMove();
-        Card GetCard();
+        Sprite GetCardIcon();
         void Stop();
         void Notify();
         void Run();

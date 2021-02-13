@@ -14,7 +14,7 @@ namespace DungeonRush.Skills
             Card target = move.GetTargetTile().GetCard();
 
             if (target != null)
-                target.StatusController.AddStatus(status);
+                target.GetStatusController().AddStatus(status);
 
         }
     }

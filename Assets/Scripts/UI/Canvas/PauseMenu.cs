@@ -38,10 +38,10 @@ namespace DungeonRush.UI
             int damage = player.GetDamage();
             SetText(damageTxt, damage);
 
-            int critic = player.CriticChance;
+            int critic = player.GetStats().CriticChance;
             SetText(criticChance, critic);
 
-            int dodge = player.DodgeChance;
+            int dodge = player.GetStats().DodgeChance;
             SetText(dodgeChance, dodge);
 
             List<string> names = player.GetItemNames();
@@ -72,6 +72,8 @@ namespace DungeonRush.UI
         #region BUTTON OPERATIONS
         public void Resume()
         {
+            UIManager.Instance.ChangeFrameRate(false);
+
             GameManager.Instance.SetGameState(GameState.PLAY);
             pauseMenuUI.SetActive(false);
             pauseButton.gameObject.SetActive(true);
@@ -83,6 +85,8 @@ namespace DungeonRush.UI
             SetTexts();
             pauseMenuUI.SetActive(true);
             pauseButton.gameObject.SetActive(false);
+
+            UIManager.Instance.ChangeFrameRate(true);
         }
 
         public void MainMenu()

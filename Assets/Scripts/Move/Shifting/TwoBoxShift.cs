@@ -124,7 +124,7 @@ namespace DungeonRush.Shifting
             if (moveType == MoveType.EMPTY)
                 canMove = true;
             else
-                canMove = card.CanAttack(targetTile.GetCard());
+                canMove = card.GetFighter().CanAttack(targetTile.GetCard());
             Move move = new Move(targetTile, card, moveType, canMove);
             card.SetMove(move);
         }

@@ -1,11 +1,9 @@
 ﻿using DungeonRush.Cards;
 using DungeonRush.Data;
+using DungeonRush.Field;
 using DungeonRush.Managers;
-using DungeonRush.UI.HUD;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace DungeonRush.Traits
 {
@@ -29,7 +27,7 @@ namespace DungeonRush.Traits
         public int Power { get => power; }
         public StatusType StatusType { get => statusType; }
         
-        public abstract void Execute(Card card);
+        public abstract void Execute(Card card, Tile tile = null);
 
         public virtual void Adjust()
         {
@@ -38,7 +36,6 @@ namespace DungeonRush.Traits
                 TextPopupManager.Instance.TextPopup(transform.position, power.ToString());
             
             tempTurnCount--;
-            print(tempTurnCount);
             if (tempTurnCount <= 0)
                 StartCoroutine(KillStatus());
         }

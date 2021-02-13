@@ -39,7 +39,7 @@ namespace DungeonRush.Property
 
         protected virtual void Initialize() 
         {
-            animator = card.Animator;
+            animator = card.GetAnimator();
             statusController = card.GetComponent<StatusController>();
             statusAct = new AttackerAct();
         }
@@ -62,7 +62,7 @@ namespace DungeonRush.Property
 
         protected bool IsCriticAttack()
         {
-            int criticChance = card.CriticChance + statusAct.ExtraCriticChance;
+            int criticChance = card.GetStats().CriticChance + statusAct.ExtraCriticChance;
             criticChance *= 2;
 
             if (criticChance > 0)
@@ -121,21 +121,26 @@ namespace DungeonRush.Property
             FillThePool(poolForAttackStyle, effectObject, 2);
             power = attackStyle.GetPower();
         }
-        protected bool DoAttackAction(Move move)
+        protected bool DoAttackAction(Move move, bool isTrap)
         {
-            bool isCritic = IsCriticAttack();
+            bool isCritic;
+
+            if(!isTrap)
+                isCritic = IsCriticAttack();
+            else
+                isCritic = false;
 
             if (!isCritic)
                 attackStyle.Attack(move, power);
             else
                 attackStyle.Attack(move, power * 2);
 
-            if (statusAct.CanLifeSteal)
+            if (!isTrap && statusAct.CanLifeSteal)
             {
                 if (!isCritic)
-                    card.IncreaseHealth(power);
+                    card.GetDamagable().IncreaseHealth(power);
                 else
-                    card.IncreaseHealth(power * 2);
+                    card.GetDamagable().IncreaseHealth(power * 2);
             }
 
             return isCritic;
@@ -178,10 +183,10 @@ namespace DungeonRush.Property
             if (tAttacker != null)
             {
                 tAttacker.StatusActResetAndControl();
-                dodgeChance = card.DodgeChance + tAttacker.statusAct.ExtraDodgeChance;
+                dodgeChance = card.GetStats().DodgeChance + tAttacker.statusAct.ExtraDodgeChance;
             }
             else
-                dodgeChance = card.DodgeChance;
+                dodgeChance = card.GetStats().DodgeChance;
             dodgeChance *= 2;
 
             if (dodgeChance > 0)
@@ -216,7 +221,11 @@ namespace DungeonRush.Property
                     TextPopupManager.Instance.TextPopup(tPos, "MISS");
                 else
                 {
-                    bool isCritic = DoAttackAction(move);
+                    bool isCritic;
+                    if (card.GetCardType() != CardType.TRAP)
+                        isCritic = DoAttackAction(move, false);
+                    else
+                        isCritic = DoAttackAction(move, true);
 
                     List<StatusObject> impacts = attackStyle.GetImpacts();
 
@@ -247,7 +256,7 @@ namespace DungeonRush.Property
                         TextPopupManager.Instance.TextPopup(tPos, "MISS");
                     else
                     {
-                        bool isCritic = DoAttackAction(move);
+                        bool isCritic = DoAttackAction(move, false);
                         TextPopupManager.Instance.TextPopup(tPos, power, isCritic);
                     }
                 }

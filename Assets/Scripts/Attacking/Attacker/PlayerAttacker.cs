@@ -52,16 +52,16 @@ namespace DungeonRush.Property
         private void Damage(Move move)
         {
             Tile target = move.GetTargetTile();
-            int level = 0;
-
-            if(move.GetTargetTile().GetCard() != null)
+            Card targetCard = target.GetCard();
+            
+            if(targetCard != null)
+            {
+                int level = 0;
                 level = move.GetTargetTile().GetCard().GetLevel();
-
+                if (targetCard.GetDamagable().GetHealth() <= 0)
+                    CollectableManager.Instance.AddCoins(target.transform.position, level);
+            }
             AttackAction(move);
-
-            if(target.GetCard() == null || target.GetCard().GetHealth() <= 0)
-                CollectableManager.Instance.AddCoins(target.transform.position, level);
-
         }
 
         public int GetDamage()

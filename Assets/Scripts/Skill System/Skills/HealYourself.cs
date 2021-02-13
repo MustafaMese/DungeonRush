@@ -11,7 +11,7 @@ namespace DungeonRush.Skills
             if(!canExecute) return;
 
             Card card = move.GetCard();
-            card.IncreaseHealth(Power);
+            card.GetDamagable().IncreaseHealth(Power);
 
             SkillButtonControl();
         }

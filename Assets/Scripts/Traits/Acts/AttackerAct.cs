@@ -40,7 +40,6 @@ namespace DungeonRush.Traits
                     extraCriticChance += s.Power;
                     extraDodgeChance += s.Power;
                 }
-                // TODO Life steal kısmına bir değişken eklenmeli.
                 else if (s.StatusType == StatusType.LIFE_STEAL)
                     canLifeSteal = true;
             }

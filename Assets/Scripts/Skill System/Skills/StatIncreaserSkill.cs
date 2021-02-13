@@ -19,22 +19,22 @@ namespace DungeonRush.Skills
             switch (statType)
             {
                 case StatType.MAXIMUM_HEALTH:
-                    card.MaximumHealth += 10;
+                    card.GetStats().MaximumHealth += 10;
                     break;
                 case StatType.CRITIC_CHANCE:
-                    card.CriticChance++;
+                    card.GetStats().CriticChance++;
                     break;
                 case StatType.DODGE_CHANCE:
-                    card.DodgeChance++;
+                    card.GetStats().DodgeChance++;
                     break;
                 case StatType.LIFE_COUNT:
-                    card.LifeCount++;
+                    card.GetStats().LifeCount++;
                     break;
                 case StatType.MOVE_COUNT:
-                    card.TotalMoveCount++;
+                    card.GetStats().TotalMoveCount++;
                     break;
                 case StatType.LOOT_CHANCE:
-                    card.LootChance++;
+                    card.GetStats().LootChance++;
                     break;
                 default:
                     break;

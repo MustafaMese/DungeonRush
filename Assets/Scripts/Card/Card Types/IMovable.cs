@@ -9,8 +9,6 @@ namespace DungeonRush.Cards
         bool IsMoveFinished();
         Shift GetShift();
         void ExecuteMove();
-        Move GetMove();
-        void SetMove(Move move);
     }
 }
 

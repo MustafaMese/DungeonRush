@@ -247,7 +247,7 @@ namespace DungeonRush.UI
         public void ChangeFrameRate(bool reduce)
         {
             if(reduce)
-                Application.targetFrameRate = 15;
+                Application.targetFrameRate = 7;
             else
                 Application.targetFrameRate = GameManager.Instance.targetFrameRate;
         }

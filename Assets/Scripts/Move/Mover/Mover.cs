@@ -30,7 +30,7 @@ namespace DungeonRush.Property
             DOTween.Init();
             move = new Move();
             card = GetComponent<Card>();
-            animator = card.Animator;
+            animator = card.GetAnimator();
 
             walkParticul = shifting.GetEffect();
             FillThePool(walkParticulPool, walkParticul, 2);

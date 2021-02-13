@@ -60,7 +60,7 @@ namespace DungeonRush
                     Tile t = tilesByCoordinates[c.transform.position];
                     
                     if (c.GetCardType() == CardType.TRAP)
-                        t.SetTrapCard(c);
+                        t.SetEnvironmentCard((EnvironmentCard)c);
                     else
                         t.SetCard(c);
 

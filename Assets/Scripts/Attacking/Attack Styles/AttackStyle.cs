@@ -20,6 +20,7 @@ namespace DungeonRush.Attacking
 
         public abstract void Attack(Move move, int damage);
         public abstract void SetEffectPosition(GameObject effect, Vector3 tPos, Transform card = null);
+       
         public virtual Dictionary<Tile, Swipe> GetAvaibleTiles(Card card)
         {
             if (card == null) return null;
@@ -58,46 +59,6 @@ namespace DungeonRush.Attacking
                 if (rightTile.GetCard() != null && card.GetCharacterType().IsEnemy(rightTile.GetCard().GetCharacterType()))
                     avaibleTiles.Add(rightTile, Swipe.RIGHT);
             }
-
-            // if (coordinate.y < rL - 1)
-            // {
-            //     var targetCoordinate = new Vector2(coordinate.x, coordinate.y + 1);
-            //     var upperTile = Board.tilesByCoordinates[targetCoordinate];
-            //     if (upperTile.GetCard() != null && card.GetCharacterType().IsEnemy(upperTile.GetCard().GetCharacterType()))
-            //     {
-            //         avaibleTiles.Add(upperTile, Swipe.UP);
-            //     }
-            // }
-
-            // if (coordinate.y > 0)
-            // {
-            //     var targetCoordinate = new Vector2(coordinate.x, coordinate.y - 1);
-            //     var lowerTile = Board.tilesByCoordinates[targetCoordinate];
-            //     if (lowerTile.GetCard() != null && card.GetCharacterType().IsEnemy(lowerTile.GetCard().GetCharacterType()))
-            //     {
-            //         avaibleTiles.Add(lowerTile, Swipe.DOWN);
-            //     }
-            // }
-
-            // if (coordinate.x > 0)
-            // {
-            //     var targetCoordinate = new Vector2(coordinate.x - 1, coordinate.y);
-            //     var leftTile = Board.tilesByCoordinates[targetCoordinate];
-            //     if (leftTile.GetCard() != null && card.GetCharacterType().IsEnemy(leftTile.GetCard().GetCharacterType()))
-            //     {
-            //         avaibleTiles.Add(leftTile, Swipe.LEFT);
-            //     }
-            // }
-
-            // if (coordinate.x < rL - 1)
-            // {
-            //     var targetCoordinate = new Vector2(coordinate.x + 1, coordinate.y);
-            //     var rightTile = Board.tilesByCoordinates[targetCoordinate];
-            //     if (rightTile.GetCard() != null && card.GetCharacterType().IsEnemy(rightTile.GetCard().GetCharacterType()))
-            //     {
-            //         avaibleTiles.Add(rightTile, Swipe.RIGHT);
-            //     }
-            // }
 
             return avaibleTiles;
         }
@@ -158,27 +119,44 @@ namespace DungeonRush.Attacking
             }
             return false;
         }
+        
         public virtual List<Card> GetAttackedCards(Move move)
         {
             return null;
         }
+
         public int GetPower()
         {
             return power;
         }
+
         public GameObject GetEffect()
         {
             return effectObject;
         }
+
         public float GetAnimationTime()
         {
             return animationTime;
         }
+
         protected void ConfigureCardMove(Card card, Tile targetTile)
         {
             Move move = new Move(targetTile, card, MoveType.ATTACK, false);
             card.SetMove(move);
         }
-        public List<StatusObject> GetImpacts() { return impacts; }
+
+        public List<StatusObject> GetImpacts() 
+        {
+            return impacts; 
+        }
+        
+        public void ExecuteImpacts(Card target)
+        {
+            for (var i = 0; i < impacts.Count; i++)
+            {
+                target.GetStatusController().AddStatus(impacts[i]);
+            }
+        }
     }
 }

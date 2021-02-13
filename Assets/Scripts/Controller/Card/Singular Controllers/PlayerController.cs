@@ -90,6 +90,7 @@ namespace DungeonRush.Controller
                         moveProcess.StartProcess();
                     else
                         attackProcess.StartProcess();
+                        
                 }
                 else
                 {
@@ -166,9 +167,9 @@ namespace DungeonRush.Controller
         {
             isRunning = true;
         }
-        public Card GetCard()
+        public Sprite GetCardIcon()
         {
-            return player;
+            return player.GetCharacterIcon();
         }
         public void Stop() 
         {
@@ -194,15 +195,15 @@ namespace DungeonRush.Controller
         {
             MoveSchedular.Instance.enemyController.ConfigureSurroundingCardsSkinStates();
             PlayerCamera.Instance.MoveCamera(transform.position);
-            if (player.InstantMoveCount > 0)
+            if (player.GetStats().InstantMoveCount > 0)
             {
                 Begin();
                 ActivateStatuses();
-                player.InstantMoveCount--;
+                player.GetStats().InstantMoveCount--;
             }
             else
             {
-                player.InstantMoveCount = player.TotalMoveCount;
+                player.GetStats().InstantMoveCount = player.GetStats().TotalMoveCount;
                 MoveSchedular.Instance.OnNotify();
             }
         }
@@ -226,11 +227,11 @@ namespace DungeonRush.Controller
             player.Coins = data.gold;
             player.Experience = data.xp;
 
-            player.CriticChance = data.criticChance;
-            player.DodgeChance = data.dodgeChance;
-            player.LifeCount = data.lifeCount;
-            player.TotalMoveCount = data.moveCount;
-            player.LootChance = data.lootChance;
+            player.GetStats().CriticChance = data.criticChance;
+            player.GetStats().DodgeChance = data.dodgeChance;
+            player.GetStats().LifeCount = data.lifeCount;
+            player.GetStats().TotalMoveCount = data.moveCount;
+            player.GetStats().LootChance = data.lootChance;
 
             for (int i = 0; i < data.uniqueItemIDs.Length; i++)
             {

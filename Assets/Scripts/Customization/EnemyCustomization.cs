@@ -41,7 +41,6 @@ namespace DungeonRush.Customization
         {
             for (int i = 0; i < sprites.Length; i++)
             {
-                print("1");
                 ChangeLayer(sprites[i], top, multiplier);
             }
             if (characterHUD != null)

@@ -116,7 +116,7 @@ namespace DungeonRush.UI
 
         public void Execute(Button button)
         {
-            if (!card.Controller.IsRunning()) return;
+            if (!card.GetController().IsRunning()) return;
 
             SkillButton skillButton = FindSkill(button);
             skillUser.ExecuteActiveSkill(skillButton.skill);

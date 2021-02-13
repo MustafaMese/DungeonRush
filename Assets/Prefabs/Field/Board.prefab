@@ -1,0 +1,93 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8931616264657897728
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2961078446738838923}
+  - component: {fileID: 5310059779354086915}
+  - component: {fileID: 5986450731467944349}
+  m_Layer: 0
+  m_Name: Board
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2961078446738838923
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8931616264657897728}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5310059779354086915
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8931616264657897728}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2d8968ed7bff7646b621b5a02318832, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5986450731467944349
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8931616264657897728}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10b0d726fd87bcc4faa7e504fdf80db2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  width: 1
+  height: 1
+  offset: {x: 1, y: 1, z: 0}
+  tilePrefab: {fileID: 7234369657258852871, guid: b6ea0ca7ee171484aa8b5c27ec668b5a,
+    type: 3}
+  topWallPrefab: {fileID: 7782201103506554325, guid: 784c8dcc7486c824181bf2f6408d0489,
+    type: 3}
+  downWallPrefab: {fileID: 7957350905932739985, guid: d4cd285bf0dbb054d9c579e26a609b0f,
+    type: 3}
+  rightWallPrefab: {fileID: 7696939018109201448, guid: 22868aa6026fe0d47af496fb110e9828,
+    type: 3}
+  leftWallPrefab: {fileID: 5450838680123620179, guid: dc235486e5d28464798691b5d80e1870,
+    type: 3}
+  topLeftWallPrefab: {fileID: 4147739546733981346, guid: be53cd24f435dd44e8fb757dc8285bcd,
+    type: 3}
+  topRightWallPrefab: {fileID: 4875012487492026158, guid: 730b848c9f1e69b439cfed24da783d14,
+    type: 3}
+  downLeftWallPrefab: {fileID: 5016130635085023543, guid: d72710b398003224ba1223278aeb1e02,
+    type: 3}
+  downRightWallPrefab: {fileID: 7522659921048867633, guid: be9e5456ad251544da283b895aa71ed2,
+    type: 3}
+  downRightOppositeWallPrefab: {fileID: 7782201103506554325, guid: 778c15f8520e74e4888f2e698db31956,
+    type: 3}
+  downLeftOppositeWallPrefab: {fileID: 7782201103506554325, guid: 85ee7b475421e83409a6b9a64698d077,
+    type: 3}
+  topRightOppositeWallPrefab: {fileID: 7782201103506554325, guid: b6f137e1a09ace748bb0b8372120bbb5,
+    type: 3}
+  topLeftOppositeWallPrefab: {fileID: 7782201103506554325, guid: 0e9c33bad762be640a2894dbd21f0cce,
+    type: 3}
+  color: {r: 1, g: 1, b: 1, a: 1}
+  showStartPoint: 0
+  fileNames:
+  - Cards/Players
+  - Cards/Enemies
+  - Cards/Traps

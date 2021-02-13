@@ -16,7 +16,7 @@ namespace DungeonRush.Attacking
             Card targetCard = move.GetTargetTile().GetCard();
             //SoundManager.Instance.SelectAudioSource(clip);
             if (targetCard != null)
-                targetCard.DecreaseHealth(damage);
+                targetCard.GetDamagable().DecreaseHealth(damage);
         }
 
         public override void SetEffectPosition(GameObject effect, Vector3 tPos, Transform card)

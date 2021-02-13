@@ -17,7 +17,7 @@ public abstract class ActiveSkill : Skill
         {
             StartCoroutine(Animate(move));
             IncreaseCooldown();
-            move.GetCard().Controller.Stop();
+            move.GetCard().GetController().Stop();
             canExecute = true;
         }
         else

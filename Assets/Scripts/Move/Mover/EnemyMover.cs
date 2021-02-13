@@ -27,7 +27,7 @@ namespace DungeonRush.Property
         {
             UpdateAnimation(false);
             move.GetCard().transform.position = move.GetTargetTile().GetCoordinate();
-            Tile.ChangeTile(move, true, false);
+            Tile.ChangeTile(move);
             isMoveFinished = true;
             move.Reset();
         }

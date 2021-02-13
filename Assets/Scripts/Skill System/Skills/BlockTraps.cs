@@ -8,7 +8,7 @@ namespace DungeonRush.Skills
         public override void Execute(Move move)
         {
             if(canExecute)
-                move.GetCard().CanBlockTraps = true;
+                move.GetCard().GetStats().CanBlockTraps = true;
         }
     }
 }

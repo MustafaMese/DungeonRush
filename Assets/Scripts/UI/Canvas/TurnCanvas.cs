@@ -57,7 +57,7 @@ namespace DungeonRush.UI
                 if (i + 1 == aIs.Count)
                     lastOne = true;
 
-                UIImage image = new UIImage(aIs[i].GetCard().GetCharacterIcon(), lastOne);
+                UIImage image = new UIImage(aIs[i].GetCardIcon(), lastOne);
                 cards.Add(image);
             }
         }

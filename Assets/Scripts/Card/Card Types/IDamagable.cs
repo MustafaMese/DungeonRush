@@ -11,5 +11,4 @@
         void IncreaseHealth(int h);
         void DecreaseHealth(int h);
     }
-
 }

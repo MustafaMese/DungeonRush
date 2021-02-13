@@ -30,7 +30,7 @@ namespace DungeonRush.Property
         private void Start()
         {
             card = GetComponent<Card>();
-            animator = card.Animator;
+            animator = card.GetAnimator();
 
             audioSource = gameObject.AddComponent(typeof(AudioSource)) as AudioSource;
             audioSource.volume = 0.2f;
@@ -80,7 +80,7 @@ namespace DungeonRush.Property
                 CardManager.Unsubscribe(card);
 
                 yield return new WaitForSeconds(deathTime);
-                CardManager.RemoveCardForAttacker(card.GetTile().GetCoordinate());
+                CardManager.RemoveCard(card.GetTile().GetCoordinate());
             }
         }
 
@@ -123,10 +123,10 @@ namespace DungeonRush.Property
                     UpdateAnimation(false);
                 else
                 {
-                    if (card.LifeCount > 0)
+                    if (card.GetStats().LifeCount > 0)
                     {
                         health = (int)(maxHealth * 30 / 100);
-                        card.LifeCount--;
+                        card.GetStats().LifeCount--;
                     }
                     else
                         StartCoroutine(Death());

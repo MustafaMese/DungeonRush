@@ -47,7 +47,7 @@ namespace DungeonRush.Cards
             //    sprite.color = c;
             //    yield return null;
             //}
-            CardManager.RemoveCardForAttacker(GetTile().GetCoordinate());
+            CardManager.RemoveCard(GetTile().GetCoordinate());
             yield return null;
         }
     }

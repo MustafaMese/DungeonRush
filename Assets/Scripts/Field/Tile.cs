@@ -14,7 +14,7 @@ namespace DungeonRush
 
             private Vector2 coordinate = Vector2.zero;
             private Card card = null;
-            private Card trapCard = null;
+            [SerializeField] EnvironmentCard trapCard = null;
 
             [SerializeField] SpriteRenderer image;
 
@@ -31,7 +31,7 @@ namespace DungeonRush
                     image.sortingOrder = (int)posX;
             }
 
-            public Card GetTrapCard()
+            public EnvironmentCard GetEnvironmentCard()
             {
                 return trapCard;
             }
@@ -51,7 +51,7 @@ namespace DungeonRush
                 this.coordinate = pos;
             }
 
-            public void SetTrapCard(Card card)
+            public void SetEnvironmentCard(EnvironmentCard card)
             {
                 this.trapCard = card;
             }
@@ -68,12 +68,8 @@ namespace DungeonRush
                 return false;
             }
 
-            public static void ChangeTile(Move move, bool isEmpty, bool isPlayer)
+            public static void ChangeTile(Move move)
             {
-                if (!isEmpty)
-                    //CardManager.RemoveCard(move.GetTargetTile());
-                if (isPlayer)
-                    CardManager.Instance.SetInstantPlayerTile(move.GetTargetTile());
                 move.GetTargetTile().SetCard(move.GetCard());
                 move.GetCardTile().SetCard(null);
                 move.GetCard().SetTile(move.GetTargetTile());

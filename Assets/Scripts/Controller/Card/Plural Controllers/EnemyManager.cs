@@ -1,9 +1,6 @@
-﻿using DungeonRush.Cards;
-using DungeonRush.Data;
+﻿using DungeonRush.Data;
 using DungeonRush.Field;
-using DungeonRush.Managers;
 using DungeonRush.UI;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,6 +10,7 @@ namespace DungeonRush.Controller
     {
         [SerializeField] int attackerDistance = 5;
 
+        // TODO PlayerControler'dan kurtulmak için MoveSchedular'ı kullan. Aynısınnı TrapManager'a uygula.
         private PlayerController playerController;
         private ProcessHandleChecker determineProcess;
         private ProcessHandleChecker assigningProcess;
@@ -111,6 +109,7 @@ namespace DungeonRush.Controller
         {
             if (moveFinished && attackerCards[attackerIndex] != null)
             {
+                print("121");
                 UIManager.Instance.ChangeIcons(attackerIndex);
                 attackerCards[attackerIndex].Run();
                 moveFinished = false;

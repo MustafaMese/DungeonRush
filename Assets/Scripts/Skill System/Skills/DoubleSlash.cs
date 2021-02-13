@@ -15,7 +15,7 @@ namespace DungeonRush.Skills
             Card targetCard = targetTile.GetCard();
             
             if(targetCard != null)
-                targetCard.DecreaseHealth(Power);
+                targetCard.GetDamagable().DecreaseHealth(Power);
         }
 
         public override void PositionEffect(GameObject effect, Move move)

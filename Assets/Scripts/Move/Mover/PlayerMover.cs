@@ -49,14 +49,14 @@ namespace DungeonRush
                 {
                     case MoveType.ITEM:
                         ItemMove(move.GetCard(), item);
-                        ChangeTiles(true);
+                        ChangeTiles();
                         break;
                     case MoveType.COIN:
-                        CoinMove(item);
-                        ChangeTiles(false);
+                        //CoinMove(item);
+                        ChangeTiles();
                         break;
                     case MoveType.EMPTY:
-                        ChangeTiles(true);
+                        ChangeTiles();
                         break;
                     default:
                         break;
@@ -66,14 +66,14 @@ namespace DungeonRush
                 move.Reset();
             }
 
-            private void ChangeTiles(bool isEmpty)
+            private void ChangeTiles()
             {
-                Tile.ChangeTile(move, isEmpty, true);
+                Tile.ChangeTile(move);
             }
 
             private void CoinMove(Card item)
             {
-                FindObjectOfType<CoinCounter>().IncreaseCoin(item.GetHealth());
+               //FindObjectOfType<CoinCounter>().IncreaseCoin(item.GetHealth());
             }
 
             private void ItemMove(Card card, Card item)

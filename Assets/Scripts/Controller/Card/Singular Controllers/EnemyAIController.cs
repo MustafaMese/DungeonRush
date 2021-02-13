@@ -21,7 +21,7 @@ namespace DungeonRush.Controller
         private bool isMoving = false;
         private Swipe swipe;
         private Swipe swipeForAim;
-        private Card card;
+        private EnemyCard card;
         private bool isRunning = false;
 
         private ProcessHandleChecker preparingProcess;
@@ -53,7 +53,7 @@ namespace DungeonRush.Controller
 
         private void Initialize()
         {
-            card = GetComponent<Card>();
+            card = GetComponent<EnemyCard>();
             mover = card.GetComponent<Mover>();
             attacker = card.GetComponent<Attacker>();
 
@@ -116,6 +116,7 @@ namespace DungeonRush.Controller
             else
                 return card.GetAttackStyle().Define(card, swipe);
         }
+        // TODO end kısımlarını kaldır. 1 frame'e mahal oluyo.
         private void AttackProcess()
         {
             if (attackProcess.start)
@@ -161,7 +162,7 @@ namespace DungeonRush.Controller
                 Notify();
             }
         }
-        private Swipe SelectTileToAttack(Card card)
+        private Swipe SelectTileToAttack(EnemyCard card)
         {
             List<Tile> list;
             Dictionary<Tile, Swipe> tiles;
@@ -180,7 +181,7 @@ namespace DungeonRush.Controller
 
             return Swipe.NONE;
         }
-        private Swipe SelectTileToMove(Card card)
+        private Swipe SelectTileToMove(EnemyCard card)
         {
             List<Tile> list;
             Dictionary<Tile, Swipe> tiles;
@@ -199,7 +200,7 @@ namespace DungeonRush.Controller
                 return Swipe.NONE;
         }
 
-        private Swipe SelectTileForSwipe(Card card)
+        private Swipe SelectTileForSwipe(EnemyCard card)
         {
             Swipe s = Swipe.NONE;
             if (state == State.NONE)
@@ -232,7 +233,7 @@ namespace DungeonRush.Controller
             return s;
         }
 
-        private void SelectSwipeForAim(Card card)
+        private void SelectSwipeForAim(EnemyCard card)
         {
             List<Tile> list;
             Dictionary<Tile, Swipe> tiles;
@@ -309,9 +310,9 @@ namespace DungeonRush.Controller
             attackProcess.Init(false);
             moveProcess.Init(false);
         }
-        public Card GetCard()
+        public Sprite GetCardIcon()
         {
-            return card;
+            return card.GetCharacterIcon();
         }
 
         public void Run()
@@ -319,7 +320,7 @@ namespace DungeonRush.Controller
             statusAct.Reset();
             statusAct.ActControl(statusController.activeStatuses);
             
-            swipe = SelectTileForSwipe(GetCard());
+            swipe = SelectTileForSwipe(card);
             ChangeState();
             isRunning = true;
             preparingProcess.StartProcess();
@@ -364,15 +365,15 @@ namespace DungeonRush.Controller
 
         public void Notify()
         {
-            if (card.InstantMoveCount > 0)
+            if (card.GetStats().InstantMoveCount > 0)
             {
                 Run();
                 ActivateStatuses();
-                card.InstantMoveCount--;
+                card.GetStats().InstantMoveCount--;
             }
             else
             {
-                card.InstantMoveCount = card.TotalMoveCount;
+                card.GetStats().InstantMoveCount = card.GetStats().TotalMoveCount;
                 MoveSchedular.Instance.enemyController.OnNotify();
             }
         }

@@ -19,8 +19,7 @@ namespace DungeonRush.UI
 
         private string pickedObjectName = "";
 
-        // TODO Burda bir mallık var.
-       public void EnablePanel(Item i)
+        public void EnablePanel(Item i)
         {
             UIManager.Instance.Pause();
 

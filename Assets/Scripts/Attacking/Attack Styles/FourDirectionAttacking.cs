@@ -25,7 +25,7 @@ namespace DungeonRush.Attacking
                 if(tempList[i] != null)
                 {
                     Card card = tempList[i];
-                    card.DecreaseHealth(damage);
+                    card.GetDamagable().DecreaseHealth(damage);
                 }
             }
         }

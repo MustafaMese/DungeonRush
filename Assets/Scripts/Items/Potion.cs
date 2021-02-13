@@ -11,10 +11,10 @@ namespace DungeonRush.Items
 
         public override void Execute(Card card)
         {
-            Impact(card);
+            Impact(card.GetDamagable());
         }
 
-        private void Impact(Card card)
+        private void Impact(IDamagable card)
         {
             switch(GetItemType())
             {

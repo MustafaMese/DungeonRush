@@ -22,7 +22,7 @@ namespace DungeonRush.Attacking
             for (int i = 0; i < tempList.Count; i++)
             {
                 if(tempList[i] != null)
-                    tempList[i].DecreaseHealth(damage);
+                    tempList[i].GetDamagable().DecreaseHealth(damage);
             }
         }
 

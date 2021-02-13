@@ -10,7 +10,7 @@ namespace DungeonRush.Skills
 {
     public abstract class Skill : MonoBehaviour, ISkill
     {
-        [Multiline(8)]
+        [Multiline(2)]
         [Tooltip("A string using the MultiLine attribute")]
         [SerializeField]
         private string notes = "- General options and effect options will be using for every skills. \n" +
