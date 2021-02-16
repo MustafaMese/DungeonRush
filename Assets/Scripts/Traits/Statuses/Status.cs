@@ -12,18 +12,19 @@ namespace DungeonRush.Traits
         [SerializeField] StatusType statusType;
         [SerializeField] int power;
         [SerializeField] int turnCount;
-        [SerializeField] float effectTime;
-        [SerializeField] GameObject effect;
+        [SerializeField] protected float effectTime;
+        [SerializeField] protected GameObject effect;
         [SerializeField] Sprite icon;
         [SerializeField] bool isUsingTextPopup;
         [SerializeField] bool dontKillEffect;
 
+        protected ObjectPool<GameObject> effectPool;
+        protected bool effectUsed; // Use this on dontKillEffects situtations.
+
         private GameObject HUDImage;
         private int tempTurnCount;
-        private ObjectPool<GameObject> effectPool;
         private StatusController statusController;
-        private bool effectUsed; // Use this on dontKillEffects situtations.
-
+        
         public int Power { get => power; }
         public StatusType StatusType { get => statusType; }
         
@@ -70,7 +71,7 @@ namespace DungeonRush.Traits
             }
         }
 
-        protected IEnumerator KillStatus()
+        protected virtual IEnumerator KillStatus()
         {
             statusController.Notify(this);
             yield return new WaitForSeconds(effectTime);

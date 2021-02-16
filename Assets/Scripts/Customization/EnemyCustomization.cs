@@ -47,19 +47,15 @@ namespace DungeonRush.Customization
                 ChangeLayer(characterHUD, top, multiplier);
         }
 
-        public void OverShadow()
+        private void HUDControl(bool state)
         {
-            characterHUD.gameObject.SetActive(false);
-        }
-
-        public void RemoveShadow()
-        {
-            characterHUD.gameObject.SetActive(true);
+            characterHUD.gameObject.SetActive(!state);
         }
 
         public void ChangeSkinState(bool state)
         {
             skin.SetActive(state);
+            HUDControl(state);
         }
     }
 }

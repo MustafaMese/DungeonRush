@@ -10,6 +10,15 @@ namespace DungeonRush.Controller
     // TODO bu sınıfı optimize et.
     public class EnvironmentManager : MonoBehaviour, ICardController
     {
+        private static EnvironmentManager instance;
+        public static EnvironmentManager Instance 
+        {
+            get 
+            {
+                return instance; 
+            }
+        }
+        
         [SerializeField] int activeTrapDistance = 4;
 
         private PlayerController playerController;
@@ -20,10 +29,14 @@ namespace DungeonRush.Controller
         private int trapIndex;
         private List<EnvironmentAIController> trapCards;
 
-        public List<EnvironmentElement> elementPrefabs;
-
+        public List<EnvironmentElement> elementPrefabs = new List<EnvironmentElement>();
         public static List<EnvironmentAIController> subscribedEnvironmentCards = new List<EnvironmentAIController>();
         
+        private void Awake() 
+        {
+            instance = this;
+        }
+
         private void Start()
         {
             playerController = FindObjectOfType<PlayerController>();
@@ -38,6 +51,7 @@ namespace DungeonRush.Controller
             {
                 if (determineProcess.IsRunning())
                 {
+                    print("1");
                     Board.touched = true;
                     DetermineActiveTraps();
                     moveFinished = true;
@@ -52,9 +66,20 @@ namespace DungeonRush.Controller
             }
         }
 
+        public EnvironmentCard GetEnvironmentCard(ElementType element)
+        {
+            for (var i = 0; i < elementPrefabs.Count; i++)
+            {
+                if(element == elementPrefabs[i].element)
+                    return elementPrefabs[i].card;
+            }
+            return null;
+        }
+
         #region DETERMINIG METHODS
         private void DetermineActiveTraps()
         {
+            print("2");
             trapCards = GetActiveTraps();
             determineProcess.Finish();
             assigningProcess.StartProcess();
@@ -65,6 +90,7 @@ namespace DungeonRush.Controller
         }
         private List<EnvironmentAIController> GetActiveTraps()
         {
+            print("3");
             List<EnvironmentAIController> l = new List<EnvironmentAIController>();
 
             for (int i = 0; i < subscribedEnvironmentCards.Count; i++)
@@ -83,6 +109,7 @@ namespace DungeonRush.Controller
         {
             if (moveFinished && trapCards[trapIndex] != null)
             {
+                print("4");
                 trapCards[trapIndex].Run();
                 moveFinished = false;
             }

@@ -90,6 +90,7 @@ namespace DungeonRush.Controller
         // TODO arada can fulleniyo neden?
         private void PrepareMoveProcess()
         {
+            print("5");
             if(card.GetElementType() != ElementType.STATIC)
                 EvolveOthers();
 
@@ -109,6 +110,7 @@ namespace DungeonRush.Controller
 
         private void EvolveOthers()
         {
+            print("6");
             List<EnvironmentCard> cards = card.CheckOtherEnvironmentCards();
             for (var i = 0; i < cards.Count; i++)
                 card.EvolveIt(cards[i]);

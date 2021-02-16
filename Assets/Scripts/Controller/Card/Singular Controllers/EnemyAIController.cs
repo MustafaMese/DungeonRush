@@ -260,15 +260,6 @@ namespace DungeonRush.Controller
         {
             customization.ChangeSkinState(state);
         }
-
-        public void ChangeShadowState(bool shadow)
-        {
-
-            if (shadow)
-                customization.OverShadow();
-            else
-                customization.RemoveShadow();
-        }
         #endregion
 
         #region CARD CONTROL METHODS

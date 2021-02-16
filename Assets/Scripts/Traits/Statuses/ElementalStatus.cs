@@ -1,4 +1,5 @@
-﻿using DungeonRush.Cards;
+﻿using System.Collections;
+using DungeonRush.Cards;
 using DungeonRush.Field;
 using UnityEngine;
 
@@ -10,18 +11,38 @@ namespace DungeonRush.Traits
 
         public override void Execute(Card card, Tile tile)
         {
-            ImpactOnSurface(tile);
-            if(Power > 0)
-                card.GetDamagable().IncreaseHealth(Power);
-            else
-                card.GetDamagable().DecreaseHealth(Power);
+            if(card != null)
+            {
+                if (Power > 0)
+                    card.GetDamagable().IncreaseHealth(Power);
+                else
+                    card.GetDamagable().DecreaseHealth(Power);
+            }
+            
+            StartCoroutine(KillStatus());
         }
 
-        private void ImpactOnSurface(Tile tile)
+        public void Initialize(Vector3 pos)
         {
-            EnvironmentCard trap = tile.GetEnvironmentCard();
-            if(trap != null)
-                trap.Evolve(elementType);
+            transform.position = pos;
+
+            effectPool = new Data.ObjectPool<GameObject>();
+            effectPool.SetObject(effect);
+            effectPool.FillPool(1, transform);
+            effectUsed = false;
+
+            Animate();
         }
-    }
+
+        protected override IEnumerator KillStatus()
+        {
+            yield return new WaitForSeconds(effectTime);
+            Destroy(this.gameObject);
+        }
+
+        public ElementType GetElementType()
+        {
+            return elementType;
+        }
+     }
 }

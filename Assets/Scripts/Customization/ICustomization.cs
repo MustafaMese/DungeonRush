@@ -7,8 +7,6 @@ namespace DungeonRush.Customization
     public interface ICustomization
     {
         void ChangeSkinState(bool state);
-        void RemoveShadow();
-        void OverShadow();
         void ChangeLayer(bool moveToTop, int multiplier = 1);
     }
 }
