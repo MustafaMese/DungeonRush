@@ -7,7 +7,7 @@ TextureImporter:
     second: Button_Settings
   - first:
       213: -838614137262259712
-    second: Button_Restart
+    second: Button_Replay
   - first:
       213: 2150264950873720009
     second: Button_LevelLocation
@@ -16,7 +16,7 @@ TextureImporter:
     second: Button_LegCustomization
   - first:
       213: -4517326878673107270
-    second: Button_EquipmentPage
+    second: Button_EquipmentPanel
   - first:
       213: -4018893044712542775
     second: Button_Home
@@ -25,19 +25,19 @@ TextureImporter:
     second: Button_HelmetCustomization
   - first:
       213: -2895684239499028257
-    second: Button_AttributePoints
+    second: DungeonTactics_ButtonPack_7
   - first:
       213: -3409256213933817475
     second: Button_Pause
   - first:
       213: 7970631052369756944
-    second: Button_CharacterPage
+    second: Button_CharacterPanel
   - first:
       213: -2054606952811590026
     second: Button_ArmCustomization
   - first:
       213: -8955468725883873270
-    second: Button_Start
+    second: Button_Play
   - first:
       213: 5435120381062711783
     second: Button_LevelSelect
@@ -49,10 +49,10 @@ TextureImporter:
     second: Button_LowerMenu_Character
   - first:
       213: 8842724435333334861
-    second: Button_LowerMenu_Dungeon
+    second: Button_MainMenu_Dungeon
   - first:
       213: -1750903616149277123
-    second: Button_LowerMenu_Shop
+    second: Button_MainMenu_Shop
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -112,7 +112,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 1024
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -124,7 +124,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Standalone
-    maxTextureSize: 1024
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -136,7 +136,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Android
-    maxTextureSize: 1024
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -171,7 +171,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Button_Restart
+      name: Button_Replay
       rect:
         serializedVersion: 2
         x: 460
@@ -234,7 +234,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Button_EquipmentPage
+      name: Button_EquipmentPanel
       rect:
         serializedVersion: 2
         x: 213
@@ -297,7 +297,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Button_AttributePoints
+      name: DungeonTactics_ButtonPack_7
       rect:
         serializedVersion: 2
         x: 961
@@ -339,7 +339,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Button_CharacterPage
+      name: Button_CharacterPanel
       rect:
         serializedVersion: 2
         x: 467
@@ -381,7 +381,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Button_Start
+      name: Button_Play
       rect:
         serializedVersion: 2
         x: 218
@@ -450,7 +450,7 @@ TextureImporter:
         x: 11
         y: 696
         width: 1088
-        height: 284
+        height: 248
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -465,13 +465,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Button_LowerMenu_Dungeon
+      name: Button_MainMenu_Dungeon
       rect:
         serializedVersion: 2
         x: 1
         y: 346
         width: 1088
-        height: 311
+        height: 247
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -486,13 +486,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Button_LowerMenu_Shop
+      name: Button_MainMenu_Shop
       rect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 1088
-        height: 252
+        height: 247
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
