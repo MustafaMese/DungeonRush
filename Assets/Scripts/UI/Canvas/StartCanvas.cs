@@ -151,7 +151,7 @@ namespace DungeonRush.UI
             return Vector3.zero;
         }
 
-        private static Vector3 Distance(Vector3 v1, Vector3 v2)
+        private Vector3 Distance(Vector3 v1, Vector3 v2)
         {
             return new Vector3(
                   v1.x - v2.x,

@@ -88,6 +88,7 @@ namespace DungeonRush.UI
         private IEnumerator LevelTransition()
         {
             yield return new WaitForSeconds(1f);
+            MoveSchedular.Instance.playerController.SavePlayer();
             GameManager.Instance.SetGameState(GameState.LEVEL_TRANSITION);
         }
 

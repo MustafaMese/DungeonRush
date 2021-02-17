@@ -6,6 +6,9 @@ namespace DungeonRush.Managers
 {
     public class LoadManager : MonoBehaviour 
     {
+        private const int START_POINT = 4;
+        private const int SKIP_COUNT = 5;
+
         private static LoadManager instance = null;
         // Game Instance Singleton
         public static LoadManager Instance
@@ -22,32 +25,38 @@ namespace DungeonRush.Managers
         public void LoadNextScene()
         {
             var scene = SceneManager.GetActiveScene();
-            var n = scene.buildIndex + 1;
+            var levelIndex = scene.buildIndex;
 
-            if(n != SceneManager.sceneCountInBuildSettings)
-                SceneManager.LoadScene(scene.buildIndex + 1);
+            if((levelIndex + 1) != SceneManager.sceneCountInBuildSettings)
+            {
+                if(levelIndex == 0)
+                    SceneManager.LoadScene(levelIndex + 1);
+                else if(levelIndex == 1)
+                    LoadRandomLevel(2, 4);
+                else if(levelIndex > 1 && levelIndex < 4)
+                    LoadRandomLevel(4, 9);
+                else if(levelIndex < 9)
+                    LoadRandomLevel(9, 14);
+                else if(levelIndex < 14)
+                    LoadRandomLevel(14, 19);
+                else if(levelIndex < 19)
+                    LoadRandomLevel(19, 24);
+                else if(levelIndex < 24)
+                    LoadRandomLevel(24, 29);
+            }
             else
                 SceneManager.LoadScene(1);
+        }
+
+        private void LoadRandomLevel(int min, int max)
+        {
+            int index = Random.Range(min, max);
+            SceneManager.LoadScene(index);
         }
 
         public void LoadStartScene()
         {
             SceneManager.LoadScene("StartScreen");
-        }
-
-        public void LoadLoseScene()
-        {
-            SceneManager.LoadScene("LoseScreen");
-        }
-        public void LoadLoadingScreen()
-        {
-            SceneManager.LoadScene("LoadingScreen");
-        }
-
-        public void RestartScene()
-        {
-            var scene = SceneManager.GetActiveScene();
-            SceneManager.LoadScene(scene.buildIndex);
         }
 
         public static int GetSceneIndex()

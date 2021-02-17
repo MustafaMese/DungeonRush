@@ -93,7 +93,7 @@ namespace DungeonRush.UI
                     break;
                 case GameState.LEVEL_TRANSITION:
                     _fadingCanvas.PanelControl(true);
-                    MoveSchedular.Instance.playerController.SavePlayer();
+                    
                     StartCoroutine(NextLevel());
                     break;
                 case GameState.DEFEAT:
