@@ -99,7 +99,6 @@ namespace DungeonRush.UI
         {
             itemUser.ExecuteItem(tempItem, tempItem.GetBoneType());
             PanelControl(false);
-            print("loot");
             tempItem = null;
             enableButtons = false;
 

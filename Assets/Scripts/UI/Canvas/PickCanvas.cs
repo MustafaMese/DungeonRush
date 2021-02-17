@@ -31,8 +31,7 @@ namespace DungeonRush.UI
 
         public void EnablePanel(Skill s)
         {
-            UIManager.Instance.Pause();
-
+           // UIManager.Instance.Pause();
             panel.SetActive(true);
             SetName(s.SkillName);
             SetSprite(s.IconBig);
@@ -51,7 +50,7 @@ namespace DungeonRush.UI
             sprite.sprite = null;
             panel.SetActive(false);
 
-            UIManager.Instance.Resume();
+            //UIManager.Instance.Resume();
             GameManager.Instance.SetGameState(GameState.PLAY);
         }
 

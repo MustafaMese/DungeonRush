@@ -26,7 +26,7 @@ namespace DungeonRush.Skills
             {
                 SkillObject o = skillObjects[i];
                 skillObjects.Remove(o);
-                AddSkill(o);
+                AddSkill(o, false);
             }
         }
 
@@ -39,6 +39,11 @@ namespace DungeonRush.Skills
                 ids.Add(id);
             }
             return ids;
+        }
+
+        public void AddSkillToList(SkillObject skillObject)
+        {
+            skillObjects.Add(skillObject);
         }
 
         public void AddSkill(SkillObject skillObject, bool openPanel = true)

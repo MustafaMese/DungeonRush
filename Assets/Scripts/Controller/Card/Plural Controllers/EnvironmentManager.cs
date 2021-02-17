@@ -39,19 +39,18 @@ namespace DungeonRush.Controller
 
         private void Start()
         {
-            playerController = FindObjectOfType<PlayerController>();
+            playerController = MoveSchedular.Instance.playerController;
             InitProcessHandlers();
         }
 
         private void Update()
         {
-            if (playerController == null) playerController = FindObjectOfType<PlayerController>();
+            //if (playerController == null) playerController = FindObjectOfType<PlayerController>();
 
             if (IsRunning())
             {
                 if (determineProcess.IsRunning())
                 {
-                    print("1");
                     Board.touched = true;
                     DetermineActiveTraps();
                     moveFinished = true;
@@ -79,7 +78,6 @@ namespace DungeonRush.Controller
         #region DETERMINIG METHODS
         private void DetermineActiveTraps()
         {
-            print("2");
             trapCards = GetActiveTraps();
             determineProcess.Finish();
             assigningProcess.StartProcess();
@@ -90,7 +88,6 @@ namespace DungeonRush.Controller
         }
         private List<EnvironmentAIController> GetActiveTraps()
         {
-            print("3");
             List<EnvironmentAIController> l = new List<EnvironmentAIController>();
 
             for (int i = 0; i < subscribedEnvironmentCards.Count; i++)

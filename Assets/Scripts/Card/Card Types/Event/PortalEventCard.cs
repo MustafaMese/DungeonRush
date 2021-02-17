@@ -12,8 +12,7 @@ namespace DungeonRush.Cards
 
         private void Portal()
         {
-            FindObjectOfType<PlayerController>().SavePlayer();
-            GameManager.Instance.SetGameState(GameState.LEVEL_TRANSITION);
+            GameManager.Instance.SetGameState(GameState.REWARD);
         }
     }
 }

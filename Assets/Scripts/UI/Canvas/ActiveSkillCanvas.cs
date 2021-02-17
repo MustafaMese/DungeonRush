@@ -48,7 +48,6 @@ namespace DungeonRush.UI
         {
             if (skillButtons.Count <= 0)
             {
-                print("1111");
                 InitilizeButtons();
             }
             FindEmptyButton(skillButtons, skillData);

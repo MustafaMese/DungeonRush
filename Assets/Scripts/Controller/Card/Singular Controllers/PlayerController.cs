@@ -24,6 +24,7 @@ namespace DungeonRush.Controller
         private Attacker attacker;
         private ICustomization customization;
         private StatusController statusController;
+        private SkillUser skillUser;
         [SerializeField] FieldOfView fieldOfView;
         private void Start()
         {
@@ -32,6 +33,7 @@ namespace DungeonRush.Controller
             attacker = player.GetComponent<Attacker>();
             customization = player.GetComponent<ICustomization>();
             statusController = player.GetComponent<StatusController>();
+            skillUser = player.GetComponent<SkillUser>();
 
             if(transform.position.y < 0)
                 customization.ChangeLayer(false, (int)transform.position.y);

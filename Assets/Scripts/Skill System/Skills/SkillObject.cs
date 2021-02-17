@@ -5,12 +5,13 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "ScriptableObjects/Skill Object")]
 public class SkillObject : ScriptableObject
 {
-    [SerializeField] Skill statusPrefab;
+    public Skill skillPrefab;
+    public Sprite iconSmall;
     private string ID = Guid.NewGuid().ToString("N");
 
     public Skill Create(Transform t)
     {
-        Skill s = Instantiate(statusPrefab, t);
+        Skill s = Instantiate(skillPrefab, t);
         return s;
     }
 

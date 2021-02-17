@@ -26,6 +26,7 @@ namespace DungeonRush.UI
         [SerializeField] TurnCanvas turnCanvasPrefab;
         [SerializeField] ActiveSkillCanvas activeSkillCanvasPrefab;
         [SerializeField] ChoiceCanvas choiceCanvasPrefab;
+        [SerializeField] RewardCanvas rewardCanvasPrefab;
         
         private ActiveSkillCanvas _activeSkillCanvas;
         private PauseMenu _pauseMenu;
@@ -34,6 +35,7 @@ namespace DungeonRush.UI
         private FadingCanvas _fadingCanvas;
         private TurnCanvas _turnCanvas;
         private ChoiceCanvas _choiceCanvas;
+        private RewardCanvas _rewardCanvas;
 
         private void Awake()
         {
@@ -82,8 +84,16 @@ namespace DungeonRush.UI
                     _pauseMenu.PanelControl(true);
                     _activeSkillCanvas.PanelControl(true);
                     break;
+                case GameState.REWARD:
+                    _turnCanvas.PanelControl(false);
+                    _pauseMenu.PanelControl(false);
+                    _activeSkillCanvas.PanelControl(false);
+
+                    _rewardCanvas.PanelControl(true);                
+                    break;
                 case GameState.LEVEL_TRANSITION:
                     _fadingCanvas.PanelControl(true);
+                    MoveSchedular.Instance.playerController.SavePlayer();
                     StartCoroutine(NextLevel());
                     break;
                 case GameState.DEFEAT:
@@ -125,6 +135,9 @@ namespace DungeonRush.UI
 
                 if(_choiceCanvas == null)
                     _choiceCanvas = Instantiate(choiceCanvasPrefab);
+
+                if(_rewardCanvas == null)
+                    _rewardCanvas = Instantiate(rewardCanvasPrefab);
             }
         }
 
@@ -140,7 +153,6 @@ namespace DungeonRush.UI
         {
             if (_fadingCanvas == null)
             {
-                print("fading");
                 InitializeByBuildIndex();
             }
 

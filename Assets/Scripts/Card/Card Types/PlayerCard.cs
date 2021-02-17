@@ -42,7 +42,7 @@ namespace DungeonRush
             private Mover mover = null;
             private PlayerAttacker playerAttacker;
             private ItemUser itemUser;
-            private IMoveController controller;
+            private PlayerController controller;
             private StatusController statusController;
 
             private IMovable movable;
@@ -56,7 +56,7 @@ namespace DungeonRush
                 health = GetComponent<Health>();
                 mover = GetComponent<Mover>();
                 playerAttacker = GetComponent<PlayerAttacker>();
-                controller = GetComponent<IMoveController>();
+                controller = GetComponent<PlayerController>();
                 statusController = GetComponent<StatusController>();
                 movable = GetComponent<IMovable>();
                 fighter = GetComponent<IFighter>();
@@ -69,7 +69,7 @@ namespace DungeonRush
                 PlayerCamera.Instance.transform.position = new Vector3(transform.position.x, transform.position.y + 1, z);
 
                 if (!isFirstLevel)
-                    GetComponent<PlayerController>().LoadPlayer();
+                    controller.LoadPlayer();
                 else
                     SetCurrentHealth(GetMaxHealth());
 

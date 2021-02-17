@@ -23,13 +23,13 @@ namespace DungeonRush.Controller
 
         private void Start()
         {
-            playerController = FindObjectOfType<PlayerController>();
+            playerController = MoveSchedular.Instance.playerController;
             InitProcessHandlers();
         }
 
         private void Update()
         {
-            if(playerController == null) playerController = FindObjectOfType<PlayerController>();
+            //if(playerController == null) playerController = FindObjectOfType<PlayerController>();
 
             if (IsRunning())
             {
