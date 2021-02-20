@@ -38,7 +38,6 @@ namespace DungeonRush.Cards
 
         public void EvolveIt(EnvironmentCard changingTrap)
         {
-            print("7");
             bool delete;
             EnvironmentCard prefab = GetPrefab(changingTrap.GetElementType(), elementType, out delete);
             if(prefab == null) 
@@ -88,6 +87,18 @@ namespace DungeonRush.Cards
             }
         }
 
+        public bool CheckTime()
+        {
+            if(!isDefinite) return true;
+            else if(isDefinite && time >= 0) 
+            {
+                time--;
+                return true;
+            }
+            else
+                return false;
+        }
+
         protected EnvironmentCard GetPrefab(ElementType changed, ElementType changer, out bool delete)
         {
             delete = false;
@@ -122,7 +133,7 @@ namespace DungeonRush.Cards
             CardManager.Instance.AddCard(prefab, tile);
         }
 
-        private void Remove(EnvironmentCard card)
+        public void Remove(EnvironmentCard card)
         {
             card.GetController().Stop();
             CardManager.Unsubscribe(card);

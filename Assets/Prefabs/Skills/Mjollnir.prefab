@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2419150118449485161}
-  - component: {fileID: 2419150118449485166}
+  - component: {fileID: 5588826758891641994}
   m_Layer: 0
   m_Name: Mjollnir
   m_TagString: Untagged
@@ -31,7 +31,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2419150118449485166
+--- !u!114 &5588826758891641994
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -40,13 +40,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 2419150118449485167}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 99190737daf64f540ba4e35657013593, type: 3}
+  m_Script: {fileID: 11500000, guid: e452b7df6b8d79c419d7f28342280820, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   notes: "- General options and effect options will be using for every skills. \n-
     isAttacker determines using at attacking or moving action."
   skillName: Mjollnir
-  cooldown: 1
+  cooldown: 0
   isAttacker: 1
   isUsingTextPopup: 1
   effectTime: 1
@@ -57,4 +57,4 @@ MonoBehaviour:
     type: 3}
   power: 3
   skillType: 1
-  chanceFactor: 70
+  chanceFactor: 0
