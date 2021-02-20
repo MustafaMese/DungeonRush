@@ -24,13 +24,13 @@ namespace DungeonRush.UI
             }
 
         }
-        private List<RewardButton> rewardButtons = new List<RewardButton>();
+        public List<RewardButton> rewardButtons = new List<RewardButton>();
 
         [SerializeField] GameObject panel;
         [SerializeField] Button[] buttons;
         [SerializeField] Sprite foreshadow;
 
-        private bool isChosen;
+        public bool isChosen;
 
         private void Start() 
         {
@@ -76,7 +76,7 @@ namespace DungeonRush.UI
         // Button method.
         public void ChooseSkill(Button button)
         {
-            if(isChosen) return;
+            if(!isChosen) return;
 
             isChosen = true;
             SkillObject skill = FindSkill(button);

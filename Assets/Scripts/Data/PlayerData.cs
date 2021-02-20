@@ -33,11 +33,8 @@ public class PlayerData
         moveCount = player.GetStats().TotalMoveCount;
         lootChance = player.GetStats().LootChance;
 
-        Debug.Log("1");
-
         uniqueItemIDs = player.GetComponent<ItemUser>().GetItemsIDs().ToArray();
         uniqueSkillIDs = player.GetComponent<SkillUser>().GetSkillIDs().ToArray();
 
-        Debug.Log("2");
     }
 }

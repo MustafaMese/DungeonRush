@@ -47,10 +47,8 @@ namespace DungeonRush.Managers
             obj.SetActive(true);
             obj.transform.position = pos;
             obj.transform.SetParent(cardTransform);
-            //obj.transform.SetParent(null);
             yield return new WaitForSeconds(time);
             obj.SetActive(false);
-            //obj.transform.SetParent(cardTransform);
             pool.AddObjectToPool(obj);
         }
 

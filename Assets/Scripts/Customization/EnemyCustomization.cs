@@ -55,7 +55,7 @@ namespace DungeonRush.Customization
         public void ChangeSkinState(bool state)
         {
             skin.SetActive(state);
-            HUDControl(state);
+            HUDControl(!state);
         }
     }
 }
