@@ -65,7 +65,7 @@ namespace DungeonRush
                 Instantiate(uiManagerPrefab);
                 Instantiate(loadManagerPrefab);
                 Instantiate(swipeManagerPrefab);
-                Instantiate(soundManagerPrefab);
+                //Instantiate(soundManagerPrefab);
 
                 var number = LoadManager.GetSceneIndex();
                 if (number > 1)

@@ -51,6 +51,7 @@ namespace DungeonRush.Managers
         private void LoadRandomLevel(int min, int max)
         {
             int index = Random.Range(min, max);
+            print(index);
             SceneManager.LoadScene(index);
         }
 
@@ -62,35 +63,6 @@ namespace DungeonRush.Managers
         public static int GetSceneIndex()
         {
             return SceneManager.GetActiveScene().buildIndex;
-        }
-
-        public IEnumerator LoadScene()
-        {
-            yield return null;
-
-            //Begin to load the Scene you specify
-            AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(1);
-            //Don't let the Scene activate until you allow it to
-            asyncOperation.allowSceneActivation = false;
-            Debug.Log("Pro :" + asyncOperation.progress);
-            //When the load is still in progress, output the Text and progress bar
-            while (!asyncOperation.isDone)
-            {
-                //Output the current progress
-                //text.text = "Loading progress: " + (asyncOperation.progress * 100) + "%";
-                // Check if the load has finished
-                if (asyncOperation.progress >= 0.9f)
-                {
-                    //Change the Text to show the Scene is ready
-                    //text.text = "Press the space bar to continue";
-                    //Wait to you press the space key to activate the Scene
-                    if (Input.GetKeyDown(KeyCode.Space))
-                        //Activate the Scene
-                        asyncOperation.allowSceneActivation = true;
-                }
-
-                yield return null;
-            }
         }
     }
 }

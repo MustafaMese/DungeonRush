@@ -10,16 +10,16 @@ namespace DungeonRush.Traits
         [SerializeField] CharacterHUD characterHUD;
 
         public List<Status> activeStatuses = new List<Status>();
-        public List<StatusObject> STATUS = new List<StatusObject>();
+        //public List<StatusObject> STATUS = new List<StatusObject>();
 
         private Card card;
         private void Start()
         {
             card = GetComponent<Card>();
-            for(int i = 0; i < STATUS.Count; i++)
-            {
-                AddStatus(STATUS[i]);
-            }
+            // for(int i = 0; i < STATUS.Count; i++)
+            // {
+            //     AddStatus(STATUS[i]);
+            // }
         }
 
         public void AddStatus(StatusObject statusObject)

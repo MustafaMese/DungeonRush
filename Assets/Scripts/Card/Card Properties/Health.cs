@@ -32,9 +32,9 @@ namespace DungeonRush.Property
             card = GetComponent<Card>();
             animator = card.GetAnimator();
 
-            audioSource = gameObject.AddComponent(typeof(AudioSource)) as AudioSource;
-            audioSource.volume = 0.2f;
-            audioSource.clip = SoundManager.Instance.hurt;
+            // audioSource = gameObject.AddComponent(typeof(AudioSource)) as AudioSource;
+            // audioSource.volume = 0.2f;
+            // audioSource.clip = SoundManager.Instance.hurt;
 
             statusController = card.GetComponent<StatusController>();
             statusAct = new HealthAct();
@@ -117,7 +117,7 @@ namespace DungeonRush.Property
                 health -= amount;
                 health = Mathf.Max(0, health);
 
-                audioSource.Play();
+                //audioSource.Play();
 
                 if (health > 0) 
                     UpdateAnimation(false);

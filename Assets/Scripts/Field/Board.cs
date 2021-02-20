@@ -12,7 +12,6 @@ namespace DungeonRush
     {
         public class Board : MonoBehaviour
         {
-            // Touched moveschedulara veya nonplayera falan alınabilinir.
             public static Board instance;
 
             public static int RowLength;
@@ -47,7 +46,6 @@ namespace DungeonRush
                     
                     pos.SetCoordinate(pos.transform.position);
                     pos.SetCard(null);
-                    //pos.transform.SetParent(null);
                     tilesByCoordinates.Add(pos.transform.position, pos);
                 }
             }
@@ -65,8 +63,6 @@ namespace DungeonRush
                         t.SetCard(c);
 
                     c.transform.SetParent(null);
-                    // if (c.GetCardType() != CardType.PLAYER)
-                    //     c.transform.SetParent(transform);
 
                     c.SetTile(t);
 

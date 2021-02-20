@@ -12,11 +12,6 @@ public class SplashScreen : MonoBehaviour
         StartCoroutine(Next());
     }
 
-    void Update()
-    {
-        
-    }
-
     private IEnumerator Next()
     {
         yield return new WaitForSeconds(1f);
