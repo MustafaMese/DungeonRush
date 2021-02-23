@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2419150118449485161}
-  - component: {fileID: 3334627980782611133}
+  - component: {fileID: 7268527120662991581}
   m_Layer: 0
-  m_Name: Bomb
+  m_Name: Dynamite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -31,7 +31,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3334627980782611133
+--- !u!114 &7268527120662991581
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -40,20 +40,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 2419150118449485167}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bcc9d913b5ba30d4d878b96042629715, type: 3}
+  m_Script: {fileID: 11500000, guid: b008123e7a13ea246bda2565b5e0efdd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   notes: "- General options and effect options will be using for every skills. \n-
     isAttacker determines using at attacking or moving action."
-  skillName: Bomb
-  cooldown: 2
-  isAttacker: 0
+  skillName: Dynamite
+  cooldown: 3
+  isAttacker: 1
   isUsingTextPopup: 1
-  effectTime: 2
-  effect: {fileID: 3360374245300453417, guid: a8aa7b3e73ab8644b85cde3135695ab0, type: 3}
-  iconSmallForActivePanel: {fileID: 21300000, guid: ab74f4ae0c4042f4dae9651e8fecbc46,
+  effectTime: 1
+  effect: {fileID: 4524334140888161972, guid: 6c1832702d4c35a46ac490a46f538e66, type: 3}
+  iconSmallForActivePanel: {fileID: 21300000, guid: b60b0e4654f7e4040893f0e9051b6473,
     type: 3}
-  iconBigForPickCanvas: {fileID: 21300000, guid: ab74f4ae0c4042f4dae9651e8fecbc46,
+  iconBigForPickCanvas: {fileID: 21300000, guid: b60b0e4654f7e4040893f0e9051b6473,
     type: 3}
-  power: 22
+  power: 5
   skillType: 0

@@ -106,7 +106,6 @@ namespace DungeonRush.Controller
         {
             if (moveFinished && trapCards[trapIndex] != null)
             {
-                print("4");
                 trapCards[trapIndex].Run();
                 moveFinished = false;
             }

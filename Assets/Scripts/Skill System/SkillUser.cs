@@ -10,7 +10,8 @@ namespace DungeonRush.Skills
 {
     public class SkillUser : MonoBehaviour
     {
-        [SerializeField] List<SkillObject> skillObjects = new List<SkillObject>();
+        List<SkillObject> skillObjects = new List<SkillObject>();
+        [SerializeField] List<SkillObject> s = new List<SkillObject>();
 
         private List<Skill> skills = new List<Skill>();
         private Card card;
@@ -22,10 +23,9 @@ namespace DungeonRush.Skills
             lastIndex = 0;
             card = GetComponent<Card>();
 
-            for (var i = 0; i < skillObjects.Count; i++)
+            for (var i = 0; i < s.Count; i++)
             {
-                SkillObject o = skillObjects[i];
-                skillObjects.Remove(o);
+                SkillObject o = s[i];
                 AddSkill(o, false);
             }
         }
@@ -113,6 +113,7 @@ namespace DungeonRush.Skills
 
             skill.Adjust(card.GetMove());
             skill.Execute(card.GetMove());
+            StartCoroutine(skill.Animate(card.GetMove()));
         }
     }
 }

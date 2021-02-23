@@ -31,10 +31,8 @@ namespace DungeonRush
 
             public void Initizalize()
             {
-                CardManager.Instance.cards = new List<Card>(FindObjectsOfType<Card>());
                 InitializeTiles(new List<Tile>(FindObjectsOfType<Tile>()));
-                SetCardTiles(CardManager.Instance.cards);
-                DeterminePlayerTile();
+                SetCardTiles(new List<Card>(FindObjectsOfType<Card>()));
             }
 
             private void InitializeTiles(List<Tile> cardPlaces)
@@ -68,26 +66,6 @@ namespace DungeonRush
 
                 }
             }
-
-            #region CARDS
-            private void DeterminePlayerTile()
-            {
-                int count = CardManager.Instance.cards.Count;
-                List<Card> cmCards = new List<Card>(CardManager.Instance.cards);
-                for (int i = 0; i < count; i++)
-                {
-                    Card card = cmCards[i];
-                    if (card.GetCardType() == CardType.PLAYER)
-                        CardManager.Instance.instantPlayerTile = card.GetTile();
-                }
-            }
-
-            public Card GiveRandomCard(Card[] card)
-            {
-                int length = card.Length;
-                return card[UnityEngine.Random.Range(0, length)];
-            }
-            #endregion
 
             private void OnDestroy()
             {

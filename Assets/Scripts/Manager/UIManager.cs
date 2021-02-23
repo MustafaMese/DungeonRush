@@ -49,6 +49,12 @@ namespace DungeonRush.UI
 
         private void InitializeByBuildIndex()
         {
+            if(GameManager.Instance.test)
+            {
+                InitializeCanvases(false);
+                return;
+            }
+            
             var number = LoadManager.GetSceneIndex();
             if (number < 2)
             {

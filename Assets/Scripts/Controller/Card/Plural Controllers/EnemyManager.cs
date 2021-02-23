@@ -72,6 +72,7 @@ namespace DungeonRush.Controller
                 if (subscribedEnemies[i] == null) continue;
 
                 subscribedEnemies[i].ActivateStatuses();
+                subscribedEnemies[i].ConfigureLayers();
 
                 var distance = GetDistance(subscribedEnemies[i].transform.position);
                 if (distance <= attackerDistance)
@@ -109,7 +110,6 @@ namespace DungeonRush.Controller
         {
             if (moveFinished && attackerCards[attackerIndex] != null)
             {
-                print("121");
                 UIManager.Instance.ChangeIcons(attackerIndex);
                 attackerCards[attackerIndex].Run();
                 moveFinished = false;

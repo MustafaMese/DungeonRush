@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2419150118449485161}
-  - component: {fileID: 3334627980782611133}
+  - component: {fileID: 2675110462175021397}
   m_Layer: 0
-  m_Name: Bomb
+  m_Name: Block Traps
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -31,7 +31,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3334627980782611133
+--- !u!114 &2675110462175021397
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -40,20 +40,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 2419150118449485167}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bcc9d913b5ba30d4d878b96042629715, type: 3}
+  m_Script: {fileID: 11500000, guid: f0e3042808ad0ea41a599d3ff317fcc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   notes: "- General options and effect options will be using for every skills. \n-
     isAttacker determines using at attacking or moving action."
-  skillName: Bomb
-  cooldown: 2
+  skillName: Block Traps
+  cooldown: 0
   isAttacker: 0
-  isUsingTextPopup: 1
-  effectTime: 2
-  effect: {fileID: 3360374245300453417, guid: a8aa7b3e73ab8644b85cde3135695ab0, type: 3}
-  iconSmallForActivePanel: {fileID: 21300000, guid: ab74f4ae0c4042f4dae9651e8fecbc46,
+  isUsingTextPopup: 0
+  effectTime: 0
+  effect: {fileID: 341001778631176425, guid: 9eff205e2c0e6984c806b14a5024acd0, type: 3}
+  iconSmallForActivePanel: {fileID: 21300000, guid: 097bd9d748c120645acd467bc7575b19,
     type: 3}
-  iconBigForPickCanvas: {fileID: 21300000, guid: ab74f4ae0c4042f4dae9651e8fecbc46,
+  iconBigForPickCanvas: {fileID: 21300000, guid: 097bd9d748c120645acd467bc7575b19,
     type: 3}
-  power: 22
+  power: 0
   skillType: 0

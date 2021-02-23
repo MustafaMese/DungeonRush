@@ -41,7 +41,7 @@ namespace DungeonRush.Skills
         protected bool canExecute;
         protected Card card;
 
-        public SkillType skillType;
+        [HideInInspector] public SkillType skillType;
 
         public float EffectTime { get => effectTime; }
         public int Power { get => power; set => power = value; }
@@ -72,32 +72,36 @@ namespace DungeonRush.Skills
             pool.FillPool(objectCount, transform);
         }
 
-        protected IEnumerator Animate(Move move)
+        public IEnumerator Animate(Move move)
         {
-            GameObject obj;
-            List<GameObject> objects = new List<GameObject>();
-            int count = GetGameobjectCount();
-            for (int i = 0; i < count; i++)
+            if(canExecute)
             {
-                obj = effectPool.Pull(transform);
-                obj.SetActive(true);
+                GameObject obj;
+                List<GameObject> objects = new List<GameObject>();
+                int count = GetGameobjectCount();
+                for (int i = 0; i < count; i++)
+                {
+                    obj = effectPool.Pull(transform);
+                    obj.SetActive(true);
 
-                PositionEffect(obj, move);
-                objects.Add(obj);
+                    PositionEffect(obj, move);
+                    objects.Add(obj);
 
-                if(isUsingTextPopup)
-                    TextPopupManager.Instance.TextPopup(obj.transform.position, power.ToString());
+                    if(isUsingTextPopup)
+                        TextPopupManager.Instance.TextPopup(obj.transform.position, power.ToString());
+                }
+
+                yield return new WaitForSeconds(EffectTime);
+
+                for (int i = 0; i < count; i++)
+                {
+                    obj = objects[i];
+                    obj.transform.SetParent(transform);
+                    obj.SetActive(false);
+                    effectPool.AddObjectToPool(obj);
+                }
             }
-
-            yield return new WaitForSeconds(EffectTime);
-
-            for (int i = 0; i < count; i++)
-            {
-                obj = objects[i];
-                obj.transform.SetParent(transform);
-                obj.SetActive(false);
-                effectPool.AddObjectToPool(obj);
-            }
+            else yield return null;
         }
 
         protected virtual void IncreaseCooldown()

@@ -22,6 +22,7 @@ namespace DungeonRush
 
             public GameState gameState = GameState.DEFEAT;
 
+            public bool test;
             [SerializeField] UIManager uiManagerPrefab;
             [SerializeField] LoadManager loadManagerPrefab;
             [SerializeField] CardManager cardManagerPrefab;
@@ -62,6 +63,22 @@ namespace DungeonRush
             {
                 Application.targetFrameRate = targetFrameRate;
 
+                if(test)
+                {
+                    Instantiate(uiManagerPrefab);
+                    Instantiate(loadManagerPrefab);
+                    Instantiate(swipeManagerPrefab);
+                    Instantiate(cardManagerPrefab);
+                    Instantiate(moveSchedularPrefab);
+                    Instantiate(collectableManagerPrefab);
+                    Instantiate(playerCameraPrefab);
+                    Instantiate(textPopupManager);
+                    Instantiate(effectOperator);
+                    SetGameState(GameState.BEGIN_LEVEL);
+
+                    return;
+                }
+
                 Instantiate(uiManagerPrefab);
                 Instantiate(loadManagerPrefab);
                 Instantiate(swipeManagerPrefab);
@@ -79,6 +96,7 @@ namespace DungeonRush
 
                     SetGameState(GameState.BEGIN_LEVEL);
                 }
+
             }
 
             public void SetGameState(GameState state, UIState uiState = UIState.NONE)

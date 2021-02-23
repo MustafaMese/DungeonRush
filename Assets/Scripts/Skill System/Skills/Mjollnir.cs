@@ -16,6 +16,8 @@ namespace DungeonRush.Skills
         private List<Card> targets = new List<Card>();
         private List<Vector3> targetPositions = new List<Vector3>();
 
+        MjollnirPositioning mPos;
+
         public override void Execute(Move move)
         {
             if(!canExecute) return;
@@ -33,8 +35,8 @@ namespace DungeonRush.Skills
         {
             effect.transform.SetParent(null);
             effect.transform.position = Vector3.zero;
-            // TODO BU KISMA BİR AYAR LAZIM.
-            MjollnirPositioning mPos = effect.GetComponent<MjollnirPositioning>();
+            if(mPos == null)
+                mPos = effect.GetComponent<MjollnirPositioning>();
             mPos.Execute(targetPositions, EffectTime);
         }
 
@@ -43,6 +45,7 @@ namespace DungeonRush.Skills
             targets.Clear();
             targetPositions.Clear();
             Vector2 currentCoordinate = move.GetCardTile().GetCoordinate();
+
             bool isFinished = false;
             while (!isFinished)
             {

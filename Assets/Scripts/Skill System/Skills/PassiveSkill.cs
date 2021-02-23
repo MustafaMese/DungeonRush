@@ -21,7 +21,6 @@ public abstract class PassiveSkill : Skill
                 canExecute = false;
             else
             {
-                StartCoroutine(Animate(move));
                 IncreaseCooldown();
                 canExecute = true;
             }

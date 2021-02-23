@@ -13,17 +13,15 @@ namespace DungeonRush.Skills
         [SerializeField] LineRenderer lineRenderer;
         List<GameObject> objects = new List<GameObject>();
 
-
         public void Execute(List<Vector3> targetPositions, float time)
         {
             lineRenderer.positionCount = targetPositions.Count;
-
-            for (int i = 0; i < targetPositions.Count; i++)
-                lineRenderer.SetPosition(i, targetPositions[i]);
             objects.Clear();
 
             for (int i = 0; i < targetPositions.Count; i++)
             {
+                lineRenderer.SetPosition(i, targetPositions[i]);
+
                 if (poolForEffect.IsObjectNull())
                 {
                     poolForEffect.SetObject(lightiningPrefab);
@@ -31,6 +29,7 @@ namespace DungeonRush.Skills
                 }
 
                 GameObject obj = poolForEffect.Pull(lineRenderer.transform);
+                obj.SetActive(true);
                 objects.Add(obj);
 
                 obj.transform.position = targetPositions[i];
@@ -42,7 +41,10 @@ namespace DungeonRush.Skills
         public void Deactive()
         {
             for (int i = 0; i < objects.Count; i++)
+            {
+                objects[i].SetActive(false);
                 poolForEffect.AddObjectToPool(objects[i]);
+            }
             objects.Clear();
         }
 
