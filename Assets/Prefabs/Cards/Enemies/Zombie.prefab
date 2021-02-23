@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4950715627525588739}
   - component: {fileID: 2544652440643157556}
   m_Layer: 0
-  m_Name: Enemy_Zombie_LeftLeg
+  m_Name: LeftLeg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -70,7 +70,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -421616167
   m_SortingLayer: 2
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_Sprite: {fileID: 3166352369590066033, guid: bd674bd95a5f34b4f8c4337777943748,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -100,8 +100,8 @@ MonoBehaviour:
   - {fileID: 3099049216093245095}
   - {fileID: 3400207060039121000}
   m_Bounds:
-    m_Center: {x: -0.010891616, y: 0.00087949634, z: 0}
-    m_Extent: {x: 0.07267434, y: 0.25307125, z: 0}
+    m_Center: {x: 0.011281975, y: -0.002049178, z: 7.592285}
+    m_Extent: {x: 0.06845566, y: 0.25425032, z: 0.00000023841858}
   m_UseBatching: 1
   m_AlwaysUpdate: 1
 --- !u!1 &542529550536445665
@@ -116,7 +116,7 @@ GameObject:
   - component: {fileID: 6667874132914935492}
   - component: {fileID: 5378565031801601004}
   m_Layer: 0
-  m_Name: Enemy_Zombie_BodyArmor
+  m_Name: BodyArmor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -174,7 +174,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -421616167
   m_SortingLayer: 2
-  m_SortingOrder: 3
+  m_SortingOrder: 4
   m_Sprite: {fileID: 367997290029152595, guid: bd674bd95a5f34b4f8c4337777943748, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -202,7 +202,7 @@ MonoBehaviour:
   m_BoneTransforms:
   - {fileID: 4750367308285827812}
   m_Bounds:
-    m_Center: {x: 0.0025078654, y: 0.020417511, z: 0}
+    m_Center: {x: 0.030080497, y: 0.017518342, z: 7.592285}
     m_Extent: {x: 0.16214405, y: 0.20187023, z: 0}
   m_UseBatching: 1
   m_AlwaysUpdate: 1
@@ -323,7 +323,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1177562272448667441}
-  m_LocalRotation: {x: 0, y: 0, z: 0.0051901476, w: 0.9999866}
+  m_LocalRotation: {x: 0, y: 0, z: 0.0051901997, w: 0.9999866}
   m_LocalPosition: {x: 0.12685266, y: -0.00065486133, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -354,7 +354,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1413300337233550057}
-  m_LocalRotation: {x: 0, y: 0, z: 0.0055775456, w: 0.9999845}
+  m_LocalRotation: {x: 0, y: 0, z: 0.0055774506, w: 0.9999845}
   m_LocalPosition: {x: 0.14753215, y: -0.0005782023, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -438,7 +438,7 @@ GameObject:
   - component: {fileID: 854930246850130134}
   - component: {fileID: 127122685557871327}
   m_Layer: 0
-  m_Name: Enemy_Zombie_Helmet
+  m_Name: Helmet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -496,7 +496,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -421616167
   m_SortingLayer: 2
-  m_SortingOrder: 5
+  m_SortingOrder: 6
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -611,7 +611,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2774874694648583419}
-  m_LocalRotation: {x: 0, y: 0, z: 0.5793234, w: 0.8150978}
+  m_LocalRotation: {x: 0, y: 0, z: 0.51436144, w: 0.85757357}
   m_LocalPosition: {x: 0.06076526, y: 0.0024187267, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -642,7 +642,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2792394412874965216}
-  m_LocalRotation: {x: 0, y: 0, z: 0.026481224, w: 0.99964935}
+  m_LocalRotation: {x: 0, y: 0, z: 0.026481228, w: 0.99964935}
   m_LocalPosition: {x: 0.23663312, y: 0.002628699, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -673,13 +673,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2860334367388531939}
-  m_LocalRotation: {x: -0, y: -0, z: -0.039212056, w: 0.999231}
+  m_LocalRotation: {x: -0, y: -0, z: -0.09180277, w: 0.9957772}
   m_LocalPosition: {x: 0.193, y: -0.003, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8286251713977865111}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -364.495}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 15109.465}
 --- !u!1 &2865565634130833042
 GameObject:
   m_ObjectHideFlags: 0
@@ -720,7 +720,7 @@ GameObject:
   m_Component:
   - component: {fileID: 556819021906736356}
   m_Layer: 0
-  m_Name: Bones
+  m_Name: Bone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -794,7 +794,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3466634184465783926}
-  m_LocalRotation: {x: 0, y: 0, z: 0.013515471, w: 0.9999087}
+  m_LocalRotation: {x: 0, y: 0, z: 0.013515467, w: 0.9999087}
   m_LocalPosition: {x: 0.21763672, y: 0.0005759448, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -825,13 +825,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3596354017789712520}
-  m_LocalRotation: {x: -0, y: -0, z: 0.051071364, w: 0.998695}
+  m_LocalRotation: {x: -0, y: -0, z: 0.12837398, w: 0.9917258}
   m_LocalPosition: {x: 0.199, y: -0.003, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1565250603795224586}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -354.146}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -16545.248}
 --- !u!1 &3882713851300388978
 GameObject:
   m_ObjectHideFlags: 0
@@ -885,7 +885,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3997782081985975020}
-  m_LocalRotation: {x: 0, y: 0, z: -0.6328067, w: 0.7743099}
+  m_LocalRotation: {x: 0, y: 0, z: -0.5911328, w: 0.8065743}
   m_LocalPosition: {x: 0.08261907, y: -0.0063471496, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -1033,7 +1033,7 @@ GameObject:
   - component: {fileID: 158296451886060123}
   - component: {fileID: 7395496558323019805}
   m_Layer: 0
-  m_Name: Enemy_Zombie_LeftArm
+  m_Name: LeftArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1091,7 +1091,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -421616167
   m_SortingLayer: 2
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_Sprite: {fileID: -661832103932191489, guid: bd674bd95a5f34b4f8c4337777943748,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1122,8 +1122,8 @@ MonoBehaviour:
   - {fileID: 3044950096824312635}
   - {fileID: 477190324697262560}
   m_Bounds:
-    m_Center: {x: 0.012974337, y: 0.009310901, z: 0}
-    m_Extent: {x: 0.116258755, y: 0.20433724, z: 0}
+    m_Center: {x: 0.058566242, y: 0.0062548965, z: 7.592285}
+    m_Extent: {x: 0.1343238, y: 0.20443304, z: 0}
   m_UseBatching: 1
   m_AlwaysUpdate: 1
 --- !u!1 &4742544610512536664
@@ -1169,7 +1169,7 @@ GameObject:
   - component: {fileID: 8445514209625711139}
   - component: {fileID: 1773413865729920632}
   m_Layer: 0
-  m_Name: Enemy_Zombie_RightLeg
+  m_Name: RightLeg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1227,7 +1227,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -421616167
   m_SortingLayer: 2
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_Sprite: {fileID: -6861787931324383645, guid: bd674bd95a5f34b4f8c4337777943748,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1257,8 +1257,8 @@ MonoBehaviour:
   - {fileID: 156311049038855435}
   - {fileID: 7550721702903623033}
   m_Bounds:
-    m_Center: {x: 0.0014253408, y: -0.0009008348, z: 0}
-    m_Extent: {x: 0.07899436, y: 0.25203073, z: 0}
+    m_Center: {x: 0.022122964, y: -0.0026361942, z: 7.592285}
+    m_Extent: {x: 0.08605334, y: 0.2502638, z: 0.00000047683716}
   m_UseBatching: 1
   m_AlwaysUpdate: 1
 --- !u!1 &5063095829126473280
@@ -1459,7 +1459,7 @@ GameObject:
   - component: {fileID: 2359870226468046511}
   - component: {fileID: 2127620209579398627}
   m_Layer: 0
-  m_Name: Enemy_Zombie_Head
+  m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1517,7 +1517,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -421616167
   m_SortingLayer: 2
-  m_SortingOrder: 4
+  m_SortingOrder: 5
   m_Sprite: {fileID: 946172421305919687, guid: bd674bd95a5f34b4f8c4337777943748, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -1545,7 +1545,7 @@ MonoBehaviour:
   m_BoneTransforms:
   - {fileID: 1379313256807788771}
   m_Bounds:
-    m_Center: {x: -0.0026435927, y: 0.000070884824, z: 0}
+    m_Center: {x: 0.024883263, y: -0.0028588027, z: 7.592285}
     m_Extent: {x: 0.12024221, y: 0.114172734, z: 0}
   m_UseBatching: 1
   m_AlwaysUpdate: 1
@@ -1561,7 +1561,7 @@ GameObject:
   - component: {fileID: 2824152227441803625}
   - component: {fileID: 98672573671512399}
   m_Layer: 0
-  m_Name: Enemy_Zombie_Body
+  m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1619,7 +1619,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -421616167
   m_SortingLayer: 2
-  m_SortingOrder: 2
+  m_SortingOrder: 3
   m_Sprite: {fileID: 8757210343706111666, guid: bd674bd95a5f34b4f8c4337777943748,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1649,8 +1649,8 @@ MonoBehaviour:
   - {fileID: 4498258964539186383}
   - {fileID: 204231598687715967}
   m_Bounds:
-    m_Center: {x: 0.0019025058, y: 0.0007018447, z: 0}
-    m_Extent: {x: 0.16100934, y: 0.28124434, z: 0}
+    m_Center: {x: 0.029414102, y: -0.002212584, z: 7.592285}
+    m_Extent: {x: 0.16100934, y: 0.2812596, z: 0}
   m_UseBatching: 1
   m_AlwaysUpdate: 1
 --- !u!1 &6732878182480930431
@@ -1676,13 +1676,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6732878182480930431}
-  m_LocalRotation: {x: -0, y: -0, z: 0.014465336, w: 0.99989545}
+  m_LocalRotation: {x: -0, y: -0, z: 0.02516947, w: 0.99968326}
   m_LocalPosition: {x: 0.205, y: -0.005, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3099049216093245095}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 1.6580001}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 2.8850002}
 --- !u!1 &7350922943606495318
 GameObject:
   m_ObjectHideFlags: 0
@@ -1801,7 +1801,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7454017396280174713}
-  m_LocalRotation: {x: 0, y: 0, z: -0.99995106, w: -0.0098958695}
+  m_LocalRotation: {x: 0, y: 0, z: -0.9997878, w: -0.020600857}
   m_LocalPosition: {x: 0.05512254, y: -0.0734209, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -1866,13 +1866,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8368154855500369278}
-  m_LocalRotation: {x: -0, y: -0, z: -0.009717735, w: 0.9999528}
+  m_LocalRotation: {x: -0, y: -0, z: 0.0056419964, w: 0.9999841}
   m_LocalPosition: {x: 0.191, y: -0.008, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 156311049038855435}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -1.1140001}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0.647}
 --- !u!1 &8590878319088954613
 GameObject:
   m_ObjectHideFlags: 0
@@ -1896,7 +1896,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8590878319088954613}
-  m_LocalRotation: {x: 0, y: 0, z: -0.99994594, w: -0.010397147}
+  m_LocalRotation: {x: 0, y: 0, z: -0.9996683, w: -0.025754401}
   m_LocalPosition: {x: 0.06652901, y: 0.060814574, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -1916,7 +1916,7 @@ GameObject:
   - component: {fileID: 1403795908200209296}
   - component: {fileID: 3527046213276002947}
   m_Layer: 0
-  m_Name: Enemy_Zombie_RightArm
+  m_Name: RightArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1974,7 +1974,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -421616167
   m_SortingLayer: 2
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_Sprite: {fileID: 1400490123246145374, guid: bd674bd95a5f34b4f8c4337777943748,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -2005,8 +2005,8 @@ MonoBehaviour:
   - {fileID: 3876944545355997105}
   - {fileID: 5046493556117733218}
   m_Bounds:
-    m_Center: {x: -0.009778723, y: 0.00095155835, z: 0}
-    m_Extent: {x: 0.116266996, y: 0.20371738, z: 0}
+    m_Center: {x: -0.008297995, y: -0.001223743, z: 7.592285}
+    m_Extent: {x: 0.14237416, y: 0.20299351, z: 0.00000023841858}
   m_UseBatching: 1
   m_AlwaysUpdate: 1
 --- !u!1 &8874577879020648454
@@ -2035,7 +2035,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8874577879020648454}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.1, z: 0}
+  m_LocalPosition: {x: 0, y: 0.3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 123001835901790431}
@@ -2097,7 +2097,7 @@ Animator:
   m_GameObject: {fileID: 8874577879020648454}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 6c1aca9c57d48264d8e43b09bcb4df30, type: 2}
+  m_Controller: {fileID: 9100000, guid: 36e66d2d8e2614245b99e10ac29ed20e, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -2371,7 +2371,7 @@ PrefabInstance:
     - target: {fileID: 6684713649665185488, guid: 733517a4bf866b94aa4cded94ec54d29,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.765
+      value: 0.89
       objectReference: {fileID: 0}
     - target: {fileID: 7449892435444301109, guid: 733517a4bf866b94aa4cded94ec54d29,
         type: 3}
