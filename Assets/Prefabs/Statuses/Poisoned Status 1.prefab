@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1297090293320668663}
   - component: {fileID: 3592143157347007890}
   m_Layer: 0
-  m_Name: Status Base
+  m_Name: Poisoned Status
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -43,10 +43,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37d31a03e9e913445b7b4e353e94b73b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  statusType: 0
+  statusType: 2
   power: 4
   turnCount: 3
   effectTime: 1
-  effect: {fileID: 7381039665932993195, guid: febef08ed8cc4354485b2c8eecf0aa68, type: 3}
-  icon: {fileID: 21300000, guid: d39127be3a4fdac41a01528272fb2bf5, type: 3}
+  effect: {fileID: 3251895585649527294, guid: 1f1e4aa5e6110254eb0fcd9e1037ebeb, type: 3}
+  icon: {fileID: 21300000, guid: 8d56276df799cf14e990897bfa8b7f16, type: 3}
   isUsingTextPopup: 1
+  dontKillEffect: 0
+  elementType: 6

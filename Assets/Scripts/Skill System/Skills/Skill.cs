@@ -38,7 +38,6 @@ namespace DungeonRush.Skills
         
         protected ObjectPool<GameObject> effectPool;
         protected int tempCooldown;
-        protected bool canExecute;
         protected Card card;
 
         [HideInInspector] public SkillType skillType;
@@ -58,12 +57,11 @@ namespace DungeonRush.Skills
 
         public virtual void Initialize(Card card)
         {
-            tempCooldown = cooldown;
-            canExecute = false;
+            tempCooldown = 0;
             this.card = card;
 
             effectPool = new ObjectPool<GameObject>();
-            FillPool(effectPool, effect, 2);
+            FillPool(effectPool, effect, 1);
         }
 
         private void FillPool(ObjectPool<GameObject> pool, GameObject effect, int objectCount)
@@ -74,34 +72,30 @@ namespace DungeonRush.Skills
 
         public IEnumerator Animate(Move move)
         {
-            if(canExecute)
+            GameObject obj;
+            List<GameObject> objects = new List<GameObject>();
+            int count = GetGameobjectCount();
+            for (int i = 0; i < count; i++)
             {
-                GameObject obj;
-                List<GameObject> objects = new List<GameObject>();
-                int count = GetGameobjectCount();
-                for (int i = 0; i < count; i++)
-                {
-                    obj = effectPool.Pull(transform);
-                    obj.SetActive(true);
+                obj = effectPool.Pull(transform);
+                obj.SetActive(true);
 
-                    PositionEffect(obj, move);
-                    objects.Add(obj);
+                PositionEffect(obj, move);
+                objects.Add(obj);
 
-                    if(isUsingTextPopup)
-                        TextPopupManager.Instance.TextPopup(obj.transform.position, power.ToString());
-                }
-
-                yield return new WaitForSeconds(EffectTime);
-
-                for (int i = 0; i < count; i++)
-                {
-                    obj = objects[i];
-                    obj.transform.SetParent(transform);
-                    obj.SetActive(false);
-                    effectPool.AddObjectToPool(obj);
-                }
+                if (isUsingTextPopup)
+                    TextPopupManager.Instance.TextPopup(obj.transform.position, power.ToString());
             }
-            else yield return null;
+
+            yield return new WaitForSeconds(EffectTime);
+
+            for (int i = 0; i < count; i++)
+            {
+                obj = objects[i];
+                obj.transform.SetParent(transform);
+                obj.SetActive(false);
+                effectPool.AddObjectToPool(obj);
+            }
         }
 
         protected virtual void IncreaseCooldown()

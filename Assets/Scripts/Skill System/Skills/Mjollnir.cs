@@ -18,10 +18,17 @@ namespace DungeonRush.Skills
 
         MjollnirPositioning mPos;
 
+        public override void Initialize(Card card)
+        {
+            base.Initialize(card);
+            GameObject obj = effectPool.Pull(transform);
+            mPos = obj.GetComponent<MjollnirPositioning>();
+            effectPool.AddObjectToPool(obj);
+            mPos.Initialize();
+        }
+
         public override void Execute(Move move)
         {
-            if(!canExecute) return;
-
             FindTargets(move);
             for (int i = 0; i < targets.Count; i++)
             {
@@ -35,8 +42,6 @@ namespace DungeonRush.Skills
         {
             effect.transform.SetParent(null);
             effect.transform.position = Vector3.zero;
-            if(mPos == null)
-                mPos = effect.GetComponent<MjollnirPositioning>();
             mPos.Execute(targetPositions, EffectTime);
         }
 

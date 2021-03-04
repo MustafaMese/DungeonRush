@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1297090293320668663}
-  - component: {fileID: 3807822792733929800}
+  - component: {fileID: 4658617493352814362}
   m_Layer: 0
-  m_Name: FeatureSetter
+  m_Name: Lifesteal Status
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -31,7 +31,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3807822792733929800
+--- !u!114 &4658617493352814362
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -43,11 +43,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 360df144ac406204084455165ca21229, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  statusType: 0
+  statusType: 15
   power: 0
-  turnCount: 0
-  effectTime: 0
-  effect: {fileID: 0}
+  turnCount: 5
+  effectTime: 1
+  effect: {fileID: 7651826169867923554}
   icon: {fileID: 0}
-  isUsingTextPopup: 0
+  isUsingTextPopup: 1
   dontKillEffect: 0

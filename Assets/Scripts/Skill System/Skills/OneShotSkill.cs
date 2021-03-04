@@ -12,7 +12,7 @@ public abstract class OneShotSkill : Skill
 
     public override void Adjust(Move move)
     {
-        //StartCoroutine(Animate(move));
-        canExecute = true;
+        Execute(move);
+        StartCoroutine(Animate(move));
     }
 }

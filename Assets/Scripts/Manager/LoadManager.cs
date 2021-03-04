@@ -43,6 +43,8 @@ namespace DungeonRush.Managers
                     LoadRandomLevel(19, 24);
                 else if(levelIndex < 24)
                     LoadRandomLevel(24, 29);
+                else
+                    SceneManager.LoadScene(1);
             }
             else
                 SceneManager.LoadScene(1);
@@ -51,7 +53,6 @@ namespace DungeonRush.Managers
         private void LoadRandomLevel(int min, int max)
         {
             int index = Random.Range(min, max);
-            print(index);
             SceneManager.LoadScene(index);
         }
 

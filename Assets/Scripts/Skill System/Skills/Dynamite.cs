@@ -21,8 +21,6 @@ namespace DungeonRush.Skills
 
         public override void Execute(Move move)
         {
-            if(!canExecute) return;
-
             FindTargets(move);
 
             for (int i = 0; i < targets.Count; i++)

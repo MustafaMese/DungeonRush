@@ -42,8 +42,20 @@ namespace DungeonRush.Managers
         {
             GameObject coin;
             coin = Instantiate(animatedCoinPrefab);
+            FillPool(coin, 15);
+        }
+
+        private void FillPool(GameObject coin, int coinCount)
+        {
             objectPool.SetObject(coin);
-            objectPool.FillPool(15, transform);
+            objectPool.FillPool(coinCount, transform);
+
+            for (var i = 0; i < coinCount; i++)
+            {
+                var obj = objectPool.Pull(transform);
+                obj.SetActive(false);
+                objectPool.AddObjectToPool(obj);
+            }
         }
 
         private void Animate(Vector3 collectedCoinPosition, int amount)

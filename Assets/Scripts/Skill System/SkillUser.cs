@@ -112,8 +112,6 @@ namespace DungeonRush.Skills
             }
 
             skill.Adjust(card.GetMove());
-            skill.Execute(card.GetMove());
-            StartCoroutine(skill.Animate(card.GetMove()));
         }
     }
 }

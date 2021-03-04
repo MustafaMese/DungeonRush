@@ -17,12 +17,11 @@ public abstract class PassiveSkill : Skill
     {
         if(CooldownControl())
         {
-            if(!CalculateChance()) 
-                canExecute = false;
-            else
+            if(CalculateChance())
             {
                 IncreaseCooldown();
-                canExecute = true;
+                Execute(move);
+                StartCoroutine(Animate(move));
             }
         }
         else

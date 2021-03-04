@@ -224,5 +224,5 @@ public enum ElementType
     GRASS,
     ELECTRICITY,
     POISON,
-    STATIC
+    NONE
 }

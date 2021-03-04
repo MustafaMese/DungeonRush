@@ -9,8 +9,6 @@ namespace DungeonRush.Skills
     {
         public override void Execute(Move move)
         {
-            if(!canExecute) return;
-
             Card card = move.GetTargetTile().GetCard();
             if (card != null)
                 card.GetDamagable().DecreaseHealth(10000);

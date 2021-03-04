@@ -8,8 +8,6 @@ namespace DungeonRush.Skills
     {
         public override void Execute(Move move)
         {
-            if(!canExecute) return;
-
             Card card = move.GetCard();
             card.GetDamagable().IncreaseHealth(Power);
 

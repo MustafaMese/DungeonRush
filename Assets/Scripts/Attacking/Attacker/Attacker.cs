@@ -150,6 +150,13 @@ namespace DungeonRush.Property
         {
             pool.SetObject(effect);
             pool.FillPool(objectCount, transform);
+
+            for (var i = 0; i < pool.GetStackLength(); i++)
+            {
+                var obj = pool.Pull(transform);
+                obj.SetActive(false);
+                pool.AddObjectToPool(obj);
+            }
         }
 
         public AttackStyle GetAttackStyle()

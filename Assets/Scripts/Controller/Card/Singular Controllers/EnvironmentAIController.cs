@@ -97,7 +97,7 @@ namespace DungeonRush.Controller
                 card.Remove(card);
             }
 
-            if(card.GetElementType() != ElementType.STATIC)
+            if(card.GetElementType() != ElementType.NONE)
                 EvolveOthers();
 
             bool canMove = DoMove();

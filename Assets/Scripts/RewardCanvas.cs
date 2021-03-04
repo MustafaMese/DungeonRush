@@ -60,6 +60,7 @@ namespace DungeonRush.UI
                 SkillObject skill = ItemDB.Instance.GetRandomSkill();
                 rewardButtons[i].button = buttons[i];
                 rewardButtons[i].skill = skill;
+                rewardButtons[i].button.image.sprite = rewardButtons[i].skill.skillPrefab.IconSmall;
             }
                 
         }
@@ -76,7 +77,11 @@ namespace DungeonRush.UI
         // Button method.
         public void ChooseSkill(Button button)
         {
-            if(!isChosen) return;
+            print("1");
+
+            if(isChosen) return;
+
+            print("2");
 
             isChosen = true;
             SkillObject skill = FindSkill(button);
@@ -97,8 +102,6 @@ namespace DungeonRush.UI
             SkillObject skill = null;
             for (var i = 0; i < rewardButtons.Count; i++)
             {
-                rewardButtons[i].button.image.sprite = rewardButtons[i].skill.skillPrefab.IconSmall;
-
                 if (rewardButtons[i].button == button)
                     skill = rewardButtons[i].skill;
                 else
