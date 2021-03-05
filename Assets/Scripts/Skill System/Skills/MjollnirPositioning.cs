@@ -11,45 +11,62 @@ namespace DungeonRush.Skills
         private ObjectPool<GameObject> poolForEffect = new ObjectPool<GameObject>();
 
         [SerializeField] LineRenderer lineRenderer;
-        List<GameObject> objects = new List<GameObject>();
+
+        List<GameObject> activeObjects = new List<GameObject>();
+        List<GameObject> deactiveObjects = new List<GameObject>();
 
         public void Initialize()
         {
             poolForEffect.SetObject(lightiningPrefab);
-            poolForEffect.FillPool(3, transform);
+            poolForEffect.Fill(3, transform);
+
+            for (var i = 0; i < 3; i++)
+            {
+                GameObject obj = poolForEffect.Pull(transform);
+                obj.SetActive(false);
+                poolForEffect.Push(obj);
+            }
         }
 
         public void Execute(List<Vector3> targetPositions, float time)
         {
             lineRenderer.positionCount = targetPositions.Count;
-            objects.Clear();
+            activeObjects.Clear();
 
             for (int i = 0; i < targetPositions.Count; i++)
             {
+                print(targetPositions.Count);
+
                 lineRenderer.SetPosition(i, targetPositions[i]);
 
                 GameObject obj = poolForEffect.Pull(lineRenderer.transform);
                 obj.SetActive(true);
-                objects.Add(obj);
+                activeObjects.Add(obj);
 
                 obj.transform.position = targetPositions[i];
             }
 
-            StartCoroutine(Deactivate(time));
+            //StartCoroutine(Deactivate(time));
         }
 
         private IEnumerator Deactivate(float time)
         {
-            time = time / 2;
-
-            yield return new WaitForSeconds(time);
-
-            for (int i = 0; i < objects.Count; i++)
+            for (var i = 0; i < activeObjects.Count; i++)
             {
-                objects[i].SetActive(false);
-                poolForEffect.AddObjectToPool(objects[i]);
+                GameObject obj = activeObjects[i];
+
+                deactiveObjects.Add(obj);
+                activeObjects.Remove(obj);
             }
-            objects.Clear();
+
+            yield return new WaitForSeconds(time / 2);
+
+            for (int i = 0; i < deactiveObjects.Count; i++)
+            {
+                deactiveObjects[i].SetActive(false);
+                poolForEffect.Push(deactiveObjects[i]);
+            }
+            deactiveObjects.Clear();
         }
 
     }

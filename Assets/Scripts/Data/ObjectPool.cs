@@ -14,18 +14,18 @@ namespace DungeonRush.Data
             this.prefab = prefab;
         }
 
-        public int GetStackLength()
+        public int GetLength()
         {
             return objectPool.Count;
         }
 
-        public void FillPool(int count, Transform t)
+        public void Fill(int count, Transform t)
         {
             for (int i = 0; i < count; i++)
             {
                 T obj = Object.Instantiate(prefab as Object, t) as T;
                 
-                AddObjectToPool(obj);
+                Push(obj);
             }
         }
 
@@ -41,18 +41,15 @@ namespace DungeonRush.Data
             return Object.Instantiate(prefab as Object, t) as T;
         }
 
-        public T PullForDestroy()
+        public T Pop()
         {
             if (objectPool.Count > 0)
                 return objectPool.Pop();
             return null;
         }
 
-        public void AddObjectToPool(T obj)
+        public void Push(T obj)
         {
-            if (obj == null)
-                Debug.Log("sa");
-
             if (obj != null)
                 objectPool.Push(obj);
         }

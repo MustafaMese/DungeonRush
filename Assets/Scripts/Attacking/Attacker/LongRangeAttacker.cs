@@ -48,7 +48,7 @@ namespace DungeonRush.Attacking
             Transform cardTransform = move.GetCardTile().transform;
 
             attackStyle.SetEffectPosition(obj, cardTransform.position, cardTransform);
-            pool.AddObjectToPool(obj);
+            pool.Push(obj);
         }
     }
 }

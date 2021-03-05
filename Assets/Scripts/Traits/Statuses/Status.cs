@@ -54,7 +54,14 @@ namespace DungeonRush.Traits
         private void FillPool(ObjectPool<GameObject> pool, GameObject effect, int objectCount)
         {
             pool.SetObject(effect);
-            pool.FillPool(objectCount, transform);
+            pool.Fill(objectCount, transform);
+
+            for (var i = 0; i < objectCount; i++)
+            {
+                GameObject obj = pool.Pull(transform);
+                obj.SetActive(false);
+                pool.Push(obj);
+            }
         }
 
         protected void Animate()

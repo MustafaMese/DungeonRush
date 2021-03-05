@@ -67,10 +67,18 @@ namespace DungeonRush.Skills
         private void FillPool(ObjectPool<GameObject> pool, GameObject effect, int objectCount)
         {
             pool.SetObject(effect);
-            pool.FillPool(objectCount, transform);
+            pool.Fill(objectCount, transform);
+
+            for (var i = 0; i < objectCount; i++)
+            {
+                GameObject obj = pool.Pull(transform);
+                obj.SetActive(false);
+                pool.Push(obj);
+            }
+
         }
 
-        public IEnumerator Animate(Move move)
+        public virtual IEnumerator Animate(Move move)
         {
             GameObject obj;
             List<GameObject> objects = new List<GameObject>();
@@ -94,7 +102,7 @@ namespace DungeonRush.Skills
                 obj = objects[i];
                 obj.transform.SetParent(transform);
                 obj.SetActive(false);
-                effectPool.AddObjectToPool(obj);
+                effectPool.Push(obj);
             }
         }
 

@@ -25,13 +25,24 @@ namespace DungeonRush.Traits
         public void Initialize(Vector3 pos)
         {
             transform.position = pos;
-
-            effectPool = new Data.ObjectPool<GameObject>();
-            effectPool.SetObject(effect);
-            effectPool.FillPool(1, transform);
+            FillPool();
             effectUsed = false;
 
             Animate();
+        }
+
+        private void FillPool()
+        {
+            effectPool = new Data.ObjectPool<GameObject>();
+            effectPool.SetObject(effect);
+            effectPool.Fill(1, transform);
+
+            for (var i = 0; i < 1; i++)
+            {   
+                GameObject obj = effectPool.Pull(transform);
+                obj.SetActive(false);
+                effectPool.Push(obj);
+            }
         }
 
         protected override IEnumerator KillStatus()

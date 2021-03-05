@@ -48,7 +48,7 @@ namespace DungeonRush.Property
             GameObject obj = walkParticulPool.Pull(transform);
             obj.transform.position = pos;
             yield return new WaitForSeconds(time);
-            walkParticulPool.AddObjectToPool(obj);
+            walkParticulPool.Push(obj);
         }
 
         private IEnumerator TreasureMove()

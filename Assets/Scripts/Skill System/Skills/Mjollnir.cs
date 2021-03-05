@@ -2,6 +2,7 @@
 using DungeonRush.Data;
 using DungeonRush.Field;
 using DungeonRush.Property;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -23,7 +24,7 @@ namespace DungeonRush.Skills
             base.Initialize(card);
             GameObject obj = effectPool.Pull(transform);
             mPos = obj.GetComponent<MjollnirPositioning>();
-            effectPool.AddObjectToPool(obj);
+            effectPool.Push(obj);
             mPos.Initialize();
         }
 
@@ -43,6 +44,12 @@ namespace DungeonRush.Skills
             effect.transform.SetParent(null);
             effect.transform.position = Vector3.zero;
             mPos.Execute(targetPositions, EffectTime);
+        }
+
+        public override IEnumerator Animate(Move move)
+        {
+            // Burayı yap.
+            yield return null;
         }
 
         private void FindTargets(Move move)

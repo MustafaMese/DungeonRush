@@ -34,7 +34,14 @@ namespace DungeonRush.Managers
         void FillThePool(ObjectPool<TextPopup> pool, TextPopup effect, int objectCount)
         {
             pool.SetObject(effect);
-            pool.FillPool(objectCount, transform);
+            pool.Fill(objectCount, transform);
+
+            for (var i = 0; i < objectCount; i++)
+            {
+                TextPopup obj = pool.Pull(transform);
+                obj.gameObject.SetActive(false);
+                pool.Push(obj);
+            }
         }
 
         public void TextPopup(Vector3 tPos, int damage, bool isCritical = false)
@@ -56,7 +63,7 @@ namespace DungeonRush.Managers
             float t = obj.GetDisapperTime();
             yield return new WaitForSeconds(t);
             obj.gameObject.SetActive(false);
-            poolForTextPopup.AddObjectToPool(obj);
+            poolForTextPopup.Push(obj);
         }
 
         private IEnumerator StartTextPopup(Vector3 tPos, int damage, bool isCritical = false)
@@ -68,14 +75,14 @@ namespace DungeonRush.Managers
             float t = obj.GetDisapperTime();
             yield return new WaitForSeconds(t);
             obj.gameObject.SetActive(false);
-            poolForTextPopup.AddObjectToPool(obj);
+            poolForTextPopup.Push(obj);
         }
 
         public void DeleteObjectsInPool(ObjectPool<GameObject> pool)
         {
-            for (int i = 0; i < pool.GetStackLength(); i++)
+            for (int i = 0; i < pool.GetLength(); i++)
             {
-                GameObject obj = pool.PullForDestroy();
+                GameObject obj = pool.Pop();
                 if (obj != null)
                     Destroy(obj);
                 else

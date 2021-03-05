@@ -48,13 +48,13 @@ namespace DungeonRush.Managers
         private void FillPool(GameObject coin, int coinCount)
         {
             objectPool.SetObject(coin);
-            objectPool.FillPool(coinCount, transform);
+            objectPool.Fill(coinCount, transform);
 
             for (var i = 0; i < coinCount; i++)
             {
                 var obj = objectPool.Pull(transform);
                 obj.SetActive(false);
-                objectPool.AddObjectToPool(obj);
+                objectPool.Push(obj);
             }
         }
 
@@ -75,7 +75,7 @@ namespace DungeonRush.Managers
         {
             yield return new WaitForSeconds(duration);
             coin.SetActive(false);
-            objectPool.AddObjectToPool(coin);
+            objectPool.Push(coin);
             player.Coins++;
             int sum = Random.Range(1, 3);
             player.Experience += sum;

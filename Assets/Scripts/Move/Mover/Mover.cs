@@ -44,7 +44,14 @@ namespace DungeonRush.Property
         private void FillThePool(ObjectPool<GameObject> pool, GameObject effect, int count)
         {
             pool.SetObject(effect);
-            pool.FillPool(count, transform);
+            pool.Fill(count, transform);
+
+            for (var i = 0; i < count; i++)
+            {
+                GameObject obj = pool.Pull(transform);
+                obj.SetActive(false);
+                pool.Push(obj);
+            }   
         }
 
         public void ChangeShiftOneTurn(bool isTempGonnaBeNull, Shift s = null)

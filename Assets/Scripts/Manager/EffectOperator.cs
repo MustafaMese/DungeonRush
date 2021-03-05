@@ -38,7 +38,7 @@ namespace DungeonRush.Managers
             yield return new WaitForSeconds(time);
             obj.SetActive(false);
             attackStyle.SetEffectPosition(obj, target.position, cardTransform);
-            pool.AddObjectToPool(obj);
+            pool.Push(obj);
         }
 
         private IEnumerator OperateEffect(ObjectPool<GameObject> pool, Transform cardTransform, Vector3 pos, float time)
@@ -49,7 +49,7 @@ namespace DungeonRush.Managers
             obj.transform.SetParent(cardTransform);
             yield return new WaitForSeconds(time);
             obj.SetActive(false);
-            pool.AddObjectToPool(obj);
+            pool.Push(obj);
         }
 
         public void Operate(ObjectPool<GameObject> pool, Transform cardTransform,Vector3 pos)
@@ -58,14 +58,14 @@ namespace DungeonRush.Managers
             obj.SetActive(true);
             obj.transform.position = pos;
             obj.transform.SetParent(cardTransform);
-            pool.AddObjectToPool(obj);
+            pool.Push(obj);
         }
 
         public void Delete(ObjectPool<GameObject> pool)
         {
-            for(int i = 0; i < pool.GetStackLength(); i++)
+            for(int i = 0; i < pool.GetLength(); i++)
             {
-                GameObject obj = pool.PullForDestroy();
+                GameObject obj = pool.Pop();
                 Destroy(obj);
             }
         }

@@ -149,13 +149,13 @@ namespace DungeonRush.Property
         protected void FillThePool(ObjectPool<GameObject> pool, GameObject effect, int objectCount)
         {
             pool.SetObject(effect);
-            pool.FillPool(objectCount, transform);
+            pool.Fill(objectCount, transform);
 
-            for (var i = 0; i < pool.GetStackLength(); i++)
+            for (var i = 0; i < pool.GetLength(); i++)
             {
                 var obj = pool.Pull(transform);
                 obj.SetActive(false);
-                pool.AddObjectToPool(obj);
+                pool.Push(obj);
             }
         }
 
