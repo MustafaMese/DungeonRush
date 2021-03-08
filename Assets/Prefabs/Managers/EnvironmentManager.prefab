@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6216542283747646278}
-  - component: {fileID: 2748724027339495976}
+  - component: {fileID: 9040678069362953900}
   m_Layer: 0
-  m_Name: TrapManager
+  m_Name: EnvironmentManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -31,7 +31,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2748724027339495976
+--- !u!114 &9040678069362953900
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -45,9 +45,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   activeTrapDistance: 8
   elementPrefabs:
-  - card: {fileID: 5690650751941843031, guid: 14b98835a5570e94f9334420cbf41a8f, type: 3}
+  - card: {fileID: 0}
     element: 0
-  - card: {fileID: 5690650751941843031, guid: def7f404b8c2d9e47bb61aa3cd92e9e5, type: 3}
-    element: 6
-  - card: {fileID: 5690650751941843031, guid: 0f1e1bec71f519a4696d03804cc19398, type: 3}
-    element: 1
+  - card: {fileID: 0}
+    element: 0

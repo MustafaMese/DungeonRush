@@ -1,6 +1,7 @@
 using UnityEngine;
 using DungeonRush.Attacking;
 using DungeonRush.Cards;
+using DungeonRush.Property;
 
 namespace DungeonRush.Items
 {
@@ -15,16 +16,18 @@ namespace DungeonRush.Items
 
         public override void Execute(Card card)
         {
-            ItemUser itemUser = card.GetComponent<ItemUser>();
-            SetWeapon(itemUser);
+            SetWeapon(card);
         }
 
-        private void SetWeapon(ItemUser itemUser)
+        private void SetWeapon(Card card)
         {
-            if (itemUser != null && itemUser.isWeaponUser)
+            ItemUser itemUser = card.GetComponent<ItemUser>();
+            Attacker attacker = card.GetComponent<Attacker>();
+            if (itemUser != null && attacker != null && itemUser.isWeaponUser)
             {
                 itemUser.weapon = this;
                 itemUser.weaponBone.sprite = GetPrimarySprite();
+                attacker.SetAttackStyle(attackStyle);
             }
         }
 

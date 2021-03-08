@@ -1,6 +1,7 @@
 ﻿using DungeonRush.Cards;
 using DungeonRush.Data;
 using DungeonRush.Field;
+using DungeonRush.Managers;
 using DungeonRush.Property;
 using System.Collections;
 using System.Collections.Generic;
@@ -17,15 +18,28 @@ namespace DungeonRush.Skills
         private List<Card> targets = new List<Card>();
         private List<Vector3> targetPositions = new List<Vector3>();
 
-        MjollnirPositioning mPos;
+        private ObjectPool<MjollnirPositioning> effectPool;
 
         public override void Initialize(Card card)
         {
-            base.Initialize(card);
-            GameObject obj = effectPool.Pull(transform);
-            mPos = obj.GetComponent<MjollnirPositioning>();
-            effectPool.Push(obj);
-            mPos.Initialize();
+            tempCooldown = 0;
+            this.card = card;
+
+            InitializeLighting();
+        }
+
+        private void InitializeLighting()
+        {
+            effectPool = new ObjectPool<MjollnirPositioning>();
+            effectPool.SetObject(effect.GetComponent<MjollnirPositioning>());
+            effectPool.Fill(2, transform);
+
+            for (var i = 0; i < effectPool.GetLength(); i++)
+            {
+                MjollnirPositioning obj = effectPool.Pull(transform);
+                obj.Initialize(gameObject);
+                effectPool.Push(obj);
+            }
         }
 
         public override void Execute(Move move)
@@ -39,17 +53,22 @@ namespace DungeonRush.Skills
             }
         }
 
-        public override void PositionEffect(GameObject effect, Move move)
-        {
-            effect.transform.SetParent(null);
-            effect.transform.position = Vector3.zero;
-            mPos.Execute(targetPositions, EffectTime);
-        }
-
         public override IEnumerator Animate(Move move)
         {
-            // Burayı yap.
-            yield return null;
+            MjollnirPositioning mPos = effectPool.Pull(transform);
+            mPos.transform.SetParent(null);
+            mPos.transform.position = Vector3.zero;
+
+            mPos.Execute(targetPositions, EffectTime);
+            if (isUsingTextPopup)
+                TextPopupManager.Instance.TextPopup(mPos.transform.position, Power.ToString());
+
+            yield return new WaitForSeconds(EffectTime);
+
+            mPos.Deactivate();
+            mPos.transform.SetParent(transform);
+            mPos.gameObject.SetActive(false);
+            effectPool.Push(mPos);
         }
 
         private void FindTargets(Move move)
@@ -74,7 +93,7 @@ namespace DungeonRush.Skills
                                 targetCard != move.GetCard() && !targets.Contains(targetCard))
                         {
                             targets.Add(targetCard);
-                            targetPositions.Add(target);
+                            targetPositions.Add(targetTile.GetCoordinate());
                             currentCoordinate = targetTile.GetCoordinate();
                             break;
                         }

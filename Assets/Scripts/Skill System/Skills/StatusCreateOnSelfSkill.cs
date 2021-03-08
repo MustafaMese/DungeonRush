@@ -23,6 +23,7 @@ namespace DungeonRush.Skills
             Card card = move.GetCard();
             if (card != null)
                 statusController.AddStatus(status);
+                
         }
     }
 }

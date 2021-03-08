@@ -12,7 +12,7 @@ public class EnvironmentElementDrawer : PropertyDrawer
         Rect contentPosition = EditorGUI.PrefixLabel(position, label);
         contentPosition.width *= 0.5f;
         EditorGUI.indentLevel = 0;
-        EditorGUI.PropertyField(contentPosition, property.FindPropertyRelative("impact"), GUIContent.none);
+        EditorGUI.PropertyField(contentPosition, property.FindPropertyRelative("card"), GUIContent.none);
 
         contentPosition.x += contentPosition.width;
         EditorGUI.PropertyField(contentPosition, property.FindPropertyRelative("element"), GUIContent.none);

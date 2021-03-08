@@ -25,7 +25,7 @@ namespace DungeonRush.Skills
         [Header("Effect Options")]
         [Space]
         [SerializeField] private float effectTime;
-        [SerializeField] private GameObject effect;
+        [SerializeField] protected GameObject effect;
 
         [Header("Icon Options")]
         [Space]
@@ -36,7 +36,7 @@ namespace DungeonRush.Skills
         [Space]
         [SerializeField] private int power;
         
-        protected ObjectPool<GameObject> effectPool;
+        protected ObjectPool<GameObject> pool;
         protected int tempCooldown;
         protected Card card;
 
@@ -60,8 +60,8 @@ namespace DungeonRush.Skills
             tempCooldown = 0;
             this.card = card;
 
-            effectPool = new ObjectPool<GameObject>();
-            FillPool(effectPool, effect, 1);
+            pool = new ObjectPool<GameObject>();
+            FillPool(pool, effect, 2);
         }
 
         private void FillPool(ObjectPool<GameObject> pool, GameObject effect, int objectCount)
@@ -85,7 +85,7 @@ namespace DungeonRush.Skills
             int count = GetGameobjectCount();
             for (int i = 0; i < count; i++)
             {
-                obj = effectPool.Pull(transform);
+                obj = pool.Pull(transform);
                 obj.SetActive(true);
 
                 PositionEffect(obj, move);
@@ -102,7 +102,7 @@ namespace DungeonRush.Skills
                 obj = objects[i];
                 obj.transform.SetParent(transform);
                 obj.SetActive(false);
-                effectPool.Push(obj);
+                pool.Push(obj);
             }
         }
 

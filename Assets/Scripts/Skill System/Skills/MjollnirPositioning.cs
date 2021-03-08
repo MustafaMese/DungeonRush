@@ -8,65 +8,51 @@ namespace DungeonRush.Skills
     public class MjollnirPositioning : MonoBehaviour
     {
         [SerializeField] GameObject lightiningPrefab;
-        private ObjectPool<GameObject> poolForEffect = new ObjectPool<GameObject>();
+        private ObjectPool<GameObject> pool = new ObjectPool<GameObject>();
 
         [SerializeField] LineRenderer lineRenderer;
+        private List<GameObject> activeList = new List<GameObject>();
 
-        List<GameObject> activeObjects = new List<GameObject>();
-        List<GameObject> deactiveObjects = new List<GameObject>();
-
-        public void Initialize()
+        public void Initialize(GameObject obje)
         {
-            poolForEffect.SetObject(lightiningPrefab);
-            poolForEffect.Fill(3, transform);
+            pool.SetObject(lightiningPrefab);
+            pool.Fill(3, transform);
 
             for (var i = 0; i < 3; i++)
             {
-                GameObject obj = poolForEffect.Pull(transform);
+                GameObject obj = pool.Pull(transform);
+                obj.transform.SetParent(obje.transform);
                 obj.SetActive(false);
-                poolForEffect.Push(obj);
+                pool.Push(obj);
             }
         }
 
         public void Execute(List<Vector3> targetPositions, float time)
         {
             lineRenderer.positionCount = targetPositions.Count;
-            activeObjects.Clear();
+            activeList.Clear();
 
             for (int i = 0; i < targetPositions.Count; i++)
             {
-                print(targetPositions.Count);
-
                 lineRenderer.SetPosition(i, targetPositions[i]);
 
-                GameObject obj = poolForEffect.Pull(lineRenderer.transform);
+                GameObject obj = pool.Pull(lineRenderer.transform);
                 obj.SetActive(true);
-                activeObjects.Add(obj);
-
                 obj.transform.position = targetPositions[i];
+                activeList.Add(obj);
             }
-
-            //StartCoroutine(Deactivate(time));
         }
 
-        private IEnumerator Deactivate(float time)
+        public void Deactivate()
         {
-            for (var i = 0; i < activeObjects.Count; i++)
+            for (var i = 0; i < activeList.Count; i++)
             {
-                GameObject obj = activeObjects[i];
-
-                deactiveObjects.Add(obj);
-                activeObjects.Remove(obj);
+                GameObject obj = activeList[i];
+                obj.SetActive(false);
+                pool.Push(obj);
             }
 
-            yield return new WaitForSeconds(time / 2);
-
-            for (int i = 0; i < deactiveObjects.Count; i++)
-            {
-                deactiveObjects[i].SetActive(false);
-                poolForEffect.Push(deactiveObjects[i]);
-            }
-            deactiveObjects.Clear();
+            activeList.Clear();
         }
 
     }

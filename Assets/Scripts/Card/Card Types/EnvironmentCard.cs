@@ -19,7 +19,7 @@ namespace DungeonRush.Cards
         [SerializeField] bool isDefinite;
         [SerializeField] float time;
 
-        [SerializeField] List<ImpactElementList> impacts;
+        [SerializeField] List<ImpactList> impacts;
 
         private Attacker attacker;
         private IMoveController controller;

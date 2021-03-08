@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-[CustomPropertyDrawer(typeof(ImpactElementList))]
-public class ImpactElementListDrawer : PropertyDrawer
+[CustomPropertyDrawer(typeof(ImpactList))]
+public class ImpactListDrawer : PropertyDrawer
 {
     public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
     {
