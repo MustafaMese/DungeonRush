@@ -70,12 +70,11 @@ namespace DungeonRush
 
             public void TakeItem(Item loot, bool openPanel = true)
             {
-                BoneType lootBone = loot.GetBoneType();
-
-                if(loot.GetItemType() != ItemType.WEAPON && loot.GetItemType() != ItemType.ARMOR)
-                    loot.Execute(card);
-                else
+                loot.Execute(card);
+                
+                if (loot.GetItemType() == ItemType.WEAPON || loot.GetItemType() == ItemType.ARMOR)
                 {
+                    BoneType lootBone = loot.GetBoneType();
                     if (items[lootBone] != null)
                         UIManager.Instance.EnableChoiceCanvas(items[loot.GetBoneType()], loot, this);
                     else

@@ -24,24 +24,17 @@ namespace DungeonRush.Managers
 
         [SerializeField] TextPopup textPopup = null;
 
-        private ObjectPool<TextPopup> poolForTextPopup = new ObjectPool<TextPopup>();
+        private ObjectPool pool = new ObjectPool();
 
         private void Start()
         {
-            FillThePool(poolForTextPopup, textPopup, 3);
+            FillThePool(pool, textPopup, 3);
         }
 
-        void FillThePool(ObjectPool<TextPopup> pool, TextPopup effect, int objectCount)
+        void FillThePool(ObjectPool pool, TextPopup textPopup, int objectCount)
         {
-            pool.SetObject(effect);
+            pool.SetObject(textPopup.gameObject);
             pool.Fill(objectCount, transform);
-
-            for (var i = 0; i < objectCount; i++)
-            {
-                TextPopup obj = pool.Pull(transform);
-                obj.gameObject.SetActive(false);
-                pool.Push(obj);
-            }
         }
 
         public void TextPopup(Vector3 tPos, int damage, bool isCritical = false)
@@ -56,37 +49,35 @@ namespace DungeonRush.Managers
 
         private IEnumerator StartTextPopup(Vector3 tPos, string text)
         {
-            TextPopup obj = poolForTextPopup.Pull(transform);
+            TextPopup obj = pool.Pull(transform).GetComponent<TextPopup>();
             obj.gameObject.SetActive(true);
             obj.transform.position = tPos;
             obj.Setup(text, tPos);
             float t = obj.GetDisapperTime();
             yield return new WaitForSeconds(t);
             obj.gameObject.SetActive(false);
-            poolForTextPopup.Push(obj);
+            pool.Push(obj.gameObject);
         }
 
         private IEnumerator StartTextPopup(Vector3 tPos, int damage, bool isCritical = false)
         {
-            TextPopup obj = poolForTextPopup.Pull(transform);
+            TextPopup obj = pool.Pull(transform).GetComponent<TextPopup>();
             obj.gameObject.SetActive(true);
             obj.transform.position = tPos;
             obj.Setup(damage, tPos, isCritical);
             float t = obj.GetDisapperTime();
             yield return new WaitForSeconds(t);
             obj.gameObject.SetActive(false);
-            poolForTextPopup.Push(obj);
+            pool.Push(obj.gameObject);
         }
 
-        public void DeleteObjectsInPool(ObjectPool<GameObject> pool)
+        public void DeleteObjectsInPool(ObjectPool pool)
         {
             for (int i = 0; i < pool.GetLength(); i++)
             {
                 GameObject obj = pool.Pop();
                 if (obj != null)
                     Destroy(obj);
-                else
-                    return;
             }
         }
     }

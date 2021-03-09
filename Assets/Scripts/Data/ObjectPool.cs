@@ -4,12 +4,12 @@ using UnityEngine;
 
 namespace DungeonRush.Data
 {
-    public class ObjectPool<T> where T : class
+    public class ObjectPool
     {
-        private T prefab;
-        private Stack<T> objectPool = new Stack<T>();
+        private GameObject prefab;
+        private Stack<GameObject> objectPool = new Stack<GameObject>();
 
-        public void SetObject(T prefab)
+        public void SetObject(GameObject prefab)
         {
             this.prefab = prefab;
         }
@@ -23,32 +23,32 @@ namespace DungeonRush.Data
         {
             for (int i = 0; i < count; i++)
             {
-                T obj = Object.Instantiate(prefab as Object, t) as T;
+                GameObject obj = Object.Instantiate(prefab, t) as GameObject;
                 
                 Push(obj);
             }
         }
 
-        public T Pull(Transform t)
+        public GameObject Pull(Transform t)
         {
             if (objectPool.Count > 0)
             {
-                T obj = objectPool.Pop();
+                GameObject obj = objectPool.Pop();
 
                 return obj;
             }
 
-            return Object.Instantiate(prefab as Object, t) as T;
+            return Object.Instantiate(prefab, t);
         }
 
-        public T Pop()
+        public GameObject Pop()
         {
             if (objectPool.Count > 0)
                 return objectPool.Pop();
             return null;
         }
 
-        public void Push(T obj)
+        public void Push(GameObject obj)
         {
             if (obj != null)
                 objectPool.Push(obj);

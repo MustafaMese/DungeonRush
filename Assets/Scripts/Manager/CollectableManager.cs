@@ -30,7 +30,7 @@ namespace DungeonRush.Managers
         [SerializeField, Range(0.9f, 2f)] float maxAnimDuration;
         [SerializeField] float spread;
 
-        private ObjectPool<GameObject> objectPool = new ObjectPool<GameObject>();
+        private ObjectPool objectPool = new ObjectPool();
         private PlayerCard player;
 
         private void Start()
@@ -49,13 +49,6 @@ namespace DungeonRush.Managers
         {
             objectPool.SetObject(coin);
             objectPool.Fill(coinCount, transform);
-
-            for (var i = 0; i < coinCount; i++)
-            {
-                var obj = objectPool.Pull(transform);
-                obj.SetActive(false);
-                objectPool.Push(obj);
-            }
         }
 
         private void Animate(Vector3 collectedCoinPosition, int amount)

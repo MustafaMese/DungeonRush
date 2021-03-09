@@ -94,7 +94,7 @@ namespace DungeonRush.Controller
             if(!check)
             {
                 Notify();
-                card.Remove(card);
+                EnvironmentCard.Remove(card);
             }
 
             if(card.GetElementType() != ElementType.NONE)

@@ -35,7 +35,7 @@ namespace DungeonRush.Attacking
             AttackAction(cards, move);
         }
 
-        protected override void AttackEffect(ObjectPool<GameObject> pool, Move move, float time)
+        protected override void AttackEffect(ObjectPool pool, Move move, float time)
         {
             if (move.GetTargetTile().GetCard() != null)
             {

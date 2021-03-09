@@ -23,6 +23,7 @@ namespace DungeonRush.Items
         {
             ItemUser itemUser = card.GetComponent<ItemUser>();
             Attacker attacker = card.GetComponent<Attacker>();
+
             if (itemUser != null && attacker != null && itemUser.isWeaponUser)
             {
                 itemUser.weapon = this;

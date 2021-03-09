@@ -15,11 +15,10 @@ namespace DungeonRush.Property
         private Shift tempShift = null;
 
         [SerializeField] protected float movingTime = 0.2f;
-        
         [SerializeField] protected float particulTime = 0;
 
         protected GameObject walkParticul = null;
-        protected ObjectPool<GameObject> walkParticulPool = new ObjectPool<GameObject>();
+        protected ObjectPool walkParticulPool = new ObjectPool();
         protected bool isMoveFinished = false;
         protected Move move;
         protected Card card;
@@ -41,17 +40,10 @@ namespace DungeonRush.Property
         public abstract void Move();
         protected virtual void Initialize() { }
 
-        private void FillThePool(ObjectPool<GameObject> pool, GameObject effect, int count)
+        private void FillThePool(ObjectPool pool, GameObject effect, int count)
         {
             pool.SetObject(effect);
-            pool.Fill(count, transform);
-
-            for (var i = 0; i < count; i++)
-            {
-                GameObject obj = pool.Pull(transform);
-                obj.SetActive(false);
-                pool.Push(obj);
-            }   
+            pool.Fill(count, transform); 
         }
 
         public void ChangeShiftOneTurn(bool isTempGonnaBeNull, Shift s = null)

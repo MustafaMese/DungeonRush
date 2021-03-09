@@ -8,7 +8,7 @@ namespace DungeonRush.Skills
     public class MjollnirPositioning : MonoBehaviour
     {
         [SerializeField] GameObject lightiningPrefab;
-        private ObjectPool<GameObject> pool = new ObjectPool<GameObject>();
+        private ObjectPool pool = new ObjectPool();
 
         [SerializeField] LineRenderer lineRenderer;
         private List<GameObject> activeList = new List<GameObject>();

@@ -22,7 +22,7 @@ namespace DungeonRush.Property
         public int power = 0;
         protected bool attackFinished = false; 
         
-        protected ObjectPool<GameObject> poolForAttackStyle = new ObjectPool<GameObject>();
+        protected ObjectPool pool = new ObjectPool();
         protected GameObject effectObject = null;
         protected Card card = null;
         protected StatusController statusController = null;
@@ -32,7 +32,7 @@ namespace DungeonRush.Property
             DOTween.Init();
             card = GetComponent<Card>();
             effectObject = attackStyle.GetEffect();
-            FillThePool(poolForAttackStyle, effectObject, 1);
+            FillThePool(pool, effectObject, 1);
             power = attackStyle.GetPower();
             Initialize();
         }
@@ -74,7 +74,7 @@ namespace DungeonRush.Property
             return false;
         }
 
-        protected virtual void AttackEffect(ObjectPool<GameObject> pool, Move move, float time)
+        protected virtual void AttackEffect(ObjectPool pool, Move move, float time)
         {
             Transform cardTransform = move.GetCard().transform;
             Transform target = move.GetTargetTile().transform;
@@ -114,11 +114,11 @@ namespace DungeonRush.Property
 
         public void SetAttackStyle(AttackStyle attackStyle)
         {
-            TextPopupManager.Instance.DeleteObjectsInPool(poolForAttackStyle);
+            TextPopupManager.Instance.DeleteObjectsInPool(pool);
 
             this.attackStyle = attackStyle;
             effectObject = attackStyle.GetEffect();
-            FillThePool(poolForAttackStyle, effectObject, 2);
+            FillThePool(pool, effectObject, 2);
             power = attackStyle.GetPower();
         }
         protected bool DoAttackAction(Move move, bool isTrap)
@@ -146,17 +146,10 @@ namespace DungeonRush.Property
             return isCritic;
         }
 
-        protected void FillThePool(ObjectPool<GameObject> pool, GameObject effect, int objectCount)
+        protected void FillThePool(ObjectPool pool, GameObject effect, int objectCount)
         {
             pool.SetObject(effect);
             pool.Fill(objectCount, transform);
-
-            for (var i = 0; i < pool.GetLength(); i++)
-            {
-                var obj = pool.Pull(transform);
-                obj.SetActive(false);
-                pool.Push(obj);
-            }
         }
 
         public AttackStyle GetAttackStyle()
@@ -246,7 +239,7 @@ namespace DungeonRush.Property
                 }
             }
             float time = attackStyle.GetAnimationTime();
-            AttackEffect(poolForAttackStyle, move, time);
+            AttackEffect(pool, move, time);
         }
 
         protected void AttackAction(List<Card> targetCards, Move move)
@@ -269,7 +262,7 @@ namespace DungeonRush.Property
                 }
             }
             float time = attackStyle.GetAnimationTime();
-            AttackEffect(poolForAttackStyle, move, time);
+            AttackEffect(pool, move, time);
         }
     }
 }

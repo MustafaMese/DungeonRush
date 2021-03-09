@@ -21,21 +21,6 @@ namespace DungeonRush.Customization
         [SerializeField] SpriteRenderer weaponleft;
         
         [SerializeField] GameObject skin;
-        private SpriteRenderer[] sprites = new SpriteRenderer[10];
-
-        private void Start() 
-        {
-            sprites[0] = armRight;
-            sprites[1] = helmet;
-            sprites[2] = body;
-            sprites[3] = bodyArmor;
-            sprites[4] = head;
-            sprites[5] = armLeft;
-            sprites[6] = legLeft;
-            sprites[7] = legRight;
-            sprites[8] = weaponleft;
-            sprites[9] = weaponRight;
-        }
 
         public void ChangeBoneSprite(BoneType bone, Sprite sprite)
         {
@@ -86,9 +71,7 @@ namespace DungeonRush.Customization
             if(top)
                 sR.sortingOrder += 6 * multiplier;
             else
-            {
                 sR.sortingOrder -= 6 * multiplier;
-            }
         }
 
         private void ChangeLayer(CharacterHUD c, bool top, int multiplier = 1)
@@ -109,10 +92,17 @@ namespace DungeonRush.Customization
 
         public void ChangeLayer(bool top, int multiplier = 1)
         {
-            for (int i = 0; i < sprites.Length; i++)
-            {
-                ChangeLayer(sprites[i], top, multiplier);
-            }
+            ChangeLayer(head, top, multiplier);
+            ChangeLayer(helmet, top, multiplier);
+            ChangeLayer(body, top, multiplier);
+            ChangeLayer(bodyArmor, top, multiplier);
+            ChangeLayer(armRight, top, multiplier);
+            ChangeLayer(armLeft, top, multiplier);
+            ChangeLayer(legRight, top, multiplier);
+            ChangeLayer(legLeft, top, multiplier);
+            ChangeLayer(weaponRight, top, multiplier);
+            ChangeLayer(weaponleft, top, multiplier);
+
             if (characterHUD != null)
                 ChangeLayer(characterHUD, top, multiplier);
         }

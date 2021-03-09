@@ -18,7 +18,7 @@ namespace DungeonRush.Skills
         private List<Card> targets = new List<Card>();
         private List<Vector3> targetPositions = new List<Vector3>();
 
-        private ObjectPool<MjollnirPositioning> effectPool;
+        private ObjectPool effectPool;
 
         public override void Initialize(Card card)
         {
@@ -30,15 +30,15 @@ namespace DungeonRush.Skills
 
         private void InitializeLighting()
         {
-            effectPool = new ObjectPool<MjollnirPositioning>();
-            effectPool.SetObject(effect.GetComponent<MjollnirPositioning>());
+            effectPool = new ObjectPool();
+            effectPool.SetObject(effect);
             effectPool.Fill(2, transform);
 
             for (var i = 0; i < effectPool.GetLength(); i++)
             {
-                MjollnirPositioning obj = effectPool.Pull(transform);
+                MjollnirPositioning obj = effectPool.Pull(transform).GetComponent<MjollnirPositioning>();
                 obj.Initialize(gameObject);
-                effectPool.Push(obj);
+                effectPool.Push(obj.gameObject);
             }
         }
 
@@ -55,7 +55,7 @@ namespace DungeonRush.Skills
 
         public override IEnumerator Animate(Move move)
         {
-            MjollnirPositioning mPos = effectPool.Pull(transform);
+            MjollnirPositioning mPos = effectPool.Pull(transform).GetComponent<MjollnirPositioning>();
             mPos.transform.SetParent(null);
             mPos.transform.position = Vector3.zero;
 
@@ -68,7 +68,7 @@ namespace DungeonRush.Skills
             mPos.Deactivate();
             mPos.transform.SetParent(transform);
             mPos.gameObject.SetActive(false);
-            effectPool.Push(mPos);
+            effectPool.Push(mPos.gameObject);
         }
 
         private void FindTargets(Move move)

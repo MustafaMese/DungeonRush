@@ -18,7 +18,7 @@ namespace DungeonRush.Traits
         [SerializeField] bool isUsingTextPopup;
         [SerializeField] bool dontKillEffect;
 
-        protected ObjectPool<GameObject> effectPool;
+        protected ObjectPool pool;
         protected bool effectUsed; // Use this on dontKillEffects situtations.
 
         private GameObject HUDImage;
@@ -38,47 +38,40 @@ namespace DungeonRush.Traits
             
             tempTurnCount--;
             if (tempTurnCount <= 0)
-                StartCoroutine(KillStatus());
+                StartCoroutine(Kill());
         }
 
         public virtual void Initialize(CharacterHUD canvas, StatusController statusController)
         {
             this.statusController = statusController;
             tempTurnCount = turnCount;
-            effectPool = new ObjectPool<GameObject>();
-            FillPool(effectPool, effect, 2);
+            pool = new ObjectPool();
+            Fill(pool, effect, 2);
             effectUsed = false;
             HUDImage = canvas.AddImageToPanel(icon);
         }
 
-        private void FillPool(ObjectPool<GameObject> pool, GameObject effect, int objectCount)
+        private void Fill(ObjectPool pool, GameObject effect, int objectCount)
         {
             pool.SetObject(effect);
             pool.Fill(objectCount, transform);
-
-            for (var i = 0; i < objectCount; i++)
-            {
-                GameObject obj = pool.Pull(transform);
-                obj.SetActive(false);
-                pool.Push(obj);
-            }
         }
 
         protected void Animate()
         {
             if(!dontKillEffect)
-                EffectOperator.Instance.Operate(effectPool, transform, transform.position, effectTime);
+                EffectOperator.Instance.Operate(pool, transform, transform.position, effectTime);
             else
             {
                 if(!effectUsed)
                 {
                     effectUsed = true;
-                    EffectOperator.Instance.Operate(effectPool, transform, transform.position);
+                    EffectOperator.Instance.Operate(pool, transform, transform.position);
                 }
             }
         }
 
-        protected virtual IEnumerator KillStatus()
+        protected virtual IEnumerator Kill()
         {
             statusController.Notify(this);
             yield return new WaitForSeconds(effectTime);

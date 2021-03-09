@@ -36,7 +36,7 @@ namespace DungeonRush.Skills
         [Space]
         [SerializeField] private int power;
         
-        protected ObjectPool<GameObject> pool;
+        protected ObjectPool pool;
         protected int tempCooldown;
         protected Card card;
 
@@ -60,22 +60,14 @@ namespace DungeonRush.Skills
             tempCooldown = 0;
             this.card = card;
 
-            pool = new ObjectPool<GameObject>();
+            pool = new ObjectPool();
             FillPool(pool, effect, 2);
         }
 
-        private void FillPool(ObjectPool<GameObject> pool, GameObject effect, int objectCount)
+        private void FillPool(ObjectPool pool, GameObject effect, int objectCount)
         {
             pool.SetObject(effect);
             pool.Fill(objectCount, transform);
-
-            for (var i = 0; i < objectCount; i++)
-            {
-                GameObject obj = pool.Pull(transform);
-                obj.SetActive(false);
-                pool.Push(obj);
-            }
-
         }
 
         public virtual IEnumerator Animate(Move move)

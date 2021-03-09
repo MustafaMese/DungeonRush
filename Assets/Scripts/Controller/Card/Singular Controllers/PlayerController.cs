@@ -25,7 +25,9 @@ namespace DungeonRush.Controller
         private ICustomization customization;
         private StatusController statusController;
         private SkillUser skillUser;
+
         [SerializeField] FieldOfView fieldOfView;
+        
         private void Start()
         {
             InitProcessHandlers();

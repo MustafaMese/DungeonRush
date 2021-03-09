@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using DungeonRush.Attacking;
 using DungeonRush.Controller;
+using DungeonRush.Customization;
 using DungeonRush.Field;
 using DungeonRush.Managers;
 using DungeonRush.Property;
@@ -24,16 +25,24 @@ namespace DungeonRush.Cards
         private Attacker attacker;
         private IMoveController controller;
         private StatusController statusController;
+        private ICustomization customization;
 
         private IFighter fighter;
 
         protected override void Initialize()
         {
             base.Initialize();
+
             attacker = GetComponent<Attacker>();
             controller = GetComponent<IMoveController>();
             statusController = GetComponent<StatusController>();
             fighter = GetComponent<IFighter>();
+            customization = GetComponent<ICustomization>();
+
+            if (transform.position.y < 0)
+                customization.ChangeLayer(false, (int)transform.position.y);
+            else if (transform.position.y > 0)
+                customization.ChangeLayer(true, (int)transform.position.y);
         }
 
         public void EvolveIt(EnvironmentCard changingTrap)
@@ -72,19 +81,7 @@ namespace DungeonRush.Cards
 
         private void Impact(ElementType element)
         {
-            print("8");
-            for (var i = 0; i < impacts.Count; i++)
-            {
-                if(impacts[i].element == element)
-                {
-                    ElementalStatus status = (ElementalStatus)impacts[i].impact.Create(null);
-
-                    status.Initialize(transform.position);
-                    status.Execute(GetTile().GetCard(), GetTile());
-                    return;
-                }
-
-            }
+            
         }
 
         public bool CheckTime()
@@ -127,13 +124,15 @@ namespace DungeonRush.Cards
             else return null;
         }
 
-        private void Change(EnvironmentCard oldCard, EnvironmentCard prefab, Tile tile)
+        public static void Change(EnvironmentCard oldCard, EnvironmentCard prefab, Tile tile)
         {
-            Remove(oldCard);
+            if(oldCard != null)
+                Remove(oldCard);
+                
             CardManager.Instance.AddCard(prefab, tile);
         }
 
-        public void Remove(EnvironmentCard card)
+        public static void Remove(EnvironmentCard card)
         {
             card.GetController().Stop();
             CardManager.Unsubscribe(card);

@@ -46,8 +46,6 @@ namespace DungeonRush.UI
 
         public void DisablePanel()
         {
-            print("uwu");
-
             pickedObjectName = "";
             sprite.sprite = null;
             panel.SetActive(false);

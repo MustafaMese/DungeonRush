@@ -20,17 +20,17 @@ namespace DungeonRush.Managers
             Instance = this;
         }
 
-        public void Operate(ObjectPool<GameObject> pool, Transform cardTransform, Transform target, float time, AttackStyle attackStyle)
+        public void Operate(ObjectPool pool, Transform cardTransform, Transform target, float time, AttackStyle attackStyle)
         {
             StartCoroutine(OperateEffect(pool, cardTransform, target, time, attackStyle));
         }
 
-        public void Operate(ObjectPool<GameObject> pool, Transform cardTransform, Vector3 pos, float time)
+        public void Operate(ObjectPool pool, Transform cardTransform, Vector3 pos, float time)
         {
             StartCoroutine(OperateEffect(pool, cardTransform, pos, time));
         }
         
-        private IEnumerator OperateEffect(ObjectPool<GameObject> pool, Transform cardTransform, Transform target, float time, AttackStyle attackStyle)
+        private IEnumerator OperateEffect(ObjectPool pool, Transform cardTransform, Transform target, float time, AttackStyle attackStyle)
         {
             GameObject obj = pool.Pull(cardTransform);
             obj.SetActive(true);
@@ -41,7 +41,7 @@ namespace DungeonRush.Managers
             pool.Push(obj);
         }
 
-        private IEnumerator OperateEffect(ObjectPool<GameObject> pool, Transform cardTransform, Vector3 pos, float time)
+        private IEnumerator OperateEffect(ObjectPool pool, Transform cardTransform, Vector3 pos, float time)
         {
             GameObject obj = pool.Pull(cardTransform);
             obj.SetActive(true);
@@ -52,7 +52,7 @@ namespace DungeonRush.Managers
             pool.Push(obj);
         }
 
-        public void Operate(ObjectPool<GameObject> pool, Transform cardTransform,Vector3 pos)
+        public void Operate(ObjectPool pool, Transform cardTransform,Vector3 pos)
         {
             GameObject obj = pool.Pull(cardTransform);
             obj.SetActive(true);
@@ -61,7 +61,7 @@ namespace DungeonRush.Managers
             pool.Push(obj);
         }
 
-        public void Delete(ObjectPool<GameObject> pool)
+        public void Delete(ObjectPool pool)
         {
             for(int i = 0; i < pool.GetLength(); i++)
             {
