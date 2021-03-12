@@ -30,6 +30,7 @@ namespace DungeonRush.Controller
         private List<EnvironmentAIController> trapCards;
 
         public List<EnvironmentElement> elementPrefabs = new List<EnvironmentElement>();
+        public List<ImpactList> impacts = new List<ImpactList>();
         public static List<EnvironmentAIController> subscribedEnvironmentCards = new List<EnvironmentAIController>();
         
         private void Awake() 
@@ -65,7 +66,9 @@ namespace DungeonRush.Controller
             }
         }
 
-        public EnvironmentCard GetEnvironmentCard(ElementType element)
+        #region ENVIRONMENT MENTHODS
+
+        private EnvironmentCard GetEnvironmentCard(ElementType element)
         {
             for (var i = 0; i < elementPrefabs.Count; i++)
             {
@@ -74,6 +77,53 @@ namespace DungeonRush.Controller
             }
             return null;
         }
+        
+        private Impact GetImpact(ElementType element)
+        {
+            for (var i = 0; i < impacts.Count; i++)
+            {
+                if (element == impacts[i].element)
+                    return impacts[i].impact;
+            }
+            return null;
+        }
+
+        public Impact GetImpactPrefab(ElementType changed, ElementType changer)
+        {
+            if ((changed == ElementType.FIRE && changer == ElementType.POISON) || (changed == ElementType.POISON && changer == ElementType.FIRE))
+                return GetImpact(ElementType.FIRE);
+            
+            return null;
+        }
+
+        public EnvironmentCard GetElementPrefab(ElementType changed, ElementType changer)
+        {
+            if(changed == ElementType.GRASS && changer == ElementType.FIRE)
+                return GetEnvironmentCard(ElementType.FIRE);
+            else if(changer == ElementType.ELECTRICITY && changed == ElementType.WATER)
+                return GetEnvironmentCard(ElementType.ELECTRICITY);
+
+            return null;
+        }
+
+        public EnvironmentCard GetElementPrefab(Impact impact, ElementType changed, out bool delete)
+        {
+            ElementType changer = impact.elementType;
+            delete = false;
+
+            if ((changed == ElementType.FIRE && changer == ElementType.POISON) || (changed == ElementType.POISON && changer == ElementType.FIRE))
+                delete = true;
+            else if ((changed == ElementType.FIRE && changer == ElementType.WATER) || (changed == ElementType.WATER && changer == ElementType.FIRE))
+                delete = true;
+            else if (changed == ElementType.GRASS && changer == ElementType.FIRE)
+                return GetEnvironmentCard(ElementType.FIRE);
+            else if (changer == ElementType.ELECTRICITY && changed == ElementType.WATER)
+                return GetEnvironmentCard(ElementType.ELECTRICITY);   
+
+            return null;
+        }
+
+        #endregion
 
         #region DETERMINIG METHODS
         private void DetermineActiveTraps()

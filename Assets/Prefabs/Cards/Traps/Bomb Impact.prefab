@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &4185157950748904857
+--- !u!1 &2759927184272906026
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,48 +8,57 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 6216542283747646278}
-  - component: {fileID: 9040678069362953900}
+  - component: {fileID: 8618571823793473258}
+  - component: {fileID: 6034007988081895825}
   m_Layer: 0
-  m_Name: EnvironmentManager
+  m_Name: Bomb Impact
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &6216542283747646278
+--- !u!4 &8618571823793473258
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4185157950748904857}
+  m_GameObject: {fileID: 2759927184272906026}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 1, y: 2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &9040678069362953900
+--- !u!114 &6034007988081895825
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4185157950748904857}
+  m_GameObject: {fileID: 2759927184272906026}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4d51993494535b84186e3356b2add4f9, type: 3}
+  m_Script: {fileID: 11500000, guid: 3b232c877b447f54cb8290f6728c0d1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  activeTrapDistance: 8
-  elementPrefabs:
-  - card: {fileID: 5690650751941843031, guid: 14b98835a5570e94f9334420cbf41a8f, type: 3}
-    element: 0
-  - card: {fileID: 5690650751941843031, guid: def7f404b8c2d9e47bb61aa3cd92e9e5, type: 3}
-    element: 6
-  impacts:
-  - impact: {fileID: 6034007988081895825, guid: 924fd07b48ce8dc4c9cd3d5125309424,
-      type: 3}
-    element: 0
+  impactOnCards: 0
+  impactOnTiles: 1
+  status: {fileID: 0}
+  elementType: 0
+  containedPoints:
+  - {x: 1, y: 0}
+  - {x: -1, y: 0}
+  - {x: 0, y: 1}
+  - {x: 0, y: -1}
+  - {x: 1, y: 1}
+  - {x: -1, y: 1}
+  - {x: -1, y: -1}
+  - {x: 1, y: -1}
+  - {x: 0, y: 0}
+  effect: {fileID: 3360374245300453417, guid: a8aa7b3e73ab8644b85cde3135695ab0, type: 3}
+  effectTime: 1
+  objectCount: 1
+  power: 5
+  usingTextPopup: 1

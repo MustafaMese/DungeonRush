@@ -15,8 +15,8 @@ public class Impact : MonoBehaviour
     [SerializeField] bool impactOnCards;
     [SerializeField] bool impactOnTiles;
     [SerializeField, Tooltip("Do you need status for this impact?")] StatusObject status;
-    [SerializeField] ElementType elementType;
-    [SerializeField, Tooltip("If you need, include itself too")] Vector2[] containedPoints;
+    public ElementType elementType;
+    [SerializeField, Tooltip("If you need, include (0, 0) too")] Vector2[] containedPoints;
 
     [Header("Effect Settings")]
     [Space]
@@ -33,21 +33,15 @@ public class Impact : MonoBehaviour
 
     public void Execute(Tile tile)
     {
+        Animate();
+
         if (impactOnCards)
-        {
-            Card card = tile.GetCard();
+            DoImpactOnCards(tile);
 
-            card.GetDamagable().DecreaseHealth(power);
-            if(status != null)
-                card.GetStatusController().AddStatus(status);
-        }
+        if (impactOnTiles)
+            DoImpactOnTiles(tile);
 
-        if(impactOnTiles)
-        {
-            EnvironmentCard environmentCard = EnvironmentManager.Instance.GetEnvironmentCard(elementType);
-            EnvironmentCard.Change(tile.GetEnvironmentCard(), environmentCard, tile);
-        }
-
+        StartCoroutine(Kill());
     }
 
     private void DoImpactOnCards(Tile tile)
@@ -60,38 +54,57 @@ public class Impact : MonoBehaviour
             Vector2 newPos = currentPosition + containedPoints[i];
             Card card = Board.tilesByCoordinates[newPos].GetCard();
 
-            card.GetDamagable().DecreaseHealth(power);
-            if (status != null)
-                card.GetStatusController().AddStatus(status);
+            if(card != null)
+            {
+                card.GetDamagable().DecreaseHealth(power);
+                if (status != null)
+                    card.GetStatusController().AddStatus(status);
+            }
         }
     }
 
     private void DoImpactOnTiles(Tile tile)
     {
-        if(!impactOnTiles) return;
+        if (!impactOnTiles) return;
 
         Vector2 currentPosition = tile.GetCoordinate();
-        EnvironmentCard environmentCard = EnvironmentManager.Instance.GetEnvironmentCard(elementType);
         for (var i = 0; i < containedPoints.Length; i++)
         {
             Vector2 newPos = currentPosition + containedPoints[i];
-            if(Board.tilesByCoordinates.ContainsKey(newPos))
+            if (Board.tilesByCoordinates.ContainsKey(newPos))
             {
-                Tile newTile = Board.tilesByCoordinates[newPos];
-                EnvironmentCard.Change(newTile.GetEnvironmentCard(), environmentCard, newTile);
+                Tile target = Board.tilesByCoordinates[newPos];
+                Change(target, target.GetEnvironmentCard());
             }
         }
     }
 
-    private void Initialize()
+    private void Change(Tile targetT ,EnvironmentCard targetC)
     {
+        if(targetC == null) return;
+
+        bool delete;
+        var prefab = EnvironmentManager.Instance.GetElementPrefab(this, targetC.GetElementType(), out delete);
+        if(delete)
+            targetC.Remove(targetC);
+        else if(prefab != null)
+        {
+            targetC.Remove(targetC);
+            CardManager.Instance.AddCard(prefab, targetT);
+        }
+    }
+
+    public void Initialize(Vector2 position)
+    {
+        transform.position = position;
+        transform.SetParent(null);
+
+        pool = new ObjectPool();
         Fill(pool, effect, objectCount);
     }
 
     private void Fill(ObjectPool pool, GameObject effect, int objectCount)
     {
-        pool = new ObjectPool();
-
         pool.SetObject(effect);
         pool.Fill(objectCount, transform);
     }
@@ -99,11 +112,11 @@ public class Impact : MonoBehaviour
     private void Animate()
     {
         EffectOperator.Instance.Operate(pool, transform, transform.position, effectTime);
-        if(usingTextPopup)
+        if (usingTextPopup)
             TextPopupManager.Instance.TextPopup(transform.position, power.ToString());
     }
 
-    public IEnumerator Kill()
+    private IEnumerator Kill()
     {
         yield return new WaitForSeconds(effectTime);
         Destroy(gameObject);

@@ -14,27 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackStyle: {fileID: 11400000, guid: be73707879522e34aaea2795f3e21801, type: 2}
   power: 0
---- !u!114 &5318830684578525296
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7821660480389757882}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e14a3f125cf82d41ac31fec11c50fff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cardProperties: {fileID: 11400000, guid: 0ab7c1f8044035643a8189e5d8388d6a, type: 2}
-  characterType: {fileID: 11400000, guid: 2a3e3fe8cec4a1542bd4fb27dc548c5c, type: 2}
-  nameText: {fileID: 0}
-  elementType: 6
-  isDefinite: 1
-  time: 3
-  impacts:
-  - impact: {fileID: 11400000, guid: 6f392805886004b4ea4ddcd13e1c67e2, type: 2}
-    element: 0
 --- !u!114 &5339539437919108818
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -47,6 +26,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0209375259596ee4fa8164d644bfe4ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-8697854617225844791
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7821660480389757882}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6146916e4611ba44ab2186f2c570a088, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  particles: []
 --- !u!1001 &2459315102350707180
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -216,8 +208,7 @@ PrefabInstance:
       propertyPath: m_LocalScale.y
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 7843158094167380411, guid: 58acc544318decb4e911771822d4b66c, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 58acc544318decb4e911771822d4b66c, type: 3}
 --- !u!1 &7821660480389757882 stripped
 GameObject:

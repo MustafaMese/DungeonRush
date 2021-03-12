@@ -5,6 +5,6 @@ using System;
 [Serializable]
 public class ImpactList
 {
-    public StatusObject impact;
+    public Impact impact;
     public ElementType element;
 }

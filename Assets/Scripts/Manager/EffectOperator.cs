@@ -43,6 +43,9 @@ namespace DungeonRush.Managers
 
         private IEnumerator OperateEffect(ObjectPool pool, Transform cardTransform, Vector3 pos, float time)
         {
+            if (pool == null) print("1");
+            if (cardTransform == null) print("2");
+
             GameObject obj = pool.Pull(cardTransform);
             obj.SetActive(true);
             obj.transform.position = pos;

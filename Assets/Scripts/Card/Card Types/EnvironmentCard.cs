@@ -20,8 +20,6 @@ namespace DungeonRush.Cards
         [SerializeField] bool isDefinite;
         [SerializeField] float time;
 
-        [SerializeField] List<ImpactList> impacts;
-
         private Attacker attacker;
         private IMoveController controller;
         private StatusController statusController;
@@ -47,41 +45,23 @@ namespace DungeonRush.Cards
 
         public void EvolveIt(EnvironmentCard changingTrap)
         {
-            bool delete;
-            EnvironmentCard prefab = GetPrefab(changingTrap.GetElementType(), elementType, out delete);
-            if(prefab == null) 
-            {
-                if(!delete) return;
-                else
-                {
-                    Remove(changingTrap);
-                    return;
-                }
-            }
-            changingTrap.Impact(elementType);
-            Change(changingTrap, prefab, changingTrap.GetTile());
-        }
+            if(changingTrap == null) return;
 
-        public void Evolve(ElementType element)
-        {
-            bool delete;
-            EnvironmentCard prefab = GetPrefab(elementType, element, out delete);
-            if (prefab == null)
+            Impact impactPrefab = EnvironmentManager.Instance.GetImpactPrefab(changingTrap.GetElementType(), elementType);
+            if(impactPrefab != null)
             {
-                if (!delete) return;
-                else
-                {
-                    Remove(this);
-                    return;
-                }
-            }
-            Impact(element);
-            Change(this, prefab, GetTile());
-        }
+                Impact impact = Instantiate(impactPrefab, transform.position, Quaternion.identity);
 
-        private void Impact(ElementType element)
-        {
-            
+                impact.Initialize(transform.position);
+                impact.Execute(GetTile());
+            }
+
+            EnvironmentCard eCard = EnvironmentManager.Instance.GetElementPrefab(changingTrap.GetElementType(), elementType);
+            if(eCard != null)
+            {
+                Remove(changingTrap);
+                CardManager.Instance.AddCard(eCard, GetTile());
+            }
         }
 
         public bool CheckTime()
@@ -96,43 +76,20 @@ namespace DungeonRush.Cards
                 return false;
         }
 
-        protected EnvironmentCard GetPrefab(ElementType changed, ElementType changer, out bool delete)
+        public void Change(ElementType changer, EnvironmentCard changed, Tile tile)
         {
-            delete = false;
+            if(changed == null) return;
 
-            if(changer == ElementType.FIRE && (changed == ElementType.OIL || changed == ElementType.GRASS)) return EnvironmentManager.Instance.GetEnvironmentCard(changer);
-            else if(changer == ElementType.FIRE && (changed == ElementType.WATER || changed == ElementType.FREEZE)) 
+            EnvironmentCard prefab = EnvironmentManager.Instance.GetElementPrefab(changer, changed.GetElementType());
+            
+            if(prefab != null)
             {
-                delete = true;
-                return null;
+                Remove(changed);
+                CardManager.Instance.AddCard(prefab, tile);
             }
-            else if(changer == ElementType.FIRE && changed == ElementType.POISON) return EnvironmentManager.Instance.GetEnvironmentCard(changer);
-            else if(changer == ElementType.WATER && (changed == ElementType.FIRE)) 
-            {
-                delete = true;
-                return null;
-            }
-            else if(changer == ElementType.WATER && (changed == ElementType.OIL)) return EnvironmentManager.Instance.GetEnvironmentCard(changer);
-            else if(changer == ElementType.FREEZE && (changed == ElementType.FIRE)) 
-            {
-                delete = true;
-                return null;
-            }
-            else if(changer == ElementType.FREEZE && (changed == ElementType.WATER)) return EnvironmentManager.Instance.GetEnvironmentCard(changer);
-            else if(changer == ElementType.ELECTRICITY && (changed == ElementType.WATER)) return EnvironmentManager.Instance.GetEnvironmentCard(changer);
-            else if(changer == ElementType.POISON && (changed == ElementType.FIRE)) return EnvironmentManager.Instance.GetEnvironmentCard(changer);
-            else return null;
         }
 
-        public static void Change(EnvironmentCard oldCard, EnvironmentCard prefab, Tile tile)
-        {
-            if(oldCard != null)
-                Remove(oldCard);
-                
-            CardManager.Instance.AddCard(prefab, tile);
-        }
-
-        public static void Remove(EnvironmentCard card)
+        public void Remove(EnvironmentCard card)
         {
             card.GetController().Stop();
             CardManager.Unsubscribe(card);
