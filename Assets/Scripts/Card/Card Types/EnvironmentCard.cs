@@ -47,20 +47,22 @@ namespace DungeonRush.Cards
         {
             if(changingTrap == null) return;
 
+            Tile target = changingTrap.GetTile();
+
             Impact impactPrefab = EnvironmentManager.Instance.GetImpactPrefab(changingTrap.GetElementType(), elementType);
             if(impactPrefab != null)
             {
                 Impact impact = Instantiate(impactPrefab, transform.position, Quaternion.identity);
 
                 impact.Initialize(transform.position);
-                impact.Execute(GetTile());
+                impact.Execute(target);
             }
 
             EnvironmentCard eCard = EnvironmentManager.Instance.GetElementPrefab(changingTrap.GetElementType(), elementType);
             if(eCard != null)
             {
                 Remove(changingTrap);
-                CardManager.Instance.AddCard(eCard, GetTile());
+                CardManager.Instance.AddCard(eCard, target);
             }
         }
 

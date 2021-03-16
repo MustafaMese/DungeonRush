@@ -23,6 +23,7 @@ namespace DungeonRush.Cards
 
         protected override void Initialize()
         {
+            base.Initialize();
             skill = ItemDB.Instance.GetRandomSkill();
         }
 

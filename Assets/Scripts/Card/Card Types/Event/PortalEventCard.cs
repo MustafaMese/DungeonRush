@@ -5,6 +5,12 @@ namespace DungeonRush.Cards
 {
     public class PortalEventCard : EventCard
     {
+
+        protected override void Initialize()
+        {
+            base.Initialize();
+        }
+
         public override void GetEvent(Card card)
         {
             Portal();

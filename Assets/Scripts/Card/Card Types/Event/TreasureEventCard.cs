@@ -5,6 +5,7 @@ using UnityEngine;
 using DungeonRush.Managers;
 using DungeonRush.Items;
 using DungeonRush.UI;
+using DungeonRush.Customization;
 
 namespace DungeonRush.Cards
 {
@@ -17,8 +18,10 @@ namespace DungeonRush.Cards
 
         protected override void Initialize()
         {
+            base.Initialize();
             item = ItemDB.Instance.GetRandomItemByType(iType);
 
+            // TODO Potionların hatalarının çıkış noktası.
             if (iType == ItemType.MAX_HEALTH_INCREASER || iType == ItemType.POTION)
                 sprite.sprite = item.GetPrimarySprite();
         }

@@ -45,7 +45,7 @@ namespace DungeonRush.UI
             SetText(dodgeChance, dodge);
 
             List<string> names = player.GetItemNames();
-            SetText(itemsTxt, names);
+            //SetText(itemsTxt, names);
         }
 
         private void SetText(TextMeshProUGUI text, int value)

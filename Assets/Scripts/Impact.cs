@@ -52,13 +52,19 @@ public class Impact : MonoBehaviour
         for (var i = 0; i < containedPoints.Length; i++)
         {
             Vector2 newPos = currentPosition + containedPoints[i];
-            Card card = Board.tilesByCoordinates[newPos].GetCard();
-
-            if(card != null)
+            if(Board.tilesByCoordinates.ContainsKey(newPos))
             {
-                card.GetDamagable().DecreaseHealth(power);
-                if (status != null)
-                    card.GetStatusController().AddStatus(status);
+                Card card = Board.tilesByCoordinates[newPos].GetCard();
+                if (card != null && card.GetDamagable() != null)
+                {
+                    card.GetDamagable().DecreaseHealth(power);
+
+                    if (usingTextPopup)
+                        TextPopupManager.Instance.TextPopup(transform.position, power.ToString());
+
+                    if (status != null)
+                        card.GetStatusController().AddStatus(status);
+                }
             }
         }
     }
@@ -79,8 +85,10 @@ public class Impact : MonoBehaviour
         }
     }
 
-    private void Change(Tile targetT ,EnvironmentCard targetC)
+    private void Change(Tile targetT, EnvironmentCard targetC)
     {
+        if(targetC == null) print(targetT.GetCoordinate() + " 2");
+
         if(targetC == null) return;
 
         bool delete;
@@ -112,8 +120,6 @@ public class Impact : MonoBehaviour
     private void Animate()
     {
         EffectOperator.Instance.Operate(pool, transform, transform.position, effectTime);
-        if (usingTextPopup)
-            TextPopupManager.Instance.TextPopup(transform.position, power.ToString());
     }
 
     private IEnumerator Kill()
