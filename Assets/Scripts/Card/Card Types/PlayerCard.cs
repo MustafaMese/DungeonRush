@@ -22,14 +22,14 @@ namespace DungeonRush
             [SerializeField] Animator animator = null;
             [SerializeField] bool isFirstLevel = false;
 
-            private int experience = 0;
+            public int experience = 0;
             public int Experience
             {
                 get { return experience; }
                 set { experience = value; }
             }
 
-            private int coins = 0;
+            public int coins = 0;
             public int Coins
             {
                 get { return coins; }

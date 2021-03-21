@@ -58,7 +58,11 @@ namespace DungeonRush.Controller
             attacker = card.GetComponent<Attacker>();
 
             customization = card.GetComponent<ICustomization>();
-            ConfigureLayers();
+
+            if (transform.position.y < 0)
+                customization.ChangeLayer(false, (int)transform.position.y);
+            else if (transform.position.y > 0)
+                customization.ChangeLayer(true, (int)transform.position.y);
 
             statusController = card.GetComponent<StatusController>();
             statusAct = new ControllerAct();
@@ -89,7 +93,12 @@ namespace DungeonRush.Controller
                 var move = card.GetMove().GetCanMove();
 
                 float y = card.GetMove().GetTargetTile().GetCoordinate().y;
-                ConfigureLayers();
+
+                if (y < card.transform.position.y)
+                    customization.ChangeLayer(true);
+                else if (y > card.transform.position.y)
+                    customization.ChangeLayer(false);
+
 
                 if (move)
                     moveProcess.StartProcess();
@@ -273,14 +282,6 @@ namespace DungeonRush.Controller
             else
                 state = actionState.ChangeState(state, exclamation);
 
-        }
-
-        public void ConfigureLayers()
-        {
-            if (transform.position.y < 0)
-                customization.ChangeLayer(false, (int)transform.position.y);
-            else if (transform.position.y > 0)
-                customization.ChangeLayer(true, (int)transform.position.y);
         }
 
         public void Stop()

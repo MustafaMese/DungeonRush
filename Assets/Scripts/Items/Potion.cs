@@ -8,6 +8,7 @@ namespace DungeonRush.Items
     public class Potion : Item
     {
         [SerializeField] int power;
+        // TODO Buraya status eklenebilir.
 
         public override void Execute(Card card)
         {

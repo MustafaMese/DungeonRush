@@ -19,11 +19,14 @@ namespace DungeonRush.Customization
         [SerializeField] SpriteRenderer legLeft;
         [SerializeField] SpriteRenderer weaponRight;
         [SerializeField] SpriteRenderer weaponleft;
+        [SerializeField] SpriteRenderer shadow;
         
         [SerializeField] GameObject skin;
 
         public void ChangeBoneSprite(BoneType bone, Sprite sprite)
         {
+            print("Benim adım osman");
+
             switch (bone)
             {
                 case BoneType.HEAD:
@@ -95,13 +98,14 @@ namespace DungeonRush.Customization
             ChangeLayer(head, top, multiplier);
             ChangeLayer(helmet, top, multiplier);
             ChangeLayer(body, top, multiplier);
-            ChangeLayer(bodyArmor, top, multiplier);
+            //ChangeLayer(bodyArmor, top, multiplier);
             ChangeLayer(armRight, top, multiplier);
             ChangeLayer(armLeft, top, multiplier);
             ChangeLayer(legRight, top, multiplier);
             ChangeLayer(legLeft, top, multiplier);
             ChangeLayer(weaponRight, top, multiplier);
             ChangeLayer(weaponleft, top, multiplier);
+            ChangeLayer(shadow, top, multiplier);
 
             if (characterHUD != null)
                 ChangeLayer(characterHUD, top, multiplier);

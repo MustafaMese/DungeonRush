@@ -173,6 +173,7 @@ namespace DungeonRush.UI
         {
             yield return _fadingCanvas.FadeOut();
             _fadingCanvas = null;
+            GameManager.Instance.levelCount = 0;
             LoadManager.Instance.LoadStartScene();
         }
 

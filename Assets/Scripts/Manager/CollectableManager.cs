@@ -76,6 +76,7 @@ namespace DungeonRush.Managers
 
         public void AddCoins(Vector3 collectedCoinPosition, int level)
         {
+            print("1");
             Animate(collectedCoinPosition, level);
         }
     }

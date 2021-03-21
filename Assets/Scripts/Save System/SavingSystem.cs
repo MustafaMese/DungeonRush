@@ -10,6 +10,13 @@ namespace DungeonRush.Saving
     public static class SavingSystem
     {
         private const string instantPath = "/playerInstant.sav";
+        private const string propertyPath = "/property.sav";
+
+        public static void SaveProperties()
+        {
+            
+        }
+
         public static void SavePlayerInstantProgress(PlayerCard player)
         {
             BinaryFormatter formatter = new BinaryFormatter();

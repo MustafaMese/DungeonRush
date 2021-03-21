@@ -72,7 +72,6 @@ namespace DungeonRush.Controller
                 if (subscribedEnemies[i] == null) continue;
 
                 subscribedEnemies[i].ActivateStatuses();
-                subscribedEnemies[i].ConfigureLayers();
 
                 var distance = GetDistance(subscribedEnemies[i].transform.position);
                 if (distance <= attackerDistance)

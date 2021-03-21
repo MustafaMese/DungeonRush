@@ -20,11 +20,7 @@ namespace DungeonRush.Items
 
         private void SetArmor(ItemUser itemUser)
         {
-            if (itemUser != null && itemUser.isWeaponUser)
-            {
-                itemUser.armor = this;
-                itemUser.armorBone.sprite = GetPrimarySprite();
-            }
+            // Buraya bişiler
         }
 
         public override int GetPower()

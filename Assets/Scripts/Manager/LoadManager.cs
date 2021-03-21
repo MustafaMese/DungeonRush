@@ -6,8 +6,12 @@ namespace DungeonRush.Managers
 {
     public class LoadManager : MonoBehaviour 
     {
-        private const int START_POINT = 4;
-        private const int SKIP_COUNT = 5;
+        [SerializeField] int veryEasyFirst;
+        [SerializeField] int easyFirst;
+        [SerializeField] int moderateFirst;
+        [SerializeField] int hardFirst;
+        [SerializeField] int veryHardFirst;
+        [SerializeField] int bossFirst;
 
         private static LoadManager instance = null;
         // Game Instance Singleton
@@ -27,27 +31,43 @@ namespace DungeonRush.Managers
             var scene = SceneManager.GetActiveScene();
             var levelIndex = scene.buildIndex;
 
+            int diffuculty = GameManager.Instance.levelCount / 5;
+
             if((levelIndex + 1) != SceneManager.sceneCountInBuildSettings)
             {
-                if(levelIndex == 0)
-                    SceneManager.LoadScene(levelIndex + 1);
-                else if(levelIndex == 1)
-                    LoadRandomLevel(2, 4);
-                else if(levelIndex > 1 && levelIndex < 4)
-                    LoadRandomLevel(4, 9);
-                else if(levelIndex < 9)
-                    LoadRandomLevel(9, 14);
-                else if(levelIndex < 14)
-                    LoadRandomLevel(14, 19);
-                else if(levelIndex < 19)
-                    LoadRandomLevel(19, 24);
-                else if(levelIndex < 24)
-                    LoadRandomLevel(24, 29);
-                else
-                    SceneManager.LoadScene(1);
+                switch (diffuculty)
+                {
+                    case (int)Difficulty.VERY_EASY:
+                        LoadRandomLevel(veryEasyFirst, easyFirst);
+                        break;
+                    case (int)Difficulty.EASY:
+                        LoadRandomLevel(easyFirst, moderateFirst);
+                        break;
+                    case (int)Difficulty.MODERATE:
+                        LoadRandomLevel(moderateFirst, hardFirst);
+                        break;
+                    case (int)Difficulty.HARD:
+                        LoadRandomLevel(hardFirst, veryHardFirst);
+                        break;
+                    case (int)Difficulty.VERY_HARD:
+                        LoadRandomLevel(veryHardFirst, bossFirst);
+                        break;
+                    case (int)Difficulty.BOSS:
+                        LoadRandomLevel(bossFirst, SceneManager.sceneCountInBuildSettings - 1);
+                        break;
+                    default:
+                        SceneManager.LoadScene(1);
+                        GameManager.Instance.levelCount = 0;
+                        break;
+                }
             }
             else
+            {
+                GameManager.Instance.levelCount = 0;
                 SceneManager.LoadScene(1);
+            }
+            
+            
         }
 
         private void LoadRandomLevel(int min, int max)

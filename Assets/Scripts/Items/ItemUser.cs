@@ -13,19 +13,13 @@ namespace DungeonRush
             public bool isWeaponUser = false;
             public bool isArmorUser = false;
             public Item weapon = null;
-            public Item armor = null;
             public SpriteRenderer weaponBone = null;
-            public SpriteRenderer armorBone = null;
 
             private Card card = null;
             private PlayerCustomization customization;
 
-            private bool isBeginning;
-
             private Dictionary<BoneType, Item> items = new Dictionary<BoneType, Item>(); 
             public int armorP;
-
-            public List<Item> i = new List<Item>();
 
             private void Start()
             {
@@ -33,7 +27,6 @@ namespace DungeonRush
 
                 card = GetComponent<Card>();
                 customization = GetComponent<PlayerCustomization>();
-                isBeginning = true;
 
                 items.Add(BoneType.HEAD, null);
                 items.Add(BoneType.HELMET, null);
@@ -81,7 +74,6 @@ namespace DungeonRush
                     {
                         if(openPanel)
                             UIManager.Instance.EnableItemCanvas(loot);
-                        i.Add(loot);
                         ExecuteItem(loot, lootBone);
                     }
                 }
@@ -94,10 +86,13 @@ namespace DungeonRush
                 if (loot.GetItemType() == ItemType.ARMOR)
                     armorP += loot.GetPower();
 
+                print(loot.GetName() + " " + lootBone);
+
                 if (lootBone == BoneType.ARM || lootBone == BoneType.LEG || lootBone == BoneType.WEAPON_DUAL)
                     customization.ChangeBoneSprite(lootBone, loot.GetPrimarySprite(), loot.GetSecondarySprite());
                 else
                     customization.ChangeBoneSprite(lootBone, loot.GetPrimarySprite());
+                    
             }
 
             public int GetArmor()

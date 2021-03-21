@@ -90,18 +90,33 @@ namespace DungeonRush.Controller
         // TODO arada can fulleniyo neden?
         private void PrepareMoveProcess()
         {
+            if(CheckDefinity()) return;
+
+            if (card.GetElementType() != ElementType.NONE)
+                EvolveOthers();
+
+            if(IsAttackerNull()) return;
+
+            Move();
+        }
+
+        private bool CheckDefinity()
+        {
             bool check = card.CheckTime();
-            if(!check)
+            if (!check)
             {
                 Notify();
                 card.Remove(card);
+                return true;
             }
-            
-            if(card.GetElementType() != ElementType.NONE)
-                EvolveOthers();
+            return false;
+        }
 
+        private void Move()
+        {
             bool canMove = DoMove();
             preparingProcess.Finish();
+
             if (canMove)
             {
                 attackProcess.StartProcess();
@@ -112,6 +127,17 @@ namespace DungeonRush.Controller
                 Stop();
                 Notify();
             }
+        }
+
+        private bool IsAttackerNull()
+        {
+            if (attacker == null)
+            {
+                Stop();
+                Notify();
+                return true;
+            }
+            return false;
         }
 
         private void EvolveOthers()

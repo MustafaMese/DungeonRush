@@ -36,6 +36,9 @@ namespace DungeonRush
             public int targetFrameRate = 60;
 
             private bool started = false;
+            // TODO Bu değişken tekrar sıfır olmalı.
+            public int levelCount = 0;
+
             private void Awake()
             {
                 if (Instance != null)
@@ -77,9 +80,9 @@ namespace DungeonRush
                     Instantiate(textPopupManager);
                     Instantiate(effectOperator);
 
+                    levelCount++;
                     SetGameState(GameState.BEGIN_LEVEL);
                 }
-
             }
 
             public void SetGameState(GameState state, UIState uiState = UIState.NONE)
@@ -98,4 +101,14 @@ namespace DungeonRush
             }
         }
     }
+}
+
+public enum Difficulty
+{
+    VERY_EASY,
+    EASY,
+    MODERATE,
+    HARD,
+    VERY_HARD,
+    BOSS
 }
