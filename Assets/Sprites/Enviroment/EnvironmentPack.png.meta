@@ -1,25 +1,19 @@
 fileFormatVersion: 2
-guid: c524ac93fd4074e4b856e88841f7e47f
+guid: 4d9c0f9cb2c28a34c8f24f4a5b90ad78
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -2572842601457448701
-    second: Enviroment_Portal_NextLevel
+      213: -1695403107585009203
+    second: Environment_Portal
   - first:
-      213: -622576764029490908
-    second: Enviroment_Chest_Skill
+      213: -5563573882831400231
+    second: Environment_Chess_SkillChess
   - first:
-      213: 3614123605629594130
-    second: Enviroment_Potion_HealthIncreaser
+      213: 7051984634692590270
+    second: Environment_Chess_WeaponChess
   - first:
-      213: 4029557701506746773
-    second: Enviroment_Potion_Health
-  - first:
-      213: -1567719653854444748
-    second: Enviroment_Chest_Weapon
-  - first:
-      213: 5861235741325635866
-    second: Enviroment_Chest_Armor
+      213: -14794387598306108
+    second: Environment_Chess_ArmorChess
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -79,7 +73,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 512
+    maxTextureSize: 1024
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -91,7 +85,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Standalone
-    maxTextureSize: 512
+    maxTextureSize: 1024
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -103,7 +97,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Android
-    maxTextureSize: 512
+    maxTextureSize: 1024
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -117,13 +111,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Enviroment_Portal_NextLevel
+      name: Environment_Portal
       rect:
         serializedVersion: 2
-        x: 76
-        y: 72
-        width: 133
-        height: 242
+        x: 66
+        y: 65
+        width: 157
+        height: 256
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -131,19 +125,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3090325194d6b4cd0800000000000000
-      internalID: -2572842601457448701
+      spriteID: dc95d453bd7b878e0800000000000000
+      internalID: -1695403107585009203
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Enviroment_Chest_Skill
+      name: Environment_Chess_SkillChess
       rect:
         serializedVersion: 2
-        x: 372
-        y: 207
-        width: 127
+        x: 371
+        y: 208
+        width: 129
         height: 129
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -152,19 +146,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4292c9e4bb92c57f0800000000000000
-      internalID: -622576764029490908
+      spriteID: 9d29138d7073ac2b0800000000000000
+      internalID: -5563573882831400231
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Enviroment_Potion_HealthIncreaser
+      name: Environment_Chess_WeaponChess
       rect:
         serializedVersion: 2
-        x: 517
-        y: 209
-        width: 131
+        x: 230
+        y: 206
+        width: 128
         height: 131
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -173,62 +167,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 21ae7e75542f72230800000000000000
-      internalID: 3614123605629594130
+      spriteID: eba5d5889aeadd160800000000000000
+      internalID: 7051984634692590270
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Enviroment_Potion_Health
+      name: Environment_Chess_ArmorChess
       rect:
         serializedVersion: 2
-        x: 368
-        y: 55
-        width: 140
-        height: 140
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 599cf38416ddbe730800000000000000
-      internalID: 4029557701506746773
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Enviroment_Chest_Weapon
-      rect:
-        serializedVersion: 2
-        x: 232
-        y: 208
-        width: 123
-        height: 128
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 4338b9ce7475e3ae0800000000000000
-      internalID: -1567719653854444748
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Enviroment_Chest_Armor
-      rect:
-        serializedVersion: 2
-        x: 230
+        x: 229
         y: 64
-        width: 128
-        height: 129
+        width: 130
+        height: 131
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -236,8 +188,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a11b9824ada475150800000000000000
-      internalID: 5861235741325635866
+      spriteID: 4c4988635907bcff0800000000000000
+      internalID: -14794387598306108
       vertices: []
       indices: 
       edges: []
