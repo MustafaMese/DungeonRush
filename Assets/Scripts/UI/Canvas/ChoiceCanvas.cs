@@ -64,8 +64,6 @@ namespace DungeonRush.UI
 
         public void EnablePanel(Item item, Item loot, ItemUser itemUser)
         {
-            UIManager.Instance.Pause();
-
             SetItemPanel(item.GetUISprite(), item.GetName(), item.GetPower(), " ", " Bu kılıç kadim zamanlarda ilk youtuberlar tarafından yapıldı. ");
             SetLootPanel(loot.GetUISprite(), loot.GetName(), loot.GetPower(), " ", " Bu kılıç kadim zamanlarda ilk youtuberlar tarafından yapıldı. ");
             
@@ -102,17 +100,14 @@ namespace DungeonRush.UI
             tempItem = null;
             enableButtons = false;
 
-            UIManager.Instance.Resume();
             GameManager.Instance.SetGameState(GameState.PLAY);
         }
 
         public void ChooseItem()
         {
             PanelControl(false);
-            print("item");
             enableButtons = false;
 
-            UIManager.Instance.Resume();
             GameManager.Instance.SetGameState(GameState.PLAY);
         }
     }

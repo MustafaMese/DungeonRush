@@ -13,6 +13,16 @@ namespace DungeonRush.Traits
         public int lifeCount;
         public int moveCount;
         public int lootChance;
+
+        public void Set(int hp, int critic, int dodge, int life, int move, int loot)
+        {
+            maximumHealth = hp;
+            criticChance = critic;
+            dodgeChance = dodge;
+            lifeCount = life;
+            moveCount = move;
+            lootChance = loot;
+        }
     }
 
     public enum StatType

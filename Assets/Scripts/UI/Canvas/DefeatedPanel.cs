@@ -1,5 +1,7 @@
 ﻿using DungeonRush.Cards;
+using DungeonRush.Data;
 using DungeonRush.Managers;
+using DungeonRush.Saving;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -36,19 +38,16 @@ namespace DungeonRush.UI
             defeatedPanel.SetActive(true);
             button.gameObject.SetActive(true);
             SetValues();
+            SaveUtilities();
         }
 
         public void Defeat()
         {
-            UIManager.Instance.Pause();
-
             SetDefeat();
         }
 
         public void MainMenu()
         {
-            UIManager.Instance.Resume();
-            
             GameManager.Instance.SetGameState(GameState.END);
         }
 
@@ -74,6 +73,14 @@ namespace DungeonRush.UI
         {
             defeatedPanel.SetActive(activate);
             button.gameObject.SetActive(activate);
+        }
+
+        private void SaveUtilities()
+        {
+            PlayerUtility utilities = SavingSystem.LoadUtilities();
+            int xp = player.Experience + utilities.totalXp;
+            int gold = player.Coins + utilities.gold;
+            SavingSystem.SaveUtilities(xp, gold);
         }
     }
 }

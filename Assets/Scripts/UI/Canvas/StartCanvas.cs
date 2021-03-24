@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,6 +6,7 @@ using DG.Tweening;
 using DungeonRush.Managers;
 using DungeonRush.Saving;
 using System;
+using TMPro;
 
 namespace DungeonRush.UI
 {
@@ -31,17 +32,15 @@ namespace DungeonRush.UI
             }
         }
 
+        //[SerializeField] TextMeshProUGUI goldText;
         [SerializeField] GameObject startingPanel = null;
         [SerializeField] GameObject shoppingPanel = null;
         [SerializeField] GameObject characterPanel = null;
-
         [SerializeField] Image marker = null;
         [SerializeField] Sprite startImage = null;
         [SerializeField] Sprite shopImage = null;
         [SerializeField] Sprite characterImage = null;
-
         [SerializeField] List<Panel> panels = new List<Panel>();
-
         [SerializeField] float endValue = 0f;
         [SerializeField] float endTime = 0f;
         private bool touched = false;

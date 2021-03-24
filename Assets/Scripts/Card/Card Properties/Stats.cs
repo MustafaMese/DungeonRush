@@ -1,4 +1,4 @@
-﻿public class Stats
+public class Stats
 {
     private int maximumHealth;
     private int criticChance;
@@ -17,4 +17,5 @@
     public int InstantMoveCount { get => instantMoveCount; set => instantMoveCount = value; }
     public int LootChance { get => lootChance; set => lootChance = value; }
     public bool CanBlockTraps { get => canBlockTraps; set => canBlockTraps = value; }
+    
 }

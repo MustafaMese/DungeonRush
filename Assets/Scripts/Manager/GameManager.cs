@@ -39,6 +39,9 @@ namespace DungeonRush
             // TODO Bu değişken tekrar sıfır olmalı.
             public int levelCount = 0;
 
+            public int xp = 0;
+            public int gold = 0;
+
             private void Awake()
             {
                 if (Instance != null)
@@ -105,7 +108,7 @@ namespace DungeonRush
 
 public enum Difficulty
 {
-    VERY_EASY,
+    VERY_EASY = 1,
     EASY,
     MODERATE,
     HARD,

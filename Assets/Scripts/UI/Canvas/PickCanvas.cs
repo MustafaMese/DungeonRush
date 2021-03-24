@@ -21,8 +21,6 @@ namespace DungeonRush.UI
 
         public void EnablePanel(Item i)
         {
-            UIManager.Instance.Pause();
-
             panel.SetActive(true);
             SetName(i.GetName());
             SetSprite(i.GetUISprite());

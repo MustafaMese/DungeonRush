@@ -10,6 +10,7 @@ using DungeonRush.Traits;
 using TMPro;
 using DungeonRush.Shifting;
 using DungeonRush.Attacking;
+using DungeonRush.Saving;
 
 namespace DungeonRush
 {
@@ -61,7 +62,6 @@ namespace DungeonRush
                 movable = GetComponent<IMovable>();
                 fighter = GetComponent<IFighter>();
                 damagable = GetComponent<IDamagable>();
-                SetStats();
                 move = new Move();
                 itemUser = GetComponent<ItemUser>();
 
@@ -71,8 +71,15 @@ namespace DungeonRush
                 if (!isFirstLevel)
                     controller.LoadPlayer();
                 else
-                    SetCurrentHealth(GetMaxHealth());
+                {
+                    int damage;
+                    PlayerProperties data = SavingSystem.LoadPlayerProperties();
+                    PlayerProperties.CalculateStr(data.str, out cardProperties.cardStats.maximumHealth, out damage);
+                    PlayerProperties.CalculateAgi(data.agi, out cardProperties.cardStats.criticChance, out cardProperties.cardStats.dodgeChance);
+                    PlayerProperties.CalculateLuck(data.luck, out cardProperties.cardStats.lootChance);
+                }
 
+                SetStats();
                 nameText.text = cardName;
             }
 
@@ -110,7 +117,10 @@ namespace DungeonRush
                     stats.LootChance = cardProperties.cardStats.lootChance;
                     stats.InstantMoveCount = stats.TotalMoveCount;
                     if (stats.MaximumHealth > 0)
+                    {
                         SetMaxHealth(stats.MaximumHealth);
+                        SetCurrentHealth(stats.MaximumHealth);
+                    }
                 }
             }
 

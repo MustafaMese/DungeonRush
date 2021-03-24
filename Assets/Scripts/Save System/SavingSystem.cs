@@ -1,4 +1,5 @@
 ﻿using DungeonRush.Cards;
+using DungeonRush.Data;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -11,23 +12,91 @@ namespace DungeonRush.Saving
     {
         private const string instantPath = "/playerInstant.sav";
         private const string propertyPath = "/property.sav";
+        private const string utilityPath = "/utility.sav";
 
-        public static void SaveProperties()
+        // TODO xp ve goldu loadla topla ve savele
+        public static void SaveUtilities(int xp, int gold)
         {
-            
+            BinaryFormatter formatter = new BinaryFormatter();
+            string path = Application.persistentDataPath + utilityPath;
+            FileStream stream = new FileStream(path, FileMode.Create);
+            PlayerUtility utilities = new PlayerUtility(xp, gold);
+            formatter.Serialize(stream, utilities);
+            stream.Close();
+        }
+
+        public static void SaveProperties(int str, int agi, int luck)
+        {
+            BinaryFormatter formatter = new BinaryFormatter();
+            string path = Application.persistentDataPath + propertyPath;
+            FileStream stream = new FileStream(path, FileMode.Create);
+            PlayerProperties properties = new PlayerProperties(str, agi, luck);
+            formatter.Serialize(stream, properties);
+            stream.Close();
         }
 
         public static void SavePlayerInstantProgress(PlayerCard player)
         {
             BinaryFormatter formatter = new BinaryFormatter();
             string path = Application.persistentDataPath + instantPath;
-            Debug.Log(path);
             FileStream stream = new FileStream(path, FileMode.Create);
-
             PlayerData data = new PlayerData(player);
-
             formatter.Serialize(stream, data);
             stream.Close();
+        }
+
+        public static DungeonRush.Data.PlayerUtility LoadUtilities()
+        {
+            string path = Application.persistentDataPath + utilityPath;
+            try
+            {
+                if (File.Exists(path))
+                {
+                    BinaryFormatter formatter = new BinaryFormatter();
+                    FileStream stream = new FileStream(path, FileMode.Open);
+                    PlayerUtility data = formatter.Deserialize(stream) as PlayerUtility;
+                    stream.Close();
+                    return data;
+                }
+                else
+                {
+                    PlayerUtility data = new PlayerUtility(0, 0);
+                    return data;
+                }
+            }
+            catch (System.Exception)
+            {
+                PlayerUtility data = new PlayerUtility(0, 0);
+                return data;
+            }
+        }
+
+        public static PlayerProperties LoadPlayerProperties()
+        {
+            string path = Application.persistentDataPath + propertyPath;
+            Debug.Log(path);
+            try
+            {
+                if (File.Exists(path))
+                {
+                    BinaryFormatter formatter = new BinaryFormatter();
+                    FileStream stream = new FileStream(path, FileMode.Open);
+                    PlayerProperties data = formatter.Deserialize(stream) as PlayerProperties;
+                    stream.Close();
+                    return data;
+                }
+                else
+                {
+                    PlayerProperties data = new PlayerProperties(0, 0, 0);
+                    return data;
+                }
+            }
+            catch (System.Exception)
+            {
+                PlayerProperties data = new PlayerProperties(0, 0, 0);
+                return data;
+            }
+            
         }
 
         public static PlayerData LoadPlayerInstantProgress()
