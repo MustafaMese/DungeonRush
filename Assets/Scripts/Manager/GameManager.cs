@@ -23,7 +23,6 @@ namespace DungeonRush
             public GameState gameState = GameState.DEFEAT;
 
             [SerializeField] UIManager uiManagerPrefab;
-            [SerializeField] LoadManager loadManagerPrefab;
             [SerializeField] CardManager cardManagerPrefab;
             [SerializeField] MoveSchedular moveSchedularPrefab;
             [SerializeField] CollectableManager collectableManagerPrefab;
@@ -36,8 +35,6 @@ namespace DungeonRush
             public int targetFrameRate = 60;
 
             private bool started = false;
-            // TODO Bu değişken tekrar sıfır olmalı.
-            public int levelCount = 0;
 
             public int xp = 0;
             public int gold = 0;
@@ -69,7 +66,6 @@ namespace DungeonRush
                 Application.targetFrameRate = targetFrameRate;
 
                 Instantiate(uiManagerPrefab);
-                Instantiate(loadManagerPrefab);
                 Instantiate(swipeManagerPrefab);
                 //Instantiate(soundManagerPrefab);
 
@@ -83,7 +79,6 @@ namespace DungeonRush
                     Instantiate(textPopupManager);
                     Instantiate(effectOperator);
 
-                    levelCount++;
                     SetGameState(GameState.BEGIN_LEVEL);
                 }
             }
@@ -104,14 +99,4 @@ namespace DungeonRush
             }
         }
     }
-}
-
-public enum Difficulty
-{
-    VERY_EASY = 1,
-    EASY,
-    MODERATE,
-    HARD,
-    VERY_HARD,
-    BOSS
 }

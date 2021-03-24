@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -13,6 +13,8 @@ namespace DungeonRush.Managers
         [SerializeField] int veryHardFirst;
         [SerializeField] int bossFirst;
 
+        public Stack<int> difficultyStack = new Stack<int>();
+
         private static LoadManager instance = null;
         // Game Instance Singleton
         public static LoadManager Instance
@@ -23,20 +25,45 @@ namespace DungeonRush.Managers
 
         private void Awake()
         {
-            Instance = this;
+            if (Instance != null)
+                Destroy(Instance);
+            else
+            {
+                Instance = this;
+                DontDestroyOnLoad(this);
+            }
+        }
+
+        public void Fill()
+        {
+            difficultyStack.Push(1);
+            print(1);
+            for (var i = 5; i > 1; i--)
+                for (var y = 0; y < Random.Range(3, 6); y++)
+                {
+                    print(i);
+                    difficultyStack.Push(i);
+                }            
+            print(1);
+            difficultyStack.Push(1);
+            
+
         }
 
         public void LoadNextScene()
         {
             var scene = SceneManager.GetActiveScene();
             var levelIndex = scene.buildIndex;
-
-            int diffuculty = GameManager.Instance.levelCount / 5;
-
-            if((levelIndex + 1) != SceneManager.sceneCountInBuildSettings)
+            if(levelIndex == 0)
+                SceneManager.LoadScene(levelIndex + 1);
+            else
             {
+                int diffuculty = difficultyStack.Pop();
                 switch (diffuculty)
                 {
+                    case (int)Difficulty.STARTING_POINT:
+                        SceneManager.LoadScene(1);
+                        break;
                     case (int)Difficulty.VERY_EASY:
                         LoadRandomLevel(veryEasyFirst, easyFirst);
                         break;
@@ -55,19 +82,8 @@ namespace DungeonRush.Managers
                     case (int)Difficulty.BOSS:
                         LoadRandomLevel(bossFirst, SceneManager.sceneCountInBuildSettings - 1);
                         break;
-                    default:
-                        SceneManager.LoadScene(1);
-                        GameManager.Instance.levelCount = 0;
-                        break;
                 }
             }
-            else
-            {
-                GameManager.Instance.levelCount = 0;
-                SceneManager.LoadScene(1);
-            }
-            
-            
         }
 
         private void LoadRandomLevel(int min, int max)
@@ -86,4 +102,15 @@ namespace DungeonRush.Managers
             return SceneManager.GetActiveScene().buildIndex;
         }
     }
+}
+
+public enum Difficulty
+{
+    STARTING_POINT,
+    VERY_EASY,
+    EASY,
+    MODERATE,
+    HARD,
+    VERY_HARD,
+    BOSS
 }

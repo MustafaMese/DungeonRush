@@ -163,6 +163,7 @@ namespace DungeonRush.UI
             if (!touched)
             {
                 touched = true;
+                LoadManager.Instance.Fill();
                 StartCoroutine(Next());
             }
         }

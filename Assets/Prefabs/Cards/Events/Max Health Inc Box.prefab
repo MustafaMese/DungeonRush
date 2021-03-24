@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   particles: []
   isParticle: 0
-  spriteRenderer: {fileID: 8915921207584027404}
+  spriteRenderers:
+  - {fileID: 8915921207584027404}
+  - {fileID: 6309269472078980254}
 --- !u!114 &5717302378588674723
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -215,6 +217,12 @@ GameObject:
 --- !u!212 &8915921207584027404 stripped
 SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 8336880170289353018, guid: 906b20504bf5ca04d9354ffbc1b79fe8,
+    type: 3}
+  m_PrefabInstance: {fileID: 579059180043936310}
+  m_PrefabAsset: {fileID: 0}
+--- !u!212 &6309269472078980254 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 6883255505121789608, guid: 906b20504bf5ca04d9354ffbc1b79fe8,
     type: 3}
   m_PrefabInstance: {fileID: 579059180043936310}
   m_PrefabAsset: {fileID: 0}

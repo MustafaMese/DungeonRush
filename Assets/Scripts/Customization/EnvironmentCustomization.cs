@@ -8,7 +8,7 @@ namespace DungeonRush.Customization
     {
         [SerializeField] ParticleSystemRenderer[] particles;
         [SerializeField] bool isParticle = true;
-        [SerializeField] SpriteRenderer spriteRenderer;
+        [SerializeField] SpriteRenderer[] spriteRenderers;
 
         public void ChangeLayer(bool top, int multiplier = 1)
         {
@@ -24,10 +24,13 @@ namespace DungeonRush.Customization
             }
             else
             {
-                if (top)
-                    spriteRenderer.sortingOrder += 6 * multiplier;
-                else
-                    spriteRenderer.sortingOrder -= 6 * multiplier;
+                for (var i = 0; i < spriteRenderers.Length; i++)
+                {
+                    if (top)
+                        spriteRenderers[i].sortingOrder += 6 * multiplier;
+                    else
+                        spriteRenderers[i].sortingOrder -= 6 * multiplier;
+                }
             }
             
         }
