@@ -59,7 +59,10 @@ namespace DungeonRush
                     stats.LootChance = cardProperties.cardStats.lootChance;
                     stats.InstantMoveCount = stats.TotalMoveCount;
                     if (stats.MaximumHealth > 0)
+                    {
                         SetMaxHealth(stats.MaximumHealth);
+                        SetCurrentHealth(stats.MaximumHealth);
+                    }
                 }
             }
 

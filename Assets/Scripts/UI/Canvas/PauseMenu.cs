@@ -14,6 +14,7 @@ namespace DungeonRush.UI
         [SerializeField] GameObject pauseMenuUI;
         [SerializeField] Button pauseButton;
         [SerializeField] Transform skillSetPanel;
+        [SerializeField] Transform itemSetPanel;
 
         [Header("Character Stats")]
         [SerializeField] TextMeshProUGUI healthTxt = null;
@@ -102,11 +103,14 @@ namespace DungeonRush.UI
             pauseButton.gameObject.SetActive(activate);
         }
 
-        public Image AddImageToPanel(Sprite sprite)
+        public Image AddImageToPanel(Sprite sprite, bool isSkill)
         {
             var obj = new GameObject("Image").AddComponent<Image>();
             obj.sprite = sprite;
-            return Instantiate(obj, skillSetPanel);
+            if(isSkill)
+                return Instantiate(obj, skillSetPanel);
+            else
+                return Instantiate(obj, itemSetPanel);
         }
     }
 }

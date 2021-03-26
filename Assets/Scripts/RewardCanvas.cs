@@ -77,12 +77,8 @@ namespace DungeonRush.UI
         // Button method.
         public void ChooseSkill(Button button)
         {
-            print("1");
-
             if(isChosen) return;
-
-            print("2");
-
+            
             isChosen = true;
             SkillObject skill = FindSkill(button);
             // TODO Burayı düzeltmeye çalış.

@@ -11,6 +11,7 @@ using TMPro;
 using DungeonRush.Shifting;
 using DungeonRush.Attacking;
 using DungeonRush.Saving;
+using DungeonRush.Managers;
 
 namespace DungeonRush
 {
@@ -21,16 +22,16 @@ namespace DungeonRush
             [SerializeField] TextMeshPro nameText = null;
             [SerializeField] EventMover eventMover = null;
             [SerializeField] Animator animator = null;
-            [SerializeField] bool isFirstLevel = false;
+            [SerializeField] bool testing = false;
 
-            public int experience = 0;
+            private int experience = 0;
             public int Experience
             {
                 get { return experience; }
                 set { experience = value; }
             }
 
-            public int coins = 0;
+            private int coins = 0;
             public int Coins
             {
                 get { return coins; }
@@ -68,18 +69,30 @@ namespace DungeonRush
                 float z = PlayerCamera.Instance.transform.position.z;
                 PlayerCamera.Instance.transform.position = new Vector3(transform.position.x, transform.position.y + 1, z);
 
-                if (!isFirstLevel)
-                    controller.LoadPlayer();
+                if(testing)
+                {
+                    SetStats();
+                }
                 else
                 {
-                    int damage;
-                    PlayerProperties data = SavingSystem.LoadPlayerProperties();
-                    PlayerProperties.CalculateStr(data.str, out cardProperties.cardStats.maximumHealth, out damage);
-                    PlayerProperties.CalculateAgi(data.agi, out cardProperties.cardStats.criticChance, out cardProperties.cardStats.dodgeChance);
-                    PlayerProperties.CalculateLuck(data.luck, out cardProperties.cardStats.lootChance);
+                    if (!LoadManager.Instance.isFirstLevel)
+                    {
+                        SetStats();
+                        controller.LoadPlayer();
+                    }
+                    else
+                    {
+                        int damage;
+                        PlayerProperties data = SavingSystem.LoadPlayerProperties();
+                        PlayerProperties.CalculateStr(data.str, out cardProperties.cardStats.maximumHealth, out damage);
+                        PlayerProperties.CalculateAgi(data.agi, out cardProperties.cardStats.criticChance, out cardProperties.cardStats.dodgeChance);
+                        PlayerProperties.CalculateLuck(data.luck, out cardProperties.cardStats.lootChance);
+                        SetStats();
+                    }
                 }
 
-                SetStats();
+                
+
                 nameText.text = cardName;
             }
 

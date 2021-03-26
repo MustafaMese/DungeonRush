@@ -69,18 +69,22 @@ namespace DungeonRush.Controller
             List<EnemyAIController> l = new List<EnemyAIController>();
             for (int i = 0; i < subscribedEnemies.Count; i++)
             {
-                if (subscribedEnemies[i] == null) continue;
+                EnemyAIController ai = subscribedEnemies[i];
 
-                subscribedEnemies[i].ActivateStatuses();
+                if (ai == null) continue;
+                
+                ai.ActivateStatuses();
 
-                var distance = GetDistance(subscribedEnemies[i].transform.position);
+                if (ai == null) continue;
+
+                var distance = GetDistance(ai.transform.position);
                 if (distance <= attackerDistance)
                 {
-                    SetAttackerSkinState(subscribedEnemies[i], false);
-                    l.Add(subscribedEnemies[i]);
+                    SetAttackerSkinState(ai, false);
+                    l.Add(ai);
                 }
                 else
-                    SetAttackerSkinState(subscribedEnemies[i], true);
+                    SetAttackerSkinState(ai, true);
             }
 
             return l;

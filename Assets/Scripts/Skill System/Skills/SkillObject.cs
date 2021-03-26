@@ -6,7 +6,7 @@ using UnityEngine;
 public class SkillObject : ScriptableObject
 {
     public Skill skillPrefab;
-    private string ID = Guid.NewGuid().ToString("N");
+    public string ID = Guid.NewGuid().ToString("N");
 
     public Skill Create(Transform t)
     {

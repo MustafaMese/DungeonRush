@@ -51,8 +51,12 @@ namespace DungeonRush.Managers
             obj.transform.position = pos;
             obj.transform.SetParent(cardTransform);
             yield return new WaitForSeconds(time);
-            obj.SetActive(false);
-            pool.Push(obj);
+            if(obj != null)
+            {
+                obj.SetActive(false);
+                pool.Push(obj);
+            }
+            
         }
 
         public void Operate(ObjectPool pool, Transform cardTransform,Vector3 pos)

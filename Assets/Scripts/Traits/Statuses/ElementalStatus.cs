@@ -11,13 +11,7 @@ namespace DungeonRush.Traits
         public override void Execute(Card card, Tile tile)
         {
             if(card != null)
-            {
-                if (Power > 0)
-                    card.GetDamagable().IncreaseHealth(Power);
-                else
-                    card.GetDamagable().DecreaseHealth(Power);
-            }
-            
+                card.GetDamagable().DecreaseHealth(Power); 
         }
      }
 }

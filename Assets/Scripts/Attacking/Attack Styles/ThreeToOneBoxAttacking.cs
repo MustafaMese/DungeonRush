@@ -14,15 +14,14 @@ namespace DungeonRush.Attacking
 
         public override void Attack(Move move, int damage)
         {
-            Debug.Log("Selam tatlım");
-
             Tile target = move.GetTargetTile();
             tempList = FindTargetTiles(move);
             tempList.Add(target.GetCard());
             for (int i = 0; i < tempList.Count; i++)
             {
-                if(tempList[i] != null)
-                    tempList[i].GetDamagable().DecreaseHealth(damage);
+                Card targetCard = tempList[i];
+                if(targetCard != null)
+                    targetCard.GetDamagable().DecreaseHealth(damage);
             }
         }
 

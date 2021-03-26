@@ -14,7 +14,6 @@ namespace DungeonRush.Attacking
         public override void Attack(Move move, int damage)
         {
             Card targetCard = move.GetTargetTile().GetCard();
-            //SoundManager.Instance.SelectAudioSource(clip);
             if (targetCard != null)
                 targetCard.GetDamagable().DecreaseHealth(damage);
         }

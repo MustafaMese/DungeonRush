@@ -36,8 +36,6 @@ namespace DungeonRush.Managers
 
         private void OnLevelWasLoaded(int level)
         {
-            print("ses l:" + level);
-
             if (level > 1)
                 musicSource.Stop();
             else

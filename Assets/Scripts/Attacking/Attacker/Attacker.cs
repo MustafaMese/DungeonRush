@@ -19,7 +19,7 @@ namespace DungeonRush.Property
         private AttackStyle tempAttackStyle = null;
         private Animator animator = null;
 
-        public int power = 0;
+        protected int power = 0;
         protected bool attackFinished = false; 
         
         protected ObjectPool pool = new ObjectPool();
@@ -33,7 +33,7 @@ namespace DungeonRush.Property
             card = GetComponent<Card>();
             effectObject = attackStyle.GetEffect();
             FillThePool(pool, effectObject, 1);
-            power = attackStyle.GetPower();
+            power = attackStyle.GetPower() + card.GetDamageProperty();
             Initialize();
         }
 
@@ -119,7 +119,7 @@ namespace DungeonRush.Property
             this.attackStyle = attackStyle;
             effectObject = attackStyle.GetEffect();
             FillThePool(pool, effectObject, 2);
-            power = attackStyle.GetPower();
+            power = attackStyle.GetPower() + card.GetDamageProperty();
         }
         protected bool DoAttackAction(Move move, bool isTrap)
         {
@@ -226,16 +226,9 @@ namespace DungeonRush.Property
                         isCritic = DoAttackAction(move, false);
                     else
                         isCritic = DoAttackAction(move, true);
-
-                    List<StatusObject> impacts = attackStyle.GetImpacts();
-
-                    if(impacts != null && impacts.Count > 0)
-                    {
-                        for (int i = 0; i < impacts.Count; i++)
-                            tCard.GetComponent<StatusController>().AddStatus(impacts[i]);
-                    }
-
+                        
                     TextPopupManager.Instance.TextPopup(tPos, power, isCritic);
+                    attackStyle.ExecuteImpacts(target);
                 }
             }
             float time = attackStyle.GetAnimationTime();
@@ -244,6 +237,9 @@ namespace DungeonRush.Property
 
         protected void AttackAction(List<Card> targetCards, Move move)
         {
+            if (card.GetCardType() != CardType.TRAP)
+                StatusActResetAndControl();
+
             for (int i = 0; i < targetCards.Count; i++)
             {
                 Card tCard = targetCards[i];
@@ -258,6 +254,7 @@ namespace DungeonRush.Property
                     {
                         bool isCritic = DoAttackAction(move, false);
                         TextPopupManager.Instance.TextPopup(tPos, power, isCritic);
+                        attackStyle.ExecuteImpacts(tCard.GetTile());
                     }
                 }
             }

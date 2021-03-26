@@ -10,9 +10,9 @@ namespace DungeonRush.Skills
 {
     public class SkillUser : MonoBehaviour
     {
-        List<SkillObject> skillObjects = new List<SkillObject>();
-        [SerializeField] List<SkillObject> s = new List<SkillObject>();
+        public List<SkillObject> s = new List<SkillObject>();
 
+        private List<SkillObject> skillObjects = new List<SkillObject>();
         private List<Skill> skills = new List<Skill>();
         private Card card;
         private bool isBeginning;
@@ -25,8 +25,7 @@ namespace DungeonRush.Skills
 
             for (var i = 0; i < s.Count; i++)
             {
-                SkillObject o = s[i];
-                AddSkill(o, false);
+                AddSkill(s[i], false);
             }
         }
 

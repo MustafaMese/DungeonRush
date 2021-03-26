@@ -87,8 +87,6 @@ public class Impact : MonoBehaviour
 
     private void Change(Tile targetT, EnvironmentCard targetC)
     {
-        if(targetC == null) print(targetT.GetCoordinate() + " 2");
-
         if(targetC == null) return;
 
         bool delete;

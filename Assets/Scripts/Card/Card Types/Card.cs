@@ -57,6 +57,11 @@ namespace DungeonRush
                 return cardName;
             }
 
+            public int GetDamageProperty()
+            {
+                return cardProperties.cardStats.damage;
+            }
+
             public Tile GetTile()
             {
                 return tile;

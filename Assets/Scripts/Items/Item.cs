@@ -9,11 +9,9 @@ namespace DungeonRush.Items
     public abstract class Item : ScriptableObject, IItem
     {
         [SerializeField] string itemName;
-        
         [SerializeField] ItemType type;
         [SerializeField] Sprite UISprite = null;
         [SerializeField] Sprite primarySprite = null;
-        [SerializeField] List<StatusObject> impacts = new List<StatusObject>();
 
         string ID = Guid.NewGuid().ToString("N");
 

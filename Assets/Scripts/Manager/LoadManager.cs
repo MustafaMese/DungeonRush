@@ -13,7 +13,8 @@ namespace DungeonRush.Managers
         [SerializeField] int veryHardFirst;
         [SerializeField] int bossFirst;
 
-        public Stack<int> difficultyStack = new Stack<int>();
+        private Stack<int> difficultyStack = new Stack<int>();
+        public bool isFirstLevel;
 
         private static LoadManager instance = null;
         // Game Instance Singleton
@@ -36,18 +37,11 @@ namespace DungeonRush.Managers
 
         public void Fill()
         {
-            difficultyStack.Push(1);
-            print(1);
+            difficultyStack.Push(0);
             for (var i = 5; i > 1; i--)
                 for (var y = 0; y < Random.Range(3, 6); y++)
-                {
-                    print(i);
                     difficultyStack.Push(i);
-                }            
-            print(1);
             difficultyStack.Push(1);
-            
-
         }
 
         public void LoadNextScene()
@@ -58,6 +52,7 @@ namespace DungeonRush.Managers
                 SceneManager.LoadScene(levelIndex + 1);
             else
             {
+                isFirstLevel = false;
                 int diffuculty = difficultyStack.Pop();
                 switch (diffuculty)
                 {
@@ -65,6 +60,7 @@ namespace DungeonRush.Managers
                         SceneManager.LoadScene(1);
                         break;
                     case (int)Difficulty.VERY_EASY:
+                        isFirstLevel = true;
                         LoadRandomLevel(veryEasyFirst, easyFirst);
                         break;
                     case (int)Difficulty.EASY:

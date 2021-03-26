@@ -142,6 +142,12 @@ namespace DungeonRush.Controller
 
             for (int i = 0; i < subscribedEnvironmentCards.Count; i++)
             {
+                if(subscribedEnvironmentCards[i] == null)
+                {
+                    subscribedEnvironmentCards.Remove(subscribedEnvironmentCards[i]);
+                    continue;
+                }
+
                 if ((subscribedEnvironmentCards[i].transform.position - playerController.transform.position).sqrMagnitude <= activeTrapDistance)
                     l.Add(subscribedEnvironmentCards[i]);
             }

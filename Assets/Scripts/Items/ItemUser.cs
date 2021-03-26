@@ -82,12 +82,11 @@ namespace DungeonRush
             public void ExecuteItem(Item loot, BoneType lootBone)
             {
                 items[lootBone] = loot;
+                UIManager.Instance.AddItemToSkillSet(loot.GetPrimarySprite());
 
                 if (loot.GetItemType() == ItemType.ARMOR)
                     armorP += loot.GetPower();
-
-                print(loot.GetName() + " " + lootBone);
-
+                    
                 if (lootBone == BoneType.ARM || lootBone == BoneType.LEG || lootBone == BoneType.WEAPON_DUAL)
                     customization.ChangeBoneSprite(lootBone, loot.GetPrimarySprite(), loot.GetSecondarySprite());
                 else

@@ -97,10 +97,10 @@ namespace DungeonRush.UI
                     StartCoroutine(NextLevel());
                     break;
                 case GameState.DEFEAT:
-                    _defeatedPanel.Defeat();
-
                     _turnCanvas.PanelControl(false);
                     _pauseMenu.PanelControl(false);
+
+                    _defeatedPanel.Defeat();
                     break;
                 case GameState.END:
                     _fadingCanvas.PanelControl(true);
@@ -241,7 +241,12 @@ namespace DungeonRush.UI
 
         public void AddSkillToSkillSet(Sprite sprite)
         {
-            _pauseMenu.AddImageToPanel(sprite);
+            _pauseMenu.AddImageToPanel(sprite, true);
+        }
+
+        public void AddItemToSkillSet(Sprite sprite)
+        {
+            _pauseMenu.AddImageToPanel(sprite, false);
         }
 
         #endregion

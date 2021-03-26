@@ -16,7 +16,7 @@ namespace DungeonRush.Attacking
         [SerializeField] protected float animationTime;
         [SerializeField] protected int power;
 
-        [SerializeField] protected List<StatusObject> impacts = new List<StatusObject>();
+        [SerializeField] protected List<Impact> impacts = new List<Impact>();
 
         public abstract void Attack(Move move, int damage);
         public abstract void SetEffectPosition(GameObject effect, Vector3 tPos, Transform card = null);
@@ -146,16 +146,18 @@ namespace DungeonRush.Attacking
             card.SetMove(move);
         }
 
-        public List<StatusObject> GetImpacts() 
+        public List<Impact> GetImpacts() 
         {
             return impacts; 
         }
         
-        public void ExecuteImpacts(Card target)
+        public void ExecuteImpacts(Tile target)
         {
             for (var i = 0; i < impacts.Count; i++)
             {
-                target.GetStatusController().AddStatus(impacts[i]);
+                Impact impact = Instantiate(impacts[i], target.GetCoordinate(), Quaternion.identity);
+                impact.Initialize(target.GetCoordinate());
+                impact.Execute(target);
             }
         }
     }
