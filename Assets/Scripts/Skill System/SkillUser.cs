@@ -58,7 +58,7 @@ namespace DungeonRush.Skills
             if(openPanel)
                 UIManager.Instance.EnableSkillCanvas(skill);
 
-            UIManager.Instance.AddSkillToSkillSet(skill.IconSmall);
+            UIManager.Instance.AddToSkillSet(skill.IconSmall);
 
             skills.Add(skill);
         }

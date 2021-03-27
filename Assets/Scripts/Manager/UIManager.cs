@@ -239,12 +239,12 @@ namespace DungeonRush.UI
 
         #region PAUSE CANVAS METHODS
 
-        public void AddSkillToSkillSet(Sprite sprite)
+        public void AddToSkillSet(Sprite sprite)
         {
             _pauseMenu.AddImageToPanel(sprite, true);
         }
 
-        public void AddItemToSkillSet(Sprite sprite)
+        public void AddToItemSet(Sprite sprite)
         {
             _pauseMenu.AddImageToPanel(sprite, false);
         }

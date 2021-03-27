@@ -52,6 +52,7 @@ namespace DungeonRush
                     stats = new Stats();
 
                     stats.MaximumHealth = cardProperties.cardStats.maximumHealth;
+                    stats.Damage = cardProperties.cardStats.damage;
                     stats.CriticChance = cardProperties.cardStats.criticChance;
                     stats.DodgeChance = cardProperties.cardStats.dodgeChance;
                     stats.LifeCount = cardProperties.cardStats.lifeCount;

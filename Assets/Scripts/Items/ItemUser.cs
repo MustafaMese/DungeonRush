@@ -63,8 +63,6 @@ namespace DungeonRush
 
             public void TakeItem(Item loot, bool openPanel = true)
             {
-                loot.Execute(card);
-                
                 if (loot.GetItemType() == ItemType.WEAPON || loot.GetItemType() == ItemType.ARMOR)
                 {
                     BoneType lootBone = loot.GetBoneType();
@@ -81,8 +79,16 @@ namespace DungeonRush
 
             public void ExecuteItem(Item loot, BoneType lootBone)
             {
+                if(loot.GetItemType() == ItemType.ARMOR && items[lootBone] != null)
+                {
+                    Armor item = items[lootBone] as Armor;
+                    item.TakeOffArmor(card);
+                }
+
+                loot.Execute(card);
+
                 items[lootBone] = loot;
-                UIManager.Instance.AddItemToSkillSet(loot.GetPrimarySprite());
+                UIManager.Instance.AddToItemSet(loot.GetPrimarySprite());
 
                 if (loot.GetItemType() == ItemType.ARMOR)
                     armorP += loot.GetPower();

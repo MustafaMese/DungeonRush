@@ -8,6 +8,8 @@ namespace DungeonRush.Traits
     {
         public override void Execute(Card card, Tile tile = null)
         {
+            // EYLEMLERİ SİLEN STATUSLERDİR. öRNEĞİN BİR KARAKTER DİSARMED İSE VURAMAZ.
+
             return;
         }
     }

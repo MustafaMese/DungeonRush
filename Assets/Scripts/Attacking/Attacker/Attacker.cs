@@ -19,7 +19,7 @@ namespace DungeonRush.Property
         private AttackStyle tempAttackStyle = null;
         private Animator animator = null;
 
-        protected int power = 0;
+        public int power = 0;
         protected bool attackFinished = false; 
         
         protected ObjectPool pool = new ObjectPool();
@@ -33,7 +33,6 @@ namespace DungeonRush.Property
             card = GetComponent<Card>();
             effectObject = attackStyle.GetEffect();
             FillThePool(pool, effectObject, 1);
-            power = attackStyle.GetPower() + card.GetDamageProperty();
             Initialize();
         }
 
@@ -119,11 +118,11 @@ namespace DungeonRush.Property
             this.attackStyle = attackStyle;
             effectObject = attackStyle.GetEffect();
             FillThePool(pool, effectObject, 2);
-            power = attackStyle.GetPower() + card.GetDamageProperty();
         }
         protected bool DoAttackAction(Move move, bool isTrap)
         {
             bool isCritic;
+            power = attackStyle.GetPower() + card.GetStats().Damage;
 
             if(!isTrap)
                 isCritic = IsCriticAttack();

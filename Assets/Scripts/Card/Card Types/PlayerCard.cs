@@ -50,15 +50,15 @@ namespace DungeonRush
             private IMovable movable;
             private IDamagable damagable;
             private IFighter fighter;
-            private Stats stats;
+            public Stats stats;
 
             protected override void Initialize()
             {
                 base.Initialize();
                 health = GetComponent<Health>();
                 mover = GetComponent<Mover>();
-                playerAttacker = GetComponent<PlayerAttacker>();
                 controller = GetComponent<PlayerController>();
+                playerAttacker = GetComponent<PlayerAttacker>();
                 statusController = GetComponent<StatusController>();
                 movable = GetComponent<IMovable>();
                 fighter = GetComponent<IFighter>();
@@ -123,6 +123,7 @@ namespace DungeonRush
                     stats = new Stats();
 
                     stats.MaximumHealth = cardProperties.cardStats.maximumHealth;
+                    stats.Damage = cardProperties.cardStats.damage;
                     stats.CriticChance = cardProperties.cardStats.criticChance;
                     stats.DodgeChance = cardProperties.cardStats.dodgeChance;
                     stats.LifeCount = cardProperties.cardStats.lifeCount;
