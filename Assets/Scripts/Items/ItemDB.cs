@@ -1,4 +1,5 @@
-﻿using DungeonRush.Skills;
+﻿using DungeonRush.Managers;
+using DungeonRush.Skills;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -26,9 +27,7 @@ namespace DungeonRush.Items
         }
 
         public List<Item> allItems = new List<Item>();
-        public List<Item> levelItems = new List<Item>();
-        public List<Item> lootedItems = new List<Item>();
-
+        public List<ItemList> levelItems = new List<ItemList>();
         public List<SkillObject> allSkills = new List<SkillObject>();
 
         public Item GetItem(string id)
@@ -65,21 +64,36 @@ namespace DungeonRush.Items
                 return null;
         }
 
-        public Item GetRandomItemByType(ItemType type)
+        public Item GetRandomItem(ItemType type)
         {
-            List<Item> it = new List<Item>();
-            for (int i = 0; i < allItems.Count; i++)
+            List<Item> items = new List<Item>();
+
+            for(int y = 0; y < levelItems.Count; y++)
             {
-                if (allItems[i].GetItemType() == type && !it.Contains(allItems[i]))
-                    it.Add(allItems[i]);
+                if (levelItems[y].difficulty == LoadManager.Instance.levelDifficulty)
+                {
+                    List<Item> lItems = new List<Item>(levelItems[y].items);
+                    for (var i = 0; i < levelItems[y].items.Count; i++)
+                    {
+                        if(lItems[i].GetItemType() == type && !items.Contains(lItems[i]))
+                            items.Add(lItems[i]);
+                    }
+                    break;
+                }
             }
 
-            var number = it.Count;
+            // for (int i = 0; i < allItems.Count; i++)
+            // {
+            //     if (allItems[i].GetItemType() == type && !items.Contains(allItems[i]))
+            //         items.Add(allItems[i]);
+            // }
 
+            var number = items.Count;
+            print(number);
             if (number > 0)
             {
-                var s = Random.Range(0, number);
-                return it[s];
+                var ran = Random.Range(0, number);
+                return items[ran];
             }
             else
                 return null;

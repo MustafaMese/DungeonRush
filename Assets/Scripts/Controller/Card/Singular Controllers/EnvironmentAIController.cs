@@ -107,6 +107,11 @@ namespace DungeonRush.Controller
             {
                 Notify();
                 card.Remove(card);
+                if (card.GetElementType() == ElementType.FIRE)
+                {
+                    var newCard = EnvironmentManager.Instance.GetEnvironmentCard(ElementType.BURNED);
+                    CardManager.Instance.AddCard(newCard, card.GetTile());
+                }
                 return true;
             }
             return false;

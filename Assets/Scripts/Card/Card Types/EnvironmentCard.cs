@@ -182,5 +182,6 @@ public enum ElementType
     GRASS,
     ELECTRICITY,
     POISON,
+    BURNED,
     NONE
 }

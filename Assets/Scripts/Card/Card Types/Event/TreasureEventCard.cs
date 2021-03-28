@@ -19,7 +19,7 @@ namespace DungeonRush.Cards
         protected override void Initialize()
         {
             base.Initialize();
-            item = ItemDB.Instance.GetRandomItemByType(iType);
+            item = ItemDB.Instance.GetRandomItem(iType);
             
             // TODO Potionların hatalarının çıkış noktası.
             if (iType == ItemType.MAX_HEALTH_INCREASER || iType == ItemType.POTION)

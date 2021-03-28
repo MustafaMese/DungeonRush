@@ -68,7 +68,7 @@ namespace DungeonRush.Controller
 
         #region ENVIRONMENT MENTHODS
 
-        private EnvironmentCard GetEnvironmentCard(ElementType element)
+        public EnvironmentCard GetEnvironmentCard(ElementType element)
         {
             for (var i = 0; i < elementPrefabs.Count; i++)
             {

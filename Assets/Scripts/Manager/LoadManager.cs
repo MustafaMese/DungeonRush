@@ -13,9 +13,10 @@ namespace DungeonRush.Managers
         [SerializeField] int veryHardFirst;
         [SerializeField] int bossFirst;
 
-        private Stack<int> difficultyStack = new Stack<int>();
-        public bool isFirstLevel;
+        [HideInInspector] public bool isFirstLevel;
+        public Difficulty levelDifficulty;
 
+        private Stack<int> difficultyStack = new Stack<int>();
         private static LoadManager instance = null;
         // Game Instance Singleton
         public static LoadManager Instance
@@ -54,6 +55,8 @@ namespace DungeonRush.Managers
             {
                 isFirstLevel = false;
                 int diffuculty = difficultyStack.Pop();
+                levelDifficulty = (Difficulty)diffuculty;
+
                 switch (diffuculty)
                 {
                     case (int)Difficulty.STARTING_POINT:
