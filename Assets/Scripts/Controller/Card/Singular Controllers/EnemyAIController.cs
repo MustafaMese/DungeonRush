@@ -92,14 +92,6 @@ namespace DungeonRush.Controller
                 preparingProcess.Finish();
                 var move = card.GetMove().GetCanMove();
 
-                float y = card.GetMove().GetTargetTile().GetCoordinate().y;
-
-                if (y < card.transform.position.y)
-                    customization.ChangeLayer(true);
-                else if (y > card.transform.position.y)
-                    customization.ChangeLayer(false);
-
-
                 if (move)
                     moveProcess.StartProcess();
                 else
@@ -147,6 +139,13 @@ namespace DungeonRush.Controller
             if (moveProcess.start)
             {
                 card.ExecuteMove();
+
+                float y = card.GetMove().GetTargetTile().GetCoordinate().y;
+                if (y < card.transform.position.y)
+                    customization.ChangeLayer(true);
+                else if (y > card.transform.position.y)
+                    customization.ChangeLayer(false);
+
                 moveProcess.ContinuingProcess(false);
             }
             else if (moveProcess.continuing)

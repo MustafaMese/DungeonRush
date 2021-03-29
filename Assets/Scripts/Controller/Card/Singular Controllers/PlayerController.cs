@@ -84,12 +84,6 @@ namespace DungeonRush.Controller
 
                     var move = player.GetMove().GetCanMove();
 
-                    float y = player.GetMove().GetTargetTile().GetCoordinate().y;
-                    if(y < player.transform.position.y)
-                        customization.ChangeLayer(true);
-                    else if(y > player.transform.position.y)
-                        customization.ChangeLayer(false);
-
                     if (move)
                         moveProcess.StartProcess();
                     else
@@ -137,6 +131,13 @@ namespace DungeonRush.Controller
             if (moveProcess.start)
             {
                 player.ExecuteMove();
+
+                float y = player.GetMove().GetTargetTile().GetCoordinate().y;
+                if (y < player.transform.position.y)
+                    customization.ChangeLayer(true);
+                else if (y > player.transform.position.y)
+                    customization.ChangeLayer(false);
+
                 moveProcess.ContinuingProcess(false);
             }
             else if (moveProcess.continuing)
