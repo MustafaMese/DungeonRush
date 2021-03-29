@@ -65,6 +65,16 @@ MonoBehaviour:
   eventMover: {fileID: 3258430279536405659}
   animator: {fileID: 8675051149343862436}
   testing: 0
+  stats:
+    maximumHealth: 0
+    damage: 0
+    criticChance: 0
+    dodgeChance: 0
+    lifeCount: 0
+    totalMoveCount: 0
+    instantMoveCount: 0
+    lootChance: 0
+    canBlockTraps: 0
 --- !u!114 &2523765715347771965
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -181,6 +191,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackStyle: {fileID: 11400000, guid: c105e26c3642cf440940ba93f17c88b3, type: 2}
+  power: 0
   isSkillUser: 1
   range: 0.8
   closingToEnemyTime: 0.1
@@ -1251,7 +1262,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: a19a677131bf04d42b2d20470032d694,
+      objectReference: {fileID: 21300000, guid: e995cfc3f978a234997dea0a1f96f371,
         type: 3}
     - target: {fileID: 8502113235681636700, guid: 8ac7bc9397342904a9fd5cc69de7927a,
         type: 3}
@@ -1423,22 +1434,22 @@ PrefabInstance:
     - target: {fileID: 9177131743038528313, guid: 8ac7bc9397342904a9fd5cc69de7927a,
         type: 3}
       propertyPath: m_Bounds.m_Center.x
-      value: -0.0068564713
+      value: -0.16686583
       objectReference: {fileID: 0}
     - target: {fileID: 9177131743038528313, guid: 8ac7bc9397342904a9fd5cc69de7927a,
         type: 3}
       propertyPath: m_Bounds.m_Center.y
-      value: 0.06341116
+      value: 0.23169163
       objectReference: {fileID: 0}
     - target: {fileID: 9177131743038528313, guid: 8ac7bc9397342904a9fd5cc69de7927a,
         type: 3}
       propertyPath: m_Bounds.m_Extent.x
-      value: 0.1754907
+      value: 0.30672175
       objectReference: {fileID: 0}
     - target: {fileID: 9177131743038528313, guid: 8ac7bc9397342904a9fd5cc69de7927a,
         type: 3}
       propertyPath: m_Bounds.m_Extent.y
-      value: 0.23833238
+      value: 0.32595736
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8ac7bc9397342904a9fd5cc69de7927a, type: 3}
