@@ -62,7 +62,7 @@ namespace DungeonRush.UI
             s = 1.ToString() + DUNGEON;
             dungeonText.text = s;
 
-            s = GOLD + player.Coins.ToString();
+            s = GOLD + player.Gold.ToString();
             goldText.text = s;
 
             s = XP + player.Experience.ToString();
@@ -79,7 +79,7 @@ namespace DungeonRush.UI
         {
             PlayerUtility utilities = SavingSystem.LoadUtilities();
             int xp = player.Experience + utilities.totalXp;
-            int gold = player.Coins + utilities.gold;
+            int gold = player.Gold + utilities.gold;
             SavingSystem.SaveUtilities(xp, gold);
         }
     }

@@ -7,7 +7,6 @@ using UnityEngine;
 
 namespace DungeonRush.Controller
 {
-    // TODO bu sınıfı optimize et.
     public class EnvironmentManager : MonoBehaviour, ICardController
     {
         private static EnvironmentManager instance;
@@ -46,7 +45,6 @@ namespace DungeonRush.Controller
 
         private void Update()
         {
-            //if (playerController == null) playerController = FindObjectOfType<PlayerController>();
 
             if (IsRunning())
             {

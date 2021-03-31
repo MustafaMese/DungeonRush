@@ -24,7 +24,7 @@ public class PlayerData
     {
         maxHealth = player.GetMaxHealth(); 
         currentHealth = player.GetHealth();
-        gold = player.Coins;
+        gold = player.Gold;
         xp = player.Experience;
 
         criticChance = player.GetStats().CriticChance;

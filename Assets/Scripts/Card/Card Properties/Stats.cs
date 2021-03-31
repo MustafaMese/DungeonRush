@@ -1,16 +1,15 @@
 
-[System.Serializable]
 public class Stats
 {
-    public int maximumHealth;
-    public int damage;
-    public int criticChance;
-    public int dodgeChance;
-    public int lifeCount;
-    public int totalMoveCount;
-    public int instantMoveCount;
-    public int lootChance;
-    public bool canBlockTraps;
+    private int maximumHealth;
+    private int damage;
+    private int criticChance;
+    private int dodgeChance;
+    private int lifeCount;
+    private int totalMoveCount;
+    private int instantMoveCount;
+    private int lootChance;
+    private bool canBlockTraps;
 
     public int MaximumHealth { get => maximumHealth; set => maximumHealth = value; }
     public int Damage { get => damage; set => damage = value; }

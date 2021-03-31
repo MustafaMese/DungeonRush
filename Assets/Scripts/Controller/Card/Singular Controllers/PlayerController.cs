@@ -229,7 +229,7 @@ namespace DungeonRush.Controller
             player.SetMaxHealth(data.maxHealth);
             player.SetCurrentHealth(data.currentHealth);
             player.GetComponent<Health>().InitializeBar();
-            player.Coins = data.gold;
+            player.Gold = data.gold;
             player.Experience = data.xp;
 
             player.GetStats().CriticChance = data.criticChance;

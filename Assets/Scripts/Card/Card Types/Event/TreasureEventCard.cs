@@ -21,7 +21,6 @@ namespace DungeonRush.Cards
             base.Initialize();
             item = ItemDB.Instance.GetRandomItem(iType);
             
-            // TODO Potionların hatalarının çıkış noktası.
             if (iType == ItemType.MAX_HEALTH_INCREASER || iType == ItemType.POTION)
                 sprite.sprite = item.GetPrimarySprite();
         }

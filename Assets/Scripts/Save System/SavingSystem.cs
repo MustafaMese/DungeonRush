@@ -14,7 +14,6 @@ namespace DungeonRush.Saving
         private const string propertyPath = "/property.sav";
         private const string utilityPath = "/utility.sav";
 
-        // TODO xp ve goldu loadla topla ve savele
         public static void SaveUtilities(int xp, int gold)
         {
             BinaryFormatter formatter = new BinaryFormatter();

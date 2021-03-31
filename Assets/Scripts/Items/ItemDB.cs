@@ -70,7 +70,7 @@ namespace DungeonRush.Items
 
             for(int y = 0; y < levelItems.Count; y++)
             {
-                if (levelItems[y].difficulty == LoadManager.Instance.levelDifficulty)
+                if ((int)levelItems[y].difficulty <= (int)LoadManager.Instance.levelDifficulty)
                 {
                     List<Item> lItems = new List<Item>(levelItems[y].items);
                     for (var i = 0; i < levelItems[y].items.Count; i++)

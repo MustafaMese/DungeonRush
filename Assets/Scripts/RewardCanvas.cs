@@ -81,7 +81,6 @@ namespace DungeonRush.UI
             
             isChosen = true;
             SkillObject skill = FindSkill(button);
-            // TODO Burayı düzeltmeye çalış.
             MoveSchedular.Instance.playerController.GetComponent<SkillUser>().AddSkillToList(skill);
             StartCoroutine(LevelTransition());
         }

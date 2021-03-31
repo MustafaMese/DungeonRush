@@ -75,6 +75,8 @@ namespace DungeonRush.Property
             }
             else
             {
+                CollectableManager.Instance.GainXpAndGold(transform.position, GetMaxHealth());
+
                 EnemyAIController controller = GetComponent<EnemyAIController>();
                 controller.Stop();
                 CardManager.Unsubscribe(card);

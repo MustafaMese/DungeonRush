@@ -51,8 +51,9 @@ namespace DungeonRush.Managers
             objectPool.Fill(coinCount, transform);
         }
 
-        private void Animate(Vector3 collectedCoinPosition, int amount)
+        private void Animate(Vector3 collectedCoinPosition)
         {
+            int amount = Random.Range(1, 5);
             for (int i = 0; i < amount; i++)
             {
                 GameObject coin = objectPool.Pull(transform);
@@ -69,15 +70,21 @@ namespace DungeonRush.Managers
             yield return new WaitForSeconds(duration);
             coin.SetActive(false);
             objectPool.Push(coin);
-            player.Coins++;
-            int sum = Random.Range(1, 3);
-            player.Experience += sum;
         }
 
-        public void AddCoins(Vector3 collectedCoinPosition, int level)
+        public void GainXpAndGold(Vector3 collectedCoinPosition, int maxHealth)
         {
-            print("1");
-            Animate(collectedCoinPosition, level);
+            CalculateXpAndGold(maxHealth);
+            Animate(collectedCoinPosition);
+        }
+
+        private void CalculateXpAndGold(int maxHealth)
+        {
+            int gold = (maxHealth / 5) * 2;
+            int xp = (maxHealth / 7) * 2;
+
+            player.Gold += gold;
+            player.Experience += xp;
         }
     }
 }

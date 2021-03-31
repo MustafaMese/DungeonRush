@@ -1,10 +1,5 @@
 ﻿using DG.Tweening;
-using DungeonRush.Attacking;
-using DungeonRush.Cards;
 using DungeonRush.Data;
-using DungeonRush.Field;
-using DungeonRush.Items;
-using DungeonRush.Managers;
 using DungeonRush.Skills;
 using System.Collections;
 using UnityEngine;
@@ -49,21 +44,6 @@ namespace DungeonRush.Property
             MoveToAttackRange();
         }
 
-        private void Damage(Move move)
-        {
-            Tile target = move.GetTargetTile();
-            Card targetCard = target.GetCard();
-            
-            if(targetCard != null)
-            {
-                int level = 0;
-                level = move.GetTargetTile().GetCard().GetLevel();
-                if (targetCard.GetDamagable().GetHealth() <= 0)
-                    CollectableManager.Instance.AddCoins(target.transform.position, level);
-            }
-            AttackAction(move);
-        }
-
         public int GetDamage()
         {
             return power;
@@ -73,7 +53,7 @@ namespace DungeonRush.Property
         {
             UpdateAnimation(false, false);
             UpdateAnimation(true, true);
-            Damage(move);
+            AttackAction(move);
             yield return new WaitForSeconds(damageTime);
             move.GetCard().transform.DOMove(move.GetCardTile().GetCoordinate(), getBackTime).OnComplete(() => FinaliseAttack());
         }

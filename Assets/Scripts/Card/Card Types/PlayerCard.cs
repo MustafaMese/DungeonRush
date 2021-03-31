@@ -24,18 +24,18 @@ namespace DungeonRush
             [SerializeField] Animator animator = null;
             [SerializeField] bool testing = false;
 
-            private int experience = 0;
+            public int experience = 0;
             public int Experience
             {
                 get { return experience; }
                 set { experience = value; }
             }
 
-            private int coins = 0;
-            public int Coins
+            public int gold = 0;
+            public int Gold
             {
-                get { return coins; }
-                set { coins = value; }
+                get { return gold; }
+                set { gold = value; }
             }
 
             private bool isEventMove = false;
@@ -50,7 +50,7 @@ namespace DungeonRush
             private IMovable movable;
             private IDamagable damagable;
             private IFighter fighter;
-            public Stats stats;
+            private Stats stats;
 
             protected override void Initialize()
             {

@@ -87,7 +87,6 @@ namespace DungeonRush.Controller
             }
         }
 
-        // TODO arada can fulleniyo neden?
         private void PrepareMoveProcess()
         {
             if(CheckDefinity()) return;
