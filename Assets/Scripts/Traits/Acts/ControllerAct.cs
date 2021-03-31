@@ -33,7 +33,7 @@ namespace DungeonRush.Traits
 
                 if (s.StatusType == StatusType.DISARMED)
                     canAttack = false;
-                else if (s.StatusType == StatusType.ENTANGLED)
+                else if (s.StatusType == StatusType.ENTANGLED || s.StatusType == StatusType.FROZEN)
                     canMove = false;
                 else if (s.StatusType == StatusType.STUNNED)
                 {

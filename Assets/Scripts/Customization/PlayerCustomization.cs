@@ -25,8 +25,6 @@ namespace DungeonRush.Customization
 
         public void ChangeBoneSprite(BoneType bone, Sprite sprite)
         {
-            print("Benim adım osman");
-
             switch (bone)
             {
                 case BoneType.HEAD:

@@ -1,0 +1,56 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2759927184272906026
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8618571823793473258}
+  - component: {fileID: 6034007988081895825}
+  m_Layer: 0
+  m_Name: Bleeding Impact
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8618571823793473258
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2759927184272906026}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1, y: 2, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6034007988081895825
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2759927184272906026}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b232c877b447f54cb8290f6728c0d1c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  impactOnCards: 1
+  impactOnTiles: 0
+  status: {fileID: 11400000, guid: 57258ccd0b8f05f47b1577ab88ffdd3d, type: 2}
+  elementType: 8
+  containedPoints:
+  - {x: 0, y: 0}
+  effect: {fileID: 3251895585649527294, guid: 60273ae6085f6c745a0edecf608fb58c, type: 3}
+  effectTime: 1.5
+  objectCount: 1
+  power: 0
+  usingTextPopup: 1

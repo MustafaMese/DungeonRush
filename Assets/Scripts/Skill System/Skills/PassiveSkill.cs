@@ -38,8 +38,6 @@ public abstract class PassiveSkill : Skill
     private bool CalculateChance()
     {
         int number = Random.Range(0, 101);
-        if(chanceFactor <= number)
-            return true;
-        return false;
+        return chanceFactor >= number;
     }
 }
