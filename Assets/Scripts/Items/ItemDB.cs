@@ -27,6 +27,8 @@ namespace DungeonRush.Items
         }
 
         public List<Item> allItems = new List<Item>();
+        public List<Item> weapons = new List<Item>();
+        public List<Item> armors = new List<Item>();
         public List<ItemList> levelItems = new List<ItemList>();
         public List<SkillObject> allSkills = new List<SkillObject>();
 

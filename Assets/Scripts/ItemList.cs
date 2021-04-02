@@ -6,5 +6,5 @@ using DungeonRush.Items;
 public class ItemList
 {
     public List<Item> items;
-    public Difficulty difficulty;   
+    public Difficulty difficulty;
 }

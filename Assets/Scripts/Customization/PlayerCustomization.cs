@@ -18,7 +18,7 @@ namespace DungeonRush.Customization
         [SerializeField] SpriteRenderer legRight;
         [SerializeField] SpriteRenderer legLeft;
         [SerializeField] SpriteRenderer weaponRight;
-        [SerializeField] SpriteRenderer weaponleft;
+        [SerializeField] SpriteRenderer weaponLeft;
         [SerializeField] SpriteRenderer shadow;
         
         [SerializeField] GameObject skin;
@@ -41,9 +41,11 @@ namespace DungeonRush.Customization
                     break;
                 case BoneType.WEAPON_RIGHT:
                     weaponRight.sprite = sprite;
+                    weaponLeft.sprite = null;
                     break;
                 case BoneType.WEAPON_LEFT:
-                    weaponleft.sprite = sprite;
+                    weaponLeft.sprite = sprite;
+                    weaponRight.sprite = null;
                     break;
             }   
         }
@@ -62,7 +64,7 @@ namespace DungeonRush.Customization
                     break;
                 case BoneType.WEAPON_DUAL:
                     weaponRight.sprite = rightSprite;
-                    weaponleft.sprite = leftSprite;
+                    weaponLeft.sprite = leftSprite;
                     break;
             }
         }
@@ -102,7 +104,7 @@ namespace DungeonRush.Customization
             ChangeLayer(legRight, top, multiplier);
             ChangeLayer(legLeft, top, multiplier);
             ChangeLayer(weaponRight, top, multiplier);
-            ChangeLayer(weaponleft, top, multiplier);
+            ChangeLayer(weaponLeft, top, multiplier);
             ChangeLayer(shadow, top, multiplier);
 
             if (characterHUD != null)

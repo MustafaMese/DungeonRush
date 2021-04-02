@@ -13,7 +13,13 @@ namespace DungeonRush.Items
         [SerializeField] Sprite UISprite = null;
         [SerializeField] Sprite primarySprite = null;
 
+        [SerializeField] bool purchased;
+        [SerializeField] int price;
+
         string ID = Guid.NewGuid().ToString("N");
+
+        public bool Purchased { get => purchased; set => purchased = value; }
+        public int Price { get => price; set => price = value; }
 
         public abstract int GetPower();
         public abstract void Execute(Card card);
