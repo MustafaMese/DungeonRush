@@ -7,7 +7,10 @@ namespace DungeonRush.Items
     [CreateAssetMenu(menuName = "ScriptableObjects/Item/Armor")]
     public class Armor : Item
     {
-        [SerializeField] string explanation;
+        [Multiline(2), SerializeField] string explanation;
+
+        [Header("Armor Properties")]
+        [Space(25f)]
         [SerializeField] int power;
         [SerializeField] BoneType bone;
         [SerializeField] List<ArmorImpact> impacts = new List<ArmorImpact>();

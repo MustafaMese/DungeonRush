@@ -11,14 +11,13 @@ namespace DungeonRush.Skills
     public abstract class Skill : MonoBehaviour, ISkill
     {
         [Multiline(2)]
-        [Tooltip("A string using the MultiLine attribute")]
         [SerializeField]
         private string notes = "- General options and effect options will be using for every skills. \n" +
             "- isAttacker determines using at attacking or moving action.";
 
         [Header("General Options")]
         [SerializeField] private string skillName;
-        [SerializeField] private string explanation;
+        [Multiline(2), SerializeField] private string explanation;
         [SerializeField] private int cooldown;
         [SerializeField] private bool isAttacker;
         [SerializeField] protected bool isUsingTextPopup;

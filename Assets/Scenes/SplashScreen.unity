@@ -276,7 +276,7 @@ GameObject:
   - component: {fileID: 224440211}
   - component: {fileID: 224440210}
   m_Layer: 5
-  m_Name: Title (1)
+  m_Name: Info Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -298,8 +298,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 591.11414, y: 272.54712}
+  m_AnchoredPosition: {x: 0, y: -84.4}
+  m_SizeDelta: {x: 591.11414, y: 406.97736}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &224440210
 MonoBehaviour:
@@ -353,9 +353,9 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 32
   m_HorizontalAlignment: 2
-  m_VerticalAlignment: 512
+  m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -531,6 +531,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf48340e9ab993a4e9e4912106ff5e4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoText: {fileID: 224440210}
+  info: {fileID: 11400000, guid: 467664360e648dc4e8eb871f1e1ee369, type: 2}
 --- !u!4 &1192337454
 Transform:
   m_ObjectHideFlags: 0

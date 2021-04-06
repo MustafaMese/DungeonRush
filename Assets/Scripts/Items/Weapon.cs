@@ -9,10 +9,12 @@ namespace DungeonRush.Items
     [CreateAssetMenu(menuName = "ScriptableObjects/Item/Weapon")]
     public class Weapon : Item
     {
-        [SerializeField] string explanation;
+        [Multiline(2), SerializeField] string explanation;
+        
+        [Header("Weapon Properties")]
+        [Space(25f)]
         [SerializeField] AttackStyle attackStyle;
         [SerializeField] BoneType bone;
-        [Space]
         [Header("If this is a dual item, then fill the following varible.")]
         [SerializeField] Sprite secondarySprite;
 

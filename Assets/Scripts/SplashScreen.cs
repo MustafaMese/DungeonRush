@@ -1,20 +1,22 @@
 ﻿using DungeonRush.Managers;
-using DungeonRush.UI;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using TMPro;
 
 public class SplashScreen : MonoBehaviour
 {
+    [SerializeField] TextMeshProUGUI infoText;
+    [SerializeField] InfoText info;
+
     void Start()
     {
+        infoText.text = info.GetRandom();
         StartCoroutine(Next());
     }
 
     private IEnumerator Next()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(3f);
         GameManager.Instance.SetGameState(GameState.LEVEL_TRANSITION);
     }
 }
