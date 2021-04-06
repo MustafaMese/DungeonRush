@@ -12,6 +12,7 @@ public class Impact : MonoBehaviour
 {
     [Header("General Settings")]
     [Space]
+    public string impactName;
     [SerializeField] bool impactOnCards;
     [SerializeField] bool impactOnTiles;
     [SerializeField, Tooltip("Do you need status for this impact?")] StatusObject status;

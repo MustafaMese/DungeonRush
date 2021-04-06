@@ -1,7 +1,6 @@
 ﻿using DungeonRush.Cards;
 using DungeonRush.Items;
 using DungeonRush.Skills;
-using UnityEngine;
 
 [System.Serializable]
 public class PlayerData

@@ -7,6 +7,7 @@ namespace DungeonRush.Items
     [CreateAssetMenu(menuName = "ScriptableObjects/Item/Armor")]
     public class Armor : Item
     {
+        [SerializeField] string explanation;
         [SerializeField] int power;
         [SerializeField] BoneType bone;
         [SerializeField] List<ArmorImpact> impacts = new List<ArmorImpact>();
@@ -78,6 +79,16 @@ namespace DungeonRush.Items
         public override Sprite GetSecondarySprite()
         {
             return secondarySprite;
+        }
+
+        public override string GetExplanation()
+        {
+            return explanation;
+        }
+
+        public List<ArmorImpact> GetImpacts()
+        {
+            return impacts;
         }
     }
 }

@@ -63,14 +63,29 @@ namespace DungeonRush
 
             public void TakeItem(Item loot, bool openPanel = true)
             {
-                if (loot.GetItemType() == ItemType.WEAPON || loot.GetItemType() == ItemType.ARMOR)
+                if(loot.GetItemType() == ItemType.WEAPON)
                 {
-                    BoneType lootBone = loot.GetBoneType();
-                    if (items[lootBone] != null)
-                        UIManager.Instance.EnableChoiceCanvas(items[loot.GetBoneType()], loot, this);
+                    if (items[BoneType.WEAPON_LEFT] != null)
+                        UIManager.Instance.EnableChoiceCanvas(items[BoneType.WEAPON_LEFT], loot, this);
+                    else if(items[BoneType.WEAPON_RIGHT] != null)
+                        UIManager.Instance.EnableChoiceCanvas(items[BoneType.WEAPON_RIGHT], loot, this);
+                    else if(items[BoneType.WEAPON_DUAL] != null)
+                        UIManager.Instance.EnableChoiceCanvas(items[BoneType.WEAPON_DUAL], loot, this);
                     else
                     {
-                        if(openPanel)
+                        if (openPanel)
+                            UIManager.Instance.EnableItemCanvas(loot);
+                        ExecuteItem(loot, loot.GetBoneType());
+                    }
+                }
+                else if(loot.GetItemType() == ItemType.ARMOR)
+                {
+                    BoneType lootBone = loot.GetBoneType();
+                    if (items[lootBone] != null )
+                        UIManager.Instance.EnableChoiceCanvas(items[lootBone], loot, this);
+                    else
+                    {
+                        if (openPanel)
                             UIManager.Instance.EnableItemCanvas(loot);
                         ExecuteItem(loot, lootBone);
                     }

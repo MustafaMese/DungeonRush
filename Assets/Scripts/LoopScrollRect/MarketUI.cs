@@ -65,8 +65,6 @@ public class MarketUI : MonoBehaviour
 		item.priceText.text = item.item.Price.ToString();
 		item.icon.sprite = item.item.GetUISprite();
 
-		print(gold < item.item.Price);
-
         Color c = item.shadow.color;
 		if(gold < item.item.Price)
 			c.a = 1;
@@ -95,22 +93,31 @@ public class MarketUI : MonoBehaviour
 			var utilities = SavingSystem.LoadUtilities();
 			utilities.gold = gold;
 			SavingSystem.SaveUtilities(utilities.totalXp, utilities.gold);
+
+			var data = SavingSystem.LoadItems();
+			data.purchasedIDs.Add(item.item.GetID());
+			SavingSystem.SaveItems(data);
+
+            scrollView.ItemCallback = UpdateItem;
+            seciliItemIndex = item.CurrentRow;
+            scrollView.RefreshCells();
+
+			if(item.item.GetItemType() == ItemType.WEAPON)
+            	Refresh(false);
+			else if(item.item.GetItemType() == ItemType.ARMOR)
+				Refresh(true);
 		}
 
-        scrollView.ItemCallback = UpdateItem;
-		seciliItemIndex = item.CurrentRow;
-		scrollView.RefreshCells();
+        
 	}
 
 	private void Delete()
 	{
-		print("bum");
-
         itemInfo.Clear();
         scrollView.ClearCells();
 	}
 
-	public void PressGeneralButton(bool isArmor)
+	public void Refresh(bool isArmor)
 	{
 		Delete();
 		if(!isArmor)

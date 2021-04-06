@@ -6,33 +6,26 @@ namespace DungeonRush.Customization
 {
     public class EnvironmentCustomization : MonoBehaviour, ICustomization
     {
-        [SerializeField] ParticleSystemRenderer[] particles;
-        [SerializeField] bool isParticle = true;
-        [SerializeField] SpriteRenderer[] spriteRenderers;
+        [SerializeField] List<ParticleSystemRenderer> particles = new List<ParticleSystemRenderer>();
+        [SerializeField] List<SpriteRenderer> spriteRenderers = new List<SpriteRenderer>();
 
         public void ChangeLayer(bool top, int multiplier = 1)
         {
-            if(isParticle)
+            for (var i = 0; i < particles.Count; i++)
             {
-                for (var i = 0; i < particles.Length; i++)      
-                {
-                    if (top)
-                        particles[i].sortingOrder += 6 * multiplier;
-                    else
-                        particles[i].sortingOrder -= 6 * multiplier;
-                }
+                if (top)
+                    particles[i].sortingOrder += 6 * multiplier;
+                else
+                    particles[i].sortingOrder -= 6 * multiplier;
             }
-            else
+
+            for (var i = 0; i < spriteRenderers.Count; i++)
             {
-                for (var i = 0; i < spriteRenderers.Length; i++)
-                {
-                    if (top)
-                        spriteRenderers[i].sortingOrder += 6 * multiplier;
-                    else
-                        spriteRenderers[i].sortingOrder -= 6 * multiplier;
-                }
-            }
-            
+                if (top)
+                    spriteRenderers[i].sortingOrder += 6 * multiplier;
+                else
+                    spriteRenderers[i].sortingOrder -= 6 * multiplier;
+            } 
         }
 
         public void ChangeSkinState(bool state)

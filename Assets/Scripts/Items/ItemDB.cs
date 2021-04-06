@@ -1,4 +1,5 @@
 ﻿using DungeonRush.Managers;
+using DungeonRush.Saving;
 using DungeonRush.Skills;
 using System.Collections.Generic;
 using UnityEngine;
@@ -24,6 +25,12 @@ namespace DungeonRush.Items
                 Instance = this;
                 DontDestroyOnLoad(this);
             }
+
+            ItemsData data = SavingSystem.LoadItems();
+            for (var i = 0; i < data.purchasedIDs.Count; i++)
+                for (var y = 0; y < allItems.Count; y++)
+                    if (data.GetID(allItems[y].GetID()))
+                        allItems[y].Purchased = true;
         }
 
         public List<Item> allItems = new List<Item>();

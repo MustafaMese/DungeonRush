@@ -13,48 +13,37 @@ namespace DungeonRush.UI
     {
         [SerializeField] string text = "You took the ";
 
-        [SerializeField] TextMeshProUGUI textMesh;
+        [SerializeField] TextMeshProUGUI nameText;
+        [SerializeField] TextMeshProUGUI explanationText;
         [SerializeField] GameObject panel;
         [SerializeField] Image sprite;
-
-        private string pickedObjectName = "";
 
         public void EnablePanel(Item i)
         {
             panel.SetActive(true);
-            SetName(i.GetName());
             SetSprite(i.GetUISprite());
-            SetText();
+            SetText(i.GetName(), i.GetExplanation());
         }
 
         public void EnablePanel(Skill s)
         {
-           // UIManager.Instance.Pause();
             panel.SetActive(true);
-            SetName(s.SkillName);
             SetSprite(s.IconBig);
-            SetText();
+            SetText(s.SkillName, s.Explanation);
         }
 
-        private void SetText()
+        private void SetText(string objName, string objExp)
         {
-            string s = text + pickedObjectName;
-            textMesh.text = s;
+            nameText.text = objName;
+            explanationText.text = objExp;
         }
 
         public void DisablePanel()
         {
-            pickedObjectName = "";
             sprite.sprite = null;
             panel.SetActive(false);
 
-            //UIManager.Instance.Resume();
             GameManager.Instance.SetGameState(GameState.PLAY);
-        }
-
-        private void SetName(string n)
-        {
-            pickedObjectName = n;
         }
 
         private void SetSprite(Sprite i)

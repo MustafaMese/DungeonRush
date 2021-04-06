@@ -2,12 +2,14 @@ using UnityEngine;
 using DungeonRush.Attacking;
 using DungeonRush.Cards;
 using DungeonRush.Property;
+using System.Collections.Generic;
 
 namespace DungeonRush.Items
 {
     [CreateAssetMenu(menuName = "ScriptableObjects/Item/Weapon")]
     public class Weapon : Item
     {
+        [SerializeField] string explanation;
         [SerializeField] AttackStyle attackStyle;
         [SerializeField] BoneType bone;
         [Space]
@@ -45,6 +47,16 @@ namespace DungeonRush.Items
         public override Sprite GetSecondarySprite()
         {
             return secondarySprite;
+        }
+
+        public override string GetExplanation()
+        {
+            return explanation;
+        }
+
+        public List<Impact> GetImpacts()
+        {
+            return attackStyle.GetImpacts();
         }
     }
 }

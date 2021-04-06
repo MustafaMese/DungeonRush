@@ -37,9 +37,9 @@ namespace DungeonRush.Cards
             fighter = GetComponent<IFighter>();
             customization = GetComponent<ICustomization>();
 
-            if (transform.position.y < 0)
+            if (transform.position.y > 0)
                 customization.ChangeLayer(false, (int)transform.position.y);
-            else if (transform.position.y > 0)
+            else if (transform.position.y < 0)
                 customization.ChangeLayer(true, (int)transform.position.y);
         }
 

@@ -18,6 +18,7 @@ namespace DungeonRush.Skills
 
         [Header("General Options")]
         [SerializeField] private string skillName;
+        [SerializeField] private string explanation;
         [SerializeField] private int cooldown;
         [SerializeField] private bool isAttacker;
         [SerializeField] protected bool isUsingTextPopup;
@@ -48,6 +49,7 @@ namespace DungeonRush.Skills
         public Sprite IconSmall { get => iconSmallForActivePanel; }
         public Sprite IconBig { get => iconBigForPickCanvas; }
         public string SkillName { get => skillName; set => skillName = value; }
+        public string Explanation { get => explanation; set => explanation = value; }
 
         public abstract void Execute(Move move);
         public abstract void Adjust(Move move);

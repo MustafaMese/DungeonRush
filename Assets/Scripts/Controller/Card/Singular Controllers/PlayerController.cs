@@ -37,9 +37,9 @@ namespace DungeonRush.Controller
             statusController = player.GetComponent<StatusController>();
             skillUser = player.GetComponent<SkillUser>();
 
-            if(transform.position.y < 0)
+            if(transform.position.y > 0)
                 customization.ChangeLayer(false, (int)transform.position.y);
-            else if (transform.position.y > 0)
+            else if (transform.position.y < 0)
                 customization.ChangeLayer(true, (int)transform.position.y);
            
             MoveSchedular.Instance.playerController = this;
@@ -133,11 +133,15 @@ namespace DungeonRush.Controller
                 player.ExecuteMove();
 
                 float y = player.GetMove().GetTargetTile().GetCoordinate().y;
-                if (y < player.transform.position.y)
-                    customization.ChangeLayer(true);
-                else if (y > player.transform.position.y)
-                    customization.ChangeLayer(false);
 
+                if(player.GetMove().GetMoveType() != MoveType.EVENT)
+                {
+                    if (y < player.transform.position.y)
+                        customization.ChangeLayer(true);
+                    else if (y > player.transform.position.y)
+                        customization.ChangeLayer(false);
+                }
+                
                 moveProcess.ContinuingProcess(false);
             }
             else if (moveProcess.continuing)

@@ -13,15 +13,10 @@ namespace DungeonRush.UI
 {
     public class DefeatedPanel : MonoBehaviour, ICanvasController
     {
-        private const string DUNGEON = ". dungeon";
-        private const string ENCOUNTER = ". encounter";
-        private const string GOLD = "Gold: ";
-        private const string XP = "Experience: ";
+        private const string GOLD = "Earned Gold: ";
+        private const string XP = "Earned Experience: ";
 
         [SerializeField] GameObject defeatedPanel;
-
-        [SerializeField] TextMeshProUGUI dungeonText;
-        [SerializeField] TextMeshProUGUI encounterText;
         [SerializeField] TextMeshProUGUI goldText;
         [SerializeField] TextMeshProUGUI xpText;
         [SerializeField] Button button;
@@ -55,12 +50,6 @@ namespace DungeonRush.UI
         {
             string s = "";
             int index = SceneManager.GetActiveScene().buildIndex + 1;
-
-            s = index.ToString() + ENCOUNTER;
-            encounterText.text = s;
-
-            s = 1.ToString() + DUNGEON;
-            dungeonText.text = s;
 
             s = GOLD + player.Gold.ToString();
             goldText.text = s;

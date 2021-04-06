@@ -1,7 +1,5 @@
 ﻿using DungeonRush.Cards;
 using DungeonRush.Data;
-using System.Collections;
-using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
@@ -13,6 +11,17 @@ namespace DungeonRush.Saving
         private const string instantPath = "/playerInstant.sav";
         private const string propertyPath = "/property.sav";
         private const string utilityPath = "/utility.sav";
+        private const string itemsPath = "/items.sav";
+
+        public static void SaveItems(ItemsData data)
+        {
+            BinaryFormatter formatter = new BinaryFormatter();
+            string path = Application.persistentDataPath + itemsPath;
+            FileStream stream = new FileStream(path, FileMode.Create);
+            ItemsData items = new ItemsData(data.purchasedIDs);
+            formatter.Serialize(stream, items);
+            stream.Close();
+        }
 
         public static void SaveUtilities(int xp, int gold)
         {
@@ -44,7 +53,33 @@ namespace DungeonRush.Saving
             stream.Close();
         }
 
-        public static DungeonRush.Data.PlayerUtility LoadUtilities()
+        public static ItemsData LoadItems()
+        {
+            string path = Application.persistentDataPath + itemsPath;
+            try
+            {
+                if (File.Exists(path))
+                {
+                    BinaryFormatter formatter = new BinaryFormatter();
+                    FileStream stream = new FileStream(path, FileMode.Open);
+                    ItemsData data = formatter.Deserialize(stream) as ItemsData;
+                    stream.Close();
+                    return data;
+                }
+                else
+                {
+                    ItemsData data = new ItemsData(null);
+                    return data;
+                }
+            }
+            catch (System.Exception)
+            {
+                ItemsData data = new ItemsData(null);
+                return data;
+            }
+        }
+
+        public static PlayerUtility LoadUtilities()
         {
             string path = Application.persistentDataPath + utilityPath;
             try

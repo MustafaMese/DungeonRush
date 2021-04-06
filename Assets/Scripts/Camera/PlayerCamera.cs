@@ -21,7 +21,7 @@ namespace DungeonRush.Camera
             Instance = this;
         }
 
-        [SerializeField] float duration = 0.5f;
+        [SerializeField] float moveDuration = 0.5f;
 
         private void Start()
         {
@@ -36,8 +36,29 @@ namespace DungeonRush.Camera
 
             // TODO Burada bi randomizasyon uygulanabilir.
             targetPosition = new Vector3(targetPosition.x, targetPosition.y + 1, transform.position.z);
-            transform.DOMove(targetPosition, duration);
+            transform.DOMove(targetPosition, moveDuration);
             //SoundManager.Instance.transform.position = transform.position;
+        }
+
+        public void CameraShake(float duration, float magnitude)
+        {
+            StartCoroutine(Shake(duration, magnitude));
+        }
+
+        private IEnumerator Shake(float duration, float magnitude)
+        {
+            Vector3 originalPos = transform.localPosition;
+            float elapsed = 0.0f;
+            while(elapsed < duration)
+            {
+                float x = Random.Range(-1f, 1f) * magnitude;
+                float y = Random.Range(-1f, 1f) * magnitude;
+
+                transform.localPosition = new Vector3(originalPos.x + x, originalPos.y + y, originalPos.z);
+                elapsed += Time.deltaTime;
+                yield return null;
+            }
+            transform.localPosition = originalPos;
         }
 
     }

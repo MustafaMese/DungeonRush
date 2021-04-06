@@ -8,21 +8,24 @@ namespace DungeonRush.Items
 {
     public abstract class Item : ScriptableObject, IItem
     {
+        string ID = Guid.NewGuid().ToString("N");
+
         [SerializeField] string itemName;
         [SerializeField] ItemType type;
         [SerializeField] Sprite UISprite = null;
         [SerializeField] Sprite primarySprite = null;
-
         [SerializeField] bool purchased;
         [SerializeField] int price;
 
-        string ID = Guid.NewGuid().ToString("N");
+        public abstract int GetPower();
+        public abstract void Execute(Card card);
+
+        public virtual BoneType GetBoneType() { return BoneType.NONE; }
+        public virtual Sprite GetSecondarySprite() { return null; }
+        public virtual string GetExplanation() { return " "; }
 
         public bool Purchased { get => purchased; set => purchased = value; }
         public int Price { get => price; set => price = value; }
-
-        public abstract int GetPower();
-        public abstract void Execute(Card card);
 
         public ItemType GetItemType()
         {
@@ -48,9 +51,6 @@ namespace DungeonRush.Items
         {
             return ID;
         }
-
-        public virtual BoneType GetBoneType() { return BoneType.NONE; }
-        public virtual Sprite GetSecondarySprite() { return null; }
     }
 }
 

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using DungeonRush.Items;
 using DungeonRush.Managers;
@@ -59,13 +60,12 @@ namespace DungeonRush.UI
                     powerImage2.sprite = weaponSprite;
                     break;
             }
-            
         }
 
         public void EnablePanel(Item item, Item loot, ItemUser itemUser)
         {
-            SetItemPanel(item.GetUISprite(), item.GetName(), item.GetPower(), " ", " Bu kılıç kadim zamanlarda ilk youtuberlar tarafından yapıldı. ");
-            SetLootPanel(loot.GetUISprite(), loot.GetName(), loot.GetPower(), " ", " Bu kılıç kadim zamanlarda ilk youtuberlar tarafından yapıldı. ");
+            SetItemPanel(item.GetUISprite(), item.GetName(), item.GetPower(), GetImpactNames(item), item.GetExplanation());
+            SetLootPanel(loot.GetUISprite(), loot.GetName(), loot.GetPower(), GetImpactNames(loot), loot.GetExplanation());
             
             this.itemUser = itemUser;
             tempItem = loot;
@@ -73,13 +73,32 @@ namespace DungeonRush.UI
             PanelControl(true);
         }
 
+        private string GetImpactNames(Item item)
+        {
+            string impacts = "";
+            if(item.GetItemType() == ItemType.WEAPON)
+            {
+                Weapon weapon = item as Weapon;
+                
+                for (var i = 0; i < weapon.GetImpacts().Count; i++)
+                    impacts = impacts + weapon.GetImpacts()[i] + "\n";
+            }
+            else if(item.GetItemType() == ItemType.ARMOR)
+            {
+                Armor armor = item as Armor;
+                for (var i = 0; i < armor.GetImpacts().Count; i++)
+                    impacts = impacts + armor.GetImpacts()[i] + "\n";
+            }
+
+            return impacts;
+        }
+
         public void SetItemPanel(Sprite image, string name, int power, string impacts, string explanation)
         {
             itemImage.sprite = image;
             itemName.text = name;
             itemPower.text = power.ToString();
-            // for (var i = 0; i < impacts.Count; i++)
-            //     itemImpacts.text += impacts[i] + "\n";
+            itemImpacts.text = impacts;
             itemExplanation.text = explanation;
         }
 
@@ -88,8 +107,7 @@ namespace DungeonRush.UI
             lootImage.sprite = image;
             lootName.text = name;
             lootPower.text = power.ToString();
-            // for (var i = 0; i < impacts.Count; i++)
-            //     lootImpacts.text += impacts[i] + "\n";
+            lootImpacts.text = impacts;
             lootExplanation.text = explanation;
         }
 

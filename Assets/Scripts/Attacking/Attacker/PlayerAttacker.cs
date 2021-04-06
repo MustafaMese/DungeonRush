@@ -1,4 +1,5 @@
 ﻿using DG.Tweening;
+using DungeonRush.Camera;
 using DungeonRush.Data;
 using DungeonRush.Skills;
 using System.Collections;
@@ -33,6 +34,7 @@ namespace DungeonRush.Property
 
             Vector2 targetPos = new Vector2(move.GetCardTile().GetCoordinate().x + dir.x * range, move.GetCardTile().GetCoordinate().y + dir.y * range);
             UpdateAnimation(true, false);
+            PlayerCamera.Instance.CameraShake(0.1f, 0.1f);
             move.GetCard().transform.DOMove(targetPos, closingToEnemyTime).OnComplete(() => StartCoroutine(FinishAttack(move)));
         }
 
