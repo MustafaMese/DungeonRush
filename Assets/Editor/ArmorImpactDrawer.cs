@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEditor;
+using DungeonRush.Data;
 
 [CustomPropertyDrawer(typeof(ArmorImpact))]
 public class ArmorImpactDrawer : PropertyDrawer

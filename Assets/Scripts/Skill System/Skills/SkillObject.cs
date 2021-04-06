@@ -2,20 +2,23 @@ using System;
 using DungeonRush.Skills;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "ScriptableObjects/Skill Object")]
-public class SkillObject : ScriptableObject
+namespace DungeonRush.Skills
 {
-    public Skill skillPrefab;
-    public string ID = Guid.NewGuid().ToString("N");
-
-    public Skill Create(Transform t)
+    [CreateAssetMenu(menuName = "ScriptableObjects/Skill Object")]
+    public class SkillObject : ScriptableObject
     {
-        Skill s = Instantiate(skillPrefab, t);
-        return s;
-    }
+        public Skill skillPrefab;
+        public string ID = Guid.NewGuid().ToString("N");
 
-    public string GetID()
-    {
-        return ID;
+        public Skill Create(Transform t)
+        {
+            Skill s = Instantiate(skillPrefab, t);
+            return s;
+        }
+
+        public string GetID()
+        {
+            return ID;
+        }
     }
 }

@@ -2,6 +2,8 @@
 using DungeonRush.Data;
 using DungeonRush.Field;
 using DungeonRush.Managers;
+using DungeonRush.UI;
+using DungeonRush.UI.HUD;
 using System.Collections;
 using UnityEngine;
 

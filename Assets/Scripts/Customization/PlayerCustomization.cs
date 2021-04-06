@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using DungeonRush.UI.HUD;
 using UnityEngine;
-using UnityEngine.U2D.Animation;
 
 namespace DungeonRush.Customization
 {

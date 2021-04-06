@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using DungeonRush.Data;
 
 [CustomPropertyDrawer(typeof(ImpactList))]
 public class ImpactListDrawer : PropertyDrawer

@@ -1,5 +1,6 @@
 ﻿using DungeonRush.Cards;
 using DungeonRush.Field;
+using DungeonRush.UI;
 using DungeonRush.UI.HUD;
 
 namespace DungeonRush.Traits
