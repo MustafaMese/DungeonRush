@@ -1,35 +1,44 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace DungeonRush.UI
 {
     public class FadingCanvas : MonoBehaviour, ICanvasController
     {
-        [SerializeField] CanvasGroup canvasGroup = null;
         [SerializeField] float fadeInTime = 1f;
         [SerializeField] float fadeOutTime = 2f;
-
         [SerializeField] GameObject panel;
+        [SerializeField] Image image;
+        
 
         public IEnumerator FadeOut()
         {
-            canvasGroup.gameObject.SetActive(true);
-            while (canvasGroup.alpha < 1)
+            image.material.SetFloat("Vector1_AB1BDB34", 0);
+
+            var value = image.material.GetFloat("Vector1_AB1BDB34");
+            gameObject.SetActive(true);
+            while (value < 1)
             {
-                canvasGroup.alpha += Time.deltaTime / fadeOutTime;
+                value += Time.deltaTime / fadeOutTime;
+                image.material.SetFloat("Vector1_AB1BDB34", value);
                 yield return null;
             }
         }
 
         public IEnumerator FadeIn()
         {
-            while (canvasGroup.alpha > 0)
+            image.material.SetFloat("Vector1_AB1BDB34", 1);
+
+            var value = image.material.GetFloat("Vector1_AB1BDB34");
+            while (value > 0)
             {
-                canvasGroup.alpha -= Time.deltaTime / fadeInTime;
+                value -= Time.deltaTime / fadeInTime;
+                image.material.SetFloat("Vector1_AB1BDB34", value);
                 yield return null;
             }
-            canvasGroup.gameObject.SetActive(false);
+            gameObject.SetActive(true);
         }
 
         public void PanelControl(bool activate)

@@ -57,18 +57,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: a23a6e3155301024fa09fe7d3af6fd6c, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_Maskable: 1
+  m_RaycastTarget: 0
+  m_Maskable: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 83421b119da3ae9409e950c621fab229, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
-  m_FillMethod: 4
+  m_FillMethod: 0
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
@@ -85,7 +85,6 @@ GameObject:
   - component: {fileID: 3175302022686471926}
   - component: {fileID: 3175302022686471925}
   - component: {fileID: 3175302022686471924}
-  - component: {fileID: 6180321468007920864}
   - component: {fileID: 1875602063}
   m_Layer: 5
   m_Name: FadingCanvas
@@ -133,7 +132,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 100
   m_TargetDisplay: 0
 --- !u!114 &3175302022686471924
 MonoBehaviour:
@@ -157,18 +156,6 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
---- !u!225 &6180321468007920864
-CanvasGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3175302022686471922}
-  m_Enabled: 1
-  m_Alpha: 1
-  m_Interactable: 0
-  m_BlocksRaycasts: 0
-  m_IgnoreParentGroups: 0
 --- !u!114 &1875602063
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -181,7 +168,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65979a0d2efa7e442a0840d1bc0cff24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canvasGroup: {fileID: 6180321468007920864}
-  fadeInTime: 1
+  fadeInTime: 2
   fadeOutTime: 2
   panel: {fileID: 186536536168615503}
+  image: {fileID: 6984508399349458869}

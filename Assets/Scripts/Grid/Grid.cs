@@ -9,11 +9,9 @@ namespace DungeonRush.Grid
     {
         public List<GridStructure<Tile>> tileList = new List<GridStructure<Tile>>();
         public List<GridStructure<Card>> objectList = new List<GridStructure<Card>>();
-
         public float width = 1f;
         public float height = 1f;
         public Vector3 offset = new Vector3(1, 1, 0);
-
         public GameObject tilePrefab;
         public GameObject topWallPrefab;
         public GameObject downWallPrefab;
@@ -27,25 +25,10 @@ namespace DungeonRush.Grid
         public GameObject downLeftOppositeWallPrefab;
         public GameObject topRightOppositeWallPrefab;
         public GameObject topLeftOppositeWallPrefab;
-
         public Color color = Color.white;
-
         public bool showStartPoint;
 
         public string[] fileNames;
-
-        // Start is called before the first frame update
-        void Start()
-        {
-
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-            // Ray r = Camera.current.ScreenPointToRay(new Vector3(Input.mousePosition.x, -Input.mousePosition.y + Camera.current.pixelHeight));
-            // Vector3 mousePos = r.origin;
-        }
 
         private void OnDrawGizmos()
         {

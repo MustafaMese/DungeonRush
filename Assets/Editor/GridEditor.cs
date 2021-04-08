@@ -18,7 +18,8 @@ namespace DungeonRush.Grid
 
         Transform boardTransform;
 
-        GameObject selectedObject;
+        GameObject selectedCard;
+        GameObject selectedTile;
 
         private void OnEnable()
         {
@@ -45,8 +46,8 @@ namespace DungeonRush.Grid
             {
                 if (configureMode)
                     UpdateTiles(aligned);
-                else if (decorateMode && selectedObject != null)
-                    CreateGameObject(aligned, grid.objectList, grid.tileList, selectedObject);
+                else if (decorateMode && selectedCard != null)
+                    CreateGameObject(aligned, grid.objectList, grid.tileList, selectedCard);
             }
             else if (Event.current.type == EventType.MouseDown && Event.current.button == 1)
             {
@@ -246,33 +247,44 @@ namespace DungeonRush.Grid
 
             if (configureMode)
             {
-
-
                 EditorGUILayout.Space();
 
                 GUILayout.BeginHorizontal();
                 FloatField(" Grid Width ", grid.width, 50);
                 FloatField(" Grid Height ", grid.height, 50);
                 GUILayout.EndHorizontal();
-
                 Vector3Field(" Offset ", grid.offset, 200);
 
-                serializedObject.Update();
-                EditorGUILayout.PropertyField(serializedObject.FindProperty("tilePrefab"), new GUIContent(" Tile Prefab "));
-                LabelField(" Wall Prefabs ");
-                EditorGUILayout.PropertyField(serializedObject.FindProperty("topWallPrefab"), new GUIContent(" Top Wall Prefab "));
-                EditorGUILayout.PropertyField(serializedObject.FindProperty("downWallPrefab"), new GUIContent(" Down Wall Prefab "));
-                EditorGUILayout.PropertyField(serializedObject.FindProperty("rightWallPrefab"), new GUIContent(" Right Wall Prefab "));
-                EditorGUILayout.PropertyField(serializedObject.FindProperty("leftWallPrefab"), new GUIContent(" Left Wall Prefab "));
-                EditorGUILayout.PropertyField(serializedObject.FindProperty("topLeftWallPrefab"), new GUIContent(" Top Left Wall Prefab "));
-                EditorGUILayout.PropertyField(serializedObject.FindProperty("topRightWallPrefab"), new GUIContent(" Top Right Wall Prefab "));
-                EditorGUILayout.PropertyField(serializedObject.FindProperty("downLeftWallPrefab"), new GUIContent(" Down Left Wall Prefab "));
-                EditorGUILayout.PropertyField(serializedObject.FindProperty("downRightWallPrefab"), new GUIContent(" Down Right Wall Prefab "));
-                EditorGUILayout.PropertyField(serializedObject.FindProperty("topRightOppositeWallPrefab"), new GUIContent(" Top Right Opposite Wall Prefab "));
-                EditorGUILayout.PropertyField(serializedObject.FindProperty("downRightOppositeWallPrefab"), new GUIContent(" Down Right Opposite Wall Prefab "));
-                EditorGUILayout.PropertyField(serializedObject.FindProperty("topLeftOppositeWallPrefab"), new GUIContent(" Top Left Opposite Wall Prefab "));
-                EditorGUILayout.PropertyField(serializedObject.FindProperty("downLeftOppositeWallPrefab"), new GUIContent(" Down Left Opposite Wall Prefab "));
-                serializedObject.ApplyModifiedProperties();
+                TilePrefabField("tileFile", "Tile", ref grid.tilePrefab, " Tile ");
+                TilePrefabField("topWallFile", "Top", ref grid.topWallPrefab, " Top Wall ");
+                TilePrefabField("downWallFile", "Down", ref grid.downWallPrefab, " Down Wall ");
+                TilePrefabField("rightWallFile", "Right", ref grid.rightWallPrefab, " Right Wall ");
+                TilePrefabField("leftWallFile", "Left", ref grid.leftWallPrefab, " Left Wall ");
+                TilePrefabField("topLeftWallFile", "Top Left", ref grid.topLeftWallPrefab, " Top Left Wall ");
+                TilePrefabField("topRightWallFile", "Top Right", ref grid.topRightWallPrefab, " Top Right Wall ");
+                TilePrefabField("downLeftWallFile", "Down Left", ref grid.downLeftWallPrefab, " Down Left Wall ");
+                TilePrefabField("downRightWallFile", "Down Right", ref grid.downRightWallPrefab, " Down Right Wall ");
+                TilePrefabField("downRightOppositeWallFile", "Op. Down Right", ref grid.downRightOppositeWallPrefab, " Op. Down Right Wall");
+                TilePrefabField("downLeftOppositeWallFile", "Op. Down Left", ref grid.downLeftOppositeWallPrefab, " Op. Down Left Wall ");
+                TilePrefabField("topRightOppositeWallFile", "Op. Top Right", ref grid.topRightOppositeWallPrefab, " Op. Top Right Wall ");
+                TilePrefabField("topLeftOppositeWallFile", "Op. Top Left", ref grid.topLeftOppositeWallPrefab, " Op. Top Left Wall ");
+
+                // serializedObject.Update();
+                // EditorGUILayout.PropertyField(serializedObject.FindProperty("tilePrefab"), new GUIContent(" Tile Prefab "));
+                // LabelField(" Wall Prefabs ");
+                // EditorGUILayout.PropertyField(serializedObject.FindProperty("topWallPrefab"), new GUIContent(" Top Wall Prefab "));
+                // EditorGUILayout.PropertyField(serializedObject.FindProperty("downWallPrefab"), new GUIContent(" Down Wall Prefab "));
+                // EditorGUILayout.PropertyField(serializedObject.FindProperty("rightWallPrefab"), new GUIContent(" Right Wall Prefab "));
+                // EditorGUILayout.PropertyField(serializedObject.FindProperty("leftWallPrefab"), new GUIContent(" Left Wall Prefab "));
+                // EditorGUILayout.PropertyField(serializedObject.FindProperty("topLeftWallPrefab"), new GUIContent(" Top Left Wall Prefab "));
+                // EditorGUILayout.PropertyField(serializedObject.FindProperty("topRightWallPrefab"), new GUIContent(" Top Right Wall Prefab "));
+                // EditorGUILayout.PropertyField(serializedObject.FindProperty("downLeftWallPrefab"), new GUIContent(" Down Left Wall Prefab "));
+                // EditorGUILayout.PropertyField(serializedObject.FindProperty("downRightWallPrefab"), new GUIContent(" Down Right Wall Prefab "));
+                // EditorGUILayout.PropertyField(serializedObject.FindProperty("topRightOppositeWallPrefab"), new GUIContent(" Top Right Opposite Wall Prefab "));
+                // EditorGUILayout.PropertyField(serializedObject.FindProperty("downRightOppositeWallPrefab"), new GUIContent(" Down Right Opposite Wall Prefab "));
+                // EditorGUILayout.PropertyField(serializedObject.FindProperty("topLeftOppositeWallPrefab"), new GUIContent(" Top Left Opposite Wall Prefab "));
+                // EditorGUILayout.PropertyField(serializedObject.FindProperty("downLeftOppositeWallPrefab"), new GUIContent(" Down Left Opposite Wall Prefab "));
+                // serializedObject.ApplyModifiedProperties();
 
                 EditorGUILayout.Space();
 
@@ -310,8 +322,8 @@ namespace DungeonRush.Grid
                 EditorGUILayout.PropertyField(serializedObject.FindProperty("fileNames"));
                 serializedObject.ApplyModifiedProperties();
 
-                ObjectField(" Selected Object ", selectedObject);
-                ListObjectFiles();
+                ObjectField(" Selected Object ", selectedCard);
+                ListObjectFiles(grid.fileNames, ref selectedCard);
 
                 if (grid.objectList.Count < 1)
                     GetObjectsButton<Card>(" Get Objects ", grid.objectList);
@@ -344,6 +356,12 @@ namespace DungeonRush.Grid
             SceneView.RepaintAll();
         }
 
+        private void TilePrefabField(string serializedObjectProperty, string file, ref GameObject obj, string label)
+        {
+            ObjectField(label, obj);
+            ListObjectFile(file, ref obj);
+        }
+
         private void GetObjectsButton<T>(string label, List<GridStructure<T>> list) where T : MonoBehaviour
         {
             GUILayout.BeginHorizontal();
@@ -353,10 +371,34 @@ namespace DungeonRush.Grid
             GUILayout.EndHorizontal();
         }
 
-        private void ListObjectFiles()
+        private void ListObjectFile(string file, ref GameObject obj)
+        {
+            string path = "Assets/Prefabs/Field/" + file;
+            var assets = AssetDatabase.FindAssets("t:Object", new[] { path });
+
+            EditorGUILayout.BeginHorizontal();
+            foreach (var guid in assets)
+            {
+                var clip = AssetDatabase.LoadAssetAtPath<Object>(AssetDatabase.GUIDToAssetPath(guid));
+                if (clip.GetType() == typeof(GameObject))
+                {
+                    bool isSelected = GUILayout.Button(new GUIContent(AssetPreview.GetAssetPreview(clip), clip.name), GUILayout.Height(40), GUILayout.Width(40));
+                    if (isSelected)
+                        obj = (GameObject)clip;
+                }
+                else
+                    continue;
+                
+                
+            }
+            EditorGUILayout.EndHorizontal();
+
+        }
+
+        private void ListObjectFiles(string[] files, ref GameObject obj)
         {
             EditorGUILayout.BeginVertical();
-            List<string> names = new List<string>(grid.fileNames);
+            List<string> names = new List<string>(files);
 
             for (var i = 0; i < names.Count; i++)
             {
@@ -369,14 +411,11 @@ namespace DungeonRush.Grid
                 foreach (var guid in assets)
                 {
                     var clip = AssetDatabase.LoadAssetAtPath<Object>(AssetDatabase.GUIDToAssetPath(guid));
-                    // bool isSelected = GUILayout.Button(new GUIContent(AssetPreview.GetAssetPreview(clip), clip.name), GUILayout.Height(40), GUILayout.Width(40));
-                    // if (isSelected)
-                    //     selectedObject = (GameObject)clip;
                     if (clip.GetType() == typeof(GameObject))
                     {
                         bool isSelected = GUILayout.Button(new GUIContent(AssetPreview.GetAssetPreview(clip), clip.name), GUILayout.Height(40), GUILayout.Width(40));
                         if (isSelected)
-                            selectedObject = (GameObject)clip;
+                            obj = (GameObject)clip;
                     }
                     else
                         continue;
@@ -426,6 +465,5 @@ namespace DungeonRush.Grid
             prefab = EditorGUILayout.ObjectField(prefab, typeof(GameObject), true, GUILayout.Width(200)) as GameObject;
             GUILayout.EndHorizontal();
         }
-
     }
 }
