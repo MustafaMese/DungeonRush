@@ -248,6 +248,8 @@ namespace DungeonRush.Controller
                 player.GetComponent<ItemUser>().TakeItem(item, false);
             }
 
+            print(data.uniqueSkillIDs.Length);
+
             for (int i = 0; i < data.uniqueSkillIDs.Length; i++)
             {
                 SkillObject skillObject = ItemDB.Instance.GetSkill(data.uniqueSkillIDs[i]);

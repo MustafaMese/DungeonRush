@@ -91,15 +91,7 @@ namespace DungeonRush.Items
                     break;
                 }
             }
-
-            // for (int i = 0; i < allItems.Count; i++)
-            // {
-            //     if (allItems[i].GetItemType() == type && !items.Contains(allItems[i]))
-            //         items.Add(allItems[i]);
-            // }
-
             var number = items.Count;
-            print(number);
             if (number > 0)
             {
                 var ran = Random.Range(0, number);

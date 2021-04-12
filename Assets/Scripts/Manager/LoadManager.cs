@@ -13,7 +13,7 @@ namespace DungeonRush.Managers
         [SerializeField] int veryHardFirst;
         [SerializeField] int bossFirst;
 
-        [HideInInspector] public bool isFirstLevel;
+        public bool isFirstLevel;
         public Difficulty levelDifficulty;
 
         private Stack<int> difficultyStack = new Stack<int>();

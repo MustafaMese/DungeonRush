@@ -122,7 +122,10 @@ namespace DungeonRush.Property
         protected bool DoAttackAction(Move move, bool isTrap)
         {
             bool isCritic;
-            power = attackStyle.GetPower() + card.GetStats().Damage;
+            if(card.GetCardType() != CardType.TRAP)
+                power = attackStyle.GetPower() + card.GetStats().Damage;
+            else
+                power = attackStyle.GetPower();
 
             if(!isTrap)
                 isCritic = IsCriticAttack();
