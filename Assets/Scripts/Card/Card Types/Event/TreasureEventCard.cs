@@ -23,7 +23,6 @@ namespace DungeonRush.Cards
 
         public override void GetEvent(Card card)
         {
-            print("123");
             ItemMove(card, item);
             StartCoroutine(Disapper());
         }
@@ -38,14 +37,6 @@ namespace DungeonRush.Cards
 
         private IEnumerator Disapper()
         {
-            //Color c;
-            //while (sprite.color.a > 0)
-            //{
-            //    c = sprite.color;
-            //    c.a -= Time.deltaTime / disapperTime;
-            //    sprite.color = c;
-            //    yield return null;
-            //}
             CardManager.RemoveCard(GetTile().GetCoordinate());
             yield return null;
         }

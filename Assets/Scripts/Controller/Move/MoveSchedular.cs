@@ -12,7 +12,6 @@ namespace DungeonRush.Controller
     {
         private enum Tour {PLAYER, ENEMY, TRAP}
         private Tour tour;
-        private bool isPlayerTurn;
 
         private static MoveSchedular instance = null;
         // Game Instance Singleton
@@ -37,7 +36,6 @@ namespace DungeonRush.Controller
         protected void Initialize()
         {
             tour = Tour.PLAYER;
-            isPlayerTurn = false;
 
             enemyController = Instantiate(enemyControllerPrefab);
             environmentController = Instantiate(environmentControllerPrefab);
@@ -58,27 +56,17 @@ namespace DungeonRush.Controller
             {
                 case Tour.PLAYER:
                     environmentController.Begin();
-                    isPlayerTurn = false;
                     tour = Tour.TRAP;
                     break;
                 case Tour.ENEMY:
-                    environmentController.Begin();
-                    isPlayerTurn = true;
-                    tour = Tour.TRAP;
+                    UIManager.Instance.InitializePlayerTurn();
+                    playerController.Begin();
+                    playerController.ActivateStatuses();
+                    tour = Tour.PLAYER;
                     break;
                 case Tour.TRAP:
-                    if(isPlayerTurn)
-                    {
-                        UIManager.Instance.InitializePlayerTurn();
-                        playerController.Begin();
-                        playerController.ActivateStatuses();
-                        tour = Tour.PLAYER;
-                    }
-                    else
-                    {
-                        enemyController.Begin();
-                        tour = Tour.ENEMY;
-                    }
+                    enemyController.Begin();
+                    tour = Tour.ENEMY;
                     break;
             }
         }

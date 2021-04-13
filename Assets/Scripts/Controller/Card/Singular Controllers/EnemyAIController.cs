@@ -150,20 +150,16 @@ namespace DungeonRush.Controller
             }
             else if (moveProcess.continuing)
             {
-                
                 if (mover.IsMoveFinished())
                 {
                     mover.SetIsMoveFinished(false);
-                    moveProcess.EndProcess();
+                    Stop();
+                    moveProcess.Finish();
+                    Notify();
                 }
             }
-            else if (moveProcess.end)
-            {
-                Stop();
-                moveProcess.Finish();
-                Notify();
-            }
         }
+        
         private Swipe SelectTileToAttack(EnemyCard card)
         {
             List<Tile> list;

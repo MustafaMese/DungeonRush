@@ -48,7 +48,6 @@ namespace DungeonRush.UI
         private void Start()
         {
             DOTween.Init();
-            SavingSystem.SaveUtilities(0, 1000);
 
             Panel p;
             p = new Panel(characterPanel, 0, MenuPanelState.CHARACTER, characterImage);

@@ -12,7 +12,6 @@ namespace DungeonRush.Items
 
         public override void Execute(Card card)
         {
-            Debug.Log("1");
             Impact(card.GetDamagable());
         }
 

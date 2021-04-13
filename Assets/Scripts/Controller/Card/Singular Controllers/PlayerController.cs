@@ -116,13 +116,9 @@ namespace DungeonRush.Controller
                 if (attacker.GetAttackFinished())
                 {
                     attacker.SetAttackFinished(false);
-                    attackProcess.EndProcess();
+                    Stop();
+                    Board.touched = false;
                 }
-            }
-            else if (attackProcess.end)
-            {
-                Stop();
-                Board.touched = false;
             }
         }
 
@@ -247,8 +243,6 @@ namespace DungeonRush.Controller
                 Item item = ItemDB.Instance.GetItem(data.uniqueItemIDs[i]);
                 player.GetComponent<ItemUser>().TakeItem(item, false);
             }
-
-            print(data.uniqueSkillIDs.Length);
 
             for (int i = 0; i < data.uniqueSkillIDs.Length; i++)
             {
