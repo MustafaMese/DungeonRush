@@ -63,7 +63,9 @@ namespace DungeonRush
 
             public void TakeItem(Item loot, bool openPanel = true)
             {
-                if(loot.GetItemType() == ItemType.WEAPON)
+                if(loot.GetItemType() == ItemType.MAX_HEALTH_INCREASER || loot.GetItemType() == ItemType.POTION)
+                    ExecuteItem(loot);
+                else if(loot.GetItemType() == ItemType.WEAPON)
                 {
                     if (items[BoneType.WEAPON_LEFT] != null)
                         UIManager.Instance.EnableChoiceCanvas(items[BoneType.WEAPON_LEFT], loot, this);
@@ -90,6 +92,11 @@ namespace DungeonRush
                         ExecuteItem(loot, lootBone);
                     }
                 }
+            }
+
+            public void ExecuteItem(Item loot)
+            {
+                loot.Execute(card);
             }
 
             public void ExecuteItem(Item loot, BoneType lootBone)

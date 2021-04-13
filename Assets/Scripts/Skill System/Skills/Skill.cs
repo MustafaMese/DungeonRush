@@ -67,35 +67,41 @@ namespace DungeonRush.Skills
 
         private void FillPool(ObjectPool pool, GameObject effect, int objectCount)
         {
-            pool.SetObject(effect);
-            pool.Fill(objectCount, transform);
+            if(effect != null)
+            {
+                pool.SetObject(effect);
+                pool.Fill(objectCount, transform);
+            }
         }
 
         public virtual IEnumerator Animate(Move move)
         {
-            GameObject obj;
-            List<GameObject> objects = new List<GameObject>();
-            int count = GetGameobjectCount();
-            for (int i = 0; i < count; i++)
+            if(effect != null)
             {
-                obj = pool.Pull(transform);
-                obj.SetActive(true);
+                GameObject obj;
+                List<GameObject> objects = new List<GameObject>();
+                int count = GetGameobjectCount();
+                for (int i = 0; i < count; i++)
+                {
+                    obj = pool.Pull(transform);
+                    obj.SetActive(true);
 
-                PositionEffect(obj, move);
-                objects.Add(obj);
+                    PositionEffect(obj, move);
+                    objects.Add(obj);
 
-                if (isUsingTextPopup)
-                    TextPopupManager.Instance.TextPopup(obj.transform.position, power.ToString());
-            }
+                    if (isUsingTextPopup)
+                        TextPopupManager.Instance.TextPopup(obj.transform.position, power.ToString());
+                }
 
-            yield return new WaitForSeconds(EffectTime);
+                yield return new WaitForSeconds(EffectTime);
 
-            for (int i = 0; i < count; i++)
-            {
-                obj = objects[i];
-                obj.transform.SetParent(transform);
-                obj.SetActive(false);
-                pool.Push(obj);
+                for (int i = 0; i < count; i++)
+                {
+                    obj = objects[i];
+                    obj.transform.SetParent(transform);
+                    obj.SetActive(false);
+                    pool.Push(obj);
+                }
             }
         }
 

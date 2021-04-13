@@ -14,19 +14,16 @@ namespace DungeonRush.Cards
         [SerializeField] ItemType iType;
         [SerializeField] Item item = null;
         [SerializeField] float disapperTime = 0;
-        [SerializeField] SpriteRenderer sprite;
 
         protected override void Initialize()
         {
             base.Initialize();
             item = ItemDB.Instance.GetRandomItem(iType);
-            
-            if (iType == ItemType.MAX_HEALTH_INCREASER || iType == ItemType.POTION)
-                sprite.sprite = item.GetPrimarySprite();
         }
 
         public override void GetEvent(Card card)
         {
+            print("123");
             ItemMove(card, item);
             StartCoroutine(Disapper());
         }
@@ -34,7 +31,7 @@ namespace DungeonRush.Cards
         private void ItemMove(Card card, Item i)
         {
             if (i == null) return;
-
+            
             card.GetComponent<ItemUser>().TakeItem(i);
 
         }

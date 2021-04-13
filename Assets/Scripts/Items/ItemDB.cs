@@ -76,21 +76,8 @@ namespace DungeonRush.Items
 
         public Item GetRandomItem(ItemType type)
         {
-            List<Item> items = new List<Item>();
+            List<Item> items = SetCurrentItems(type);
 
-            for(int y = 0; y < levelItems.Count; y++)
-            {
-                if ((int)levelItems[y].difficulty <= (int)LoadManager.Instance.levelDifficulty)
-                {
-                    List<Item> lItems = new List<Item>(levelItems[y].items);
-                    for (var i = 0; i < levelItems[y].items.Count; i++)
-                    {
-                        if(lItems[i].GetItemType() == type && !items.Contains(lItems[i]))
-                            items.Add(lItems[i]);
-                    }
-                    break;
-                }
-            }
             var number = items.Count;
             if (number > 0)
             {
@@ -99,6 +86,25 @@ namespace DungeonRush.Items
             }
             else
                 return null;
+        }
+
+        private List<Item> SetCurrentItems(ItemType type)
+        {
+            List<Item> items = new List<Item>();
+            for (int y = 0; y < levelItems.Count; y++)
+            {
+                if ((int)levelItems[y].difficulty <= (int)LoadManager.Instance.levelDifficulty)
+                {
+                    List<Item> lItems = new List<Item>(levelItems[y].items);
+                    for (var i = 0; i < levelItems[y].items.Count; i++)
+                    {
+                        if (lItems[i].GetItemType() == type && !items.Contains(lItems[i]))
+                            items.Add(lItems[i]);
+                    }
+                }
+            }
+
+            return items;
         }
     } 
 }
