@@ -2,6 +2,7 @@
 using UnityEngine;
 using DungeonRush.UI;
 using DungeonRush.Camera;
+using DungeonRush.Saving;
 
 namespace DungeonRush
 {
@@ -48,7 +49,7 @@ namespace DungeonRush
                     Instance = this;
                     DontDestroyOnLoad(this);
                 }
-
+                SavingSystem.Init();
                 Initialize();
             }
 
@@ -57,13 +58,14 @@ namespace DungeonRush
                 if (!started)
                 {
                     started = true;
+                    //SavingSystem.Init();
                     Initialize();
                 }
             }
 
             protected void Initialize()
             {
-                Application.targetFrameRate = targetFrameRate;
+                //Application.targetFrameRate = targetFrameRate;
 
                 Instantiate(uiManagerPrefab);
                 Instantiate(swipeManagerPrefab);
