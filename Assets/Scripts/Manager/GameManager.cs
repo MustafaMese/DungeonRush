@@ -37,9 +37,6 @@ namespace DungeonRush
 
             private bool started = false;
 
-            public int xp = 0;
-            public int gold = 0;
-
             private void Awake()
             {
                 if (Instance != null)
@@ -49,7 +46,6 @@ namespace DungeonRush
                     Instance = this;
                     DontDestroyOnLoad(this);
                 }
-                SavingSystem.Init();
                 Initialize();
             }
 

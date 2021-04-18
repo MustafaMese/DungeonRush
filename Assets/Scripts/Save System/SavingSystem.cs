@@ -8,21 +8,10 @@ namespace DungeonRush.Saving
 {
     public static class SavingSystem
     {
-        public static readonly string SAVE_FOLDER = Application.persistentDataPath + "/Saves";
-
         private const string instantPath = "/instant.txt";
         private const string propertyPath = "/property.txt";
         private const string utilityPath = "/utility.txt";
         private const string itemsPath = "/items.txt";
-
-        public static void Init()
-        {
-            if(!Directory.Exists(SAVE_FOLDER))
-            {
-                Directory.CreateDirectory(SAVE_FOLDER);
-            }
-            Debug.Log(SAVE_FOLDER);
-        }
 
         public static void SaveItems(ItemsData data)
         {
@@ -34,7 +23,7 @@ namespace DungeonRush.Saving
             // stream.Close();
 
             string json = JsonUtility.ToJson(data);
-            File.WriteAllText(SAVE_FOLDER + itemsPath, json);
+            File.WriteAllText(Application.persistentDataPath + itemsPath, json);
         }
 
         public static void SaveUtilities(int xp, int gold)
@@ -47,7 +36,7 @@ namespace DungeonRush.Saving
             // stream.Close();
 
             string json = JsonUtility.ToJson(new PlayerUtility(xp, gold));
-            File.WriteAllText(SAVE_FOLDER + utilityPath, json);
+            File.WriteAllText(Application.persistentDataPath + utilityPath, json);
         }
 
         public static void SaveProperties(int str, int agi, int luck)
@@ -60,21 +49,22 @@ namespace DungeonRush.Saving
             // stream.Close();
 
             string json = JsonUtility.ToJson(new PlayerProperties(str, agi, luck));
-            File.WriteAllText(SAVE_FOLDER + propertyPath, json);
+            File.WriteAllText(Application.persistentDataPath + propertyPath, json);
         }
 
-        public static void SavePlayerInstantProgress(PlayerCard player)
-        {
-            // BinaryFormatter formatter = new BinaryFormatter();
-            // string path = Application.persistentDataPath + instantPath;
-            // FileStream stream = new FileStream(path, FileMode.Create);
-            // PlayerData data = new PlayerData(player);
-            // formatter.Serialize(stream, data);
-            // stream.Close();
+        // public static void SavePlayerInstantProgress(PlayerCard player)
+        // {
+        //     // BinaryFormatter formatter = new BinaryFormatter();
+        //     // string path = Application.persistentDataPath + instantPath;
+        //     // FileStream stream = new FileStream(path, FileMode.Create);
+        //     // PlayerData data = new PlayerData(player);
+        //     // formatter.Serialize(stream, data);
+        //     // stream.Close();
 
-            string json = JsonUtility.ToJson(new PlayerData(player));
-            File.WriteAllText(SAVE_FOLDER + instantPath, json);
-        }
+        //     // string json = JsonUtility.ToJson(new PlayerData(player));
+        //     // File.WriteAllText(Application.persistentDataPath + instantPath, json);
+           
+        // }
 
         public static ItemsData LoadItems()
         {
@@ -101,7 +91,7 @@ namespace DungeonRush.Saving
             //     return data;
             // }
 
-            string path = SAVE_FOLDER + itemsPath;
+            string path = Application.persistentDataPath + itemsPath;
             if(File.Exists(path))
             {
                 string json = File.ReadAllText(path);
@@ -136,7 +126,7 @@ namespace DungeonRush.Saving
             //     return data;
             // }
 
-            string path = SAVE_FOLDER + utilityPath;
+            string path = Application.persistentDataPath + utilityPath;
             if (File.Exists(path))
             {
                 string json = File.ReadAllText(path);
@@ -172,7 +162,7 @@ namespace DungeonRush.Saving
             //     return data;
             // }
 
-            string path = SAVE_FOLDER + propertyPath;
+            string path = Application.persistentDataPath + propertyPath;
             if (File.Exists(path))
             {
                 string json = File.ReadAllText(path);
@@ -183,43 +173,45 @@ namespace DungeonRush.Saving
             
         }
 
-        public static PlayerData LoadPlayerInstantProgress()
-        {
-            // string path = Application.persistentDataPath + instantPath;
+        // public static PlayerData LoadPlayerInstantProgress()
+        // {
+        //     // string path = Application.persistentDataPath + instantPath;
 
-            // Debug.Log(Application.persistentDataPath);
+        //     // Debug.Log(Application.persistentDataPath);
 
-            // if (File.Exists(path))
-            // {
-            //     BinaryFormatter formatter = new BinaryFormatter();
-            //     FileStream stream = new FileStream(path, FileMode.Open);
+        //     // if (File.Exists(path))
+        //     // {
+        //     //     BinaryFormatter formatter = new BinaryFormatter();
+        //     //     FileStream stream = new FileStream(path, FileMode.Open);
 
-            //     PlayerData data = formatter.Deserialize(stream) as PlayerData;
-            //     stream.Close();
+        //     //     PlayerData data = formatter.Deserialize(stream) as PlayerData;
+        //     //     stream.Close();
 
-            //     return data;
-            // }
-            // else
-            // {
-            //     Debug.Log("Save file not found in " + path);
-            //     return null;
-            // }
+        //     //     return data;
+        //     // }
+        //     // else
+        //     // {
+        //     //     Debug.Log("Save file not found in " + path);
+        //     //     return null;
+        //     // }
 
-            string path = SAVE_FOLDER + instantPath;
-            if (File.Exists(path))
-            {
-                string json = File.ReadAllText(path);
-                return JsonUtility.FromJson<PlayerData>(json);
-            }
-            else 
-                return null;
-        }
+        //     string path = Application.persistentDataPath + instantPath;
+        //     if (File.Exists(path))
+        //     {
+        //         string json = File.ReadAllText(path);
+        //         return JsonUtility.FromJson<PlayerData>(json);
+        //     }
+        //     else 
+        //         return null;
+        // }
 
         public static void DeletePlayerInstantSaveFile()
         {
-            string path = SAVE_FOLDER + instantPath;
-            string json = JsonUtility.ToJson(null);
-            File.WriteAllText(SAVE_FOLDER + instantPath, json);
+            PlayerPrefs.DeleteAll();
+
+            // string path = Application.persistentDataPath + instantPath;
+            // string json = JsonUtility.ToJson(null);
+            // File.WriteAllText(Application.persistentDataPath + instantPath, json);
         }
     }
 }
