@@ -43,7 +43,6 @@ namespace DungeonRush.UI
         [SerializeField] List<Panel> panels = new List<Panel>();
         [SerializeField] float endValue = 0f;
         [SerializeField] float endTime = 0f;
-        [SerializeField] PlayerData data;
         private bool touched = false;
 
         private void Start()
@@ -171,8 +170,7 @@ namespace DungeonRush.UI
 
         private IEnumerator Next()
         {
-            data.Reset();
-            //SavingSystem.DeletePlayerInstantSaveFile();
+            SavingSystem.DeletePlayerInstantSaveFile();
             yield return new WaitForSeconds(endTime);
             GameManager.Instance.SetGameState(GameState.LEVEL_TRANSITION);
         }

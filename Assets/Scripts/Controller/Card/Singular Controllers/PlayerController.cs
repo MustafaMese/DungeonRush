@@ -10,7 +10,6 @@ using DungeonRush.Saving;
 using DungeonRush.Skills;
 using DungeonRush.Traits;
 using System.Collections;
-using TMPro;
 using UnityEngine;
 
 namespace DungeonRush.Controller
@@ -26,8 +25,7 @@ namespace DungeonRush.Controller
         private ICustomization customization;
         private StatusController statusController;
         private SkillUser skillUser;
-        
-        [SerializeField] PlayerData data;
+
         [SerializeField] FieldOfView fieldOfView;
         
         private void Start()
@@ -219,44 +217,38 @@ namespace DungeonRush.Controller
         #region SAVING METHODS
         public void SavePlayer()
         {
-            //SavingSystem.SavePlayerInstantProgress(player);
-            data.Save(player);
+            SavingSystem.SavePlayerInstantProgress(player);
         }
 
         public void LoadPlayer()
         {
-            data.Load(player);
-            // PlayerData data = SavingSystem.LoadPlayerInstantProgress();
+            PlayerData data = SavingSystem.LoadPlayerInstantProgress();
 
-            // if (data == null) 
-            // {
-            //     text += true;
-            //     return;
-            // }
+            if (data == null) return;
 
-            // player.SetMaxHealth(data.maxHealth);
-            // player.SetCurrentHealth(data.currentHealth);
-            // player.GetComponent<Health>().InitializeBar();
-            // player.Gold = data.gold;
-            // player.Experience = data.xp;
+            player.SetMaxHealth(data.maxHealth);
+            player.SetCurrentHealth(data.currentHealth);
+            player.GetComponent<Health>().InitializeBar();
+            player.Gold = data.gold;
+            player.Experience = data.xp;
 
-            // player.GetStats().CriticChance = data.criticChance;
-            // player.GetStats().DodgeChance = data.dodgeChance;
-            // player.GetStats().LifeCount = data.lifeCount;
-            // player.GetStats().TotalMoveCount = data.moveCount;
-            // player.GetStats().LootChance = data.lootChance;
+            player.GetStats().CriticChance = data.criticChance;
+            player.GetStats().DodgeChance = data.dodgeChance;
+            player.GetStats().LifeCount = data.lifeCount;
+            player.GetStats().TotalMoveCount = data.moveCount;
+            player.GetStats().LootChance = data.lootChance;
 
-            // for (int i = 0; i < data.uniqueItemIDs.Length; i++)
-            // {
-            //     Item item = ItemDB.Instance.GetItem(data.uniqueItemIDs[i]);
-            //     player.GetComponent<ItemUser>().TakeItem(item, false);
-            // }
+            for (int i = 0; i < data.uniqueItemIDs.Length; i++)
+            {
+                Item item = ItemDB.Instance.GetItem(data.uniqueItemIDs[i]);
+                player.GetComponent<ItemUser>().TakeItem(item, false);
+            }
 
-            // for (int i = 0; i < data.uniqueSkillIDs.Length; i++)
-            // {
-            //     SkillObject skillObject = ItemDB.Instance.GetSkill(data.uniqueSkillIDs[i]);
-            //     player.GetComponent<SkillUser>().AddSkill(skillObject, false);
-            // }
+            for (int i = 0; i < data.uniqueSkillIDs.Length; i++)
+            {
+                SkillObject skillObject = ItemDB.Instance.GetSkill(data.uniqueSkillIDs[i]);
+                player.GetComponent<SkillUser>().AddSkill(skillObject, false);
+            }
         }
 
         #endregion
