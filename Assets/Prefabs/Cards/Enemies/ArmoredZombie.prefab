@@ -1377,77 +1377,6 @@ Transform:
   m_Father: {fileID: 4498258964539186383}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 1.6150001}
---- !u!114 &1328443484560686455
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6708060109860353316}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d8dc75e4d3851a245a6f5b1e6a78db18, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  exclamation: {fileID: 4353166315045738581}
-  actionState: {fileID: 11400000, guid: de86f84efb7d55b4b8db7061a8a21263, type: 2}
---- !u!114 &1367736208733118582
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6708060109860353316}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee3edaf9d184fde44b8f9ce8e6494364, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  attackStyle: {fileID: 11400000, guid: 2095a5238968411459db8ee626a0b2d7, type: 2}
-  power: 4
-  range: 0.8
-  closingToEnemyTime: 0.1
-  damageTime: 0.1
-  getBackTime: 0.1
---- !u!114 &3628014550476244413
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6708060109860353316}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c85bcd2b66124fc48819646c22ce26e8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  characterHUD: {fileID: 882032855262141401}
-  sprites:
-  - {fileID: 854930246850130134}
-  - {fileID: 2359870226468046511}
-  - {fileID: 6667874132914935492}
-  - {fileID: 2824152227441803625}
-  - {fileID: 1403795908200209296}
-  - {fileID: 158296451886060123}
-  - {fileID: 8445514209625711139}
-  - {fileID: 4950715627525588739}
-  - {fileID: 8167671727450940452}
-  skin: {fileID: 8874577879020648454}
---- !u!114 &8904288950417635306
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6708060109860353316}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6cd4d355be73c02468084423b9acb9ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shifting: {fileID: 11400000, guid: b63af612c90819841857890a9a82e19c, type: 2}
-  movingTime: 0.2
-  particulTime: 1
 --- !u!1 &5925091416074032721
 GameObject:
   m_ObjectHideFlags: 0
@@ -1550,6 +1479,77 @@ MonoBehaviour:
     m_Extent: {x: 0.120268136, y: 0.11455923, z: 0}
   m_UseBatching: 1
   m_AlwaysUpdate: 1
+--- !u!114 &1328443484560686455
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6708060109860353316}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8dc75e4d3851a245a6f5b1e6a78db18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  exclamation: {fileID: 4353166315045738581}
+  actionState: {fileID: 11400000, guid: de86f84efb7d55b4b8db7061a8a21263, type: 2}
+--- !u!114 &1367736208733118582
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6708060109860353316}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee3edaf9d184fde44b8f9ce8e6494364, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackStyle: {fileID: 11400000, guid: 2095a5238968411459db8ee626a0b2d7, type: 2}
+  power: 4
+  range: 0.8
+  closingToEnemyTime: 0.1
+  damageTime: 0.1
+  getBackTime: 0.1
+--- !u!114 &3628014550476244413
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6708060109860353316}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c85bcd2b66124fc48819646c22ce26e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterHUD: {fileID: 882032855262141401}
+  sprites:
+  - {fileID: 854930246850130134}
+  - {fileID: 2359870226468046511}
+  - {fileID: 6667874132914935492}
+  - {fileID: 2824152227441803625}
+  - {fileID: 1403795908200209296}
+  - {fileID: 158296451886060123}
+  - {fileID: 8445514209625711139}
+  - {fileID: 4950715627525588739}
+  - {fileID: 8167671727450940452}
+  skin: {fileID: 8874577879020648454}
+--- !u!114 &8904288950417635306
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6708060109860353316}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cd4d355be73c02468084423b9acb9ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shifting: {fileID: 11400000, guid: b63af612c90819841857890a9a82e19c, type: 2}
+  movingTime: 0.2
+  particulTime: 1
 --- !u!1 &6711285356267807791
 GameObject:
   m_ObjectHideFlags: 0
@@ -2166,7 +2166,7 @@ PrefabInstance:
         type: 3}
       propertyPath: cardProperties
       value: 
-      objectReference: {fileID: 11400000, guid: 314761a9832732149b3f4efaf7373bb4,
+      objectReference: {fileID: 11400000, guid: f17ae42eee0149246aef88d59ee1d984,
         type: 2}
     - target: {fileID: 385931742185610795, guid: 733517a4bf866b94aa4cded94ec54d29,
         type: 3}
