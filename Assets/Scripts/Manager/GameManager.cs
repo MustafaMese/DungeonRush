@@ -49,7 +49,7 @@ namespace DungeonRush
                     Instance = this;
                     DontDestroyOnLoad(this);
                 }
-                SavingSystem.Init();
+                
                 Initialize();
             }
 

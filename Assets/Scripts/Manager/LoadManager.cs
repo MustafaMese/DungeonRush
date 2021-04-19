@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -88,7 +89,19 @@ namespace DungeonRush.Managers
         private void LoadRandomLevel(int min, int max)
         {
             int index = Random.Range(min, max);
-            SceneManager.LoadScene(index);
+            //SceneManager.LoadScene(index);
+            StartCoroutine(LoadYourAsyncScene(index));
+        }
+
+        private IEnumerator LoadYourAsyncScene(int index)
+        {
+            AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(index);
+
+            while (!asyncLoad.isDone)
+            {
+                print("Level yükleniyor : " + asyncLoad.progress);
+                yield return null;
+            }
         }
 
         public void LoadStartScene()

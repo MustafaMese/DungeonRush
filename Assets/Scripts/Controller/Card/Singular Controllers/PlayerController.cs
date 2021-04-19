@@ -17,25 +17,26 @@ namespace DungeonRush.Controller
     public class PlayerController : MonoBehaviour, ICardController, IMoveController
     {
         private bool isRunning = false;
-        private PlayerCard player;
+        
         private ProcessHandleChecker preparingProcess;
         private ProcessHandleChecker attackProcess;
         private ProcessHandleChecker moveProcess;
         private Attacker attacker;
         private ICustomization customization;
         private StatusController statusController;
-        private SkillUser skillUser;
 
         [SerializeField] FieldOfView fieldOfView;
+        [SerializeField] Health health;
+        [SerializeField] ItemUser itemUser;
+        [SerializeField] SkillUser skillUser;
+        [SerializeField] PlayerCard player;
         
         private void Start()
         {
             InitProcessHandlers();
-            player = GetComponent<PlayerCard>();
             attacker = player.GetComponent<Attacker>();
             customization = player.GetComponent<ICustomization>();
             statusController = player.GetComponent<StatusController>();
-            skillUser = player.GetComponent<SkillUser>();
 
             if(transform.position.y > 0)
                 customization.ChangeLayer(false, (int)transform.position.y);
@@ -225,29 +226,51 @@ namespace DungeonRush.Controller
             PlayerData data = SavingSystem.LoadPlayerInstantProgress();
 
             if (data == null) return;
+            // player.SetMaxHealth(data.maxHealth);
+            // player.SetCurrentHealth(data.currentHealth);
+            // health.InitializeBar();
+            // player.Gold = data.gold;
+            // player.Experience = data.xp;
+            // player.GetStats().CriticChance = data.criticChance;
+            // player.GetStats().DodgeChance = data.dodgeChance;
+            // player.GetStats().LifeCount = data.lifeCount;
+            // player.GetStats().TotalMoveCount = data.moveCount;
+            // player.GetStats().LootChance = data.lootChance;
 
-            player.SetMaxHealth(data.maxHealth);
-            player.SetCurrentHealth(data.currentHealth);
-            player.GetComponent<Health>().InitializeBar();
+            health.SetMaxHealth(data.maxHealth);
+            Debug.Log("1");
+            health.SetCurrentHealth(data.currentHealth);
+            Debug.Log("1");
+            health.InitializeBar();
+            Debug.Log("1");
             player.Gold = data.gold;
+            Debug.Log("1");
             player.Experience = data.xp;
-
+            Debug.Log("1");
             player.GetStats().CriticChance = data.criticChance;
+            Debug.Log("1");
             player.GetStats().DodgeChance = data.dodgeChance;
+            Debug.Log("1");
             player.GetStats().LifeCount = data.lifeCount;
+            Debug.Log("1");
             player.GetStats().TotalMoveCount = data.moveCount;
+            Debug.Log("1");
             player.GetStats().LootChance = data.lootChance;
+            Debug.Log("1");
+
 
             for (int i = 0; i < data.uniqueItemIDs.Length; i++)
             {
+                Debug.Log("2");
                 Item item = ItemDB.Instance.GetItem(data.uniqueItemIDs[i]);
-                player.GetComponent<ItemUser>().TakeItem(item, false);
+                itemUser.TakeItem(item, false);
             }
 
             for (int i = 0; i < data.uniqueSkillIDs.Length; i++)
             {
+                Debug.Log("3");
                 SkillObject skillObject = ItemDB.Instance.GetSkill(data.uniqueSkillIDs[i]);
-                player.GetComponent<SkillUser>().AddSkill(skillObject, false);
+                skillUser.AddSkill(skillObject, false);
             }
         }
 
