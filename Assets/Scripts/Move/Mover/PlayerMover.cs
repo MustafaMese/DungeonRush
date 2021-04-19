@@ -52,7 +52,6 @@ namespace DungeonRush
                         ChangeTiles();
                         break;
                     case MoveType.COIN:
-                        //CoinMove(item);
                         ChangeTiles();
                         break;
                     case MoveType.EMPTY:
@@ -69,11 +68,6 @@ namespace DungeonRush
             private void ChangeTiles()
             {
                 Tile.ChangeTile(move);
-            }
-
-            private void CoinMove(Card item)
-            {
-               //FindObjectOfType<CoinCounter>().IncreaseCoin(item.GetHealth());
             }
 
             private void ItemMove(Card card, Card item)

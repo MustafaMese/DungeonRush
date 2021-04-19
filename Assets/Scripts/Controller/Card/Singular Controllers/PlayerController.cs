@@ -226,49 +226,26 @@ namespace DungeonRush.Controller
             PlayerData data = SavingSystem.LoadPlayerInstantProgress();
 
             if (data == null) return;
-            // player.SetMaxHealth(data.maxHealth);
-            // player.SetCurrentHealth(data.currentHealth);
-            // health.InitializeBar();
-            // player.Gold = data.gold;
-            // player.Experience = data.xp;
-            // player.GetStats().CriticChance = data.criticChance;
-            // player.GetStats().DodgeChance = data.dodgeChance;
-            // player.GetStats().LifeCount = data.lifeCount;
-            // player.GetStats().TotalMoveCount = data.moveCount;
-            // player.GetStats().LootChance = data.lootChance;
-
+            
             health.SetMaxHealth(data.maxHealth);
-            Debug.Log("1");
             health.SetCurrentHealth(data.currentHealth);
-            Debug.Log("1");
             health.InitializeBar();
-            Debug.Log("1");
             player.Gold = data.gold;
-            Debug.Log("1");
             player.Experience = data.xp;
-            Debug.Log("1");
             player.GetStats().CriticChance = data.criticChance;
-            Debug.Log("1");
             player.GetStats().DodgeChance = data.dodgeChance;
-            Debug.Log("1");
             player.GetStats().LifeCount = data.lifeCount;
-            Debug.Log("1");
             player.GetStats().TotalMoveCount = data.moveCount;
-            Debug.Log("1");
             player.GetStats().LootChance = data.lootChance;
-            Debug.Log("1");
-
 
             for (int i = 0; i < data.uniqueItemIDs.Length; i++)
             {
-                Debug.Log("2");
                 Item item = ItemDB.Instance.GetItem(data.uniqueItemIDs[i]);
                 itemUser.TakeItem(item, false);
             }
 
             for (int i = 0; i < data.uniqueSkillIDs.Length; i++)
             {
-                Debug.Log("3");
                 SkillObject skillObject = ItemDB.Instance.GetSkill(data.uniqueSkillIDs[i]);
                 skillUser.AddSkill(skillObject, false);
             }
