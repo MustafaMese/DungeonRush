@@ -18,28 +18,24 @@ namespace DungeonRush.Saving
         public static void SaveItems(ItemsData data)
         {
             string json = JsonUtility.ToJson(data);
-            Debug.Log("Items saved! \n" + json);
             File.WriteAllText(SAVE_FOLDER + itemsPath, json);
         }
 
         public static void SaveUtilities(int xp, int gold)
         {
             string json = JsonUtility.ToJson(new PlayerUtility(xp, gold));
-            Debug.Log("Utilities saved! \n" + json);
             File.WriteAllText(SAVE_FOLDER + utilityPath, json);
         }
 
         public static void SaveProperties(int str, int agi, int luck)
         {
             string json = JsonUtility.ToJson(new PlayerProperties(str, agi, luck));
-            Debug.Log("Properties saved! \n" + json);
             File.WriteAllText(SAVE_FOLDER + propertyPath, json);
         }
 
         public static void SavePlayerInstantProgress(PlayerCard player)
         {
             string json = JsonUtility.ToJson(new PlayerData(player));
-            Debug.Log("Instant saved! \n" + json);
             File.WriteAllText(SAVE_FOLDER + instantPath, json);
         }
 

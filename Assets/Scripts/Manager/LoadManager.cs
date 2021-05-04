@@ -58,31 +58,36 @@ namespace DungeonRush.Managers
                 int diffuculty = difficultyStack.Pop();
                 levelDifficulty = (Difficulty)diffuculty;
 
-                switch (diffuculty)
+                if(difficultyStack.Count > 0)
                 {
-                    case (int)Difficulty.STARTING_POINT:
-                        SceneManager.LoadScene(1);
-                        break;
-                    case (int)Difficulty.VERY_EASY:
-                        isFirstLevel = true;
-                        LoadRandomLevel(veryEasyFirst, easyFirst);
-                        break;
-                    case (int)Difficulty.EASY:
-                        LoadRandomLevel(easyFirst, moderateFirst);
-                        break;
-                    case (int)Difficulty.MODERATE:
-                        LoadRandomLevel(moderateFirst, hardFirst);
-                        break;
-                    case (int)Difficulty.HARD:
-                        LoadRandomLevel(hardFirst, veryHardFirst);
-                        break;
-                    case (int)Difficulty.VERY_HARD:
-                        LoadRandomLevel(veryHardFirst, bossFirst);
-                        break;
-                    case (int)Difficulty.BOSS:
-                        LoadRandomLevel(bossFirst, SceneManager.sceneCountInBuildSettings - 1);
-                        break;
+                    switch (diffuculty)
+                    {
+                        case (int)Difficulty.STARTING_POINT:
+                            SceneManager.LoadScene(1);
+                            break;
+                        case (int)Difficulty.VERY_EASY:
+                            isFirstLevel = true;
+                            LoadRandomLevel(veryEasyFirst, easyFirst);
+                            break;
+                        case (int)Difficulty.EASY:
+                            LoadRandomLevel(easyFirst, moderateFirst);
+                            break;
+                        case (int)Difficulty.MODERATE:
+                            LoadRandomLevel(moderateFirst, hardFirst);
+                            break;
+                        case (int)Difficulty.HARD:
+                            LoadRandomLevel(hardFirst, veryHardFirst);
+                            break;
+                        case (int)Difficulty.VERY_HARD:
+                            LoadRandomLevel(veryHardFirst, bossFirst);
+                            break;
+                        case (int)Difficulty.BOSS:
+                            LoadRandomLevel(bossFirst, SceneManager.sceneCountInBuildSettings - 1);
+                            break;
+                    }
                 }
+                else
+                    GameManager.Instance.SetGameState(GameState.DEFEAT);
             }
         }
 

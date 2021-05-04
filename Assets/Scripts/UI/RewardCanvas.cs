@@ -103,8 +103,6 @@ namespace DungeonRush.UI
                     rewardButtons[i].button.interactable = false;
             }
 
-            if(skill == null) print("smh");
-
             return skill;
         }
     }
